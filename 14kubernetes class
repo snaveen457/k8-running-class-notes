@@ -1,0 +1,1120 @@
+
+00:01
+This conference will now be recorded. In yesterday's session, we were discussing about what is config map.
+
+00:12
+what is secret, right? ConfigMap, using ConfigMap, we can maintain key value pairs of data and also multi-line string file content. Also we can maintain using ConfigMaps or secrets. These ConfigMaps and secrets can be used in your pods. The key value pairs of data you can use in the
+
+00:39
+your container environment variables or command line arguments. If it is a file content, can I use this config maps or secrets as a volumes to mount those files to my containers in the pods?
+
+00:54
+Yes, your runtime configurations can be externally mounted to the ports or containers. Using these config maps and secrets. Yesterday we already saw how to create a config map key value pairs of data and how to use that config map or secrets in our pod manifest. We already done that. Now let's consider I have one use case like this. Let's consider I have one use case like this.
+
+01:22
+Now I have my Kubernetes cluster. I have some applications running. This is my node.
+
+01:31
+I have some nodes in this cluster. I am deploying one pod here.
+
+01:37
+This part has a container. Your application, container. Now I have some file. That can be any file. As part of the container file system, you have some file that can be your settings file, your property file, your application.property file, or your XML file. Some kind of XML file. If you are using Java,
+
+02:06
+that can be Java with Spring Boot you are using, that can be your application.yml file, your Spring Boot property file or yaml file, any file. Now I want that properties or that configuration files are varying from one environment to another environment. Can I externally pass those configurations to my pod container as a value? In the Docker we use that bind mount concept here.
+
+02:35
+We can use that concept same here. Now let's say I'm taking this as an example. Let's say this is my Tomcat. I have some file like this Tomcat users.xml. Now this XML file needs to be varied. This XML file should be varied for environment environment. Now dev environment, I need to have a different configurations in that file.
+
+03:01
+In another environment like prod environment, I need to have a different configurations. Now how to do that? I want to pass different configurations in another cluster, let's say.
+
+03:15
+in another cluster. This is my product cluster production. Production Kubernetes cluster. Now same application but the configuration should be changed. Now while creating a image while creating a image in the Docker image, let's say while creating a image I have something like this that Tomcat users find something like this. Just to give an example. I'm taking this as an example.
+
+03:45
+This can be applicable for any file, any configuration file, any property file, any file. Now I have password like this.
+
+03:55
+while creating a image itself if I do like this is it going to be same file whatever file is your part of your image will it be same here also.
+
+04:07
+or anywhere. Yes. Now I want this to be different. I want this to be different here. This to be different here, but I don't want to create a different, different images. I don't want a Docker two different images to be created. Now here can I use the concept of that kind of a file mount? Can I mount file also to my container? The way we are mounting the folders. Can I mount files also to my container? Yes.
+
+04:38
+If you are using Docker, you can use that bind mount concept. But here in Kubernetes, what I can do, I will create a config map. I'll create a config map, config map in this cluster. I'll create a config map in this cluster with this content. Let's say this content here. This content here.
+
+05:04
+Now can I use this config map as a value? Can I use this config map as a value? Can I use this config map as a value here? Then can I mount that config map content, that file content to my container?
+
+05:24
+I am attaching this config map as a volume to my pod then this content of that config map the file content of this config map I am attaching to my pod that location wherever I have that file.
+
+05:40
+Now does this will be reflected here that file here. Now let's say in production production I'll create a config map with the different content. I'll create a config map with a different file content something like this. Now if I apply this if I mount this config map if I attach this config map to my pod then the content I will mount to that my file in that pod container.
+
+06:09
+in my pro you know prod do I have these things in this xml file
+
+06:20
+Yes, so we can pass you are a configuration. So I'm just taking this as an example. This is applicable for any file which you want to customize. Now let me demonstrate that scenario. Now let me take one application. Maybe let me take this application.
+
+06:40
+Let me take this application. This application I am using Tomcat image. I'm using Tomcat as a base image. I'm kind of copying my var file. I'm copying my var file here. Now, let's say. I already have a Docker image created. I already have a Docker image created. Now, let me apply that image in my Kubernetes cluster as of now.
+
+07:08
+Let me deploy that image in my Kubernetes cluster as a part of that application. Let me connect to my Kubernetes cluster. Let's connect to this one, my master, where I have a kubectl.
+
+07:40
+Here I have a cube ctl. Now let me see if too many applications are running. I'll delete and I'll demonstrate.
+
+07:53
+OK, that is fine, only three applications. Now let's say I'm trying to deploy this application.
+
+08:04
+one application like this.
+
+08:07
+I don't want to waste much time I will just use that login to generate that manifest guys when you guys are practicing start typing from line by line so that it will be easy for you to understand and learn because to save the time I am using this one
+
+08:33
+Sorry that plugin is not there.
+
+08:49
+Now I am trying to apply one application
+
+09:01
+Now let's say this is my image. I already have that image.
+
+09:08
+in the registry in my Docker Hub registry I already have that.
+
+09:27
+now this is my resistor
+
+09:31
+I'm taking this as an example Abhishek is asking sir in Tomcat users vary from environment environment in all the projects I'm taking this as a use case but first of all are we going to use that Tomcat GUI concept nowadays is anyone is using that Tomcat manager application or GUI application to deploy any var file jar file like that sorry any var file no I'm just taking that as a use case understand the concept not what I am doing here is important
+
+10:01
+No one is using the Tomcat GUI manager application to deploy because I already have that application as a var file. I already have that application var file in my Docker image. Do I need to again copy manually wherever that container is running?
+
+10:19
+No, no one is using nowadays that one just I'm taking this as a use case one example This can be applicable for any file which you want to mount from outside that can be your nginx confiler that can be your maybe like Your application dot property file if you are working on java, there is a Application properties or application yml xml those things
+
+10:49
+To make things simple, let's say you are running some software that software configuration file you want to tweak. That is common, right? That is common from environment to environment.
+
+11:06
+So I'm taking this as a use case.
+
+11:14
+So let's consider this application, this registry where, one second, not this one.
+
+11:22
+Let's say what image I have. Okay, I have an image with the tag one.
+
+11:32
+tag one let me request minimum at least 256
+
+11:39
+MI and maybe 300 will occur these are limits requests also
+
+11:52
+I'll request this much.
+
+12:04
+my container port 8080. Now to access this one you already know I know need to explain that service is required. If you want to access that application inside or outside you want you need a service. Service use selectors.
+
+12:30
+whatever port 80 your target port 8080 service name whatever you want to give type of the service if you want to access now I can say not port now any namespace that doesn't matter here since I have not given namespace for deployment as well as service in which namespace this will be created.
+
+12:59
+in the default namespace. Now let me apply this. Let me apply this.
+
+13:06
+let me apply this now
+
+13:16
+now there is a deployment there is a deployment
+
+13:23
+The pod is getting created.
+
+13:38
+the container is getting created. It is pulling the image to create a container. So it will take some time. Let's wait. Now container is running. Now if you see kubectl exec, this pod, let's say, I have this file user local tomcat slash con.
+
+14:11
+Now I have some file like this inside that pod. I have only one container that is my application that I'm getting within that this file is there. Now if you see this file content, I have not modified anything. This is the default. This is the default content of that file, just to give an example. This is the default content of that file, just to give an example. Now nothing is there. Everything is commented. Is everything is commented in this file? This file.
+
+14:43
+everything is commented now I want to modify I want to modify this configuration I want to modify this configuration I want to have a different configuration now one option while creating a image itself can I do like this while creating image itself can I copy this file with whatever you roles users just to give an example I'm taking this file as I already told
+
+15:11
+So can I have while creating itself, I can do that. But if that needs to be changed from environment to environment, if you are using Docker, normal containers or Docker Swarm, you can use the concept of bind mount. Now here.
+
+15:29
+If I go inside the pod, if I modify this file, if I go inside the pod, if I go inside that container and modify the file, if the container is, if the pod is deleted or recreated or if the container is restarted, if the container is also restarted, do you have those changes again? If I directly go inside this and modify? Will I have those changes whatever I go and modify inside this pod container?
+
+15:56
+If the pod is deleted, recreated, if container also restarted, do you have those changes? If the pod is deleted and restarted, no. Now, I want those changes to be permanent. I want those changes to be permanent. At the same time, I want those changes to should vary from one environment to another environment. Now, here, can I use a config map concept in Kubernetes?
+
+16:21
+Can't figure out.
+
+16:24
+config map as a file content. Yesterday also use config map. Yesterday we demonstrated using key value pairs. Yesterday we demonstrated using these key value pairs. Now the way we have a key value pairs, can I have like this? This is multi-line string. This is one key. This is the content of that file. Can I have like this? Can I create one config map like this? Can I have whatever file content I have like this?
+
+16:53
+Highlighted one.
+
+16:56
+This is just an example. I can have the file like this. Now let me create a config map. Let me create a config map. Now here I am going to create one more Kubernetes object called config map. Let's say I'm giving config map like Java, Web App, something like this. Any name. Any name, that doesn't matter.
+
+17:24
+Here it is going to support key value pairs of data. Yesterday, we already demonstrated key value pairs of data. Suppose you have a requirement to pass some environment variables to your container. In the environment variables are command lines you can refer. You can create a key and value here. You can refer that. Now my requirement is not a key value pair. Now can I refer something like this file content?
+
+17:52
+Tomcat iPhone users dot XML. This is how I will define that multi-line string. Now it's not a key value pair. It's a multi-line string something like this. Now, can I have whatever I wanted to have? Now for better readability for better readability. I'm removing all these things. Whatever which is not required. I'm removing all these things. Whatever which is not required but better readability.
+
+18:23
+Now can I have something like this whatever is required by Tomcat users file. Let's say user name is Mithun password is test rules whatever rules like admin GUI just to give an example I am taking this one admin GUI. Another one is.
+
+18:48
+Admin UI manager.
+
+18:54
+something is like what is that I don't remember that names admin gy and manager gy is this correct because nowadays no one will handle these things is it like just admin or manager or admin gy and manager gy
+
+19:22
+I think it is admin GOS and manager GOS only. Let's say this is my Tomcat users file. Let's consider this is Tomcat users file. Just to make things simple, I got that from that one only. I got that one from there only. Or if you don't have Tomcat users XML, you can go to official website also, that Apache official website.
+
+19:52
+You have that content also like how it looks like the sample file. The sample file you can take that Tomcat users file.
+
+20:09
+manager GUI manage admin GUI. What is all those things something like this that sample content also you can take that if you don't have the Tomcat users XML file you can download from official website also or any other website.
+
+20:29
+something like this this one to just minimize my content I am just taking like this now this is my content now this one
+
+20:42
+Can I create as a config map that file content here? This is the key multi line string, but here you need to have an indentation case. You need to have an indentation. So something like this minimum two lines should be there that indentation. But in this file, you know need to have an indentation in this file. You know need to have an indentation. Something is wrong here. Some additional dot is there. That's why he's throwing here.
+
+21:12
+So, now.
+
+21:16
+Here you need to have indentation. This doesn't matter whether you have four lines two lines that doesn't matter that is related to your XML Now can I create a config map like this config map with this content that can be any XML file YML file property file also That can be your application property files. If you are using Java you are reading some data configurations from properties
+
+21:44
+or YML files, your Spring Boot YML files like that. Can I create a config map like this? Now, this config map, can I use as a value to this container?
+
+21:59
+Can I use that config map as a volume to this container?
+
+22:07
+Yes, so here values, values but not at a container level. It is at a container, sorry it is at a container level. Values now values name, name of the value, anything name of the value something like this. Here can I use config map.
+
+22:37
+The volume as a config map like this. The type of the value is config map. The way they have given example here. They have created a key value and also file content like this. In the pod manifest, can we use that as a value, like name, any name, config map, or name of the config map? Name of the config map. Here, name. Can I use this name? This name, whatever name I have created, whatever name I used to create that config map.
+
+23:08
+This is the name of the config map. Now this config map has items. Items are basically your files, whatever you have created like this, whatever you have created like this. These are the items, items of files. So I'm using that something like this, items, name, name and key. So something like this, whatever I have given here, this is the name and key I'm using like this.
+
+23:38
+name also this key also same something like this key also something like this name as well as key that items sorry not name key and a path key and a path
+
+23:56
+something like this. Now, if I just define like this, is this file will be mounted with your container? Is that file will be mounted with your container, whatever file location you want to mount? No. So do I need to use that as a mounts here? Do I need to use that as a value mounts here?
+
+24:16
+value mounts in your container level name So whatever name I have config map with same name. I will have here mount path
+
+24:30
+mount path so to which path I need to mount so in my container where exactly I want to mount to which director I want to mount in container where that location I have that file can I mount to this location
+
+24:46
+that file also completely.
+
+24:52
+inside your container to which directory you want to mount. That is your mount path. Can I give mount path like this?
+
+25:00
+But here, since you are mounting the file, you are giving the path of the file also. But here, you need to give one more option called subpath. If you are mounting a single file, you need to use one more option called subpath. That subpath is basically your file name. You need to give this one also. Mount path as well as subpath. Without giving this mount subpath, if I give like this, because this folder has lot of other files also.
+
+25:31
+This folder has lot of other files also, not only Tomcat users. Do you have other files also like server.xml and other files, lot of other files also? Yes. So if I don't give this sub path, what will happen? This config map will be mounted with this folder, but only Tomcat users will be there. What about server.xml? Because I don't have any server.xml created as a file content in the config map, so it will be not available. So that's why.
+
+26:01
+I'm using the sub path along with the mount path sub path. Now if I do like this, now let me create a deployment. Since it's a deployment, if I modify my deployment now, these parts is going to be recreated because I modified the deployment. My part manifest is modified. Now these parts are going to be recreated with these volumes now. I'm updating this and applying yes.
+
+26:29
+No.
+
+26:31
+Let me do this.
+
+26:41
+Let me do this.
+
+26:45
+Now I have a config map guys make sure your config map doesn't have any indentation problems. It doesn't have any indentation problems. So I have a config map. This is a file content. Now I'm using that config map as a value here that I have mounted to this container that location. Now let me apply this. Let me apply this.
+
+27:15
+Let me apply this now since it's a deployment deployment got modified your container is it following that rolling deployment strategy first it is creating a container once this is ready then only it will terminate that old pod even though I have not mentioned any deployment strategy in my deployment. What is the default deployment strategy even though I have not mentioned any strategy.
+
+27:44
+rolling update rolling update now the new part is running now if I see the same thing now cubectl exec in this part in this part in this location again if I do this cat now will I able to see that
+
+28:09
+Will I able to see that?
+
+28:13
+whatever is part of my config map file content. Now can I see that now in my pod.
+
+28:26
+So this way, will I able to mount, will I able to pass configurations from outside to my pods containers based on the environment? Can I have a different configurations and pass that to my pods, my containers? This is just one example. Don't always consider this is a same based on your requirement. Let's say you have some other XML file, some other YML file, some other property file. Can I use this config maps concept, config map as a volumes?
+
+28:56
+Concept is important not stepwise do this do this do this this is not way no way of learning
+
+29:06
+based on your requirement you can use these concepts.
+
+29:11
+Now, if required, can I use one more value? Suppose I want to maintain some data. Can I use data value? Something like this. I want to mount one directory with value, kind of a persistent value. Can I use that one also here? Can I use one persistent value claim here? Can I mount that with persistent value claim? Something like this persistent value claim.
+
+29:38
+Can I mount that with some directory if I want to maintain that one also? Yes. So based on your use case, you can use all these things.
+
+29:50
+Now if I just change the if I just modify the config map is it going to reflect automatically in your pod guys that is also you need to understand let's consider I am modifying my config map content I am modifying my config map content do you think that will be automatically reflected in your pods containers no does your pod needs to be restarted I mean to say does your
+
+30:25
+Yes. So if you just modify the config map now, I'm just modifying the config map. Let's say I am modifying the config map like this password. I'm modifying the config map like this password.
+
+30:42
+In the config map, I'm just changing something like this.
+
+30:48
+Does this require redeployment? Because this is like a configuration. Does your process needs to be restored? Just to make sure, just understand the concept, whether it's a container, whether it's a server, that doesn't matter. Any time your conf file is modified, are you restarting Tomcat like that? To reflect that. Similarly, I'm modifying the config map. So if this config map.
+
+31:16
+has to be reflected in your part sir does your part needs to be recreated again does your part needs to be recreated again.
+
+31:25
+Yes, similar concept here. Now I am modifying this config map. Let me apply this config map again. Let me apply this change cube CTL apply.
+
+31:37
+Now config map is changed. Now kubectl get conf cm in the short form cm config map. Now if you see, you can describe config map.
+
+31:53
+You can get in a YML format also.
+
+31:57
+get config map in a yml format get config map that config map name iphone yml format now config map is updated config map is updated this is the config map content but if i see my pod if i see my pod is it reflected in my pod
+
+32:22
+Now if I delete and read apply
+
+32:28
+If I delete and redeploy, will it reflect? Does that needs to be deleted and redeployed? Yes. For now, what I am doing, instead of deleting the deployment, I'm just deleting the pod itself. I'm just deleting the pod itself instead of deleting a deployment. Now, this pod is going to be recreated again. But this time, same config map it is using. But config map got updated.
+
+32:56
+config map got updated. Now in this new part, can I see that content?
+
+33:10
+Now can I see that updated one now?
+
+33:14
+Is everyone fear what is config map how to use config map or secret config maps and key secrets can be used to maintain some configurations as a key value page those key value page can I use it as a can I use in my container my pod environment variables are command line arguments. Yes at the same time if I'm creating a config map as a file content, can I use those config maps or secrets also as a volumes? Can I move those config map?
+
+33:44
+Content as a values like this the way I have done. Yes. Is everyone clear? This config map and secret very important. We are going to use all these concepts in our applications.
+
+34:02
+No.
+
+34:05
+If it is a production cluster, can I create a config map with a different content and mount again same way? I already mounting but I will create a config map with a different content, different configurations.
+
+34:24
+Now before I go for a liveness probe and readiness probe. Let's discuss about this concept also. Liveness probe and readiness probe before I go for this. Let's discuss about one more concept here. Private registries. Are we going to host? Are we going to maintain?
+
+34:52
+our application images whatever we are creating for our actual applications are we going to maintain in the public repositories.
+
+35:02
+no are you going to maintain in a private repositories like nexus or jfrog
+
+35:13
+ECR like this or GCR Google Container Registry Azure Container Registry like this. Now if it is a private registry does your Kubernetes needs to be authenticated with those registries to pull the images.
+
+35:50
+your kubernetes nodes needs to be authenticated with private registries. Now let's say I don't have any nexus or JFrog guys even though you use nexus and JFrog by default is it a secure registry no because as of now you guys have not configured any certificates so nexus or JFrog if you use to host the Docker images and which protocol the nexus is running as of now.
+
+36:20
+if you create a Docker hosted repositories HTTP if it is HTTP non you know insecure registry insecure registry does that a Docker or Kubernetes will support authenticating with insecure registries by default.
+
+36:39
+even though you use a username and password on that URL, it is not going to support that insecure repositories. In that case, if you are using insecure repositories, do you need to tweak some configurations in the respective runtime? If you are using Docker in the Docker configurations, you need to tweak you need to allow Docker to work with insecure repositories. You need to modify that if I am using Kubernetes container D in the container D also do I need to modify.
+
+37:09
+some configurations if I want to use insecure repositories.
+
+37:17
+Yes, but in real time are we going to have HTTPS configured for your nexus and JFrog also? If you are using nexus and JFrog You are going to have a HTTPS configured for nexus and JFrog also if I am using secure repository like the repositories which is Secured using HTTPS SSL and TLS Then do I need to tweak any configurations to Docker or container D to work with that repositories?
+
+37:47
+No, not required. If you are running on HTTPS, not required. You don't need to tweak any configurations in the Docker or container D software to work with the Nexus and JFrog. If it is running on HTTPS, if it is running on HTTP, then insecure registries, then do I need to tweak some configurations in the docker and Kubernetes.
+
+38:11
+Yes, suppose if I am using cluster, do I need to tweak that in each and every node in my cluster? Suppose I'm using Docker Swarm or I'm using Kubernetes. Do I need to tweak those configurations in the respective runtime to work with each and every server? I need to make changes to work with insecure registry. So for now, what I am using, I am not going to use Nexus or JFrog. If you want to use Nexus and JFrog,
+
+38:42
+then you need to tweak some configurations. But in real time, in real time.
+
+38:49
+It is not required because you are you going to have nexus and JFrog also configured with
+
+38:58
+configured with HTTPS. Yes, so I don't want to waste much time over there. I don't want to waste much time over there. So that's why I'm not using his TTPR HTTPS. Sorry, I'm not using excess and Jfrag for now. Even though I'm using Docker Hub, even though I'm using Docker Hub, can I create one private repository? One private repository.
+
+39:28
+only one it is going to allow to have only one private repository in the docker hub only one private repository in the docker hub now i have a docker hub account i already have a docker hub account and in fact everyone has a docker hub account now within this docker hub within this docker hub can i create can i create a repository
+
+39:59
+One private repository.
+
+40:04
+Now I already created I already created. Now, let me show that. I logged into my Docker Hub. This is my repositories in the Docker Hub when I click on private repository. It is going to show suppose you want to create one repository like this. It is going to show whether it is public or private. So there is a public and private why this private I am not able to select this radio button is not enabled because
+
+40:34
+You are using Docker Hub for free. With free tier, I mean to say like free service, how many private repositories you can have? Only one. So do I already have one repository? Do I already have one private repository created in this? Yes. Now, if you see, most of the things are public. This is public, this is public, this is public. Now, here.
+
+41:04
+They have one private they have one private repository this one. They have one private repository this one. Can I see that as a private?
+
+41:19
+Now this is private repository. I have an image here. I have an image here, tag1. Now let me use this repository to deploy. Let me use this repository to deploy my application. Maybe.
+
+41:39
+Let me use this now. I am using that repository that is not a public repository. Now that is a private repository.
+
+41:50
+multiple lines it is copied.
+
+41:55
+Let me fix this.
+
+41:58
+Now it's a private repository.
+
+42:07
+Now I want to deploy this application, whether it's a pod, whether it's a deployment that doesn't matter here, guys, whether it's you are directly creating a pod, whether you are creating this one using deployment, that doesn't matter. I'm using private repository. To avoid the confusion, maybe let's use a deployment only. Because this won't change whether you are creating a pod or deployment or replicas, these concepts will not change.
+
+42:35
+labels I don't want for this deployment if you add also that file Now here this is my deployment manifest right so I'll say replicas
+
+42:50
+Otherwise, let's see if I have some file. Let's see if I already have some file. Why to waste a VA, maven, web app, deployment, YML is there. Now let's say here I'm using that image.
+
+43:08
+Here I am using that image.
+
+43:12
+Here I am using that private repository. The repository name is this. The registry name is Docker hands-on. Within that registry, this is the repository. I have a tag called one. Now all these things doesn't matter for you, whether you are creating one replica or three replicas, whether you have a HPA, you don't have a HPA. All this doesn't matter now. You already know all these things. Now let me apply this one.
+
+43:41
+kubectl apply-mavan webapp deployment
+
+43:49
+in test namespace because that is deployed in test namespace. Now you see the errors. Now what error I have is now what error I have? Error image full error image full now do I have a image full backup?
+
+44:10
+They have image pullback of.
+
+44:18
+Now, since I have a HPA, I think since I have a HPA also, I created a HPA also, how many replicas I expected? Minimum two replicas, one is showing in image pull backup, one is showing in image pull backup, another one is showing in pending state. Why? Because while requesting, am I using that resources concept here? Am I using that resources concept resource request and limits?
+
+44:48
+it is able to assign node to only one part. And again, that part has a problem. That part has a problem, image pullback up. Why this is in pending state? This part is not able to, Kubernetes is not able to assign any node to this part because you don't have enough CPU memory because of that. It is still in a pending state. Even though you have resources, again, will it end up in image pullback up?
+
+45:14
+Once it is scheduled also when it is assigned that node also will it end up in image pullback of again.
+
+45:20
+because I am not using the correct tags. Sorry, I'm using the private registry. Now I am using correct tags only. I'm using correct tags, correct attributes. I'm into the registry repository. Everything is perfect. Now why I have image pull back up? Let's see.
+
+45:43
+Let's see.
+
+45:47
+Now error image pull failed to pull the image failed to pull an image. It might be it is saying it is saying repository does not exist or may require authorization. It is saying repository might not exist or require authorization is the first one true is the repository doesn't exist. Did I give a valid repository? Yes, valid registry valid repository. The first case is not correct.
+
+46:18
+It is to do with second case. Now, is Kubernetes is failed to authenticate? I mean to say, does it requires authentication to pull that image because it's a private image?
+
+46:31
+Now how do you handle this? Do I need to execute Docker login in each and every servers? First of all, do I have a Docker installed? Do I have a Docker running in my Kubernetes nodes? No You know need to execute Docker login also Even though you are using Docker, you know need to execute Docker login in each and every server so I can create a secret for these credentials
+
+47:01
+Yesterday when I was explaining kubernetes secrets, do I have a Docker registry type secrets also the way we have a Opaq you TLS Similarly do I have a secret of type Docker registry? So can I create a secret with my credentials? Can I use that secret as a image pull secret? Can I use that secret as a image pull secret in my pod so that it will use that image pull secrets to pull the images
+
+47:31
+No.
+
+47:34
+you can authenticate.
+
+47:40
+authenticate private registry in Kubernetes registry in Kubernetes right. So there is a concept here. You need to create a secret. Go to the official website only go to the official website only to pull an image from private registry. So I have a Kubernetes cluster. I have a private registry also.
+
+48:12
+Create a secret based on the existing credentials. Can I create a secret like this? Qubes ETL create secret, but not this one. I'm not going to use this type. I'm going to use Docker registry type. Docker registry type secret. Can I create a secret like this?
+
+48:34
+Imperatively also you can do declarative also you can do Cube Cetal secret Docker registry. This is your secret name. This is your secret name Whatever name you want to give you can do This is your secret name Docker registry secret now here Can I give my? Registry URL can I view my registry URL username password this email ID is not mandatory
+
+49:04
+Let's say you are using nexus repository. You are using nexus repository. Can I give something like this here? Because in real time, you will have a host names or domain names also like this nexus.tcs.com. Let's say this is your you are working in TCS. You have a nexus running in for TCS. And that is mapped with this kind of internal domain name or host name. Can I give like this? nexus.tcs.com.
+
+49:33
+Here nexus URL like whatever like admin admin 123 or whatever your password. This email ID is not mandatory if you want to leave leave it. Now can I create a secret like this can I create a secret like this secret name I will give something like nexus docker cred something like this. I will create a secret.
+
+50:01
+secret of type Docker registry. Then once I have the secret,
+
+50:08
+in my pods in my pod manifest in my pod manifest where I want to deploy you can that is in a pod spec guys whether you are directly creating a pod whether you are creating a replication controller replica set demon set can I use these options whatever comes under pod spec here so something like this I will use under container section under container section
+
+50:38
+I mean to say under this part spec sibling to your containers sibling to your containers and values can I have something like this image pull secret can I give this secret name whatever I have given whatever I have created in my Kubernetes. Now does this image pull secret information will be sent to the node node because your
+
+51:06
+Is this information will be sent to that you know cubelet which is running in that node to whatever node that part is scheduled is your Kubernetes will send this secret information to that cubelet is that cubelet is going to use this secrets to authenticate with that respective registry. Is that cubelet is going to use is cubelet is going to use these credentials to authenticate with that registry? Yes. So this way we can do.
+
+51:37
+This way we can do. Now I don't have any nexus jfrog like that. I will use Docker Hub only. I will use Docker Hub. For Docker Hub use this mandatory again. If you don't pass any server details. What is the registry it will authenticate while creating a secret. This is optional.
+
+52:05
+This is optional guys that is not the URL hub.docker.com is not registry URL don't think don't think this is the URL to pull the image from the Docker hub don't think this is the URL. So there is a different URL called something like let me show Docker.io something is there Docker.io something is there. Let me see if I can show this one is.
+
+52:34
+index dot Docker dot I will but again this is not mandatory again. This is not mandatory if I remove this one also, what is the default one? You already know what is the default registry? It will authenticate you should not go hub dot Docker dot com. That is you are accessing using UI, but this is the actual that registry URL for Docker hub index dot Docker dot I will slash V1 now I can create a registry like this.
+
+53:02
+I mean to say I can create a secret like this. I can create a secret like this.
+
+53:12
+I can create a secret like this if it is a Docker Hub I can create a secret like this.
+
+53:22
+So this is my...
+
+53:25
+this one my credentials my credentials my username Docker hands-on Docker hands-on
+
+53:40
+my password whatever password something like this this is optional i'll say docker hub something like this docker hub cred now can i use this credential in my pod manifest as a image pull secret this one if that is from this i will do something like
+
+54:04
+Now, let me create a secret. Let me create a secret. This registry secret, I need to see whether it will work in a namespace level or whether it will work in a cluster level. Let me do that. Now, let me create the secret as is. If I create a secret as is in which namespace the secret will be created.
+
+54:26
+without mentioning the namespace in which namespace this will be created default. Let's do that for now. I'm stopping the screen share for some time because I don't want to reveal my Docker Hub password. I don't want to reveal my Docker Hub password. I'm stopping the screen share for a minute.
+
+55:11
+Let me share my screen back. Now I created a secret. I created a secret of Docker type Docker type. Now why it is secret? You can understand why it is secret. Why not? It is a config map because can I consider this also confidential data this Docker have this registry credentials also. Yes.
+
+55:41
+So I created a secret. Now, if I use that secret, if I use that secret, now I created that secret in a default namespace. I created that secret in a default namespace. Now in my pod manifest, in my pod manifest.
+
+55:58
+guys to demonstrate let's you know remove all these things I will demonstrate with only one replica I don't have enough sources here can I mention that as here that image that image pull secrets.
+
+56:20
+image pull secrets that instruction whatever they have given like this image pull secrets now i am mentioning in my pod manifest that image pull secrets
+
+56:33
+name of the secret whatever name you have created what is the name of the secret this is the secret name this is the secret name i am using that now let me deploy but before deploying let me delete all these applications because i don't have enough space enough memory in the cluster so it is not
+
+57:03
+Now I am using a secret. I am using a secret.
+
+57:12
+kubectl apply-f that application maven web maven web app deployment.ml. Now if you see.
+
+57:26
+Let's see whether it's a this Docker Hub credentials. Let's see. Still it is not using because that is namespace specific that is namespace specific because it's a config map also secret right? So it works in a namespace level only. Now I am trying to deploy that image in test namespace, but I have a config map the sorry that secret created in a different namespace. It is not able to refer. So let me create a secret.
+
+57:56
+Let me create a secret in this namespace. In this namespace that image that backer registry credentials. Let me create in this namespace.
+
+58:09
+While executing that comment can I use iPhone n.
+
+58:16
+I fun n that namespace while executing the command can I use that I fun and namespace name even though I am doing imperatively while executing this command can I use I fun in that namespace name yes now I created a secret I created a secret in this namespace I fun
+
+58:49
+see now that image pullback app is there now. Let me delete and redeploy. Let me delete that deployment.
+
+59:03
+Now let me apply kubectl apply ifnf that may have in web app deployment.aml I have deleted I am redeploying again now this time I have a this time I have a secret image pull secret created now is it using those secret now kubernetes is assigned one scheduler is assigned one node to that pod.
+
+59:37
+Kubernetes scheduler assigned. Assigned one node this node the scheduler assigned the node this node to this part now. The cublet which is running in that code has executed some commands is that scheduler pass that secret whatever we have created to authenticate with registry. Since we are using that as a image pull secret is that the cublet is using that secret authenticate and.
+
+01:00:07
+Pull the image.
+
+01:00:13
+Now if you see it is successfully pull that image because why in pod manifest did I pass that image pull secret also did I pass that image pull secret also in my pod manifest. Yes so this way will I able to use will I able to use private images. Also to be deployed in kubernetes yes now if it is a ECR if it is a ECR and EKS cluster in a different way it works.
+
+01:00:42
+If it is a ECR and EKS, it will work in a different way. You have a EKS cluster. Let's consider you have a EKS Kubernetes cluster. It's a managed Kubernetes cluster. It's a managed Kubernetes cluster, EKS cluster. And you have images in ECR. You have images in ECR. Let's say this is your ECR. Here, it works in a different way. You no need to create secrets like that also.
+
+01:01:11
+while creating a nodes for your EKS cluster. If I attach that ECR read-only policies, ECR that ECR container registry read-only policies, I attached to that role. That role is attached to these nodes. In that role, I have attached that permissions, ECR container registry read-only. So since this nodes already have a permissions, ECR container registry read-only permissions, will it able to pull the images from ECR?
+
+01:01:41
+the nodes these are my EKS node. If this node has one IAM role, if this node has one IAM role already attached, that IAM role has this policy attached, EC2 container registry read-only policy, let's say. Now this server already has that EC2 container registry read-only permission. You no need to create a secret and pass that as a image pool secret.
+
+01:02:10
+If you have a case cluster and your images are there in easier, but if your images are there in nexus, if your images are there in nexus like this, then do I need to follow the same process here? Do I need to create a secret for your next? Excuse me. Do I need to create a secret for this nexus credential? Then then do I need to use that secret as a image pull secret in my pod manifest?
+
+01:02:40
+Is everyone clear how to use private industries or private images?
+
+01:02:51
+Whether it's a ECR, whether it's a GCR, Nexus, does these concepts will change? Your Kubernetes concepts like secrets, image pull secrets, deployment, replica sets, demon sets.
+
+01:03:06
+liveness proofs readiness proofs volumes config map secrets it is remains same Now is everyone clear guys
+
+01:03:17
+We came a long distance in Kubernetes. We started with Kubernetes architecture. What is Kubernetes? How why we need Kubernetes? Advantages of Kubernetes.
+
+01:03:32
+Now it's kind of a middle like mid-year review in offices in offices your manager will review your performance like quarterly mid-year now like I am middle of Kubernetes now I want to review is everyone clear whatever we discussed so far is everyone clear we started with Kubernetes architecture advantages of Kubernetes architecture components components
+
+01:04:02
+or we call it as an objects or we call it as a resources or we call it as a workloads all are same.
+
+01:04:14
+like pod before we start this we discussed about namespace namespace what is namespace why do we need namespace all these things pod within this we have a single container pod what do you mean by single container pod what do you mean by multi container pod and also we discussed about static pod
+
+01:04:41
+What do you mean by static pod? Now the most important thing here is, the most important thing here is, one more concept we discussed about is service. Service. Within this service so far we discussed about cluster IP, we discussed about node port.
+
+01:05:03
+No.
+
+01:05:06
+There is another type of service called headless service is there load balancer service is there this we will discuss it later. What is this? These two we will discuss later. Now after this we started understanding how within pod how containers can communicate how one pod can communicate with other pod within the cluster same namespace how one pod can communicate with other pod.
+
+01:05:32
+Within a cluster in two different namespaces all these things we discussed like FQD and what is a QDN and all those things later. We started understanding RC RS DS deployment in deployment. We discussed a lot of stuff later. We discussed about volumes volumes like.
+
+01:05:53
+persistent values persistent value claims. Then we started understanding config maps and see it's like this. So it is like a middle of. Your net is we have a lot of concepts to be discussed. Is everyone clear whatever we discussed so far all these things. What do you mean by PV PVC config map secrets deployments? Replicas it's all these things now.
+
+01:06:22
+We have still lot of concepts like this liveness probe. liveness probe.
+
+01:06:30
+and readiness probe.
+
+01:06:40
+Then we have something like network policies. Network policies are there.
+
+01:06:51
+we have scheduling scheduling what do you mean by scheduling I want to control how my parts get scheduled I want to control how my parts get scheduled in the Docker Swarm when I was discussing using labels and constraints was I able to control how my containers get scheduled in the Docker Swarm cluster using the Docker Swarm labels and selector same thing here also
+
+01:07:18
+I want to control how my pods get scheduled because you are not directly scheduling your containers containers are getting scheduled with the help of pods. So how my pods get scheduled I want to control that here we have a lot of options like node selector node selector node affinity.
+
+01:07:45
+anti affinity, taints, tolerations
+
+01:07:55
+drain drain cardan and cardan
+
+01:08:04
+You have these scheduling features. We have network policies. Similarly, there are a lot of concepts. We are just middle of Kubernetes. Now actual advanced concepts will come here. So once this is done, we will discuss about Ingress, Ingress controller.
+
+01:08:20
+All these things will come slowly will understand all these things. Now let's focus on this liveness probe and readiness probe. What do you mean by this liveness probe and readiness probe by default is Kubernetes is going to perform the health on the application which is running in your container which is running in your pod container is it going to perform any kind of health check.
+
+01:08:44
+on that application which is running in your Kubernetes pod container. No. So Kubernetes will not perform any health check on your pod container on your application which is running in your pod container. So by default it is going to just verify whether the process that process whatever process you are trying to run whether that process is running or not.
+
+01:09:12
+whether the process is running or not. But within that process, is my application is reachable or accessible? Is your application reachable or accessible? Is it healthy? Is it going to do some kind of health checks by default?
+
+01:09:28
+No, so by default it will just check the process whether that process is running or not, but you will do have you know sometimes even though your process is running your Java process or Tomcat process is running but do have a chance that your application may not healthy your application may not respond to the requests.
+
+01:09:52
+there is a chance that your application may not respond to the request. You have some like you know just to give an example deadlock situations deadlock situations your process is in a deadlock situation your application is in a deadlock situation. What is mean by deadlock one process is waiting on the other process and other process is also waiting on the same process like that deadlocks in situation. So are you going to get a response like that.
+
+01:10:21
+If you have that deadlock issues memory leakage, you have a memory leakage and memory leakage in the sense if you are working on Java, you might be heard about JVM heap memory. So your objects heap memory has to be garbage collected after that objects are created and used that heap memory has to be garbage collected, but you have not written the code properly. There is a chance that your objects are not garbage collected.
+
+01:10:50
+there is a memory leakage. So in that case, you will have some issues. Your applications may not work as expected. So if you have these type of scenarios, even though process is running, do you think your application will respond? No. If your application is not healthy, does that container will be restarted automatically by default?
+
+01:11:21
+Does that contain us? Does that process get restarted by default? If your application is not healthy, no. Is that applications, is that parts gets removed from service endpoints by default? Is that parts gets removed from that service endpoints from default if that application is not healthy? No. So do we have issues? If we have this scenario, if we have this scenario happened in our Kubernetes, our application containers, our parts, do we have issues?
+
+01:11:50
+Do I have issues basically? Yes. Now we can perform the health on the application using liveness probe and readiness probe in Kubernetes. We can perform the health on the application using liveness probe and readiness probe.
+
+01:12:12
+in Kubernetes just to make things simple just to make things simple. When we are discussing in AWS ELB concept when we are discussing in AWS ELB concept, we deployed our applications as a servers. We deployed our applications in the VMs directly in the VMs. Now is ELB has a capability of performing the health checks?
+
+01:12:41
+just to make things simple don't compare these two together. Don't compare these two ELB with the liveness probe and readiness probe just I'm trying to explain one concept here is ELB has a capabilities of performing the health checks on the application. Some people are saying no guys. Remember we have NLB. We have NLB network load balancer. We have a LB application load balancer NLB.
+
+01:13:09
+doesn't support application health checks, but does ALB support application health checks, checking the health and application itself. Now, why it is performing health checks? If health check is failed, what ELB is trying to do basically is that the server will be removed from.
+
+01:13:31
+This ELB targets I mean to say is it going to start sending the traffic to that server where your application is not healthy. Does ELB will start sending the traffic where your application is not healthy.
+
+01:13:46
+the ZLB will start sending the traffic if you are where your application is not healthy no so is it using some kind of health checks to determine whether that application is healthy or not this one yes now similarly I have a Kubernetes similarly I have a Kubernetes similarly I have a Kubernetes how we are routing the traffic whether it is coming from inside the cluster or outside the cluster.
+
+01:14:15
+is the traffic is routed via that service, via Kubernetes service.
+
+01:14:22
+Now service is routing the traffic to the pod. Service is routing the traffic to the pod. Now let's consider your pod is running. Your pod is running. Your container is also running within the pod. But that application is not healthy. That application is not healthy. It is not responding to the request. By default, is that pod will be removed from the service endpoints?
+
+01:14:50
+By default is that part will be removed from the service endpoints service has endpoints. By default, will it be removed? No. If they if it is not removed if that application is not responding, let's say request is coming from outside the cluster or request is coming from inside the cluster that doesn't matter other application is trying to reach inside the cluster other application or outside the cluster request is coming.
+
+01:15:17
+If the request goes to that part where my application is not healthy, if the request goes to that part where my application is not healthy, do I have a problem? Is my application is down? Is my application is accessible? If the request goes to the part where my application is not healthy, do I have a problem here whether it's an internal call or external call if the request is going to this part and my application is not healthy in this part? Do I get a response back?
+
+01:15:46
+from that application, that container.
+
+01:15:51
+No. So do we have a problem here?
+
+01:15:56
+do have a problem here if this case happened.
+
+01:16:01
+Yes. No.
+
+01:16:05
+If that application is not accessible because some kind of issues like deadlock situation or memory leakage, most of the cases if that process gets restarted, if that application gets restarted or if that process gets restarted, do you have those issues resolved? Most of the case 99% if that process gets restarted, if that container gets restarted, do you have those issues resolved automatically? The deadlock or memory leakage?
+
+01:16:34
+Yes, so is it going to restart automatically now by default the way we have done so far No
+
+01:16:46
+Now how to handle these scenarios in Kubernetes that is where these two comes into picture that is where these two comes into picture that is liveness probe and readiness probe liveness probe and readiness probe. So before I go for this liveness probe and readiness probe. I may not simulate that deadlock scenario.
+
+01:17:11
+I may not simulate the deadlock scenario or I may not simulate that memory leakage scenario. Let me demonstrate by doing some some approaches here. Now let's see what applications I have. Let's see what application I have this maven web application. Maybe let's apply with the two replicas. I'll apply this one with the two replicas now.
+
+01:17:37
+I will apply this one with two replicas
+
+01:17:43
+two replicas I am deploying just to demonstrate that one
+
+01:17:54
+Now I have it two ports. I have it two ports.
+
+01:18:00
+hpa expected is 2 Now, let's see I should have a two parts now. Do I have a two parts? I mean to say two applications two replicas are running as of now there is a service for that application As of now there is a service for that application if you see cubectl describe
+
+01:18:23
+describe SVC.
+
+01:18:26
+I am describing this service. Now how many endpoints that service has? How many endpoints that service has? You can directly do this using kubectl get ep. You can directly get that kubectl get ep. How many endpoints that service has?
+
+01:18:50
+to endpoints now whether we are accessing internally or externally via this service does request goes to these two parts like that does that service does the load balancing between these two parts.
+
+01:19:05
+Now, both applications are healthy. Let's say I am using curl only. Since I am already inside my Kubernetes nodes, I am using this service IP. I am not creating any temporary port. Now, let's see what is my application context.
+
+01:19:24
+It's redirecting let me use slash now I am getting a response from this one 10.40.02 that is one of the pod that is one of the pod that is one of the pod
+
+01:19:41
+So I have customized that code. Now I'm getting 10.40.0.2 sometimes I'm getting from this one. Let me again do multiple times. I may get a response from this one also. 38.0.2. Now is it giving 38.0.2, which means when I'm accessing via service, is it doing some kind of a load balancing sometimes? 40 sometimes 38. Is it kind of doing a load balancing?
+
+01:20:08
+Now both parts are healthy both parts are healthy. Now I am not able to simulate that scenario the deadlock scenario. What I am going to do I am going to intentionally delete that var file. I am going to intentionally delete that var file within this pod container because I am not able to produce that deadlock scenario or all those things. Now I am intentionally I am going to delete that application that var file itself that var file itself from this
+
+01:20:38
+pod container. So in the user local Tomcat web apps folder.
+
+01:20:50
+the namespace also intentionally I am deleting that where file from one of the pod this pod intentionally I am deleting because I am not able to reproduce that I am not able to produce the deadlock or that memory leak a scenario I am removing that where file intentionally is your application itself is not available your application itself is not available in this application in this pod in this pod
+
+01:21:21
+in that part. In this part I have deleted that is in this one. Now if you see that application itself is not there. I cannot simulate that scenario that's why I have done this way. Now is my application running in that part.
+
+01:21:43
+No. Now if you see...
+
+01:21:48
+If you'll see...
+
+01:21:58
+I will use the Typhon N, Typhon N option.
+
+01:22:05
+If you see that application itself, there is not there. Now, if you see pod is still running, by default, is it checking the application API or application context, whether it is testing, whether that application context is healthy or not. As of now, by default, is it checking? No. So it is not doing anything. Is it just checking whether that process is running or not? Whatever process you wanted to have in that pod in that container, yes.
+
+01:22:34
+But now process is running Tomcat is running but my application is not there. If you see do I still have the endpoints when I see that service endpoints, but I still have those two endpoints.
+
+01:22:49
+Do I have still that 38 and 40 still it is there. Now parts are still running. It is showing it is ready also. Nothing is restarted. Now when I access via service now, do I have some problems now? Sometimes if the request goes to this part where my application is not there, am I going to some kind of errors now? Now, if you see, am I getting 404 now?
+
+01:23:14
+Am I getting 404 now because that application itself is not there. I have intentionally deleted but this can happen for deadlock scenario or memory leakage also your application may not respond quickly. Now sometimes I am getting 404 sometimes I am getting a response when there is request is going to other pod. I am getting a response if request is going for that one more pod where my application is not healthy. Am I getting 404?
+
+01:23:43
+then how to tackle these type of things? How to tackle these type of things in Kubernetes? Now, if my application is not healthy, that application, that pod should be removed from your service endpoint. If your pod, your application is not healthy in that pod, that pod has to be removed from service endpoint. If someone removes, if someone removes that pod, this pod from the list of endpoints from the service, if
+
+01:24:12
+If it has only this endpoint, the service will always route to this part. If someone removes this endpoint, always service routes to this part.
+
+01:24:22
+I don't want my application to be routed to the unhealthy pod. That is one use case and my I want my application process to be restarted if my application is not healthy. So to tackle these type of things in Kubernetes, we have a concept called liveness probe and readiness probes. Sometimes they'll ask what are the probes? What are the probes? You have in Kubernetes or what do you mean by probes?
+
+01:24:52
+What do you mean by probes or what are the probes? Probes are nothing but kind of a health checks. What are the probes we have in Kubernetes? Live in a probe and readiness probe. Now what is this probe? Now let's understand what do you mean by live in a probe? What do you mean by readiness probe?
+
+01:25:14
+What do you mean by liveness probe? What do you mean by readiness probe? Let's understand now. Guys, if you guys went through the interview questions, whatever we already shared, are you guys seeing 99% of the questions has been already discussed or we are discussing? We already shared a lot of questions. You self-attended a lot of interviews. 99% of the questions we already discussed or we are going to cover in the future sessions also.
+
+01:25:42
+So if you understand the concept, if you follow the concepts, will be able to easily crack the interview, will be able to easily manage your work also without proxy, without support. But you need to attend. You need to practice. You need to understand. But if you only by heart interview questions, if you only focusing on the interview questions, by hearting the comments or questions, straightforward, if the interviewer asks, you will be able to answer.
+
+01:26:11
+But if the interviewer ask in a different way, the way I have explained, I have like this, this is happening, I don't want my service to route the traffic to that pod, I want my pods to be restarted, I mean to say that containers to be restarted, if you have this case, then you have a trouble, you have a problem explaining the answer. But if you practiced all these things, if you have attended all the classes, if you practiced each and every topic, whatever we have discussed, it will be simple.
+
+01:26:43
+Now let's continue because it's already too late.
+
+01:26:51
+for the people who are not at all attending. Now let's understand this liveness probe and readiness probe.
+
+01:27:00
+Let's understand this liveness probe and readiness probe. So liveness probe and readiness probe are used to control the health of the application running inside pod container. Can I check the health of the application which is running inside my pod container using this liveness probe and readiness probes? Yes. But both are health checks. Both are health checks. But how different?
+
+01:27:29
+these two with each other. Both we will use to perform the health check. But what is the difference between this liveness probe and readiness probe? How different it is with each other? Both are performing the health checks only. But what is what? liveness probe. It is also health check. Suppose a pod is running in our application. Inside a container, our application is running inside my pod inside a container due to some reason.
+
+01:27:59
+due to some reason, let's say memory leak, a CPU usage, or application deadlock situations, your application is not responding to the request. It is your application is not responding to the request and it is stuck in a error state. It is stuck in a error state. So using liveness probe, I can check the health of the application for some reason if that liveness probe, if that health check fail, if that liveness probe fails, what it does?
+
+01:28:28
+If the liveness probe fails, what it does? If I have a liveness probe defined and that health check is failed, what it does? It will restart the process. It will restart the container. If it is going to restart the container, it is like a fresh copy of your application again. It is like a fresh copy of your application again, because your container is restarted. So most of the cases,
+
+01:28:54
+Is it going to auto resolve this deadlock situations or memory leak situations for some time? Yes. It is going to restart the container. But is this liveness probe will remove that pod from service endpoints? Suppose this liveness probe is failed. Is this liveness probe will communicate with Kubernetes to remove that pod IP from the service endpoint? Is it going to ask?
+
+01:29:20
+the 10 point controllers to remove that 10 point from that list of 10 points from that service if the liveness probe is failed no liveness probe will just what it does maximum if the health check is failed liveness probe will just restart the way we have a liveness probe the way we have a liveness probe there is another probe called readiness probe another probe called readiness probe. So this readiness probe is used to detect.
+
+01:29:50
+It is used to detect if container is ready to if the container is ready to accept the traffic whether it is ready to accept the traffic or not.
+
+01:30:05
+For some reason, for some reason this readiness probe is not successful. If this readiness probe is not successful. Is it going to show even though it is showing running state. Is it going to show like one by one if that readiness probe is failed? If that readiness probe is failed is it going to show something like, you know, one by one even though bodies showing in running state. Will it show one by one if the readiness probe is failed? No, it is not going to show ready.
+
+01:30:35
+it is not going to show as ready so even though your application part is running your process is running suppose you have a readiness probe defined your application health checks are not successful your readiness probes are not successful will it be shown as ready here will it be shown as one by one if I have a readiness probe and readiness probe is failed will it show one by one if the readiness probes are failed no it is going to show zero by one.
+
+01:31:05
+it is going to show 0 by 1. Now, if the readiness probe is used to detect if the container is ready to accept the traffic, you can use this probe to manage which parts are used as a backends for your service, which parts are used as endpoints for your service. If part is not ready, if the readiness probe is failed, which means if the part is not ready, if the readiness probe is failed,
+
+01:31:34
+Does this readiness probe will remove the list of that pod IP from the service endpoints if the readiness probe is failed and if the pod is not ready? Then does this readiness probe will remove that pod IP from the list of endpoints from that service service endpoints? Yes. Readiness probe is used to detect if the pod is ready to accept the traffic or not. If the pod is ready to accept the traffic or not.
+
+01:32:02
+As of now, do you have this readiness probe defined?
+
+01:32:07
+As of now they have this readiness probe defined. No. Because of that, is it able to detect whether that application is healthy, whether that party application is healthy or not? Is it removing that from endpoints, list of endpoints as of now? No.
+
+01:32:23
+and do I have a liveness probe which will restart your container if the health check is failed do I have a liveness probe also no so is this two things happening now by default is this two things happening by default no no
+
+01:32:39
+So QBernetti supports liveness probes, readiness probes. What type of probes we can use? I mean to say again, this liveness probes, readiness probes supports different types of, different way of checking the health. It supports different way of checking the health. One is executing a command. One is executing a command like this. One is executing a command.
+
+01:33:06
+first option executing a command. So if I define liveness probe and readiness probe like this with this option if I have this liveness probe readiness probes defined with this option same way I can define readiness probe also the way I have a liveness probe I can define a readiness probe also with these options I can define readiness probe also.
+
+01:33:39
+One option is executing a command. Now if I have my pod like this, if I have my container like this, can I define the liveness probe and readiness probe for my applications my containers? This is at a container level. If I have a multi container applications, can I use this liveness probe and readiness probes for all those containers individually as per that application which is running in that container? Yes.
+
+01:34:09
+This is at a container level executing a command. This is one option exec executing a command. What is this period seconds? What do you mean by this period seconds?
+
+01:34:26
+How frequently how frequently it has to perform that health check. So now here value is given as 5 how frequently this health check will be executed on that container.
+
+01:34:40
+every 5 seconds. Now we have a initial delay seconds. We have a initial delay seconds. What do you mean by initial delay seconds? When the party scheduled for the first time when the party scheduled for the first time when your party is getting created. If it is going to start performing the health checks immediately, do you think your application will be fully ready?
+
+01:35:05
+No. Your application will not be fully ready. When you are creating your pod, does that pod will take some time to fully set up? Pod will be assigned to node. That node will pull the container. That node will pull the image to create a container. So if I start performing the health checks immediately, initially, if I start performing the health checks immediately, do you think these health checks will be successful? Initially, immediately, if you do? No.
+
+01:35:35
+Now we need to wait for some time initially based on how much time your application is taking. Now initially let's say if I say something like this my party schedule is it going to start immediately after 50 seconds is it going to start at 50 second if I have something like this is it going to start performing the health check at 50 second even though period seconds is 5 is it going to start at 50 second no is it going to start.
+
+01:36:05
+at 65th second is it going to start at 65th in a fifth second because initial delay is 60 seconds so but once this initial delay is over is it going to start performing every five seconds like 65th 70th 75th 80 like that.
+
+01:36:29
+Yes, these type of issues also we will face recently one of the developer one of the developer has defined the liveness probes and readiness probe, but he has given zero initial delay seconds zero has given initial delay seconds zero period seconds he has given five. So the moment the party schedule immediately it is starting performing the health check.
+
+01:36:55
+So pod is initial delay seconds has given zero and he has given like this period seconds five. So immediately it is started performing the health check. Do you think that health checks become successful anytime? It is like a infinite loop. It is like infinite loop. What is happening? There is a liveness probe also liveness probe also getting performed every you know every five seconds starting with zero second. Now this will fail.
+
+01:37:23
+Does liveness probe will restart your container? Does liveness probe will restart your container because it is failed?
+
+01:37:31
+And again, it is not waiting any time. It is not waiting any time. Again, it is performing at 50 seconds. Again, will it fail? Your pod is recreated. Your pod is restarted. Sorry, not pod. Your container is restarted. And again, within five seconds, it is performing the health check. Again, will it become successful? The pod is restarted, but again, at 50 seconds, again, the health check. Do you think it will become successful anytime?
+
+01:38:00
+It is keep restarting the containers. It is keep restarting the containers like infinite loop.
+
+01:38:08
+We are getting a crash loop backup. We are getting a crash loop backup that consumer that user that guy is saying my application is keep getting restarted. When we troubleshoot when we debug, we identify that he has given wrongly. So do I need to do some buffer time initially like that depends on how much time you are container is taking initially that can be 30 seconds that can be 60 seconds. Can I even give 120 seconds also initially?
+
+01:38:41
+that depends on your application start up time how how much time your application is taking to start that is depends on your application start up time. Now this is initial delay what do you mean by this period seconds whether it is in a liveness probe or readiness probe that doesn't matter what do you mean by this period seconds how frequently how frequently now what do you mean by this executing a command option
+
+01:39:09
+what do you mean by this executing a command option. So is this command gets executed on the container. Is it internally is cublet is going to do something like this internally. Is it going to execute something like this command on that part on that container internally. Is it going to do something like this internally. Is this command gets executed on that part container internally.
+
+01:39:37
+Who is going to perform these liveness probes and readiness probes? Who is going to execute this health checks the cubelet the cubelet. Now if it is a command, how come whether it will determine whether this is successful or failure. If it is a command, Bhaskar sir might have already explained what is the code will be considered as successful when you are executing any command.
+
+01:40:04
+This command will return this is not a HTTP call. This is not a HTTP call. This is a command. Is it like a HTTP call?
+
+01:40:15
+This is not a HTTP call. This is just one normal command. So what is the code which will be considered as successful 127? No waste. Zero, zero. If the command succeeds, it returns zero. If the command succeeds, what is the status code that returns, I mean to say what is the code it returns? That exit code, zero. So if that command is successfully executed,
+
+01:40:44
+If it is returning 0 then then does that liveness probe or readiness probe is going to be considered as successful by cubelet is cubelet is going to consider that is successful. If it is returning 0 on that command. Yes, if it is not returning 0 if the command returns any value other than 0 if the command returns any value other than 0. Then if it is a liveness probe.
+
+01:41:14
+using a command option executing a command option. It is not returning 0 then does the cublet will kill the container and restart it because it is going to consider that is failed.
+
+01:41:26
+will kill the container and restart the container. Same thing readiness group. If the readiness probe also expect same thing if the readiness is failed is it going to consider that part of that container is not ready and is it going to remove that part from the list of service endpoints?
+
+01:41:45
+Yes, this is executing a comment. This is executing a comment. What is the other option you have instead of executing a command option? Can I perform HTTP health checks like this? Can I perform HTTP health checks? One is executing a comment. This is one way of performing the health check. First option. First option is performing a executing executing a command. Can I perform HTTP get calls?
+
+01:42:15
+HTTP getcalls
+
+01:42:20
+Kind of thing. That's 3dp head six.
+
+01:42:28
+and my application like this.
+
+01:42:32
+can I do something like this whether it's a liveness probe whether it's a readiness probe
+
+01:42:39
+whether it's a liveness probe, whether it's a readiness probe. Can I perform this HTTP health checks like this?
+
+01:42:49
+like periods seconds initial delay seconds one more thing is there one more is there timeout seconds what do you mean by timeout seconds here
+
+01:43:00
+what do you mean by timeout seconds you have a timeout seconds also here also you can use the timeout the timeout seconds is there what do you mean by timeout if this is not responding it is going to perform the health on this application context on this port if it is not responding within this much time within this much time within five seconds it is not responding it is responding at the six to you know sixth second eighth second tenth
+
+01:43:29
+Is it going to consider that as a healthy if it is not responding within 5 seconds? Is it going to pass it as healthy? No. So this timeout seconds kind of a SLA you are expecting that to be responded within some time. Now this is sample is it always like this party is always like this port is always like this this headers is always like this. This is just a sample. Now as per your application context.
+
+01:43:57
+As for the application context within that container, will I able to check the health on my application? This headers is not mandatory. If your application is expected to pass some headers, you can pass, otherwise you can remove that. Now in my current case, can I take like this? My application context, maven-ifn, web-ifn application, the port, on which port that process, that container is running.
+
+01:44:24
+As of now in which port that container is running that port is running for my application 8080. Now here also can I do something like this?
+
+01:44:34
+Can I do something like this based on your requirement? You can define that initial delay seconds, period seconds like that initial delay 30 or 60 based on your requirement period seconds. Also, if you want, you know, liveness readiness probes to be performed by every 10 seconds are this liveness probe has to be performed by every 30 seconds like this.
+
+01:45:01
+that is up to you. Now this is HTTP if it is a HTTP get calls, what is the code? How cubelet will consider whether that is healthy or not? What it will expect if it is a HTTP get call. So it will expect what status code any code any code greater than to 200 any code greater than to 200 and less than to
+
+01:45:30
+less than to 400 less than to 400 is considered as what any code greater than 200 and less than to 400 is considered as what in HTTP success so 200 is okay HTTP status codes 200 is okay 200 okay
+
+01:45:56
+201 what do you mean by 201 it is saying like created 301 you have what do you mean by 301 redirected it is redirecting to some other URL can I consider all these things as a success codes 200 201 301 like that but if 400 what do you mean by 400 401 403 you have a 500 502 503 all these things are different.
+
+01:46:24
+This is something to do with.
+
+01:46:28
+request bad request This is something to do with application errors 500 internal server error why not to bad gateway? Service not available if any code we are getting like above 400 Can I can it you know is it going to consider this as a failure? Any code which is coming above 500 is it going to consider as a failure above 400 anything yes, but any code
+
+01:46:55
+any code greater than or equals to 200 and less than 400 less than 400 it is not also equals any code comes within greater than within greater than or equals 200 and less than 4,400 is it going to consider as a successful.
+
+01:47:15
+Yes, this is another way of performing the another way of performing the health checks. What is the other one? TCP TCP checks kind of a port checks kind of a telnet on that respective container and respective port. This is another one TCP socket kind of a in the application in the network load balancer. It is performing right in the AWS network load balancer is you know, it is performing the
+
+01:47:43
+port check whether that port is responding or not kind of a telnet on that container IP on that pod IP and port like a port type of health checks TCP health checks just connection level transport level checking but is it going to check the health on the application level if I use this TCP socket it is going to just check whether that port is responding or not kind of a telnet on that port.
+
+01:48:13
+is TCP circuits. But most of the cases, which one we will use, because we are going to host our applications that can be your web application, or that can be your APIs, REST-based APIs. Most of the times, what type of health checks will be used? Most of the time, we will use HTTP health checks. But let's say you have some stateful applications like databases, kind of databases, or some other, like RabbitMQ Kafka.
+
+01:48:41
+In that case, can I use any health check like TCP socket check or can I use some custom command to determine whether my database is healthy or not like that? If I have some different types of applications running in Kubernetes as a pods, like databases or any other software. Database software will not have applications, application context. So can I use different way of checking the health of the database pod, database containers?
+
+01:49:08
+using this executing command option by customizing that command or TCP sockets. Yes, so this is how we can perform the health checks. This is how we can perform the health checks. As of now, do I have those health checks defined for any applications, whatever we deployed, whatever applications we deployed, not only this application, do I have these type of probes defined here? No, that's why it is not working. That's why it is not working.
+
+01:49:37
+let me define the probes let me define the probes as per your requirement
+
+01:49:47
+as per your requirements. Guys, crash loop backup will happen for many reasons, not only for live disk probe, readiness probe. Your application process is not coming up because there is a wrong configuration, wrong configurations or script in your code. It is stopping your applications to be started successfully. Then again, is Kubernetes is going to restart continuously? Because process itself is not coming.
+
+01:50:18
+process itself is not coming up successfully because of some wrong configuration scripts in your code, process itself, that container process itself is not coming up successfully. Is QBanet is going to do that kind of a starting that container and again and again, it is starting. It is not restarting. It is trying to start that is not coming up again. It is starting. That is different. Here I'm talking about different. Here,
+
+01:50:45
+I am performing the health set the process is running but application is not working.
+
+01:50:54
+So this is different case. Now.
+
+01:51:00
+I can perform the liveness probe readiness probe as per your requirement, but is it always same is it always same the way I am defining here is it always same.
+
+01:51:12
+let's use here. Now if I wrongly configure as I already told recently one of the user of my application I mean to say one of the developer has wrongly defined the probes it was causing issue is this correct for this application do you think this path checking this path is correct
+
+01:51:34
+Now you need to make sure you have the props correctly. Now if I do like this also do you think will it work? Maven iPhone, Web iPhone, app, if my application context is different.
+
+01:51:50
+No, my application context is like this. It is redirecting. It is going to be 301. That is also fine. But if I want to continue with that redirection, can I give again forward slash something like this?
+
+01:52:07
+Yes, now here I am giving this one.
+
+01:52:12
+Now intentionally intentionally I have given initial delay seconds as 60 period seconds for liveness probe 30 readiness probe 5 seconds or 10 seconds like that I have given intentionally. Now let me deploy with these probes now let me deploy my application with these probes. Now I modified that one I deployed this application with probes line number 40 there is a error.
+
+01:52:38
+Guys two minutes I'll wrap up. I don't want to drag this anymore. Line number 40 there is an error.
+
+01:52:47
+Because this is at a wrong location. No, no, this is the correct location only
+
+01:52:59
+Here there is some hidden space you have some hidden spaces here. So that's why it is giving the problem
+
+01:53:09
+Now it is fine
+
+01:53:13
+this is fine now let me apply that now this time I have a probes defined cubes ETL get all hyphen in test hyphen NS now even though parts are showing in running state why it is not showing one by one why it is still not reflecting in the ten points there is a service why the parts are not showing in that even
+
+01:53:43
+Why it is showing that?
+
+01:53:47
+one by one sorry zero by one even though it is running why still the parts are not showing in that services endpoints now it is performing the health checks now when it will be shown as ready when it will be shown as ready once the readiness probe is successful then only it will be shown as ready why it is not performing the health checks so far still it is not performing because of because of
+
+01:54:17
+the initial delay second now initial delay second I have given 60 now after 60 seconds is it going to start performing the health check of every 5 seconds or no I think I have given 10 seconds is it going to perform for every 10 seconds after sometime now it is such perform that health check that health check is successful is it showing now one by one.
+
+01:54:41
+now can I see that in the list of endpoints can I see that in the list of endpoints pods
+
+01:54:49
+Both are healthy, both are fine. Now if there is any failure, if I describe my pod, will I able to see whether that any failure in the probes, if I describe my pod, I can see that.
+
+01:55:04
+issues I can see that issues when I describe the pod or there is another thing called events events cube ctl get events events are nothing but what is happening in the background in your control plane what is happening in the background in your control plane so what your control plane is doing in the background it is showing something like this what is happening in the control plane this is getting scheduled this this pod is assigned to this node
+
+01:55:34
+events what events has happened in this namespace in the background by that control plane you can see that failures here also if you see the events if there is any failure now my parts are fine my parts are fine there are endpoints also fine i don't have any issues with my parts are running now i am able to access via that service via that service
+
+01:56:06
+I am able to access via that service I am intentionally doing I am just accessing like this via service now both are healthy both are ready there are no issues now request is coming from this pod another time requesting is going to come from another pod also sometimes 38 sometime 40 now let me simulate the same scenario let me simulate the same scenario
+
+01:56:34
+Now intentionally I am deleting that application because I am not able to produce the deadlock situation. I'm intentionally deleting.
+
+01:56:45
+that var file.
+
+01:56:49
+from one of the pod from one of the pod I'm intentionally deleting the var file but this time since I have a probes is it going to do some kind of a checks and restart and restart that container because liveness probe will fail and readiness probe is it going to remove that pod ip from that endpoint now if I do this now
+
+01:57:13
+because I am not able to reproduce the deadlock situation I am intentionally deleting that file that var file from that quad from that container
+
+01:57:31
+I'm intentionally removing now intentionally I have kept some difference in the readiness probe and liveness probe intentionally I have kept so readiness probe every 10 seconds it is performing every 10 seconds it is performing liveness probe I have intentionally kept every 30 seconds now this is removed now what is showing as running service still have endpoints
+
+01:58:01
+But will it be automatically resolved once the readiness probe is failed? If that now is it going to remove that from list of endpoints? Now there are two. Now every 10 seconds it is going to perform after it is identified that it is not healthy. Now do you see is it removed that pod from the list of endpoints now? Is that remove that pod from the list of endpoints now?
+
+01:58:29
+always I will get that response from only that part this time do I have that 404 issue they have 404 issue now no now when I see my parts it is showing like this 0 by 1 because readiness probe is failed readiness probe is failed then liveness probe comes into picture liveness probe comes into picture I have a liveness probe it is performing every 30 seconds every 30 seconds
+
+01:58:56
+after some time if liveness probe identified that that is not healthy. Is it going to restart? Can I see restart count will be one after some time?
+
+01:59:07
+now if you see I still have only one pod in the list of endpoints I have still only one pod in the list of endpoints now it is going to restart after that readiness or liveness probe seconds
+
+01:59:21
+it is going to restart as per that liveness. Now, can I see is it restarted now?
+
+01:59:29
+It's restarted completely, which means your container is completely recreated. Again, will I have that var file because container is recreated from your image. Will I have again that var file? I mean to say that application in that new container. Which is container is completely recreated. Yes. Now after some time initial delay seconds comes here. Initial delay seconds comes here. It is restarted 29 seconds ago as per the initial delay seconds. When is the next readiness probe?
+
+01:59:58
+when is the next readiness probe health check after 60 seconds period seconds is 10. So is it going to perform at 70th second that readiness probe. So still it is showing 0 by 1 still I have only one pod now any request is coming is it always going to that pod where my application is healthy. I am not experiencing any 404s or any errors because it is request is going to that pod.
+
+02:00:28
+but now this is ready this is ready now initial period is over the readiness probe is successful now can I see both end points again like this now is service is going to route the traffic to any of these part now one time one part another time another part so do you see the advantage of this liveness probe and readiness probes it is like a mandatory to use it is not not like optional it is like a mandatory to use
+
+02:00:59
+Is everyone clear what is this liveness probe and readiness probe? How it works in Kubernetes? We are going to use these things also in the actual pods containers. Thank you guys. That's it for today. Tomorrow I am not taking class for you because I want you to practice all these Kubernetes concepts whatever has been discussed. So tomorrow no class for you. Next class is on Monday. But make sure you utilize these two sessions. These two days.
+
+02:01:29
+and practice whatever has been discussed. Now at the same time, I want to define a liveness probe, readiness probe for different application, like your Node.js application or Python application or Spring Boot application.
+
+02:01:43
+I want you to define the liveness probe, readiness probe for nodejs application or python application or any other application also so that you can understand. So practice do the CACD also do the CACD also using Kubernetes also try to deploy all these things practice HPA practice this liveness probe readiness probe all these things I will continue on Monday.
+
+02:02:08
+Have a great weekend. Try to utilize this weekend for practicing next week onwards. No holidays till the course is completed. Only this Saturday is holiday next week onwards. No holidays. I need another 10 classes, another 10 to 12 classes maximum. Another 10 to 12 classes maximum I need that's it.
+
+02:02:31
+Thank you guys, will see you on Monday.
+
