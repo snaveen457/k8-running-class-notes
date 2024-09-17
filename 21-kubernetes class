@@ -1,0 +1,1029 @@
+00:01
+This conference will now be recorded.
+
+00:10
+In yesterday's session we were discussing about what is Ingress controller and what is Ingress resource
+
+00:22
+using ingress controller and ingress resource
+
+00:26
+we should be able to route the traffic to the Kubernetes services. All the external traffic can be routed within my Kubernetes cluster that can be controlled using this Ingress resource and Ingress controller. And also I can configure my TLS or SSL certificates at the Ingress level. Now let's try to discuss about another important concept in Kubernetes called R-Batch.
+
+00:55
+are back role based access control
+
+01:05
+What do you mean by this role-based access control? What is the full form of this R best?
+
+01:13
+RBAC stands for Role-based Access Control. It's all about authorization.
+
+01:26
+who can do what within a Kubernetes.
+
+01:31
+Who can do what within a Kubernetes cluster.
+
+01:40
+So we have a Kubernetes cluster. Lot of people will access the Kubernetes cluster like developers will access the Kubernetes cluster, DevOps engineers will access the Kubernetes cluster, testing team also will access the Kubernetes cluster. Does everyone will have a same access level in the cluster? Does anyone can do whatever they want to do like creating a namespace, deleting a namespace, setting the resource quotas, updating or deleting the applications.
+
+02:10
+Does everyone will have a same access level? No. So we need to grant the permissions based on the requirement, based on the roles of that person.
+
+02:23
+that I can control using RBAC in Kubernetes. So RBAC is a way to define who can do what within a Kubernetes cluster. Like as we already discussed in AWS, in AWS also, who can do what within AWS, which resources they can create, modify, delete, all these things, can we define, can we control using IAM in AWS?
+
+02:51
+like IAM has a policies concept that permissions, if that permissions is attached with some person or some group or some role based on that permission.
+
+03:08
+that person or that system can manage the access.
+
+03:16
+As we already discussed in the first day of kubernetes itself whenever any request went to the API server what is happening is is it directly processing that request whenever any request going to the API server via CLI or via API that doesn't matter any request first goes to the API server it will first authenticate it needs to be authenticated first it will authenticate whether the requestor.
+
+03:46
+whether that requestor is known to the system or not.
+
+03:51
+First authentication takes place. Once authentication is successful, then what is the next step that API server does?
+
+04:03
+It will authorize, it will authorize, authorize in the sense it will make sure that that person or that system or that person is allowed to execute that action, allowed to perform that action or not. So whenever any request sent to the API server, first it will authenticate, then it will authorize. But does Kubernetes has its own authentication database, authentication system? No.
+
+04:34
+QBurnett will not have any authentication system, which means this is my QBurnett cluster. I have an API server.
+
+04:49
+This is my master. I have a API server. I have a ETCD.
+
+04:59
+I have a control manager.
+
+05:03
+I have a scheduler, I have a ETCD like this. This is my control plate.
+
+05:13
+This is my control plane.
+
+05:25
+No, I have a schedule.
+
+05:31
+Now, any request comes to the API server, whether you are executing some CLI commands, that kubectl, any commands like kubectl create, or kubectl update, or kubectl delete, or kubectl apply, whatever it is. Any command which you are executing, or kubectl get, or edit, any command which you are executing,
+
+06:00
+Request comes to the API server via CLI or via API. Also you execute request comes to the API server. First, what API server does? Is it going to directly delete or create or edit or is it going to directly get those objects first? No, it will first perform authentication. Authentication. But as I already told, does Kubernetes will have any information about that users?
+
+06:26
+the developers information or DevOps engineers information or testers information, no. Kubernetes will not have authentication system, but Kubernetes supports a different way of authentication. Kubernetes supports different way of authentication, X509 certificates, certificate based authentication.
+
+06:52
+certificate based authentication or token based authentication or basic authentication. It supports a lot of type of authentications. Kubernetes authentication, authenticating with Kubernetes. It supports a lot of authentication mechanisms. So it is going to support certificates. The client certificate is enabled by.
+
+07:21
+this option I can while starting the API server we can enable that option. Then using those certificates also whatever certificates issued by that Kubernetes cluster if I use those certificates in my client side whenever I'm executing a kubectl commands request is going along with those certificates that API server will validate that certificates.
+
+07:51
+certificate based authentication. Or we can use a token based authentication. We can use token based authentication. Or we can integrate with external identity providers. Using this open ID connector OAuth2, using this open ID connector OAuth2, I can integrate my API server with external authentication systems like LDAP. I have Azure Active Directory.
+
+08:19
+I have a Act 2 directory.
+
+08:24
+that LDAP, right? Now is it possible for me to integrate my Kubernetes server, this Kubernetes cluster, this API server with this Azure Active Directory or LDAP basically using some protocols called OpenID or SAML, yes. Now, if I integrate this API server with the third-party identity providers like LDAP or Azure Directory, whenever I'm executing kubectl comments, whatever username
+
+08:54
+or whatever user as a what user I can figure this kubectl does request goes to API server does API server will check whether that whether that user exists in that authentication system or not.
+
+09:10
+Yes, so it will authenticate the way we integrate other tools like Jenkins, you know Jenkins or Sonar, Qubar, Nexus with LDAP. Is it possible to integrate Qubar Netis also with LDAP for authentication system? Yes, it supports different way of authentications. While setting up the cluster itself,
+
+09:36
+While setting up the cluster itself, you need to customize your API server. You need to customize your API server. You need to provide all the authentication mechanism details while configuring the API server. While starting the API server itself, you can use all these options. If you want to integrate with LDAP, you need to use this OIDC protocol by providing all the details. Your OpenID connect URLs, all these details you can configure.
+
+10:04
+So API server will authenticate with the tail app for authentication. Otherwise we can use X509 certificates, that certificates, certificate based authentication. If you guys remember, when we started the self-managed Kubernetes cluster, when we initialize the self-managed Kubernetes cluster, when I configured a kubectl, if you observe is that kubeconfig file has certificates, client certificates, if you observe that kubeconfig file.
+
+10:35
+So whenever I'm executing kubectl comments, is that certificates also getting passed along with request to the API server, is API server is validating the certificates because that certificates are issued by API server only. So it is trusting that authentication. Now I can integrate with LDAP also if I have a LDAP. Now I am using a EKS cluster. I'm using a EKS cluster.
+
+11:03
+is that EKS cluster is already integrated with IAM.
+
+11:09
+is that EKS is already integrated with IAM. If you observe, when I created a EKS cluster, I can't figure the cube config file. In that cube config file, do I have some kind of token based authentication, IAM tokens?
+
+11:28
+in the current kubecon click file whatever I have in that client system.
+
+11:36
+in this client system whatever kubeconfig file I have
+
+11:54
+whatever cube config file I have in this client system.
+
+12:10
+If you see I have a cube config file in the cube folder. Now this cube config file if you see it is like a token based authentication. It is like a token based authentication. Whenever we are executing any cubectl comments is that cubectl is first getting the token for the current user whatever user I configured in this system.
+
+12:38
+and is the token is getting passed to the API server is that API server is validating the token with the help of IAM whether that user is known to the AWS IAM or not. Yes, so if you remember as a which user I can figure this system which AWS user I can figure did I use root user access key and secret key if you remember.
+
+13:04
+Also is that root user will have a full permissions in Kubernetes also. It is authenticating then authorization. Authorization takes place in Kubernetes only. Since I am using a root user is that root user kind of admin user in Kubernetes also.
+
+13:26
+Yes, that's why am I able to do anything in that cluster like creating a namespace deleting a namespace
+
+13:35
+creating resource quotas or deployment stateful set, anything I can do. Now, already this IAM is integrated. If required, can I integrate with LDAP also? OpenID Connect using openID Connect protocol, I can integrate with LDAP also. Now, in your laptop, in your laptop, you install kubectl and you configure kubeconfig file with your credentials, your details.
+
+14:03
+then whenever you execute kubectl comments is that API server will contact LDAP to authenticate whether you are known to the system or not.
+
+14:14
+Yes, once that is done, authorization takes place here. Authorization takes place here. Authorization will be completely taken, you know, taken place in the Kubernetes itself. So how can I define those permissions authorization? That is what we can do using RBAC. So RBAC is a way to define which users
+
+14:42
+can do what within a Kubernetes cluster.
+
+14:50
+If you are working on Kubernetes for some time, you are already working on Kubernetes for some time, you have these type of use cases requirements.
+
+15:00
+in scenario like where you have to give some users limited access. I want to give some user to limited access to my Kubernetes cluster. Just to give an example, let's say I have one user called let's say Balaji and Balaji is from development team. Let's consider there is one user called Balaji. Balaji is from development team and I want him to grant access to only
+
+15:30
+few resources in Kubernetes and again only in some namespace. Only in some namespace I want to give access to only few Kubernetes resources. I don't want to give complete access for that user. You have these type of requirements. As I already told, let's say this is my Kubernetes cluster. I have developer A.
+
+16:04
+and I have developer B
+
+16:07
+Now when developer A is trying to access this Kubernetes cluster, I don't want developer A kind of full permissions. I don't want to give full permissions like he cannot create a namespace, he cannot delete a namespace, he cannot delete the deployments, he cannot delete the values. He can just get the values, view the values.
+
+16:31
+I will give only create permissions, but I will not give delete permissions. If you have these type of requirements that we can achieve using RBAC. And again, at a namespace level also, let's say this developer is working on some project, project A or team A, he belongs to team A. Now for team A, we created some namespace.
+
+17:00
+created some namespace. Let's say that team is working on products. Let's say that is one e-commerce application. The team is working on product microservices. We created one namespace. Now this developer can access only the Kubernetes resources in this namespace. I don't want this developer to access the resources which are in another namespace. Let's say this developer
+
+17:27
+like maybe order related microservices. Now developer A can only view the objects in this namespace. He don't want to get the details in this namespace. I don't want to give a permissions on this namespace. Do you have these type of requirements? When your Kubernetes cluster is shared with multiple teams, multiple people working on the cluster, do you have these type of requirements?
+
+17:57
+And again, for this developer, I don't want to give full permissions again. He cannot delete the namespace. He cannot delete the deployments. He can just only view or create and update. If you have these type of requirements, we can do that using RBAC in Kubernetes. Same concepts we have in other tools also like in Jenkins also to have a similar concept.
+
+18:24
+You want developers to give only jobs, execute permissions only, read only permissions. But you don't want your developers to create a pipeline, delete the pipelines like that.
+
+18:38
+Same concept here also. That we can do using rbat.
+
+18:45
+But before we discuss about that, let's try to understand at high level what type of users will need access to the Kubernetes.
+
+18:57
+Broadly, there are three kinds of users. Broadly, there are three kinds of users that need access to the Kubernetes cluster. Broadly, there are three types of users who need access to the Kubernetes cluster. One is basically developers. Developers are administrators. Why they need access to the Kubernetes cluster? What developers or admins will do in Kubernetes cluster? Why we need access?
+
+19:25
+Why we need to grant access to the developers or admins? The Kubernetes cluster, what they will do? They're going to do developmental or administrative task. If it is a developer, developer is going to connect to the Kubernetes cluster and apply the application. If it is administrator, he is going to do some kind of administrative task like creating a namespace, resource quotas, configuring the storage classes, all these things. So the...
+
+19:54
+Guys who need access to the kubernetes cluster like a developers and admins will need they are going to do some kind of a developmental or administrative task and we have another set of users another set of users like end users. What end users will do what end users will do? Does end users require access to the kubernetes cluster? Are we going to provide?
+
+20:23
+Access to the kubernetes cluster for the end users. Does end users is going to connect to the cluster?
+
+20:32
+No, what end users will do max end users will just access the applications. End users will just access the applications deployed on the cluster end users will access the applications which are deployed on the cluster. They are not going to you know, you are not going to give access to the cluster does end users will just access the applications which is deployed in the cluster using that application URLs.
+
+21:02
+using the domain names whatever you configured.
+
+21:08
+Yes, so end users will not access the cluster. They will just access the applications deployed in the cluster But sometimes applications also will have access restrictions Applications also will have some access restrictions If you take some applications like any application is that access restrictions will be part of application also Just to give an example Let's take
+
+21:38
+Let's take some banking application. I'm not talking about the bank application which customers will use. Let's say some bank application which employees are using. Bank employees also will use some application to do their day to day activities. The day to day activities in the banks right. The employees will use some application. Within the bank.
+
+22:03
+Now in the bank there will be different category of employees like the assistant manager, manager, regional manager, regional head like that. So whatever bank manager do in that application in the banking application does clerk also can do same kind of operations does clerk also can execute same kind of operations whatever manager does in that bank
+
+22:33
+Does branch manager can do that activities in that application?
+
+22:38
+No. So access restrictions will be there in the applications itself. But do we need to take care about access restrictions in that applications which is deployed in Kubernetes? Do we need to take care access restrictions in the applications which is deployed in Kubernetes? No. Who will take care of that? As you know access restrictions for those end users.
+
+23:05
+are managed by application teams itself. That application itself will have its own authentication and authorization.
+
+23:13
+But here RBAC is for what? RBAC is for what? RBAC is for managing the permissions to the Kubernetes cluster.
+
+23:24
+application access restrictions will be taken care by applications itself application team itself does application itself will have its own database where that application user details will be stored does application will have its own authorization mechanism who can do what within that application again yes so that will be taken care by application t we no need to worry about it so for example
+
+23:51
+I am deploying one application one web application in the Kubernetes cluster will have its own security mechanism will have its own security mechanism we no need to worry about that and what is the other type of users who will who will access the Kubernetes cluster.
+
+24:11
+the other type of users applications are bots, applications are bots, basically process, some process, some application will use Kubernetes cluster.
+
+24:27
+There is a possibility that other application need access to the Kubernetes API. There is a possibility that one application need access to the Kubernetes API, typically to talk to the resources or workloads inside the cluster. Just to give an example, if you take Metric Server, if you take Ingress Controller, is that application, that Metric Server application, which is deployed in the cluster?
+
+24:57
+or that ingress controller application or process deployed in the cluster. Is those application also needs to talk to the Kubernetes APIs, Kubernetes objects?
+
+25:11
+Yes, how we are facilitating that, how we are facilitating that, how we are managing the permissions to the applications or boards, which is deployed in Kubernetes cluster to access the Kubernetes API.
+
+25:26
+are we facilitating using this service account concept.
+
+25:33
+If you remember, did we create a service account for that service account? Did I create a kind of roles and role bindings so that? That process that application is able to communicate with Kubernetes. APS. To make things simple, let's relate this to AWS in AWS one up one server, one service, AWS service. Let's take one AWS service need to.
+
+26:02
+manage access to the other AWS resources. How we are doing that in AWS? Are we creating some kind of a concept called role with policies, IAM role, IAM role. We create we created one IAM role. We attach it to the policies to that IAM role. If that role is attached to the server, is that server is able to manage.
+
+26:28
+If server is able to access those resources based on the policies attached to that rule.
+
+26:35
+Similarly here, one application, one application or process needs to need access to the Kubernetes APIs. Are we creating a service account? Are we attaching some permissions to that service account? Are we attaching that service account with pod that application? So it is able to manage that.
+
+26:56
+Sometimes in the interviews also they are asking this question.
+
+27:01
+Sometimes in the interviews, they're asking this question. What is service account in Kubernetes? When do you need a service account? When do I need a service account? If one application need access to the Kubernetes APIs, typically to talk to the Kubernetes APIs or objects in the cluster, can I use service account concept?
+
+27:30
+Yes, so we have these two types of users. But this category of users, are we going to give access to the Kubernetes cluster? Does end users will access the cluster? No, but developers and admins? Developers and admins are applications or bots? Yes, so we have these type of users. Now, how can I manage all these things? Access to the developers or administrators or applications or bots using RBAC?
+
+27:59
+concept.
+
+28:02
+So RBAC in Kubernetes is based on the three key concepts. RBAC in Kubernetes is based on the three key concepts.
+
+28:16
+One is...
+
+28:19
+verbs one is verbs other one is API resources other one is subject verbs, API resources, subject
+
+28:38
+So verbs, API resources and subject. What is this subject? Subject is nothing but, the subject can be, the subject can be user.
+
+28:51
+Are groups?
+
+28:54
+or service accounts. These subjects are nothing but this can be a user or group or service accounts. What do you mean by verbs here? Permissions, verbs, set of operations, set of operations, set of permissions that can be executed on resources. Set of operations, set of operations, set of permissions.
+
+29:27
+kind of a create crud crud operations, crud in the sense create, update delete read kind of a permissions set of operations that can be
+
+29:47
+set of operations that can be.
+
+29:52
+Executed.
+
+29:58
+Unh.
+
+30:00
+resources what do you mean by resources here what do you mean by Kubernetes resources here can I call all these things as a Kubernetes resource ford service
+
+30:15
+namespace can I call all these as a Kubernetes resources namespace.
+
+30:24
+deployments, daemons, sets, replicas, sets, replication, controller, stateful sets all these things
+
+30:33
+HPA, PV, PVC, all these things, Kubernetes resources. Kubernetes resources. Can I call all these things as Kubernetes resources or objects, whatever I see here?
+
+30:49
+So can I define permissions on these resources using that concept? If required, can I grant permissions only to the pod, only to the deployment, or only to the demon sets? Again, only read-only permissions, or update permissions, or delete permissions on all these Kubernetes resources, including this role, including this role, role binding also on Kubernetes resource.
+
+31:24
+All these things are kubernetes resources like your pod, your pod deployment.
+
+31:35
+Demon set.
+
+31:38
+State full set.
+
+31:41
+your HPA, your namespace, your PV, PVC, storage class, all these things. Can I call all these things as resources? For these resources, for these resources, can I grant set of permissions like create permissions, update permissions, delete permissions like that?
+
+32:06
+Yes, so verbs verbs are nothing but set of operations that can be executed on set of resources. So this RBAC is based on three key concept one is verbs another one is another one is API resources. What is this API resources? Can I call all these things as API resources Kubernetes API resources or API objects? Yes, so verbs are nothing but
+
+32:35
+works are nothing but set of operations that can be executed on resources like create update delete API resources API resources are nothing but the objects available in the Kubernetes cluster the objects available in the Kubernetes cluster like parts services nodes deployments replica sets other things. Now what do you mean by subject here? We have one more important.
+
+33:05
+Subjects are nothing but users or groups or service account allowed to access these APS Subjects are nothing but users groups or service account allowed to access the Kubernetes APS, but based on the Based on the works and resources Based on the permissions on those resources so this is
+
+33:33
+RBAC is based on these three key concepts, verbs, API resources, subjects. Now, if you understand this example here, I have a role. I have a role here. So I can create a role like this. This role is like a policy in IAM. In AWS, do you have a policies?
+
+34:01
+IIM policies where you are giving some permissions for AWS resources. Yes similarly here role if you observe this role kind is role API version is this this is the namespace in that namespace I am creating a role this is my role name here if you see I have these concepts API groups resources and verbs. So verbs.
+
+34:31
+They have some kind of a permissions get watch list permissions. Get permission watch permission list permission. So these verbs this permission for which kubernetes resource I am giving.
+
+34:48
+pods. So what is this API groups? What is this API groups? The core APIs, the core APIs, whatever API are having a version called V1 for that API, the API group will be empty. That API group will be empty. Whatever I have API resources, that version has V1, that version has V1. Can I consider this as a core APIs?
+
+35:17
+Can I consider this as a core API?
+
+35:22
+Yes, so for all these things, for all these things, quad API group is V1. When I am using that one in the RBAC concept, the API group will be something like this empty, which means this parts belongs to which API group, the core API that is basically V1. Now this resource belongs to this API group. For these resource, am I granting these permissions?
+
+35:52
+this resource belongs to this API group. And for this resource, am I granting these permissions, these actions, permissions, works?
+
+36:05
+Yes, now this is my role. This is my role. If I attach this role to map these permissions to map those roles to the users or groups or subjects, I can use another concept called role binding. I can use another concept called role binding. Using this role binding here using this role binding. Kindness role binding.
+
+36:34
+API version is this in this namespace I am creating role binding. This is the role binding name using this role binding. Am I linking the subject with role? Whatever role I am going to create like this. Can I map this role or can I attach this role with subject? What is subject here as I already told subject can be subject can be user or subject can be.
+
+37:04
+subject can be group or subject can be service account. Now if I am mapping this role with this user, that user will have what permissions now? Is that user have a permissions only for pods?
+
+37:34
+again only for pods but does he has all the permissions for pods again will be able to create a pod delete the pod update the pod again
+
+37:49
+No, only get permissions. Now, if I want to give other permissions, can I give something like this?
+
+38:04
+other permissions like update, delete.
+
+38:10
+something like this, delete, create something like this. Now, if I grant like this for the parts, I'm granting these permissions. So this role is mapped with some group or some user. Now is this user will be able to create, update, delete the parts also.
+
+38:35
+Yes, now only for pods again, let's say if I want to grant permissions for Replication controller Replication controllers Can I do something like this for pods as well as replication controllers again? Replication controller also belongs to which API group? Replication controllers also belongs to which a pay group if you see V1 only so
+
+39:04
+Is this fine? APA group empty because this replication controller also falls under core APA Is this empty? Yes Now if I do like this If I do like this Now is this user Is this user has a permissions to create replication controller, update replication controller, delete replication controllers also
+
+39:29
+Yes, but let's consider for replication controllers. I don't want to give delete permission For replication controller. I don't want to give delete permission. Then can I separate this one into two sections again? I don't want to give Replication controllers delete permissions now instead of doing like this. Can I have something like this?
+
+40:01
+Can I have something like this?
+
+40:08
+I will not give delete permission. I will only create and update. Is this works for that requirement now.
+
+40:20
+Yes. Now let's say I want to give permissions for deployments. I want to give permissions for deployments. He will not have a permissions to get the deployments also. Now
+
+40:35
+If I want to give permissions to deployments, can I give something like this? Deployments, whatever permissions, maybe get watch list update But if it is a deployment, what is the API group? Is it a core APIs? Is it a core API? No, it falls under which group? It falls under which group? App slash V1, app slash V1 So I no need to do like this, app slash V1, I no need to do app slash V1 here
+
+41:05
+the APA group I can just do something like this apps just apps when I'm using this in the RBAC concept I can just use this app
+
+41:19
+apps when I am using.
+
+41:25
+in the RBAC concept I can just use apps here now only deployments but again does he has the permissions to get the replica sets or stateful sets like this if I do like this again that user no if same level can I do something like this stateful sets for stateful sets also will has this permissions but let's say I don't want to do update permissions for stateful sets.
+
+41:53
+I don't want to give update permissions for stateful sets. Can I give something like this instead of giving like this.
+
+42:02
+only stateful sets I will not give update permissions can I do like this so that for deployments you will have update permissions create permissions but here only create there is no update is everyone clear what do you mean by this here what do you mean by API group what do you mean by resources what do you mean by verbs here when we are creating a role
+
+42:35
+No.
+
+42:37
+Suppose does this guy will be having a permissions to create roles and role bindings. Now this is one role I am attaching this role with some user I am attaching this role with some user does this user will have a permissions to create or update or delete the roles role bindings again.
+
+43:00
+that user whatever user I am attaching is that user will have a permissions to create the roles get the roles update the roles like that again no if that user need to have a permissions for roles role bindings also again do I need to do like this if that user requires permissions to create get update the roles role bindings but I need to do something like this that role is also on kubernetes object.
+
+43:28
+That role is also on Kubernetes object. This belongs to this API group. So can I do something like this API group is this? Resource roles. Now if I do this permission, is that guy will be able to create the role also? Because of this create permission on this resource belongs to this API group, yes. So based on the requirement,
+
+43:57
+Based on the requirement, you can create a role. If I just create a role without mapping this role with subject, is that subject, that subject can be user, group, or service account will have a permissions if I don't map this role with subject.
+
+44:15
+No. So how can I map this role where I have defined a permissions? How can I map this role with some user? That is where we have a that is where we have another Kubernetes object called what?
+
+44:33
+role binding role binding now here using this role binding whatever role I am creating this is my role name example role this is my role name am I able to link that role that role whatever role I am creating this example role that role reference here that example role I am linking that role with this subject this subject can be what as I already told this subject can be
+
+45:03
+user, the subject can be group or the subject can be service account. Now, if I am mapping this role with this user, is this user is going to get permissions based on the permissions we have defined in this role, whatever role we mapped.
+
+45:22
+Yes. Now we have a role, role binding. Is everyone clear? What do you mean by this role? What do you mean by this role binding? What do you mean by subject? What do you mean by this API groups, resources and works?
+
+45:40
+Now the way we have a role, the way we have a role, role binding, we have another concept called cluster role and role binding. Cluster role and cluster role binding. Cluster role and cluster role binding. If you see the way I have a role, the way I have a role and role binding here, do I have a cluster role and cluster role binding also? If you observe there.
+
+46:06
+the way I have a roll and roll binding. Do I have a cluster roll and cluster roll binding also?
+
+46:14
+Now sometimes in the interview, if they are expecting a Kubernetes resource who is strong in all the Kubernetes concept, they will ask this question.
+
+46:26
+what is difference between role and cluster role or role role binding
+
+46:37
+rule rule binding
+
+46:42
+and cluster roll cluster rollback.
+
+46:48
+What is the difference?
+
+46:53
+If you understand here itself, you can easily identify and tell. The scope of this role and role binding, the names spaced value names spaced value is true for the role and role binding namespaced value is true. For the cluster role and cluster role binding namespaced value is false. What is, what does it mean? Now, when I'm creating a normal role and I am binding that role using role binding.
+
+47:21
+is that permissions will be applicable at a cluster level, even though I have given like this, deployments permissions, replication control permissions, parts permission. Does that user or that subject, whatever we mapped, will be able to get the parts, deployments, replication controllers across any namespace in the cluster? Will be able to get all these things in any namespace in the cluster if I create a normal rule?
+
+47:52
+If I create this role in a default namespace or test namespace, if I am creating this role and role binding in that namespace, will this guy be able to access these things within that namespace? If he executes kubectl get pods in other namespace, will he be able to get the pods? If this guy is executing kubectl get pods in other namespaces, will he be able to get
+
+48:22
+Will you able to get the pods? No. Now, will I able to grant permissions to the namespace level, to the namespace objects, to the namespace objects? Yes. Now, we have some objects which are irrespective of namespace, irrespective of namespace, like whatever values you see here. Namespace does false.
+
+48:49
+But if I want to grant permissions to these objects, does role will work? Does role will work if I want to grant permissions to volumes, if I want to grant permissions to the nodes, if I want to grant permissions to the PV, persistent value or nodes, we have some cluster level resources. If I want to grant permissions to that cluster level resources, does the role will work? No, I need to use a cluster role, cluster role.
+
+49:20
+But now, instead of doing a normal role, same thing if I do in a cluster role, if I do like this cluster role, cluster role binding, cluster role, cluster role binding, and this cluster role is mapped with this user. Even though I am creating that in this namespace, since it's a cluster role and cluster role binding, is this user will be able to do all these things in irrespective of any namespace again?
+
+49:51
+irrespective of any namespace is that user will be able to get the pod in any namespace even though I am creating a role cluster role in this namespace that doesn't matter. But again if it is a cluster role am I able to grant permissions to the nodes also like the objects which doesn't belongs to namespace level if required using this role can I give permissions to nodes watch permissions get permissions list permissions to the nodes
+
+50:21
+are persistent values also that persistent values whatever objects which are not in a namespace level which are not in a namespace level like all these things.
+
+50:38
+So is that possible at a cluster level to grant the access to the cluster level resources? And irrespective of namespace, I can access all these things. That is possible using cluster role and cluster role writing. Now in this use case, in this use case, this developer A belongs to team A. This developer B belongs to team B. This guy should not be able to get anything in this namespace. And this guy should not be able to access anything in this namespace.
+
+51:07
+what concept I need to use, what permissions, cluster role, cluster role binding or role or role binding.
+
+51:22
+roll and roll binding or I need to use cluster roll and cluster roll binding which one I need to use in this case
+
+51:33
+role and role binding now I have some administrators I have some DevOps engineers I have some DevOps engineers for the DevOps engineers I need to give kind of admin access now can I create a cluster role like this can I create a cluster role like this again can I do something like this a pay groups a star resources star verbs a star can I do something like this that cluster role
+
+52:03
+And is this cluster role like kind of admin role? Can I map this cluster role with that subject, that user, like this? Now, is this guy, this guy, this guy might be Balaji, Mithun, whatever it is. Does this guy will have full permissions, API groups star, resources star, verbs star, and again, it's a cluster role. Again, it's a cluster role.
+
+52:32
+Again, it's a cluster code. So does that guy will have a full access?
+
+52:42
+Yes, so kind of administrators. Is everyone clear? What is the difference between role, role binding, cluster role, cluster role binding?
+
+52:59
+Now, as I already told, can I create a user or groups within Kubernetes? This will I able to create a user this user or the group in Kubernetes the way I am creating a role role binding to have a privilege to create a user some groups? No, we cannot create a user or groups in Kubernetes. Do I need to use some third party identity provider like LDAP or IAM to manage the users and groups?
+
+53:30
+Yes.
+
+53:32
+But if I need some application, if some application or some process, if some application or process want to access Kubernetes objects within the cluster, I am applying one application. That application need access to the Kubernetes APIs, kind of a process or a boot. Then can I create a service account in Kubernetes? Can I create a service account in Kubernetes? We already use that concept.
+
+54:02
+yes. Now let me demonstrate this one. Let me demonstrate this one with some example. Now
+
+54:13
+You need to keep all these points in mind. Once you create a binding, you will not be able to edit its role reference value. Suppose you created a role binding. You created a role binding and you mapped with this user. You cannot edit once it is created. If you want to really edit this one, what needs to be done? You need to delete that binding.
+
+54:42
+and create again. Suppose with this user you created a binding. Now I want to change. I want to change with other user. I want to map this with other user. If you just modify and apply, it will not take place. You need to delete that and again create that. That you need to keep in the mind. Kubernetes uses RBAC to control access levels to its resources depending on the roles and cluster rules. As I already told,
+
+55:12
+roles and cluster roles use API namespaces, verbs, resources.
+
+55:20
+Roles work within the constraints of what? Roles works within the constraints of a namespace. It will work within a namespace level. But whereas cluster roles, is cluster roles are bound to any namespace? No. Cluster roles are not bound to specific namespace. They apply to the cluster as a whole. But even though I am creating a cluster role in test namespace, does it mean
+
+55:50
+He can do only within test namespace even though I am creating a cluster role in test namespace. No, it is like across the namespace.
+
+56:00
+Now let's take this use case. Let's take this use case since I don't have any LDAP or identity provider. I am not integrating with any LDAP and this document this document whatever document I have created this document I have created keeping in a mind that we will generate a certificates we will generate a certificates and use those certificates.
+
+56:27
+in a self-managed Kubernetes clusters or Kubernetes clusters which is created using cops I have prepared this document to create a kind of a certificate for user and use those certificates instead of root certificates I have prepared this document keeping in mind that this document works by referencing the cops cluster by referencing the cops cluster but now I am not going to follow this way.
+
+56:56
+use EKS cluster. We already have EKS cluster. Is that EKS cluster is already integrated with IIM. Yes. Now I will leverage this IIM concept. Now let's say I am Balaji. I am Balaji.
+
+57:17
+I want to connect to the CKS cluster. I want to connect to the CKS cluster for some developmental activities or troubleshooting I want to do. I want to connect to the CKS cluster. Now, this is my local laptop. Will I have a root credentials as a Balaji? Will I get AWS root credentials to configure AWS in my laptop? AWS realign my laptop. This is my laptop. I'm in my laptop terminal. Now,
+
+57:45
+As a biology, do we have a root credentials in AWS to configure AWS with root access? No.
+
+57:53
+You assume you are Balaji now, you are working on some project. You are not a AWS administrator. You don't have any AWS credentials, root credentials. No one will be using. So do we have our own credentials, our own username and password? To connect to the AWS or Kubernetes.
+
+58:13
+Now this is my laptop. I want to connect to my Kubernetes cluster.
+
+58:25
+Now, since I created a public and private endpoint access, since I created a public and private endpoint access, if I have a kubeconfig file in my local laptop, will I able to connect to that API server from internet also?
+
+58:44
+Yes, but in real time, you know, you are going to have a private endpoints unless until your system is also part of same network, maybe via VPN, via VPN, your system also connected as part of the same network, then only you can access your cluster. Even though you have a kubeconfig file, if your system is not part of the same network via VPNs, will you be able to access your Kubernetes cluster even though you have a kubeconfig file?
+
+59:15
+No, there should be a network which we already discussed. Now since I have created a public and private endpoint access, if I have a kubeconfig file here in my local laptop, will I able to connect to that Kubernetes cluster? Do I have a network connectivity? First, network is important. Do I have a network connectivity from my laptop to that API server? Since it is a public and private endpoint, if I have a kubeconfig file, do I have a network connectivity?
+
+59:45
+Network connectivity is important first. Then it comes to authentication and authorization. Now, this is kubeconfig file. Now, if I just have a AWS CLI installed, if I just have a AWS CLI installed, will I able to get the kubeconfig file?
+
+01:00:07
+I have a AWS CLI installed in my local laptop. If not you can also install AWS CLI.
+
+01:00:19
+Now this is my EKS cluster. If I want to get the kubeconfig file of EKS cluster, do I need to have a AWS CLI?
+
+01:00:31
+Now if you are using windows laptop, if you are using macbook, will you able to install AWS CLI. I am sharing this link address MSI file you can download that MSI Microsoft installer file you can download to install AWS CLI. Download that MSI file double click on that MSI click on next next next AWS CLI will be installed in your windows system 64 bit windows system.
+
+01:01:01
+Once you have in AWS CLI instance, you go to command prompt in your Windows laptop. Do you have a CMD that command prompt command prompt the way I have a terminal in MacBook. You have a command prompt go to the command prompt and execute this AWS iPhone iPhone version. You should be able to see the AWS CLI version. Now if I just have a AWS CLI, if I just have a AWS CLI, will I able to
+
+01:01:29
+get the kubeconfig file by executing this command now let's understand AWS concepts as well as Kubernetes concepts now I'm executing AWS EKS list clusters
+
+01:01:47
+Now if I just have a AWS CLI, list clusters, there is a typo, list clusters.
+
+01:01:55
+Now if I just have AWS CLI, does it mean will I able to get the cluster details, get the kubecon file of that cluster
+
+01:02:12
+no now do i need to configure my aws cli as a biology here now if i have to configure do i need to use my own access key and secret key in aws again aws also will not have a root access aws also will not have a root access let's say you have some iam user you have some iam user your aws is already integrated with ldap or your aws is already integrated with ldap
+
+01:02:43
+will be able to generate access keys and secret keys for your username
+
+01:02:50
+in AWS you logged in with your credentials in AWS will be able to get your access keys and secret keys in AWS.
+
+01:03:02
+Yes, now I don't have any LDAP integrated here also. Can I leverage this IAM users concept? I already have one user called Balaji. I already have one user called Balaji. Here IAM user. IAM user. Can I use this user access keys? Balaji, this is my credentials, my secret key, my access key. If you don't have IAM user,
+
+01:03:31
+If you don't have IAM user, you can create IAM user here. You can create IAM user. If you don't have IAM user, you can create IAM user like this. Let me delete all these things.
+
+01:03:50
+IAM concept. If you don't have IAM user, if you don't have any IAM users, you can create.
+
+01:04:05
+Now I am creating one IAM user like this. If you don't have already, I am creating one user called Balaji. This is IAM user.
+
+01:04:16
+This is AWS concept guys. This is AWS concept, nothing to do with Kubernetes. Now I am creating one IAM user.
+
+01:04:30
+with programmatic access, console access. Now while creating a user, I can attach to some group or some permissions. As of now, let me don't attach any permissions. So who will do this? AWS administrators. This is AWS administration concept. Now this is nothing to do with the Docker or Kubernetes. Now I can attach to some group. If I don't have a group, I can create a group and attach, or I can directly attach policies to that user, whatever.
+
+01:04:59
+policies.
+
+01:05:03
+Let me create some group. This is nothing to do with Kubernetes. This is AWS concept. I'm creating a group for that group. I'm attaching some permissions like.
+
+01:05:17
+some permissions, AWS permissions. And for now I'm just attaching some permissions like.
+
+01:05:28
+I am attaching some permissions like this for now just attaching few permissions I am creating that group and I am adding that user to this group
+
+01:05:42
+Now let me take this user access key and secret key. Let me take this user access key and secret key. This is my access key. This is my secret key. For future reference you can download that one. Now this is my access key. Let's say I am Bala ji. I am Bala ji. Now I am configuring my AWS CLI with my access key and secret key. AWS configure.
+
+01:06:11
+This is my access key. This is my secret key. This complete is my secret key. Default region AP South one preferred format is support stable format JSON format text format. Now I configured AWS concept here. Now even though I configure AWS CLI, if you see what is this error, it is nothing to do with Kubernetes. It is nothing to do with your.
+
+01:06:39
+Kubernetes concept here, it is still AWS. Now, is this Balaji user has a permissions to EKS in AWS? AWS permission.
+
+01:06:51
+As of now, this biology belongs to which group? This biology belongs to development group, sorry, DevOps group. Is the DevOps group attached with required AWS permissions? Now, the DevOps group, the DevOps group as of now, has only these access, only these access. EC2 full access, S3 full access, VPC full access. But does that group at least has a EKS read-only permissions at least?
+
+01:07:20
+read only permissions to the EKS at least? No. So that's why is that Balaji is able to see the clusters and get the kubeconfig file of the cluster.
+
+01:07:34
+No, this is AWS concept so far, nothing to do with the Kubernetes or RBAC. Now, as an AWS administrator, they need to grant some permissions to that group so that they can see the EKS clusters and get the kubeconfig files of that EKS clusters.
+
+01:07:55
+Now I can give like a permissions, full permissions also. Add permissions, attach policies. Here can I give something like this? EKS full access.
+
+01:08:11
+EKS, let me search with EKS. So
+
+01:08:24
+this one, EKS service policy. So if I grant this permissions, now.
+
+01:08:33
+It is the EKS.
+
+01:08:45
+Now I can create another policy. I will create another policy custom policy because this doesn't have that policy. I'll create a custom policy. I'll create my own policy. Now I'm going to click on this create policy because that doesn't have that the case policies. I'm going to create a custom policy. I click on this create this custom policy. I click on that create custom policy. Now here I'll choose.
+
+01:09:14
+service as EKS because I want to grant permissions to the EKS. EKS. Then if this is a DevOps team, for DevOps team, if DevOps team is responsible for creating and managing the EKS clusters also, can I give all actions, all EKS actions, like not only just read and write, if I want to attach this to...
+
+01:09:38
+DevOps team and if DevOps team is responsible for creating the cluster, updating the cluster, managing the EKS clusters, can I give this AWS permissions, EKS permissions to the DevOps team? This is AWS permissions, nothing to do with your docker or Kubernetes. I can do like this. But again, all resources, again, I can do all permissions or all resources.
+
+01:10:06
+Otherwise if I want to give only to specific cluster, specific cluster again read only permissions. Can I select something like this? Just read only permissions and again instead of selecting all the clusters, can I give only access to specific cluster only? If I have a multiple EKS clusters again, is it possible for me to grant EKS permissions to specific cluster by providing the ARN of that cluster? Here. Yes.
+
+01:10:37
+Guys, this is completely AWS concept, nothing to do with the RBAC, whatever I discussed so far, I'll come to that RBAC later. Now I can add an ARN here. I can add an ARN of that cluster. If I want to grant access to only one cluster, let's say there are a lot of Kubernetes clusters used by different, different teams in AWS. Is it possible for me to grant to the specific cluster access in AWS using IAM? Yes.
+
+01:11:09
+Let me get the ARN of the cluster. Here I am going to give that ARN that cluster ARN here.
+
+01:11:19
+Now, let me go to EKS, let me go to EKS.
+
+01:11:30
+This is AWS concept, nothing to do with Kubernetes again, don't get confused here what I am trying to do here. So let me go to EKS here.
+
+01:11:58
+Now I have some clusters. Now it is switched to this region, but I have a cluster in Mumbai region. Let me switch back.
+
+01:12:08
+Now I will get the ARN of the cluster.
+
+01:12:14
+Now this is my cluster. This cluster has an ARN. Let me go to configuration. This is the ARN of the cluster. Cluster ARN. I'll go to the cluster. I'll go to the configuration. This is the ARN of the cluster. As we already discussed in AWS, what is ARN, you know. Now I'm copy pasting that complete ARN here. Now I am giving this list permissions only to this cluster. If I have a lot of other clusters, again,
+
+01:12:43
+Whoever has this policy attached, will they able to get the other cluster details and other cluster kubeconfig files? Whoever this policy attached in AWS? No. But instead of doing like this, if I give all, if I have a lot of Kubernetes EKS clusters, will they able to get the cluster details and kubeconfig file of that clusters again? Yes. So based on the requirement in AWS,
+
+01:13:10
+Based on the requirement in AWS, you can create a policy like this. Now I am giving a specific policy.
+
+01:13:20
+EKS cluster.
+
+01:13:25
+read-only policy for this cluster. Just I'm giving some name that doesn't matter here. Kind of a read-only permissions for that cluster I am creating a policy. Now can I attach this policy to that group where Balaji belongs to AWS permissions. Now I'll attach this I'll
+
+01:13:55
+I'll refresh here. Now I will attach this. I will attach this one. Whatever I have created now, I am going to attach to this group where Balaji belongs to. I selected that one. Click on Add Permissions. Now.
+
+01:14:14
+This is DevOps group, DevOps group has this policy attached, only read only permissions again. Where Balaji belongs to. Now as a Balaji now, will I able to see the list of clusters available? Only that cluster again I can see. Now am I able to see that cluster? This is AWS concept. Now if I execute AWS EKS that update config. That update config.
+
+01:14:43
+command this one update cube config command aws ecs update cube config I fun I fun name this is the cluster name I fun I fun region in which region you have even though you don't pass the region what is the default region we configured in AWS CLI when I executed AWS configure AP South one only that
+
+01:15:14
+cluster name, the region name. Now, since I have AWS permissions, read-only permissions, am I able to get the kubeconfig file of that cluster? Now do I have a kubeconfig file in my cluster? I mean to say in my local laptop.
+
+01:15:34
+Again, is it kind of a token based authentication? Now, whenever I execute kubectl comments, is it going to get the token of Balaji? As a Balaji user, I configured this AWS CLI. Am I going to get the credential, the token, Balaji user token? Is the token will be passed to the API server for authentication? Yes. No, I just have a kubectl configured.
+
+01:16:04
+One more important if you understand the concept right now this biology has a read only permissions but if this biology executes this command will be able to delete the cluster case using AWS CLI let's consider he is executing this command delete cluster will be able to delete the EKS cluster even though he has executing this command AWS EKS delete cluster not possible.
+
+01:16:33
+not possible because is that biology user has this permission attached in AWS for EKS.
+
+01:16:42
+Now, do you understand the importance of permissions, managing the permissions in any tool, whether it is AWS, whether it's a Jenkins, whether it's a Kubernetes, whether it's a SonarQube, Git? Do you know the importance of administration?
+
+01:17:00
+Will it mess up everything if you give all the permissions? That's why as a DevOps engineer, are you going to do some kind of administration act in your roles and responsibilities? As a DevOps engineer in your day-to-day activities, are you going to do some kind of administration also granting the permissions to so-and-so users, so-and-so groups, in Jenkins maybe, in Jenkins or Git, or in?
+
+01:17:26
+AWS or in Kubernetes also like this What is the best practice you need to follow you need to grant least privileges? You need to follow the least privileges principle You need to follow least privileges principle. What do you mean by least privileges? You need to give least permissions Unless until there is a requirement then you grant the additional permissions now since I have given least principle here least
+
+01:17:58
+permissions is this guy is able to delete the cluster knowingly or unknowingly is executing knowingly or unknowingly he is executing this command does the cluster gets deleted because of that least principle
+
+01:18:15
+No. So this way you can manage access to any Kubernetes or any AWS or any Jenkins resource also. In Jenkins also you have this concept in Jenkins will be able to grant permissions to specific jobs, specific folders, again execute permissions, create permissions like that again, read-only permissions also use. Now since he has a read-only permissions he cannot delete the cluster. Now he is able to get the kubeconfig file.
+
+01:18:44
+cube config file now when I am executing cube CTL get nodes since it's a public endpoint from my laptop am I able to reach that API server am I able to reach this API server basically if you see this server indicates API server why there is some endpoint like this because is AWS is managing multiple control planes multi master in the background
+
+01:19:14
+Is AWS having multi-master in the background? Yes. So in front of those multi-master, are they having some kind of a load balancer? That load balancer you cannot see. That load balancer you cannot see in your account. This is kind of a load balancing in front of that control plate. Do you have a load balancer for your API servers? Because this EKS has a multi-master, multiple API servers, multi-master setup.
+
+01:19:42
+Do I have a load balancer in front of those API servers? Yes. So this is kind of a public endpoint access. Do I have a network connectivity from my laptop?
+
+01:19:58
+Since it's a public and private endpoint, am I able to reach on port 443 on that domain? This is kind of a load balancer of your API server. Do I have a network connectivity? If you see, do I have a network, oh sorry. Do I have a network connectivity here? Network connectivity is there. It is able to reach to this IP. From there, it is able to talk to API server. But now,
+
+01:20:26
+When I am executing kubectl get nodes or kubectl get pods, I am getting some kind of error. I am getting some kind of error because this user needs to be integrated in EKS. This user needs to be integrated in UK, you know, EKS. Authentication itself is not happening.
+
+01:20:54
+I think I have explained what is this verbose iPhone V option version 7 V8 V9 something like this it is there.
+
+01:21:05
+Now if you see in the background that cube ctl is making api call that cube ctl is making api call to the api server is the api server is responding with some status saying that 401 if you see the response code this is the response body which i am coming which i am getting from api server why this is happening because this user has to be integrated with
+
+01:21:36
+No.
+
+01:21:39
+Let me go to another shell. Let me go to another shell. I am opening another terminal here. Now let me connect to other AWS server. Let me connect to other AWS server where I have a kubectl configured with root credentials. Where I have a kubectl configured with my root credentials admin credentials. Let me connect to that server.
+
+01:22:08
+Let me connect to this server.
+
+01:22:12
+This server is configured with AWS root credentials. It already has all the permissions. Let me connect to that server.
+
+01:22:23
+So here, that is able to talk to Kubernetes cluster.
+
+01:22:32
+That EKS cluster, that EKS cluster API server, that EKS cluster API server is using one config map. Whatever API server we have in that EKS cluster, it is using one config map for authentication. There is one config map called AWS authentication. So that API server is internally using this authentication config map for authentication. As of now,
+
+01:23:00
+that user is not integrated in AWS this earth now as an admin
+
+01:23:12
+As an admin.
+
+01:23:17
+N, I, something is there.
+
+01:23:26
+There is one way to check one second.
+
+01:23:32
+There is way to check whether you have a permissions or not that command I forgot.
+
+01:23:39
+Exposed and explained.
+
+01:23:51
+AWS art I think that is sub command AWS art
+
+01:23:59
+help aws earth-help can I ok so since this is admin user you can verify what level of access this system has can I edit config map now if I am getting yes sir if I am getting yes whatever user I am using in this whatever user I configured whatever user I configured in this system this system I use root user of aws
+
+01:24:30
+Cube Cetel auth, can I edit config map? I am getting a permission as yes, which means is this user has a permissions to edit that config map. And again, in that namespace, cube system namespace, if I'm getting yes. So whatever user I am configured, whatever user I configured in this system, is that user has a permissions, edit permissions on config map in this namespace.
+
+01:25:00
+If you see this since I configured as a root user this AWS system I configured as the root credentials now is this root user has the permissions to the config map to edit in that namespace yes so to integrate that user here I need to I need to modify this config map
+
+01:25:29
+I need to modify this config map. Let's say, let's say type config map.
+
+01:25:38
+Let's say config map. Now I am getting a permissions like yes.
+
+01:25:47
+permissions like yes now as a root user as A root user as admin user in AWS will I able to modify these things to integrate that other biology user for authentication here Yes So I am doing kubectl edit kubectl edit Config map this config map name this config map name that is in this namespace That is in this namespace
+
+01:26:17
+I am going to do in a YML format. I am editing that config map. Now here I can integrate. I can integrate that user also in this config map. Why I am doing this as I already told is the API server of EKS is using this config map for authentication with IAM users.
+
+01:26:41
+Yes. So what I can do here, I can add a detail like this. I can add a details like this.
+
+01:26:51
+I can add details like this.
+
+01:26:56
+like this the way I have a map rules I can map the users here something like this but indentation should be proper indentation should be proper
+
+01:27:08
+map users and mapping these users.
+
+01:27:15
+Now here I need to update the ARN that IAM user ARN whatever user you have that Balaji user this Balaji user ARN I will take this ARN I will take here this ARN I will update here this way we are integrating that EKS with this IAM user for authentication for authentication
+
+01:27:44
+for authentication I am doing this one once this is done as an admin
+
+01:27:54
+that is not properly edited there is some issue let me do that properly
+
+01:28:04
+Let me do that properly If you do some mistakes it will not work So something like this you need to map Map users
+
+01:28:20
+map users now here i'll update that arn whatever arn
+
+01:28:28
+current ARN of that user.
+
+01:28:33
+Now I'll save this user name is Balaji. I save this config map as admin user. I have done this. Now is authentication works as a Balaji user from my local laptop. Let's say this is my local laptop is authentication works. Now when I execute kubectl get pods is authentication fine. Is that Balaji user is authenticated in EKS. Now I'm getting a different error. Now what does it mean?
+
+01:29:01
+Now this is actual Kubernetes concept. What is happening? Why I'm getting this error? Authentication is successful, but why I'm getting this error when I'm executing kubectl get pods as a biology here.
+
+01:29:22
+Namespace, huh?
+
+01:29:25
+It is nothing to do with namespace by default it is pointing to default namespace only but is this biology user has any permissions in Kubernetes as of now is this biology user is mapped with any role role bindings did this biology user has a permissions to get the ports.
+
+01:29:46
+Authentication is done but what about authorization? Did I created any role-role binding for this biology or cluster role-cluster role binding for this biology?
+
+01:30:07
+No, not yet. So is this biology is authenticated but is this biology user has a permissions?
+
+01:30:17
+to get the pods.
+
+01:30:24
+cubectl if you want to test cubectl or can I list pods do I have a permissions to list the pods whatever user I configured here is that user has a permission to list the pods authentication is fine do I have authorization here now do I have a permissions
+
+01:30:52
+in any namespace like let's say I have another namespace called test. Now in that namespace also to have a permissions to list the ports. This way you can test. But why this is not there? Is Balaji user is mapped with any role or role binding cluster role or cluster role binding in the cluster?
+
+01:31:14
+No. Now will be able to create pods list is not there create pods is not there this way you can test whether you have a permissions or not. Now do I have a permissions to create the pods or deployments or anything like this.
+
+01:31:37
+Now this kubectl is talking to this cluster, that kubectl is talking to this cluster. But again I don't have this permission. I don't have this cluster info permissions to see what cluster. So it is talking to this cluster. It is talking to this cluster that kubectl is talking to this cluster and checking whether that has a permissions or not. Whether that user has a permissions or not.
+
+01:32:07
+It is getting the token. It is passing the token to this API server. Authentication is fine, but that doesn't have any permissions to create the deployments, create a pods like that. We don't have permissions to get the pods, create the pods like that. Now, as a Kubernetes admin, can I map this user with some role binding or cluster role, cluster role binding based on the requirement?
+
+01:32:33
+as administrator of Kubernetes can I do that now can I grant permissions to this biology as admin of Kubernetes.
+
+01:32:45
+Now let me go to this system. Let me go to this system. This is admin user. Is this admin user has permissions?
+
+01:32:56
+for anything can I create role does this admin user has a permissions to create a role role binding
+
+01:33:10
+role binding, cluster role, cluster role binding also if required. This is admin credentials. Does this user? There is a typo cluster, cluster role.
+
+01:33:30
+cluster rule binding
+
+01:33:36
+and cluster role. So since this is admin credentials, is this admin has access to all the Kubernetes resources also because it's kind of a system user, admin user. Now as admin user, can I create these things like roles, role binding like this or cluster role, cluster role binding. Let me create one role.
+
+01:34:12
+Now I am creating a role with these permissions and I am binding that role with Balaji. I am binding that role with this user, Balaji user. I am binding this role. I am giving parts get list, create, delete, update, deployments, replicasets, daemonsets, get-down-list-only in which namespace I am creating as of now that role and role binding.
+
+01:34:40
+default now since it's a role and role binding Since it's a role and role binding now does Balaji user will have the permissions based on the role whatever I have Created for that guy here now when I execute as a Balaji user here now will I able to get the pods? Cubectl get pods now will I able to see the pods?
+
+01:35:07
+Now when I execute kubectl get ns will I able to see the namespaces? Will I able to see the namespaces? How many namespaces are there if you see?
+
+01:35:19
+Why? Because did I granted permissions to a namespace object that is a cluster level resource? No. Now, when I execute kubectl get pods, if I'm in, let's say I have another namespace like tester, even though I have a test namespace and I have a pods in that namespace, am I able to get those pods which are there in a test namespace as a biology?
+
+01:35:44
+No, I mean default namespace. I have granted permissions for pods. I have granted permissions for deployments So I am able to get the deployments also But for deployments for deployments I have created For deployments I have created only what permissions get and list But will I able to delete these deployments even the execute cubectl delete deployment? This deployment name
+
+01:36:14
+What I am getting? What do you mean by this error?
+
+01:36:26
+You know authorization forbidden forbidden. What do you mean by forbidden? What do you mean by forbidden? If you see when I am displaying the logs also what is happening in the background? 403 401 is different 403 is different. What do you mean by 403? HTTP status code 403 that API server is responding with 403
+
+01:36:55
+access forbidden access permitted you don't have a permissions 401 401 what do you mean by 401 authentication itself is failed authentication itself is failed but is this user known to the system is this biology is known to that EKS is that biology is known to the that API server yes but
+
+01:37:21
+You don't have a permissions that is 403. HTTP status codes are important ways. If you understand 401, 403, 401 error. Right.
+
+01:37:38
+authentication credentials are not correct. It lacks valid authentication 401 403 what do you mean by 403 forbidden. It indicates that requested resources forbidden you do not have a permissions to that resource. Now do I have a permissions to delete the deployment as a biology when I execute like this. No. Now if you see I do not have a permissions
+
+01:38:08
+PVC also when I execute cubes detail get PVC. They have a permissions like this PVC persistent volume claims they have a permissions to say see They have a permissions to see stateful sets if I have any stateful set or stateful sets. No Now if that user really request does Kubernetes admin has to grant the access
+
+01:38:33
+Does that Kubernetes admin has to really grant the access? Suppose if he has to have a stateful set permissions also. Now, something like this.
+
+01:38:50
+stateful.
+
+01:38:53
+sets list permissions I have given. Let's say there is no permissions for services also. This user doesn't have permissions to see the services. As of now, if we execute kubectl get svc or service, is this user has a permissions to see the services, Kubernetes services?
+
+01:39:17
+If you see no, if required, can I grant that one also? Maybe here itself service also belongs to core API group. Now here, along with pods, can I give permissions for services?
+
+01:39:32
+services like this Now let me apply as an admin. I am applying as an admin I am applying now as a biology user now They have a permissions to see the services also in that default namespace now
+
+01:39:49
+Now do I have a permissions to see stateful sets also in that namespace if I have any
+
+01:39:56
+Now this is normal role. Now if I give a cluster role, if I give a cluster role, in other namespaces also we'll be able to do.
+
+01:40:10
+No.
+
+01:40:13
+Now, let me do this.
+
+01:40:34
+Now let me change this to cluster role. Kind is cluster role.
+
+01:40:43
+Now let me give something like this like admin full access full access now here if I give something like this API groups star API group star resources star resources star like verbs also star like a like a admin user admin user admin user in kubernetes
+
+01:41:12
+Now this is cluster role and I am going to bind that role.
+
+01:41:19
+I am going to bind that rule
+
+01:41:24
+like cluster role binding since it's a cluster role I will create a cluster role binding here it is not a cluster role anymore whatever role I want to map this one is a cluster role
+
+01:41:40
+cluster role the role name is like this full access the role name is like this full access now in whatever namespace like full access this also should be unique you need to have this one also unique full access cluster role binding now even though I am creating this in default namespace now will we become a cluster level user will able to access after applying this will be able to access in irrespective of any namespace
+
+01:42:11
+Now Balaji, now when I execute cubectl get statefulsets, ifanion test. Now if you see statefulsets.
+
+01:42:26
+One second. Stateful Sets.
+
+01:42:31
+Stateful sets Wrong file applied which file I have applied I have applied wrong file Okay, let me apply the correct file. Let me apply the correct file now. Let me show that Now if you see they have a permissions to stateful sets in test namespace also now They have like a PV permissions PVC permissions also like a persistent value permissions also
+
+01:43:02
+Now will I able to see persistent values also and irrespective of any namespace. Now can I kind of admin user here. No.
+
+01:43:16
+Is everyone clear what is hardback and how it works? What do you mean by role? What do you mean by role binding? What do you mean by cluster role cluster role binding service account? But if I have a thousands of users hundreds of users, is it possible for me to map all these users like this? Whatever I have done here in the CKS cluster in that config map, if I have a hundreds of users thousands of users, is it going to be a straightforward solution like this here?
+
+01:43:44
+If I have a thousands of users like Balaji, with all Bhaskar like that, no. So that's why in the actual Kubernetes clusters, are we going to integrate the Kubernetes clusters with the identity providers like LDAP or active directory where all the users are already, all the user records are already there. Which means whenever you are executing any kubectl command, is API server is going to connect to that LDAP.
+
+01:44:10
+using OpenID Connect one protocol, OIDC protocol, OpenID Connect protocol for authentication? Yes, but once authentication is done, will I able to manage access to those users at a group level instead of user level? Can I create a groups? I mean to say LDAP can have a groups, LDAP can have a groups like development group, DevOps group. Can I map these kind of permissions to the group?
+
+01:44:38
+Here in the role binding or cluster role binding, can I map to the groups? Yes. So, in live environments, you are going to integrate with LDAP and you are going to manage permissions at a group level using this role binding and cluster role binding. But most of the cluster, the moment you join, this will be already in place. This will be already in place. But is everyone clear guys? What is authentication? What is authorization? How it works in Kubernetes?
+
+01:45:09
+how to manage permissions. This is administrator quarter. That's it for today guys. Try to practice whatever has been discussed. I'll share this whatever I have done. First what I have done, I created one IAM user with policy to list and read EKS cluster to get the cube config file in IAM console. Then as an admin user.
+
+01:45:39
+As an admin user, I edited that config map where I have added that user. I created one IAM user. That user I have added here. Then in the client side, in the admin side, I created role-role binding. In the client side, what we have done? We installed kubectl. We installed AWS CLI. We got the kubeconfig file. Then we started accessing the cluster. So try to practice these things and get familiar with RBAC.
+
+01:46:09
+Tomorrow I am going to start with help.
+
+01:46:15
+What is helm? Why do we need helm? We will discuss tomorrow this.
+
+01:46:22
+Any questions if you want to ask feel free to ask unmute yourself and ask if you have any questions Otherwise, I will continue tomorrow
+
+01:46:36
+Helm is left Prometheus and Grafana is left. These two concepts are left Prometheus and Grafana. How to monitor? How to set up Prometheus? How to set up Grafana? How to create alerts? How to monitor? We'll discuss when we discussed about Prometheus and Grafana and this is also left.
+
+01:47:04
+If you don't have any question, I'm good to close the session. If you have any question, feel free to ask.
+
+01:47:13
+As I already requested kindly share your valuable feedback whoever not yet shared your feedback kindly share your feedback I see only few people has done that already whoever has not yet done kindly share your valuable feedback. Thank you guys I will continue tomorrow.
+
