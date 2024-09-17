@@ -1,0 +1,852 @@
+00:00
+This conference will now be recorded. In yesterday's session, we were discussing about deployment. What is deployment in Kubernetes? What are the deployment strategy? Like what is recreate? What is the rolling update? When it comes to rolling update, we have some options. Like max unavailable.
+
+00:30
+and the max the surge.
+
+00:34
+and the min-ready seconds, all these things we were discussing yesterday.
+
+00:42
+Now we were discussing about what is recreate what is rolling update how it works if I am using deployment with option rolling update as a deployment strategy I can achieve zero downtime deployment. Now there are some other strategies also.
+
+01:01
+other approaches I can say blue green deployments, blue green deployments, canary deployments like this you have some of this also.
+
+01:15
+Yes, these concepts are very, very important. Whatever concepts we are discussing, Kubernetes. Not only Kubernetes. Now, these I'm trying to cover all the actual use cases. All the actual use cases, what type of use cases, the requirements. That is basically real time. I mean to say, in real time applications, what are the use cases you will have? All these things I'm trying to cover. So make sure you are utilizing these classes, whatever I'm discussing.
+
+01:45
+Day by day people are not having an interest to attend the classes. Gradually it is coming to 30 now. I see only 30 people.
+
+01:57
+So I am not sure what is happening. If something is wrong from our side.
+
+02:06
+Are we taking so much time you guys are feeling why these myth and technologies guys are taking five months. Do you want you know, do you want us to complete within two months also we can do that. Are you feeling like that?
+
+02:23
+because day by day people are not showing the interest. I thought we have something wrong with ourself itself.
+
+02:32
+We are taking something like, is it something wrong from our side? We are thinking other way also.
+
+02:39
+We are trying to cover all the use cases. If people are thinking these guys are taking five months, we can wrap it in a two months also, but that won't help you.
+
+02:50
+that won't help you. Again.
+
+02:55
+problem ok. So, utilize this session.
+
+03:10
+I'm so confident that we don't have any problems from our side. We are trying to deliver more than 100%. But still, sometimes we got a doubt. Are we doing something wrong? Is it really good if you take the five-month session? Because sometimes we are getting a feedback from people. Sir, you are taking five-month classes. Is it possible to do it in two months? Yes, it's possible. Even it is possible in one month also.
+
+03:39
+But that won't help you. That's why we are saying. You need to have a commitment. So, the whenever you join this course, like you joined in the December, I don't know the exact date. I think December 9th. Whatever interest, whatever commitment, whatever zeal you had December 18th, whatever interest, whatever commitment, whatever you
+
+04:08
+you had on December 18th. The guys who had same interest, same commitment till May 20th or 15th. Let's consider approximately May 15th, another 20 days or maybe another 20 days. Who had same interest, same commitment, same zeal, same interest, commitment, hard work. Who worked hard in these dates.
+
+04:36
+definitely they will become successful.
+
+04:41
+Definitely they will become a successful I can challenge also if you are doing hard work Practice assignments you become an expert But if you don't have interest people are like this 100 Then John 90 fib 80 March 50 April 30 This is how it is going now
+
+05:14
+This is how it is growing now.
+
+05:19
+Now the guys who is attending only in January will they be able to understand whatever we discussed in these three months? They cannot understand anything You don't think whatever you learned in January with only whatever you learn in January, you will never become a DevOps engineer
+
+05:39
+Now the most important topics I am covering.
+
+05:44
+Now I see very less people.
+
+05:48
+We are thinking, I think they are expecting to be done everything in within one month. They want to cover Linux, Jenkins, Kubernetes, Docker, AWS, everything in one month, like one week or one day each tool that won't help. So make sure you are attending. That's my suggestion. It doesn't matter guys for me. I don't I know need to care also. It doesn't matter for me. I will deliver whatever I wanted to deliver.
+
+06:16
+Even I have one student in my class, even I have one student in my class, I will deliver with same energy, same concepts. I won't skip whether I have a one student in my class, whether I have a hundred students in my class, that doesn't matter for me. But you will not get benefited. That is what my only concern.
+
+06:41
+We are guiding, we are guiding you are going in a wrong path but still if you are not realizing then I don't know how you will become a software engineer, how you will become a DevOps engineer if you are not following.
+
+06:56
+So, okay, that is fine. They might have their lot of personal reasons. I thought of checking if something is wrong with us. Are they, are you guys really feeling five months is too long, sir? If you're done in three months, it may work out. I thought I'll check once.
+
+07:17
+But as per my knowledge, 5 months is very very important. These 5 months are very very important. As per my knowledge, my experience in the training as well as in the IT.
+
+07:30
+At least you need this much so that you can become an expert in the DevOps. If someone is feeling it is too long kindly let us know. We will see if we can revise my program also like if we can accommodate in four months or two months also I will try. But share that feedback also. I will appreciate that one also.
+
+07:55
+Okay, let's get continue. Now, this blue green deployment. What do you mean by this blue green deployments and canary deployments? So blue green is one deployment approach. Not only in Kubernetes as I already told, even though we are using, even though we are using.
+
+08:22
+Normal virtual machines also without bringing the application down. Is it possible for me to? The apply zero downtime even though I'm using virtual machines. Not just containers. I'm not using containers. I'm not using Kubernetes or Docker still is that possible? Yes, so this blue green deployment is one strategy one approach that can be done.
+
+08:49
+in any type blue green deployment. So what do you mean by blue green deployment? So blue green deployment is an application release model that will gradually transfer user traffic from previous version of application to the new version of the application. So how it looks like right? I will have environments like this. Like blue and green two environments.
+
+09:19
+I will have a two types of environments. Let me open this image so that you can easily understand. Now these are my end users. Let's say these are my end users. Let's say now I have one environment, live environment. Already old version of the application. This is not clear.
+
+09:51
+Let me open some diagram which is more clear so that you can easily understand. Yeah, maybe let me open this.
+
+10:01
+No.
+
+10:04
+Like I have two environments, I have two environments. Okay, even though I'm using virtual machines, it will be like this.
+
+10:18
+Now, whether it's a server, whether it's a container, we can do this. Let's say this is my virtual machine. That virtual machine can be in your own data center or cloud. That doesn't matter. Here, I have my application is already deployed. Like version, first release, I have deployed here. Now, in front of our application servers, do we have a load balancer? Do we have a load balancer in front of our application server, that web server come load balancer?
+
+10:48
+Now the end users, the end users, does the end users will access via this load balancer that application.
+
+11:02
+You have DNS, let's say, let's say you have, give me one second, one second.
+
+11:48
+Sorry guys, let me continue. So these are my end users. These are my end users of my application. Now load balancer will have some IP address. As I already discussed, what is load balancer? This is external load balancer. This is my external load balancer. Load balancer will have some IP address. Now this load balancer is mapped with some domain, my application domain, whatever it is.
+
+12:17
+or Flipkart dot, whatever it is. This IP address is mapped with load balancer. Now, end users will access via that domain. First request goes to DNS. We already know DNS lookup will happen.
+
+12:35
+To resolve the IP of that domain, the NS lookup will happen. Then request goes to that load balancer. Request goes to that load balancer.
+
+12:50
+Now load balancer will listen on some ports. And what ports load balancer will listen, whether you are using cloud-based load balancer like ELB or Nginx, HAProxy, whatever it is, port 80, port 443. Now here, does this load balancer do the reverse proxy to your application server? Your application servers or the private servers, let's consider. These are the application servers. Just to give an example. So this is one server. This is another server.
+
+13:21
+This is one more server where I have my application posted multiple replicas, just to give an example, like this. So request comes to load balancer. Does load balancer will forward the traffic to this reverse proxy when request comes to load balancer. It may forward the traffic to that respective servers and whatever port your application is running in that servers. In that servers.
+
+13:51
+the reverse proxy.
+
+13:54
+Now this is your live environment. This is your live environment. Let's say
+
+14:02
+This is your live environment. Let's say, whenever request is coming to ATR 443, that is routing the traffic to that servers. Load balancer, reverse proxy. Now your load balancer is distributing the traffic to these servers. This is live environment. Let's say production environment. This is production load balancer. Your domain is pointed to this.
+
+14:32
+This is the live environment. In the background, we already discussed three-tier architecture. Is your applications will communicate with the databases? Like databases, that is in the background. Your application servers will communicate with the databases to read and write the data. This databases also you can have multiple, like primary, secondary, for high availability. In the databases also, your application servers are communicating with database servers.
+
+15:01
+Now this is my live environment. Now there is a change in my application. There is a change in my application. Application developers are modified the code. I want to enhance. There are new features added to that one. If it is a downtime, if it is a downtime, I am OK if my application is down when I am deploying my application in production. I am OK if people are not able to access also.
+
+15:31
+Can I route the traffic temporarily from load balancer instead of routing the traffic to these application servers? Can I route the traffic to some temporary maintenance page?
+
+15:44
+something like this maintenance page like say application is in maintenance window won't be available for so and so time kind of a message so that people can understand I will stop sending the traffic to these servers I will stop sending the traffic to these servers I will
+
+16:05
+route the traffic to some temporary page if it is a downtime then can I stop the server I mean to say can I stop Tomcat or JBoss whatever you are using can I remove the old package can I deploy the new package here in this servers 1.0 instead of 1.0 I will deploy 2.0 and I will test internally using internal load balancers the testing team or business
+
+16:35
+using internal load balancers that is not exposed to the outside. They can test this one if everything is perfect. Can I again send the traffic back to these servers if it is a downtime again if it is if this is working fine. I can route the traffic again back to these servers again back to these servers like this. But do I have a downtime here?
+
+17:04
+is my applications will be down if I follow this approach for some time maybe one hour two hours three hours or four hours or five hours based on how much time if there are no issues your deployment is smooth your production deployment is smooth successful you have not encountered any issues it may be done in two hours three hours but if you are encountering lot of issues while doing the latest code deployment it may take time.
+
+17:31
+If you are not able to resolve, again, you need to revert back to the old version. These type of issues will happen. Your application will be down. But I don't want to this approach. Can I follow one strategy called blue-green deployments? Now, this is your live environment. This is your live environment. Without disturbing this live environment, can I have a similar setup? Similar setup?
+
+18:00
+one more setup like this another setup here completely different environment now I will have a latest code applied here latest code applied here now this code does does the load balancer will start sending the traffic to these servers where I have deployed new environment where new servers new release no.
+
+18:30
+End users traffic I am not disturbing is end users are going via this load balancer to these application servers existing.
+
+18:42
+Yes, I am not disturbing that I'll bring another kind of infrastructure parallel environment kind of a green and blue kind of a green and blue live environment Live environment kind of another environment
+
+19:00
+And that's another environment.
+
+19:04
+Now I am not disturbing anything which is going here. I'll apply the latest code. This will also talk to the same database server, your live database server if required.
+
+19:21
+If there is a changes in the database also, you can bring another database server for this one. If there are no changes in the databases, you can point to the same database, live database, this another green environment. Now, internally, internally via internal load balancers, can our BA business analyst testers, can they test this application without bringing this existing one? I am not disturbing this live. So our-
+
+19:50
+Internal teams like you had business analyst and QA teams can they take some time maybe one day two day three days also fine They can test this new feature new release You are not disturbing the existing live environment. You are testing the new features in a separate environment If everything is perfect our QA team given a sign of our business analyst gave sign of the neck new release is Successful then how can I make sure I will?
+
+20:20
+my end users can start accessing the new release, new application, new features, what needs to be done so that I can start sending the traffic of my end users to this.
+
+20:34
+applications I mean to say this version of my application.
+
+20:40
+Now everything is done, everything is validated. This is successful. There is no issues. Our QA team tested internally via internal load balancers. So they have given a sign of what needs to be done so that my end user traffic will be shifted to these servers. Can I go to this load balancer proxy settings, reverse proxy?
+
+21:05
+Whether it's a nginx web server or whether it's a haproxy or fi load balancer or cloud load balancer. Can I start shifting the traffic from this to this in the load balancer? Can I start shifting the traffic to these servers? Instead of pointing to these servers, can I start shifting the traffic to other servers? Like let's say this is my new environment where I have my application.
+
+21:33
+new version of the application. If it is a normal Nginx, can I go to that Nginx confile and update? If it is a normal Nginx, I will go to that Nginx confile or HAProxy confile. Can I point to these servers?
+
+21:51
+in my load balancer. If it is a ELB kind of a stuff, can I change the target groups? Let's say this is my live target group. This is kind of a green target group. Can I go to the my AWS listeners and you know, select the different target groups like these target group where I have added all these targets. So can I update my routing here? Can I start shifting the traffic from these servers to these servers?
+
+22:19
+Within a fraction of seconds, do I need much time to just updating the route, just shifting the traffic? It is like your traffic constables. Your traffic constables will shift the traffic rate from one area to one road to another road. Similarly, can I shift the traffic in the load balancer from this server to this server, fraction of seconds? Then, does end users can access the application, the new version of the application?
+
+22:48
+Now do I need to worry about this whether this application may work or may not work do I need to worry all these things roll backing all these things no because is our QA team BA team already certified the after doing lot of testing.
+
+23:05
+years. So I can start sending the traffic then you can keep running these servers for some time. You no need to immediately stop or terminate. You can keep this environment live for some time. Suppose lot of users are experiencing lot of issues again. Can I simply switch the traffic again? Even after BA team, QA team certified still end users are having some issues, defects or bugs.
+
+23:35
+It is impacting your application, your business. Then can I again start sending back to this one? If I will not stop this environment maybe one day, two days, I will make that environment still running. Can I shift again back by updating again routing here?
+
+23:55
+So that is very rare because your BA team, QA team already certified. They have taken one day, two days to done all those testing. But still, if there are possibility, you can roll back. Otherwise, can my end users access the application? Do I have a downtime? Like a fraction of seconds. How much time you need just routing the traffic, shifting the traffic in your load balancers? Do you need maybe hours or days?
+
+24:25
+not required fraction of seconds fraction of seconds right hardly one second two second it may take to shift the traffic. So this is one approach now can I do this in a normal data centers also traditional deployment or virtualized deployment also like virtual machines are normal physical machines. Yes. Now if it is a Kubernetes can I do this in Kubernetes also.
+
+24:52
+I am running my applications as a containers as a ports. Can I do this in Kubernetes also if required?
+
+25:04
+Yes, there are two ways.
+
+25:08
+by having two clusters also I can do two clusters also I can do or with single cluster also within with single cluster also I can do. What do you mean by two clusters? Like this is my current Kubernetes cluster. This is my current Kubernetes cluster. This is my current Kubernetes cluster. Same same setup.
+
+25:47
+same setup you have.
+
+25:55
+same setup you have. This is your external load balancer. This is your external load balancer, outside of your cluster. Now within my cluster, can I have my servers? My Kubernetes servers?
+
+26:11
+This is my Kubernetes cluster. I have my Kubernetes servers where I deployed my pod. My pods are running here.
+
+26:25
+My part has a containers. My part has a container.
+
+26:32
+My pod has container. I deployed using that image. Let's say this version of the image. Just to give an example, just this version of the image. My application version of the image is this. Now, the master, the master is looking after your pods. You already know all these things. Master is looking out of your pods. Now, if you want to deploy from CACD or manually,
+
+27:01
+Can I communicate with master API server deployment? I can communicate with API server. This is your CI CD process or you are manually doing. This can be CI CD like Jenkins. You are managing deployments or maybe manually. You are deploying. It's up to you.
+
+27:25
+This we call it as architecture diagrams. Sometimes they may ask you to draw these type of diagrams also. If you are more experienced resource, like you are a team lead, you are an architect, do you need to design infrastructure, picture it before you actually implement, do you need to design your infrastructure in a pictorial diagram like this? Your cluster, your servers.
+
+27:54
+your databases, your load balances like this, you need to, you are an architect, you need to draw these type of diagrams. We call it as a architectural diagrams.
+
+28:07
+Now I had applied this application. Now in Kubernetes.
+
+28:16
+There is a service. Now, as of now, we discussed the node port service cluster IP service. For now, let's say this is node port service. This is node port service. Now, in my load balancer, can I point to that node and whatever port that service is running? This is external load balancer outside of your cluster, like Nginx, HTTP, or ELB in the cloud.
+
+28:44
+outside of your load, you know cluster, you have one more load balancer. This is external load balancer here. Can I use this respective Kubernetes nodes? Let's say this is my Kubernetes node. This is my node IP 172 dot 31 dot four dot something that you want at zero dot five.
+
+29:07
+This is something like this. Now, this service is started listening on, let's say, 30,000 some port. Let's say it is listening on node port. This is listening on node port like maybe 30,038 like this. Now, in my load balancer, which is outside of my cluster, can I have like this?
+
+29:33
+End users are not accessing via your node IP and node port. End users will access via your load balancer. Your load balancer is pointing to your node IP and node port. Now it is something like this. Now request comes to load balancer. His load balancer is going to send the traffic to your Kubernetes nodes.
+
+30:03
+Your Kubernetes nodes, this is external load balancer. This is external load balancer. It is going to route the traffic to that node on that port. Then his request goes to his kube proxy is going to forward the traffic to that cluster IP, that cluster IP to your pod IPs.
+
+30:26
+As I already told, you already know this, right? Request will go to that cluster IP, cluster IP to your quad IP. Now this way end users are accessing. This way end users are accessing. If it is two different clusters, can I bring another cluster, another environment like production and DR, kind of a production and DR, blue and green? Now I can have another cluster completely,
+
+30:56
+new cluster completely where can I deploy another latest version of the quad latest version of the deployment completely in new cluster completely different cluster.
+
+31:11
+another Kubernetes cluster where I have a different servers, where I have a different servers may be different network also altogether, may be different servers like this.
+
+31:29
+completely different cluster, different servers. Now I am not disturbing live environment. I am not disturbing live environment.
+
+31:40
+Now in this cluster again can I connect to the respective Kubernetes cluster API server manually or CI CD to different cluster can I deploy another version of the application like this version 2 deployment here then I have a separate service here Kubernetes node port service
+
+32:09
+another service. This might be running on maybe you can create same port. You can hard port or let Qubornet give some port. Maybe same port or different port that doesn't matter. Now this is another environment. Now our QA team, our BA team, let them take whatever time they want to take. If they require, they can directly test using internal load balancers
+
+32:39
+are directly using that node IP and node ports. Also our QA team or BA team can create can use internal load balancers that internal load balancers also points to the same nodes. These nodes does QA team BA team can test this application in another cluster, which is the applied new version of the application here. They can test how much time they want to test once they certifies that once they certifies that everything is proper. Then again
+
+33:09
+Can I point in this external load balancer? Can I point to these node port and these node IPs? Can I change my proxy here, reverse proxy? So will it start sending the traffic to these servers? If I update my load balancer, external load balancer to these.
+
+33:28
+Yes, this is with two different clusters with this this is with two different clusters. But is it possible within a single cluster also he is it possible to do this? Yes, how we can do this? Let me explain. This is everyone clear, whatever I have explained so far, this is very, very important. You need to understand all these things. What is blue green? What is the advantages of blue green?
+
+33:57
+these type of questions sometimes in the interview also they will ask. So you can easily explain.
+
+34:08
+All these things we already discussed. Do you know already what is DNS? Do we know already what is this load balancer? Like Nginx, HTT, PD, or ELB.
+
+34:20
+We discussed all these things. You are just leveraging all these things together. You already know what is CACD. What is CACD? All these things we are leveraging to support our project, our application. Now, if it is a single cluster, how I can do? If it is a single cluster, how I can do? Let's say here. I created a deployment.
+
+34:48
+Now I have a labels like this labels like this app. Let's say Java web app version another label I can give version one version one let's say these are the labels I have on the pod now I'll I have something like this now here I have a selector I have a selector my service
+
+35:17
+Will it has a selector?
+
+35:21
+in Kubernetes selector I have a selectors like this I have a selectors like this app java web app
+
+35:34
+version version 2 sorry version 1 version 1 something like this now is this service is going to point to these parts because these parts has the labels both labels two labels I am using and two selectors same selectors I am using here is this service is going to point to these parts this kubernetes service now from outside from outside request is coming to your kubernetes node on that port.
+
+36:03
+Request goes to the service. Service will route the traffic to this point. Now, instead of updating my deployment, instead of updating my deployment, can I create another deployment altogether, or another replica set or deployment altogether with a new version of the image in the same cluster? In the same cluster, instead of updating this existing deployment, can I create a new deployment or new replica set also directly with a new image, that version two image?
+
+36:33
+in the same cluster. Now, I'm going to create another deployment. Even replica set also fine, because you are not updating the deployment. You are creating another deployment in the cluster, in this Kubernetes cluster.
+
+36:50
+in this Kubernetes cluster, you are creating another deployment with this version of the image. And I will have labels, something different. App, Java web app. Can I say something like this, another tag as to something like this while creating a deployment? While creating a deployment, I'm giving the labels like this. You are not updating the deployment. Make sure.
+
+37:16
+You are clear on that. I am not updating the existing deployment. I'm creating a completely new deployment or new replica set. Now this parts will it continue to run because I'm not updating the existing one. I'm just creating a completely new deployment. Does this will be deleted if I do this?
+
+37:38
+No, no, I'll get a new pods. I will get a new pods, new pods with that image with the new pods with that image new container, but that will have a different labels like version as to version as to version as to
+
+38:00
+because I created a completely new deployment completely new deployment version S2
+
+38:12
+These are the labels I have for this port. Now, is your service, the current traffic, is the service will start sending the traffic to these ports? Do you think this service will start sending the traffic to these new ports, even though you deployed new application, new version, your application, new version, do you think this service will start sending the traffic to these ports, the new ports? No, because both has to be matched. I'm using two.
+
+38:41
+This version is this but here app is matching. This is matching but is the second layer selector is matching with this pod and this pod? No. So does your existing service is that live traffic will be come to these new pods even though you deploy a new version new deployment.
+
+39:01
+No, now can I create internal service different service internally? Can our QA team, BA team can test this new version of the application using directly that another service I can create for this one internally? Does our QA team can test this using that respective node port another service whatever I create internally for our team?
+
+39:29
+So their own service we will create to test the functionality. But once QA team or BA team is certifies that this is working fine, then how can I start shifting the traffic from these parts to these new parts? How can I shift the traffic, the live traffic, the live traffic which is coming from outside of the cluster to load balancer, load balancer to this node, to node to this port, to this one I am getting. How can I start switching the traffic now?
+
+39:58
+I no need to worry about here because same cluster I no need to change anything in the external load balancer I no need to change anything in the external load balancer because it is the same cluster now here can I quickly update my service selectors can I quickly change my service selectors like can I edit service selectors like this version 2 then does your pods I mean to say does your service will start shifting the traffic to these pods instead of these pods
+
+40:28
+Does your service will start shifting the traffic to these ports now? If I change the selectors of this service, the service where we are receiving the external traffic? Yes. Then can I completely delete this deployment or replica set, whatever is running? Can I completely delete this deployment or replica set or older version from my cluster?
+
+40:55
+Yes, so this way also within a single Kubernetes cluster also. Can I do this blue-green deployments in Kubernetes?
+
+41:09
+Now do I need to worry about whether this application will work or not? Do I need to roll back? kubectl rollout undo deployment
+
+41:22
+Do I need to worry about this? No, because it is already certified. But if I am doing this in a single cluster, do I need to make sure I have enough nodes, enough resources available in the cluster? If I'm going to do in a same cluster, do I need to make sure I have more number of CPUs, more number of memories or nodes available in the cluster? Otherwise, if I don't have enough resources in that cluster, will I able to deploy two versions of the applications at same time?
+
+41:52
+For some time, do I have two versions of same application running in the cluster? For some time, do I have two versions of the same application running in the same cluster? For some time, yes. So if I don't have enough CPU, enough memory, will I able to manage the old replicas as well as new replicas? No. It will impact. It will impact your existing LiveForts also if you don't have enough CPU, enough memory.
+
+42:20
+By making sure I have enough nodes, enough resources available in the cluster, can I do the blue green deployment in single Kubernetes cluster also? Like this? Yes, this is blue green. This is blue green. Sometimes in the interview, they'll ask what is blue green? If you want to do blue green in Kubernetes, how to do that? Will you guys able to explain with the two different clusters by changing the?
+
+42:50
+routes in the load balancer with two different clusters you can do. If it is the same cluster by using the services here by updating the service selectors can I start shifting the traffic from old ports to new ports if it is the same cluster.
+
+43:08
+Is everyone clear? I hope you are more clear with this diagram again, which one is recommended that depends on your requirement guys. There is no recommendation. Everything is based on the use case. Suppose your application is not worried about downtime. They don't want to have enough infrastructure. They don't want to purchase additional hardware additional servers to support that blue green. They don't have a budget.
+
+43:37
+or they don't want to have additional servers to achieve that blue green. They are okay if there is a application is down. Then can they go for completely the downtime? Completely the downtime.
+
+43:54
+Even in single cluster also, they don't want to have additional servers to run two versions of the same application simultaneously in single cluster. Also, they don't want to have additional servers additional CPU memory. In that case, can they go for completely the downtime approach?
+
+44:11
+Yes, but they are least bothered about infrastructure charges. They want to make sure that application is not down even though they are doing enhancements deployment in that case. Can they go for a deployment with the deployment with the deployment strategy as rolling update if they are confident that they have done the automation test cases also they have done the automation test cases before deploying in production. They run the automation test cases.
+
+44:40
+in QA if everything is proper can they go for a without blue green Kubernetes with the deployment strategy as rolling update they are so confident that the application will not be having any defects or bugs can they go with single cluster deployment with rolling update strategy yes but they are not confident that and that it is not about confident they don't want to impact the end users they don't want to take that risk
+
+45:08
+It is not about confidence the risk. They don't want to take that risk. So can they go for a blue green approach with single cluster also by adding more resources, by adding more nodes, more servers with single cluster also? Yes. Otherwise, can they go with two clusters, two different clusters also? Yes. Anything, whatever suits their requirement. Is it as per the requirement, whether they follow blue green, rolling update?
+
+45:37
+or blue, you know, normal downtime deployments also like that. Everything is based on the requirement.
+
+45:45
+Is everyone clear what is blue-green how to do that blue-green in a normal virtual machines and how to do it in a Kubernetes with single cluster multiple cluster. You can understand this diagram. Guys sometimes in the interview. They're asking this question also how end users traffic is reaching your Kubernetes pod container. Suppose I am one of the end user. I am accessing something like this. If that application is running in a Kubernetes cluster.
+
+46:15
+How that request is reaching your Kubernetes cluster, your pod, your container. Then do I need to explain this diagram? First, end user request goes to DNS, DNS lookup to identify the IP of that load balancer. That IP is basically external load balancer that can be ELB or that can be Nginx HAProxy. From load balancer, is it going to route the traffic to your Kubernetes nodes, node IP and node port? Then...
+
+46:43
+cluster IP to pod IP like this Do you need to explain this one? If sometimes in the interview they are asking this one also
+
+46:57
+So this is also important, but slowly I will bring one more component here. Slowly. I'll bring one more component in my Kubernetes called ingress controller, ingress controller and ingress that I will explain later. Slowly. You will get one more concept in front of this. There is a concept called ingress controller and ingress. Why do we need this ingress controller? What is ingress controller? What is ingress? I will explain later for now. Understand this flow.
+
+47:28
+For now you understand this flow later. One more component comes in your Kubernetes that is ingress controller and ingress. So what is that? I will explain later.
+
+47:42
+Is everyone clear what is blue-green?
+
+47:48
+Now it depends on requirement client if you see most of the banking applications like sbi hdf ccp bank Are they going to do this kind of a blue greens? No, most of the time they will completely take a downtime They are going to take a downtime with In advance in advance are they going to give some kind of a notifications? If I go to online sbi.com, let's say within two three days of that maintenance
+
+48:18
+They'll give some kind of a message here, kind of a message here that application will be in maintenance in so and so date. This application will not be available. And so and so time.
+
+48:32
+not only message they'll update here also sometimes here also you see this type of notification sometimes you'll get here itself saying that your application is in maintenance window like that. So if anyone comes to that application during that maintenance window are you going to get some maintenance page your application this application is in a maintenance window. This will be not available for so-and-so time kind of a maintenance page downtime.
+
+49:00
+But if you take most of the applications like Ola Uber Flipkart Amazon.com Netflix.com. Did you guys observed any outage or downtime even though they're adding lot of new new features even though they're adding lot of new new features whatever you see today in the Ola Uber maybe after one week you see new user experience new GUI completely new
+
+49:32
+They are doing lot of enhancements, releases. But did you experience any outage or downtime?
+
+49:44
+No. So, they are mission critical applications for bankings and no one will bother even though SBI is down for one day. What you will do? Okay, let it be one day down.
+
+49:58
+We will do the transactions maybe next day. But because our mentality is OK with these type of applications. But if I go for a Ola and Uber, if Ola is down, will you immediately go for? Will you immediately go for Uber if Ola is down? Will you immediately start using Uber? If a Flipkart is down, will you start immediately shifting to the Amazon.com like that? If Netflix is down, you want to watch some movie, Netflix is down. Are you going to use another streaming?
+
+50:29
+platform like Amazon prime like that. So they don't want to lose any business. They don't want to lose any business even is even one hour also matters for them. Huge revenue there will be a huge loss in the revenue even one hour is also down for them. And impact also you itself will judge as a user of all our Uber will judge.
+
+50:55
+What is this application? This is down, pathetic experience with Ola, pathetic experience with Uber. I'm not able to book a cab. I'm not able to track a ride. I'm not able to see my invoice.
+
+51:10
+Do they have a huge impact if that applications are down? Do they need to make sure that applications are highly available, fault-tolerated?
+
+51:20
+Auto scaled based on the load auto scaling. Auto scaling based on the load 100% that application should be available. Do they need to follow all the industry best practices in from infrastructure level to the application coding databases infrastructure? Your server should be highly available. Your data should be highly available. Your network should be highly available and the code also should be able to follow the best industry.
+
+51:50
+standards.
+
+51:54
+So they won't, they don't want to take a downtime. In that case, can they follow blue green as per their infrastructure? If it is a containerized applications in Kubernetes, they can manage like this. If it is a virtual machines, they can manage like whatever we have explained.
+
+52:13
+Is everyone clear what is blue-green deployment and how it works?
+
+52:19
+Now what is this canary deployment? There is one more type of deployment called canary. What do you mean by canary deployment?
+
+52:28
+It's kind of a slow, slowly you will increase.
+
+52:37
+the traffic.
+
+52:40
+to new version of your application. It's kind of a slow poison. What do you mean by slow poison? Let's say I have 100% traffic going to first the current release of my application. Now can I slowly increase the traffic from
+
+53:05
+this application this released another application currently this much 100% traffic is going to this one. Now, let's say can I say something like this 90% of the users request should go to this version of the application. And a 10% of traffic 10% of user request should go to this version. Like a new version. Like this new version app 2.0
+
+53:35
+slowly like 90% is going to the current environment, live environment, 10% I'll start sending to 2.0. Let's say, does all the users will impact? Is your complete business will be impact if there is a problem in this new one? Is all the users will be impacted or complete business will be impacted? No, only some percentage, some percentage of users, some percentage of users will be impacted. In that case,
+
+54:05
+If that is happening, this is not working. Can I again switch back 100% to this one?
+
+54:12
+if that is happening.
+
+54:17
+yes but if the new version is working fine there is no issues reported now can i slowly change maybe down the line after one day or two days or maybe after one hour two hours can i say something like this 60 percent or 80 percent to this one 40 percent to this one if no issues reported can i keep changing like this like 80 percent again 20 percent like this finally after sometime down the
+
+54:46
+Can I completely make this 100% traffic shift to this one?
+
+54:59
+Can I call this as a canary deployments? Can I call this as a canary deployment, this strategy, this approach? Yes. Now, if it is a Kubernetes, can I do this one in single Kubernetes cluster also? Yes, in single Kubernetes cluster only, you can do this, something like this.
+
+55:21
+Now let's take this one again. Let me do the control Z again. Now this is how it is there. This is how it is there.
+
+55:39
+Now let's say something like this.
+
+55:44
+something like this as of now something like this let's consider total I have four replicas just to understand more better let's consider total currently I have four replicas to understand better I am taking this one currently let's consider in the version 1.0 you have four replicas in the version 1.0 you have four replicas four pods
+
+56:12
+You have four parts, four replicas. Let's say something like this, the current live environment. Now you have labels like this. You have labels like this. Your selector also like this. Now currently four replicas are running. Now can I create another deployment? Can I create another deployment with images too? Selector is same.
+
+56:41
+selector is same like something like label I am say label label is something like this label app Java web app now replicas of this one I will just create one replicas of this one just I will create one replicas of this one just I will create one same label now will I get one new pod with that only one replica with same label
+
+57:11
+with same label I will get a new part but version 2 image version 2 image I am creating a new deployment version 2 image with same labels now does your service will start sending the traffic to this part also because same label now can I reduce the current the old replicas I have total four can I scale down to three can I scale down to three
+
+57:41
+Currently there are four can I scale down this to three? Now how many old version of the parts on how many new version of the parts I have no.
+
+57:54
+world 3 new one is it like a 75 20 percent is the traffic will go to 75 percent old ports and 25 percent new ports new pod
+
+58:08
+Now if there are no issues reported, if there are no issues reported, can I scale this one to two and can I scale down this to two? I will increase this to two, I will decrease this to two. Now something like this, two new world parts, two new parts. Slowly can I scale up this world new deployment? Can I completely scale down this world deployment to zero? I will scale this to four. I'll scale down this to completely zero.
+
+58:37
+So this way can I make 100% slowly increasing.
+
+58:42
+kind of a canary this way you can do but there are a lot of powerful software are available to manage more efficiently this one called STO. There is one more powerful software called STO. We can more efficiently manage this traffic management using STO within your Kubernetes within your Kubernetes cluster using STO you can more efficiently manage the traffic management that also you can use.
+
+59:12
+traffic management within Kubernetes. So Istio is a service mesh. Istio is a service mesh. It's a powerful software when it comes to microservices and traffic management and security. So that is one concept, but we are not covering that Istio. Istio is completely different. But whenever you get a time, I recommend you to go through this website, Istio. Istio is completely a new different concept.
+
+59:40
+This will be used with Kubernetes. This Istio will be used with Kubernetes. So Istio is a service miss. It's all about communication between your services, traffic management between your services, securing, monitoring, all these things. This I am not covering, but whenever you have some time, at least understand what is that Istio. Istio will be used with Kubernetes so that I can even do the better traffic management also.
+
+01:00:10
+Now instead of I do like this in the STO rules itself, I can define percentage, how much percentage it should route to new parts, old parts like that I can do that.
+
+01:00:22
+in that one is everyone clear what is this canary deployment if I want to do the canary deployment in Kubernetes can I do something like this or can I use some other tools like Istio
+
+01:00:36
+without using Istio also can I do like this without using Istio also can I do like this increasing the new replicas and decreasing the old replicas but Istio will give a better management of traffic all these things even Istio also you need to make some rules even in Istio also you need to apply some rules you need to modify the rules Istio rules but here you can do like
+
+01:01:03
+Is everyone clear what is canary deployment? What is blue green deployment? What is rolling update? What is recreate?
+
+01:01:13
+these type of things asked in the interview.
+
+01:01:17
+this type of things asked in the interview as well as some companies follows canary some companies follows blue green some companies follows completely downtime
+
+01:01:27
+that is based on their requirement and their use cases.
+
+01:01:36
+If it is Kubernetes.
+
+01:01:39
+we have a deployment in deployment what are what are the strategies we have recreate and rolling update but this blue green and canary is there any strategy like blue green and canary no it's a process it's someone approach it's one process it's one approach if I want to implement blue green or canary can I do that in Kubernetes also whatever I have explained
+
+01:02:09
+Even though you are using virtual machines, can I do this blue, green or canary in a virtualized deployments also? Yes. I hope everyone is clear. What is deployment and how it works?
+
+01:02:28
+Is everyone clear so far whatever we discussed in kubernetes these are core concepts pod rc rs ds deployment And services and services so service is for communication. These are like deploying your applications So what is difference between rc rs ds all these things we already discussed so we will continue with
+
+01:02:57
+next set of Kubernetes concepts. Now, as I already discussed multiple times, does Kubernetes supports auto scaling of your quads, your containers?
+
+01:03:12
+So far, what type of scaling we have done in Kubernetes? I'm trying to increase and decrease the pod replicas. What type of scaling we have done so far?
+
+01:03:35
+manual scaling now is it possible for me to automatically scale my pods
+
+01:03:49
+yes so what do you mean by auto scaling now let's say
+
+01:03:57
+Let's say this is my kubernetes cluster. Now I deployed my application. I deployed my pod while deploying the pod. Can I define resources? Is it recommended to define resources? There are two things requests and limits. Now it is recommended to define request and limits request CPU memory.
+
+01:04:26
+how much CPU how much memory you are requesting for that pod container. Now let's say CPUs will be something like this small m what that small m represents what is that small m represents when it comes to CPU millicores millicores now one core CPU one core CPU one CPU is nothing but one core it is equivalent to how much millicores
+
+01:04:56
+thousand milli core thousand milli core now CPU number of CPU cycles you need for that application process that container process now let's say my application requires minimum this much milli cores can I say request CPU 100m like 100 milli core if your application requires one CPU itself completely one core
+
+01:05:25
+can I say something like this CPU 1 just 1 don't give M if you give M it is 1 milli core if you need 1 core processor for that application container can I say something like this CPU has 1
+
+01:05:41
+That is based on your requirement your application container. How much CPU how much memory it requires you can define that one. I can define in the percentages also. I mean to say can I say 0.5? What do you mean by 0.5? I will not give him just a 0.5 is this 0.5 is equivalent to off-core. Is it equivalent to off-core 500 millicore?
+
+01:06:07
+yes so i can give like this now memory what do you mean by memory ram how much memory you need for that process to at least minimum can i request something like this 256 mi capital m capital m don't get confused this small m is milli course that will be used for cpu
+
+01:06:37
+megabytes megabytes now if required that requires minimum 1 GB can I say something like this 1 GI 1 GI minimum that application container requires that much RAM memory to run.
+
+01:06:59
+this is minimum I can give based on my requirement now limits I can set the limits let's say limits let's say I can say something like this CPU like one CPU memory like you know
+
+01:07:25
+very important concept in the interviews also they'll ask what is resource request in Kubernetes? What is resource limits in Kubernetes? Now resource request in the sense minimum guarantee CPU or minimum guarantee resources your container will be container will be getting let's say I am requesting something like this does your scheduler is going to verify in which node I can schedule this pod this container
+
+01:07:55
+that pod container based on how much we are requesting and based on how many pods are already running and how much is available in that node after all those pods already lot of pods are running. Is it going to calculate something like this? Some of all existing, some of all existing pod resource requests.
+
+01:08:25
+minus available.
+
+01:08:30
+I mean to say capacity.
+
+01:08:38
+of your node resources of your node it will calculate something like this already lot of parts requested some CPU is it going to some all those part container resource request and it will try to minus like capacity of that node it is like this capacity of that node how much CPU how much memory we have in that node minus some of all existing part
+
+01:09:08
+If we still have memory and CPU greater than this much request, then does that scheduler will try to schedule the pod to that node where I have still this much resources available after doing that calculation, wherever I have still this much more than this much. Is it going to schedule the pod in that node, your scheduler? Yes. That is scheduler. We'll take care.
+
+01:09:34
+But none of the nodes, none of the nodes has this much CPU memory available after calculating all these formulas in each and every node. Does do you think your pod will get scheduled if none of the node has this much requested CPU and memory? We are just requesting. Does it mean is your pod is going to actually use that much CPU and memory? Your node is already running out of CPU and memory? No, we are just requesting it is kind of a reserve. It is going to reserve.
+
+01:10:03
+cubelet will mark that much CPU and memory result for that pause. But even though you don't have any nodes with that much resources available, is your part is going to be in a pending state? The scheduler will schedule that part to any node? No, which means if your node is scheduled, which means do you have a guarantee that this much CPU and memory will be available minimum for your part container? If your party schedule.
+
+01:10:31
+Do you have a guarantee that this much CPU and memory always available for your pod container? Yes. Then what is this limits? What is this limits? Whenever there is a lot of load on that application that pod that container will it able to go beyond that much CPU memory even though you have enough no CPU memory in that node do you think does your pod container can go beyond that much?
+
+01:10:58
+That is maximum. This is minimum. Like a minimum CPU and memory you will get are available for your pod container. It cannot go beyond this much. Now, I have created like this. I have created like this. My pods are running. Now there is a lot of load on that pod container. I have only one replica, let's say. There is a lot of load on that.
+
+01:11:28
+application outside people are inside traffic internal or external traffic is coming to that service it is routing the traffic to that port this is my part resource request and limits my container request and limits what will happen guys when there is a lot of load what will happen does a CPU utilization memory utilization will go high if there is a lot of load which means lot of requests are coming to that application that API.
+
+01:11:57
+Does the CPU utilization and memory utilization will become high? If there is a lot of load on your process, that container is nothing but process. That container is nothing but one process that can be Tomcat process or Java process or database process, whatever it is. If there is a lot of load on that process, does automatically CPU and memory utilization will spike up?
+
+01:12:23
+if there is a lot of load the CPU utilization and memory utilization will be high
+
+01:12:31
+That is what the meaning of load load in the sense lot of requests are coming. Does the CPU utilization and memory utilization of that application that process will be high?
+
+01:12:45
+Yes, so if you don't take any action if you don't take any action forget about containers Forget about containers you are running your process as a normal virtualized deployment also if there is a lot of load on that process if the process Is if the process is running out of cpu what will happen? if the process
+
+01:13:14
+is running out of CPU what will happen does that process become slow.
+
+01:13:21
+that process process in the sense basically application will be slow basically hunger it will hunger.
+
+01:13:31
+It will not respond like your laptop or desktop is just to make it simple in your laptop. You have some CPU have some memory you install lot of applications. Does your laptop your applications will be superfast if you have a lot of load in your laptop does it will be a superfast if it is running out of CPU. No, no. Similarly, there is a lot of load on my application. My container. I have read, you know, controlling these resource and request.
+
+01:14:00
+even though there is a lot of load will it able to go beyond this much CPU will it go beyond this much no it can burst there is a concept of burstable CPUs can be burst I mean to say CPUs can go little up considering other parts other containers are not taking can they go little above that limit also yes considering other parts other containers are
+
+01:14:29
+fully utilizing the CPUs, it can burst to some extent. It can go a little beyond that CPU, but not completely again. But if other applications also have a same kind of a load, will it able to burst time into set as that CPU can go beyond this one GPU, sorry, one CPU. If other applications also having a load, no. In that case, if that...
+
+01:14:57
+CPU if that process is running out of that CPU. Does that process become slow? Does that application become slow? Do you have a performance issues in your application? Do you have a performance issues in our application? Your SLAs are breached your SLAs are breached. What do you mean by SLA? There are some SLAs also service level agreements. So does client will give some service level agreement saying that my application should be responded within so and so milliseconds.
+
+01:15:28
+or so and so seconds. Do you need to develop and support the application within that SLA? Do you need to develop host and support that application within given SLA service level agreements?
+
+01:15:41
+Yes, because do you like those type of applications guys? Let's say you take a Ola or Uber if it is taking fuse time. It is taking like one minute to load this page when I am clicking that button login it is taking one minute or 30 seconds. No one will use.
+
+01:16:01
+So now if it is running out of CPU, your server, I mean to say your process that can be container directly in server, if it is running out of CPU that application will become slow.
+
+01:16:17
+Yes, but same thing if it is running out of memory, what will happen these type of questions also asked in the interview if the process is running out of memory what will happen.
+
+01:16:32
+What will happen?
+
+01:16:37
+OOM killed OOM killed what do you mean by OOM out of memory out of memory which means your container will be killed your container will be killed
+
+01:16:55
+which means your process basically process process will be killed container is nothing but what inside the container do you have some process like a Java process at arm cad process or Python process or node.js process in which your application is running. That process is nothing but a container your process will be killed your container will be killed but since Kubernetes manages this containers again, you will get a container. I mean to say container will be restarted. But again will it killed.
+
+01:17:25
+after some time if there is a lot of load even though kubernetes is starting that container again again will it be killed again will it be killed if there is a lot of load so in that case can i see some kind of a crash loop back off also some kind of a crash loop back off error also in that case it is starting it will work for some time and again it will be killed now what is the solution if i don't want these two things to be happen what is the solution
+
+01:17:54
+I don't want these two things to be happen. What is the solution? Instead of running this and one replica, can I run this in two replicas? Can I run this in two replicas? There are two types of scaling here also. There are two types of scaling here horizontal, horizontal and vertical horizontal and vertical. What do you mean by vertical? Can I increase the capacity and resources of my pod vertically?
+
+01:18:23
+Now can I say something like this instead of one CPU it can go up to two CPU 2 GB like this if I change the limits and request of my pod that container can I consider that as a vertical scaling vertical pod auto scaling or vertical scaling. Yes so this is vertical but I don't want to do vertical can I do horizontal horizontal in the sense instead of one replica can I have two replicas.
+
+01:18:53
+two replicas two pods instead of one replica I will have a two pods two replicas with same capacity I can scale I can scale if I have a if that is deployed as a deployment or RC or RS can I scale that one to two two to three three to four like that
+
+01:19:20
+Yes, now if I have a two replicas does this service will distribute the load does this service will route the traffic between this one and this one instead of having all the load in single pod the load is distributed even after having two pods still there is a load again can I scale to
+
+01:19:42
+can I scale to three like that but this is manual this is manual I no need to do manually is there any possibility that automatically whenever there is a lot of CPU utilization memory utilization on your pod container is there anyone who can do that scaling automatically instead of I execute that scale commands is that possible based on the load based on the
+
+01:20:11
+pod container is there a possibility that we can increase and decrease the number of pod replicas. Yes, in Kubernetes there is a concept called there is a concept called pod auto scalar. There is a concept called pod auto scalar. HPA VP. What do you mean by HPA?
+
+01:20:37
+horizontal horizontal horizontal pod auto scalar. What is this VPA?
+
+01:20:49
+vertical pod autoscaler but most of the times which one we will use widely used whether it's a container whether it's a pods whether it's a virtual machines
+
+01:21:03
+horizontal horizontal but this is part auto scaler guys. Don't consider your Kubernetes will scale your nodes. It will scale the parts but to scale the parts do I need to have enough CPU memory available in my cluster? Let's say even though you are using HPA horizontal part auto scaler. Let's consider your servers doesn't have enough CPU enough memory. Do you think your part get scheduled even though HPA is increasing the number of pod replicas?
+
+01:21:34
+even though HPA is increasing the number of quad replicas. Do you think does that part get scheduled if that much resources are not available in any node in the cluster?
+
+01:21:46
+No, so this is only scaling your ports. Does Kubernetes will scale your servers if your servers are running out of CPU, servers are running out of memory. Do you think your servers will be automatically increased and decreased by Kubernetes? No, Kubernetes will scale the ports within a given cluster, within a given cluster. But will I able to scale my ports automatically if I have enough nodes, enough CPU, enough memory available in the cluster?
+
+01:22:15
+automatically that is what pod autoscaler that is what pod autoscaler so pod autoscaler is one kubernetes resource using that pod autoscaler we can increase and decrease the pod automatically but there are two things hpa and vpa which one is widely used whether it's a server whether it's a container whether it's a pod
+
+01:22:43
+we are going to use HPA, horizontal pod autoscaler. Now, how horizontal pod autoscaler works? Again, that is one Kubernetes resource. The way we have a deployment, the way we have a replication controller, the way we have a demon set or service, they have another Kubernetes object called HPA, that is horizontal pod autoscaler. So do I need to create a HPA? Also, the way I am creating a service,
+
+01:23:13
+the way I am creating a deployment, I need to create a HPA also to scale the parts automatically for that application.
+
+01:23:24
+Yes, how HP works HP works based on the metrics HP works based on the metrics does HP in HP a can I define my thresholds threshold value when to scale and how to scale the threshold values does HP should take a decision when it when it has to scale the parts when it has to decrease the parts when it has to increase the parts do we need to define some kind of a threshold value conditions.
+
+01:23:55
+threshold values based on the matrix. So let's say if CPU is greater than 80% let's say I have defined like this I have defined like this now let's say the limit is one CPU the moment it reaches 80% which means 80% 800 millicore has been already used by that container limit is one 80% of one core is what 800 millicore.
+
+01:24:22
+So the moment it reaches 800 milli course in this pod container does this HPA will try to scale the pods does this HPA will internally execute that scale command you no need to manually execute does this HPA will execute that scale command. I have a knife and replicas as three like that internally as a code. Yes. So is this HPA is responsible for watching your pods metrics your pod container metrics
+
+01:24:52
+Is this HPA is responsible for watching your pod container metrics and is it going to scale up scale down based on the metrics and threshold values. Yes.
+
+01:25:04
+Like in AWS, we have an alarm. In AWS auto scaling groups, we have alarms, cloud watch alarms. In AWS auto scaling, is AWS auto scaling is increasing and decreasing your servers? In AWS also we have auto scaling that is increasing and decreasing the servers. So is it increasing and decreasing the servers based on the threshold values, kind of a CPU utilization? So is that auto scaling is using some kind of a cloud watch metrics, cloud watch alarms?
+
+01:25:34
+to take the decisions. Yes. Similarly, similarly does HP is responsible for watching your part metrics your part container metrics and take the decision increasing and decreasing the number of ports automatically. Yes, but this HP a request metrics this HP a request metrics we are going to use one more application software called metrics server.
+
+01:26:04
+It is like a cloud watch for Kubernetes. It is like a cloud watch for Kubernetes, this matrix server. So in AWS, we have a cloud watch. Is cloud watch is going to watch your EC2 instances and observe what is CPU, what is the memory utilization? Yes. Similarly, is this matrix server is responsible for gathering the metrics about your quads, your quad metrics, your node metrics? Yes. So does this HPA will?
+
+01:26:34
+use the APS APS metric APS available as part of this metric server. So this metric server is going to gather the metrics. This metric server will contact who to gather the metrics about that node and the parts which is running on that node it will contact whom again in that node. Is it going to contact that? Is it going to contact that cubelet?
+
+01:27:02
+Is it going to contact the cubelet which is running in that node? So this metric server will contact cubelet to gather them metrics about this node and this pods which is running. So does this HPA can see whether it is over this percent on that pod on that container? Is it already reached 80 or within less than 80? If it is crosses 80, is it going to increase and decrease? Is it going to increase the replicas automatically?
+
+01:27:32
+So using this HPA will I able to increase and decrease the number of pods pod replicas automatically based on the load it will increase it will decrease so here I can define minimum replicas I can define minimum replicas and also maximum replicas minimum replicas and maximum replicas like this. Now if I say minimum replicas as 2.
+
+01:28:01
+whether you have a load whether you don't have a load how many parts will be available for that application if you have defined minimum replicas as to 2 but whenever there is a load maximum how many parts it can scale maximum up to how many parts it can increase even if there is a load 5 even after 5 parts even after 5 parts you still have a load still it is above the threshold.
+
+01:28:29
+Do you think are you going to get a sixth quad or seventh quad?
+
+01:28:37
+So, theoretically is everyone clear what is that pod autoscaler, what is that HPA, how that HPA works in the Kubernetes, is everyone clear theoretically.
+
+01:28:52
+Now, practically, I will demonstrate in the next class. Practically, I will demonstrate in the next class. We will create a HPA also, and we will see how it works. Now, before I wrap up the session for this week, I wanted you to practice whatever we discussed so far. Try to create a pods, deployment services, play around with all these things. And also, I want to give an assignment, CACD.
+
+01:29:21
+Will you guys able to build and apply any application you take maybe this application in Kubernetes cluster using Jenkins pipelines.
+
+01:29:38
+will you guys able to do this as an assignment.
+
+01:29:42
+build and apply any application, maybe this application, into Kubernetes cluster.
+
+01:29:50
+But I want to follow that all those things guys you need to maintain image for each and every release each of each and every change you want to have the new version of the image and I want you to deploy that whatever image you are building. I think yesterday class I have explained how to do that if I am not wrong did I explained in yesterday class.
+
+01:30:13
+Will you guys do that as an assignment?
+
+01:30:18
+If you want to refer, if you want to refer, there is a video in our YouTube channel.
+
+01:30:25
+If you want to refer there is a video in YouTube channel, but there I am explaining different application. You can just refer the concept. You can just refer the concept, but I want you to do in a different way for a different application.
+
+01:30:44
+I don't want you to do for this application different application, but I want to do that each and every version of the image you want to maintain you want to update that tag automatically in pipeline and apply that one. This is the video which you can refer. This is very very important video this we got a tremendous feedback not only from our students from our outside students also.
+
+01:31:13
+Almost 1 lakh people 1 lakh people watch this video 1 lakh views lot of people given the comments Not only inside people. I mean to say lot of
+
+01:31:29
+outside people also you can see like very good and important video. This is just one use case, but will I able to follow same process with different different use cases, different different requirements also not always you are going to do like this. Not every time you are going to do like this based on your requirement will able to do this.
+
+01:31:56
+Yes, so you can refer this video. But let me explain here itself in this video. I am using two options. I am to using two options to connect the Jenkins with my Kubernetes cluster. I am using two options. Now this is my Kubernetes cluster. Now I am using two options to connect Jenkins with Kubernetes one option. I am using one plugin.
+
+01:32:22
+I am using one plugin called the deploy to Kubernetes plugin. Deploy to Kubernetes plugin, but that plugin is not working. This plugin is not working with the latest releases. So deploy to Kubernetes plugin.
+
+01:32:43
+deployed to Kubernetes plugin, Jenkins plugin basically. So this plugin is not working with the latest version, which means what is the current version of that plugin? You see 2.3.1. If you use this version by going to the Jenkins, by going to the Jenkins and by going to the plugins, if I search and install,
+
+01:33:11
+This version of the plugin will be installed. This plugin will not work. You need to install old plugin if you want to use this approach. If you want to use this plugin approach, you have to install the version one, 1.0 version of this plugin, if you want to use this one. So don't use this one for now. What is the other approach? Can I do this way? Can I connect to this server? Don't use this plugin. Again, don't.
+
+01:33:40
+come to me sir this plugin is not working I am I am already clearly saying this plugin will not work if you use that two point version of the plugin it will not work because people blindly follow this video they will just follow step one Balaji sir is doing this step two doing this don't blindly follow because this plugin will not work don't come to me saying that this plugin is not working I am clearly already saying that plugin will not work so don't use this one
+
+01:34:09
+In that video another approach I have explained that is as a Jenkins user. This is my Jenkins server. Can I access to this Jenkins server? Can I switch to Jenkins user also? Because Jenkins will be running as a Jenkins user. Your Jenkins pipelines will run as Jenkins user. So can I switch to Jenkins user in this machine? Can I download and install kubectl?
+
+01:34:37
+as a Jenkins user in this Jenkins server. Can I download and install kubectl in Jenkins user as a Jenkins user? Yes. Then can I create that kubeconfig file? Can I create that dot kube dot config file again in which user home directory you should have this config file under Jenkins directory Jenkins directory. So
+
+01:35:06
+You create that kubeconfig file. You have that kubeconfig file created. In your pipeline, if you are writing something like this, kubectl apply ifnf, that deployment aml or service aml, whatever it is, if I do like this, does Jenkins will connect to that API server to create the deployment services, whatever you want to do? Because you have a kubectl configured.
+
+01:35:36
+cube config file is there. Now, where can I maintain these deployment files, manifest files in my version control system in the source code of that application, maybe whatever application. If it is this application, can I have something like this deployment, or service, whatever I want to create in my Kubernetes. Now, instead of hard coding like this, instead of hard coding, I can use some kind of a placeholder, maybe this application.
+
+01:36:05
+I want you to do for this application or any other application. Will able to do same thing for node.js or python application that does that matter. Can I deploy using CI CD in Kubernetes as a parts containers can I deploy that node.js application or python application or Java application. If you know the concepts you can do for anything. Now here I can have something like this.
+
+01:36:33
+I can have a placeholder like this. Can I update this with my build number in the pipeline on the fly because I'm maintaining that in here. I can update on the fly and apply. I already explained all these things. Will you guys do this as an assignment? If you do this, you can understand how it works. What is C A? What is CD? What is Kubernetes? What is Docker? Why we are using Docker? Why we are using Kubernetes? Why we are using Jenkins?
+
+01:37:02
+What is SEM? What is SEM? What is Git? Why we are using Git? What is Maven? Why we are using Maven? You can understand all these concepts.
+
+01:37:17
+If you are using plugin, you no need to create that cube config file manually. You no need to do that cube config file manually in that server. But in the UI itself, in the Jenkins UI itself, I will have one option. I will have an option. The way you are creating a secret, secret text, a secret username password, I have an option to create a secret of that cube config file in the Jenkins UI. I can use that secret.
+
+01:37:46
+where I have copy pasted my kubeconfig file content, then I can use that secret in my pipeline. You refer that video, I have explained both. I have explained both that kubeplugin and this kubesetail concept, but now that plugin is not working, don't do that. Don't do with that approach.
+
+01:38:10
+only use the other approach but if you still want to use that plugin you need to know how to use old version of the plugin now this is the new version now there are lot of old versions there are lot of old versions right let me go to the previous versions I will go to this releases I will go to this releases so this version you need to use 1.0 so
+
+01:38:38
+This is the direct link. You need to download this file using this direct link. You need to download this file. In Jenkins, there is an option. You can manually upload this file to install the plugin. But that is nothing to do with the docker and Kubernetes. So it's a different process altogether.
+
+01:39:06
+So in Jenkins, you can go to the manage Jenkins. There is an option to upload these plugins manually. This file you need to browse and upload so that that will also work. What, but you need to use this plugin.
+
+01:39:22
+Do whatever way you want to do, complete that assignment. I will catch you on Monday guys, I will see you on Monday. So do that, do it in a declarative way, do it in a scripted way, whatever way you want to do, do it. I will see you on Monday. Thank you guys. Have a great weekend. See you on Monday.
+
