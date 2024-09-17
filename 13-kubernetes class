@@ -1,0 +1,1011 @@
+00:00
+This conference will now be recorded.
+
+00:07
+In yesterday's session, we were discussing about.
+
+00:12
+What is persistent value? What is persistent value claim? What is static values and what is dynamic values as of now is Kubernetes cluster the current Kubernetes cluster whatever we have is it capable of creating a values dynamically? Do we have any storage class configured as of now? No so if any persistent values are requested any persistent values are created.
+
+00:41
+If there is no volumes available is that PVC will get any storage any volume? No as an admin as an admin we need to manually provision those values. Now.
+
+00:58
+I'll show you how to set up the storage class how to set up the storage class. I will try to explain here. Now I already have a I already have a NFS server. I already have a NFS server. Can I use some kind of a provisioner which will create a persistent value of type NFS automatically using this NFS server. If I configure one storage class.
+
+01:26
+that storage class is capable of creating that persistent value object using NFS type automatically. Now let me demonstrate that.
+
+01:55
+Now here. I don't have any storage class configured in this kubernetes cluster by default. I don't have any storage class. Do I have any storage class configured in this cluster?
+
+02:10
+No.
+
+02:17
+By configuring a storage class, storage class is kind of a one provisioner. It is going to provision that persistent value automatically. Now I'll configure that NFS provisioner. So there is a concept called NFS provisioner, NFS provisioner for Kubernetes. Now you can apply that NFS provisioner. You can apply that NFS provisioner.
+
+02:43
+So this NFS provisioner will try to create a persistent value. This NFS provisioner is automatically going to use your existing already configured NFS of server. This NFS provisioner is going to use your existing and already configured NFS server to support dynamic provision of persistent values. Now if I deploy this NFS provisioner,
+
+03:13
+If I'd apply this NFS provisioner basically storage class is that storage class is going to use existing NFS provisioner.
+
+03:23
+Is that sorry is that storage class is that NFS? Poisoner is going to use existing NFS server. To create a persistent value of type NFS. Yes, so this can be deployed using helm. This can be deployed using helm or without helm also using this manifest files using this manifest files. Whatever I have I can apply those manifest files and create. For our. Again.
+
+03:52
+for our students to make the thing simple for our students. What I have done, I have this YML as part of one running nodes itself I have given. So this YML, whatever YMLs we have here, that NFS related stuff, whatever that provisioner I have to deploy, I have given that as one running nodes. So let me provide that here.
+
+04:20
+So in our GitHub, Metron Technologies, there is one.
+
+04:28
+file for your purpose. I have created one YML in that PV PVC. There is one YML here NFS Provisioner now using this NFS Provisioner if I create a YML and if I apply this YML is that NFS Provisioner that storage class will be configured. If you see this YML. If you see this YML am I creating a storage class here and am I configuring a storage class here.
+
+04:57
+API version this one kind is storage class the name of the storage class that storage class is configured using which one what is the provisioner is used to configure this storage class NFS provisioner this NFS provisioner. Am I deploying that as a pod again? Am I deploying that as a pod here in my Kubernetes cluster that NFS provisioner again?
+
+05:28
+Yes, using this image, using this image, I am creating a part where I am creating an NFS provisioner. Now here, do I need to make sure I update the IP address of my existing already configured NFS server here instead of this IP? Do you need to update your existing and already configured NFS server?
+
+05:53
+There are two locations which you need to update. So let me take that NFS server private IP address.
+
+06:05
+Let me take that NFS server private IP address this one. One location is here. Another location is here. And also do I need to update this NFS a shared directory whatever I have configured in that existing already running NFS server. What was my NFS share? I need to update. Is this correct? Is this correct in the current setup? No. So I have something like this.
+
+06:35
+under course here something like this it is there again in how many places I need to update here again.
+
+06:45
+two locations now I am configuring a storage class using this provisioner. So the provisioner name this one whatever name I am using here for that environment variable same name I am using here as a provisioner name whatever name I am using here that I am using here as a provisioner name now storage class is configured with this provisioner and why do we need all these things.
+
+07:14
+Why we need to have a service account again? Why we need to have this role? And why we are binding that role with that service account? Because this provisioner, this NFS provisioner, is it going to create PV objects manually or automatically? Is it going to create that PV persistent value objects? And is it going to update persistent value claims automatically? Is this provisioner is going to create persistent values?
+
+07:43
+and is it going to update PVC's?
+
+07:49
+persistent value claims yes, so do we need to have a permissions for this provision to create a volume sub date the claims Otherwise It won't work. Otherwise it won't work So how we are granting permissions again as we discussed last time when I am explaining metric server again RBAC am I creating one service account with this name?
+
+08:22
+Now, am I granting permissions here for PVCs, for persistent volumes, for persistent volumes? Am I giving create permissions, delete permissions, list watch permissions for persistent volumes? For persistent volume claims, get permissions, watch permissions, update permissions. For storage classes also, permissions we have given. So since I am creating a permissions,
+
+08:49
+And I am binding these permissions with this service account using this role binding. And this service account, I attach it with this pod. I attach it with this pod, this pod manifest. I attach it with the service account. So does this container, I mean to say, does this application, does this provisioner will have access to the Kubernetes APIs to these objects, these permissions, as per the given permissions? Yes. If I don't do this.
+
+09:18
+If I don't do this, if I don't attach the service account, then even though I have a NFS provisioner, that NFS provisioner will be able to create PV objects programmatically. PVCs can be detected now. So this is my whole manifest. This is my whole manifest where I updated my NFS server details here, my NFS share. One more important thing here, am I marking that as a default storage class here?
+
+09:48
+Am I marking is this the easy to default storage class? Am I saying true? Which means if anyone is creating a PVC, if anyone is creating a PVC, there is no PV available. And at the same time, there is no storage class mentioned in the PVC. Does this storage class will create a value for those PVCs?
+
+10:11
+is this will be used as a default storage class for the PVCs where we have not mentioned which storage class to be used and there is no PVs available for that PVCs. Does the PV will be created by the storage class because of this default we are marking that as a default.
+
+10:31
+this now let me apply this one let me create a manifest.
+
+10:43
+As a Kubernetes admin, I am creating a storage class. Storage class will offer what type of storage you want to create for your values where configuring. Now let me apply. Let me apply this.
+
+11:02
+NFS storage. Now all the required Kubernetes objects are created. Now that is I think running in field system.
+
+11:13
+cube.
+
+11:22
+at least we see.
+
+11:26
+Now do I have that NFS provisioner also running as a pod. Now do I have a storage class created.
+
+11:35
+They have a storage class. This is the storage class name that is marked as default. This is using this default, you know, provisioner. Now this is going to create a values. So what is the reclaim policy for these values, whatever created by this storage class? What is the reclaim policy? It will be applied on that PV object. What is the reclaim policy which will be applied on that PV object? For this dynamic values.
+
+12:04
+Reclaim policy is delete. Will I able to customize this one while creating a storage class? The storage class create values, but can I change the reclaim policies instead of delete? It should do kind of a retain. Is that possible? Yes, you need to pass some parameters for the storage class object. You need to pass on parameters. You need to pass some parameters. So that way, you can change the reclaim policies.
+
+12:34
+Now, since it's a dynamic storage...
+
+12:39
+like a reclaim policy will be delete only it is recommended.
+
+12:45
+Now let me delete this application whatever application I am running let me delete this application.
+
+12:57
+So deleting this application, is it going to delete PV PVCs whatever this is using? Is it going to delete that respect to PV PVCs?
+
+13:09
+What if I'm deleting this application this application is using some persistent values persistent value claims. Is it going to delete those from the cluster?
+
+13:19
+I deleted that application. Is it going to delete those PV, PVCs, whatever it is using? No. Now, let me delete this PVC. CubeCTL delete PVC. Now I'm deleting the PVC. What will happen to the associated PV? The reclaim policy is retained. So is it going to delete this PV? I'm deleting this PVC. This PVC is associated this value.
+
+13:49
+It is not going to delete now. Let me delete the volumes also to demonstrate dynamic storages. To demonstrate dynamic storages. Let me delete the values also. Now I don't have any values. I don't have any values. I don't have any values PV is not there. I don't have a PVC. Now if I deploy this application now if I deploy this application.
+
+14:17
+It is creating a PVC it is going to create a PVC that PVC we are using in our pod manifest, but this time because of that storage class does that PV for this claim will be automatically created by that storage class because that storage class is marked as default storage class.
+
+14:38
+Now, as I already told, if I have multiple storage classes, can I say from which storage class it has to provision also using this option?
+
+15:06
+So if I have a multiple storage classes, I can mention the storage class name also, which storage class it has to use, which storage class it has to use to provision the storage. I can give, if I have multiple storage classes, I can give something like this, storage class name, something like this. If I don't give also, if I have some storage class which is marked as default storage class, is the value will be provisioned by that storage class for this claim?
+
+15:39
+Now do I need to create the PV the way we created yesterday manually do I need to create the PV the way we created this object manually now do I need to create this object manually no who will do this for us who will do this for us the storage class the provisioner now let me demonstrate that as of now do I have any PV guys I have a storage class.
+
+16:08
+I don't have any PV. I have a storage class is that storage class is marked as default.
+
+16:18
+Yes. Now I am going to deploy that database application, stateful application. Now I am just using same concept, a PVC. But I don't have any PVs. Now let me apply this. kubectl apply ifanf, that application. Now if you see, who created this PV? Now I can see one PV. I can see the PV. Who created that PV?
+
+16:48
+is that PV is created by that storage class which is marked as a default storage class
+
+16:56
+Now we just created a PVC. We just created a PVC. The guy who is deploying the application, he's created a PVC. Is that PVC? I mean to say for that PVC, is the value got created automatically and assigned?
+
+17:13
+Now any other application, let's say I want to deploy one more application like Jenkins application another stateful application like Jenkins can I create a PVC for Jenkins pod and I use that PVC for my Jenkins pod PV will be automatically created and assigned for the Jenkins also.
+
+17:32
+like any other stateful application.
+
+17:38
+yes now if you see let me go to nfs server this is my existing nfs server
+
+17:48
+This is my existing NFS server.
+
+17:54
+if we go to this existing NFS server. Now, can I see one subfolder created? Can I see one subfolder created in that NFS share directory? This subfolder, this subfolder. Now, is this subfolder mounted with the database portal from this NFS? Is this subfolder? You see, it is something like this, namespace name, namespace name, the PVC name, some random number.
+
+18:24
+is this sub folder is mounted with that database pod from this nfs server
+
+18:36
+is this subfolder mounted to the database pod. Now is database is mounting the files to this one is it started writing the files to this one.
+
+18:51
+Let me see if my pod is in running state or what state. Let me see. You see tell get all I fun in this type on NS. My pod is still in a container creating state. Let me see what could be the reason.
+
+19:13
+why it is still in a container creating state.
+
+19:20
+Again guys that for you know
+
+19:28
+failed to resolve server name or server name or service not known.
+
+19:39
+One second is because of that hash is there right. Let me recreate my storage class. It is considering this one also.
+
+19:55
+one second just to make things clear.
+
+20:11
+This is fine. I think it is taking that hash also. That's why it is saying name or service not known some kind of error we are getting. Let me see. Name or service not known. In which part, in which node this is assigned.
+
+20:29
+in which node it is assigned, this is assigned to 206.
+
+20:35
+One second, let me describe that PV.
+
+20:44
+Let me describe that PV this PV whatever PV created by that storage class. Let me describe.
+
+20:55
+it should not take this one now what I'll do let me read apply my storage class let me read apply my storage class there is a problem
+
+21:06
+cubectl get all hyphen n, test hyphen ns. First let me delete this. I'll delete this application. Cubectl delete.
+
+21:20
+RS this replica set first time going to delete
+
+21:25
+Now let me delete that PVC also.
+
+21:34
+because that is not properly provisioned. You see it will delete. PVC now the reclaim policy is delete. So the moment I delete this PVC is that associated PV will also get deleted. That PV object.
+
+21:59
+Yes.
+
+22:07
+Associated PV also gets deleted. Now let me modify my storage class. Because of the reclaim policy, the associated PV also gets deleted. Let's wait for some time.
+
+22:39
+Now let me delete whatever I have applied that storage class. I'll delete that complete because all the resources whatever I have created that storage class.
+
+22:58
+I'll modify two things.
+
+23:02
+So here somewhere there is a problem here.
+
+23:10
+This hash represents comments, but I have given like this. It is taking this one also because there is no space given. So that's why it was taking this one also. Now I have fixed that. Let me read apply. My storage class and all these provisioners now. I deleted completely. Now there is no storage class.
+
+23:35
+There is no storage class. If you see there is no poster because I deleted all these things because there was a problem. There was a problem. Now there is no storage class. There is no poster. Now I deleted whatever PVC has created.
+
+23:55
+Now I that PVC might should have deleted PV also, but why it is not deleted because of that wrong configuration because of that wrong configuration.
+
+24:08
+It is not able to delete. Let's see if I can delete like this.
+
+24:15
+I am manually deleting because of the wrong configurations it is not able to delete. I manually deleted. Now there is no PV there is no PVC. I updated my
+
+24:29
+this approach because there was a typo here. I fix that now. Let me apply this.
+
+24:41
+Now I created a storage class again. I created a storage class again with the proper configurations now with proper configurations again everything is empty. I don't have any PVC.
+
+24:58
+in that namespace. I don't have any PVs. Now, let me apply cube CTL apply. I for that spring application. I am applying now PV is created. PVC is created by house. PVC is created by
+
+25:24
+For that PVC this PV is created by storage class. Now, let's see my part status. Let's see my part status.
+
+25:34
+is my parties using that value whatever is provisioned by whatever is provisioned by that storage class. Now if I go and see here if I go and see here now.
+
+25:48
+This one, this one, the new one, it has randomly generated this directory. Now, if I see is your database bodies started using that.
+
+26:03
+this one. Do I have some files created in this sub directory in that NFS share directory?
+
+26:12
+Now is database is writing all your data files to this location, NFS server, this NFS share within that NFS share. This was the folder created for that value. Is it started writing the data here?
+
+26:27
+Yes. Now similarly, if I want to deploy another application, similarly, I want to deploy another application. Let's say I want to run Jenkins also as a container. Is it possible for me to run Jenkins also in Kubernetes? Instead of running Jenkins in a virtual machine, is it possible to run Jenkins also as a container, as a pod in Kubernetes? Can I do the, instead of virtual deployment of my Jenkins, can I do the pod deployment Jenkins?
+
+26:57
+Can I run my Jenkins also as a pod instead of virtual machine? Guys, if required, if required, can I configure? Can I use containers as agents to your Jenkins? The way you added agents, machine agents, can I use pods also as agents or containers also as agent? Yes, you can do all those things also in Jenkins. That is out of my scope, our scope. Now let me show you.
+
+27:27
+I have an image. I have an image in the Docker Hub. I have an image in the Docker Hub, the Jenkins image. Now using this Jenkins image, will I able to run my Jenkins also as a pod, as a container in Kubernetes? Now they are saying this is deprecated. Use this one. There is another registry. The registry name itself Jenkins.
+
+27:54
+The repository name is also Jenkins LTS is a tag. They're saying use this one, use this image. So they're deprecating in the favor of this one. Now they're asking us to use this one. They're asking us to use this one. This is the registry. This is the repository. You have a lot of tags, lot of tags. That LTS stands for what? LTS stands for latest stable release.
+
+28:24
+Latest not latest. This is not latest latest is different. This LTS is different LTS is stands for latest stable kind of a stuff. LTS and latest is not equals race. This is This one and this one is not same. This LTS and this one is not same. They're giving tag as LTS. They're giving tag as LTS. Now,
+
+28:54
+They're asking us to use that image. Now, can I create a deployment or replica set using that image to run Jenkins also? And one of the Kubernetes cluster as a port.
+
+29:09
+But if you want to run Jenkins also, are you going to run your Jenkins pods along with your application pods in the same Kubernetes cluster? You are not going to do that. Even though you are trying to run Jenkins as a pod, you will not run your Jenkins pod along with your application pods in the same Kubernetes cluster. Can I have a separate Kubernetes cluster where I will have only DevOps-related applications, DevOps-related tools running as a pods? Yes, you can do that.
+
+29:41
+no but the concept here but the concept here i am going to create a deployment or replica set whatever it is for jenkins now jenkins something like now can i use that image that jenkins registry official image jenkins registry repository tag now what is the port on which
+
+30:13
+80 80 now these labels something like this Jenkins app are Jenkins like this you can view
+
+30:25
+I can do like this Jenkins Jenkins like this now I'll resource request and limits. I'll request something request. CPU.
+
+30:38
+Let's say I'm requesting 200 milli core memory. I need minimum, maybe minimum 256 required limits. I'll say maybe 512. It can go something like this. Now, I am going to deploy this as a pod. Let's consider I created a lot of jobs. I installed a lot of plugins. If the Jenkins pod is deleted and recreated, do you have all those plugins, all those jobs?
+
+31:07
+your build history, your workspace, if the Jenkins part is deleted and recreated, do you have all the Jenkins data? If this is deleted and recreated.
+
+31:18
+No, you will ask the state you will ask the state. Now if I want to maintain the state of this Jenkins, I want to maintain the data of this Jenkins. Do I need to use Valium's concept again here?
+
+31:34
+Values concept again here. There are two things one is one is volumes another one is value mounts name of the value. I'll say something like this Jenkins well Here instead of using NFS instead of using host path. Can I use a concept of persistent volume claim here? something like this
+
+32:00
+I will say Jenkins PVC now can I use that value here as a value mounts as a value mounts
+
+32:12
+name whatever value name you are using that is your value mount name here mount path what is the mount path to which directory I have to mount is it always like this is it always like this
+
+32:28
+No. So do you need to mount to the directory where Jenkins is going to write the data in that container your container directory container file system where it is going to write the data. So how do I know how do I know where exactly where exactly it is writing what is the Jenkins were working directory if I want to know can I read more about this Jenkins official image.
+
+32:58
+Mamata is saying where lip Jenkins, but that is not always that is not always if you see if you understand the official Docker file whatever used by that Jenkins image to be created. What is the Jenkins home directory they are setting there is one environment variable called Jenkins home directory. What is the home directory they are setting is it where lip Jenkins or is it where underscore Jenkins underscore home?
+
+33:29
+where underscore Jenkins underscore home. So which means is this environment variable be used by your Jenkins process to write all the Jenkins related data like plugins jobs workspace everything.
+
+33:44
+So that is depends on your environment. Now, if you see they're saying, so they're saying inside the container, inside the directory, it is going to maintain the data here, where live Jenkins, sorry, where underscore Jenkins underscore home. Can I use that as a mount path here? Now, your Jenkins container will write the data to this path in the container. That path is mounted with this value.
+
+34:14
+So is it going to be maintained in the whatever storage I am going to get for this claim will it be actually maintained in that storage whatever I am going to get this for this claim. Yes. Now if I deploy as is will I get a error saying that the PVC not found. Will I get a message saying that PVC not for now since you are deploying this application. Do you need to raise a request for value using PVC? Do you need to rise a request for storage?
+
+34:45
+like how much storage you need, what type of access mode you need. Do you need to create a persistent volume claim?
+
+34:53
+This is my claim name. How much storage you need? Let's say I need 2 GI or 3 GI. This value mode is not mandatory. You can leave this something like this. Same namespace, same namespace in whatever namespace. Let's say I have a namespace called a DevOps DevOps endless.
+
+35:21
+Let's say I have namespace called devops ns or Jenkins ns. If I create a namespace like this, can I apply this in that namespace devops ns or Jenkins ns like this?
+
+35:38
+Now I am just creating a claim but now since I have a storage class configured will I get a value for this claim automatically created by that storage class now.
+
+35:54
+Dynamic volumes. Now one more thing which I want to create here to access this Jenkins from outside. Do I need to create a service for this Jenkins also?
+
+36:08
+service Jenkins service.
+
+36:14
+your labels as a selectors here what labels I am using for my pod template Jenkins.
+
+36:24
+port this port can be 80 or 8080 that is service ports target port but if I want to access outside what type of service now
+
+36:37
+node put now do I need to have this service also in the same namespace
+
+36:44
+whatever namespace I have that can be like this but as of now do I have this namespace created if I apply this will I get a error saying that will I get a error saying that devops ns not found
+
+37:00
+If required I can create a namespace also.
+
+37:14
+api version kind spec kind namespace kind namespace api version v1
+
+37:29
+this is not spec this is metadata now here can I give name like this devops ns
+
+37:42
+Now if I want to add any labels for that namespace like labels. Now I'll say team devops team.
+
+37:56
+something like this.
+
+38:00
+something like this tools kind of a metadata.
+
+38:07
+something like this anything any key value pair for identification purpose. This is declarative way of creating a namespace if I want to imperatively also create can I execute that cubes utl create ns that namespace name.
+
+38:24
+Whatever way you want to do this now. I'm just creating a PVC. Now does PV will be automatically created because there is a storage class.
+
+38:39
+But to demonstrate this application, let me scale down the other application because I have a lot of applications already running. To demonstrate this application, I'll try to scale down the other application. I'll try to scale down the other application. This is Spring Gap application. Now I'll try to scale down because do I have enough resources available in my cluster to run multiple applications? No. So instead of two replicas,
+
+39:07
+Instead of two replicas, I am creating only one replica for this application.
+
+39:13
+But in real time are you going to make sure you have enough servers enough CPU enough memory available in the cluster to deploy all of your applications with as many replicas as you need. As many replicas as you need if you want to deploy you'll make sure you have enough. Now I have only one replica of this database one replica of this application. Now I'm going to deploy this Jenkins also one replica only one replica.
+
+39:45
+As of now, do I have that namespace? The DevOps NS? No. I'm creating all these things in a single YML. But can I, for a better maintenance and readability, can I have each and everything in a separate YML? This one in separate YML, if you want to have a better readability, this one in a separate YML for better readability and maintenance? Yes. It's up to you.
+
+40:15
+it's up to you that doesn't matter now let me apply this I may get a error
+
+40:23
+kubectl apply but a dry run can I do if I want to check whether it will work or not dry run equals to client is there server is there now everything is perfect since it's a dry run since it's a dry run namespace is not actually created that's why is it saying error for that other three deployment PVC and service is it saying namespace not found because this is just a dry run.
+
+40:54
+Now, let me do client-side validation. Let me do client-side validation. So it is not actually verifying with the server only cubes. You tell itself is doing the validation. Now is it verifying that yml manifest only it is not verifying whether that was resources are there in the server side.
+
+41:15
+So when I'm using this server option is request is went to the API server and is it doing the kind of a dry run over there. Yes, when I'm using this client option, is it doing within kubectl within client only. It is not actually verifying with server. It is just verifying the manifest.
+
+41:36
+Now let me apply this.
+
+41:40
+let me apply this now I have PV is this PV created automatically is this persistent value is it created automatically now.
+
+41:56
+Who created that PV automatically?
+
+42:00
+storage class. Now is that PV is used by this PVC is that PV is used by this PVC is that PV is claimed by this PVC. Now that PVC is a namespace specific that PV is a namespace specific. Now do I have that PVC created? Do I have that PVC created in this namespace
+
+42:28
+is that PVC is used by your Jenkins pod.
+
+42:33
+cube CTL describe what
+
+42:38
+cubes detail describe pod I am describing this pod which is there in this name space. Now we have a value is that value is basically a reference to the persistent volume claim in the same name space. This is Jenkins PVC. This value is mounted with this directory. Now I have a Jenkins pod. Now Jenkins is
+
+43:05
+writing all its Jenkins related files in this directory Jenkins underscore home directory Jenkins underscore home directory it is writing
+
+43:22
+Now is it actually is all these files are actually written in that NFS storage. Now this is my NFS server. If I see.
+
+43:34
+mvnt nfs share now can I see one more folder that namespace name pvc name some random name now do I have all these files that Jenkins is writing all the data to this nfs storage
+
+43:55
+Now, can I see all these files?
+
+44:01
+whatever I see in the Jenkins Jenkins zone directory is it actually return into this mount.
+
+44:08
+Now whatever I see here is it there.
+
+44:18
+Can I see same thing? It is not a backup. Is your container directory is mounted with this storage? So it is actually maintaining the files here. Now I'll access Jenkins. I'll access Jenkins.
+
+44:36
+using that service name using that service name. Sorry service port 32072. Let's say I want to access the Jenkins from outside.
+
+44:49
+any server where I can open that port.
+
+44:58
+Let me open that port.
+
+45:11
+that quote I'll open 32072.
+
+45:16
+Now I by using that server IP address wherever I have opened that port that node IP and node port this node IP public IP and that respective port when I'm accessing am I able to see Jenkins home page since I'm creating this for the first time do I need to configure this Jenkins get the initial admin password now if I do the normal cat here will I get that password.
+
+45:46
+Where is that password? How to get this password now? Can I execute kubectl exec, that pod name, that cat command on that one, that Kubernetes pod, that cat command here? Otherwise, if you check the logs also, kubectl logs of the data, sorry, that Jenkins pod. Now, can I see that initial admin password?
+
+46:16
+Can I see that initial admin password? This one. Otherwise you execute kubectl exec. Exec. Instead of ls, what I'll do, I'll do the cat. Cat on that location.
+
+46:34
+I know need to go inside also. This is my password. This is my initial admin password. Now whatever plugins I am installing, whatever jobs I am going to create, whatever credentials I am going to create, does all these things will be part of that varlib Jenkins is that varlib Jenkins is mounted with your different storage like NFS. Even though my Jenkins part is deleted and recreated, they have everything. Whatever is part of my last Jenkins part.
+
+47:04
+Will I again have all the jobs, all the configurations?
+
+47:11
+So are you guys clear? If it is a stateful application, do we need to use this Values concept? If I want to run any stateful application in Kubernetes, do I need to use Values concept and how to use Values with respect to Values? What is PVC? What is PV? What is storage class? What is access mode? What is reclaim policies? Are you guys clear? I am just taking few one or two use cases.
+
+47:40
+But for based on your requirement, if you want to run any application, kind of any stateful application, are you going to leverage all these concepts, like deployments or services, PVCs, namespaces, resource request limits, values, value modes? Are you going to leverage all these things based on your requirement?
+
+48:03
+years so that is how it works now it is taking some time because my I have given very less resources just a 256 mi very less cpu so that's why the performance of this Jenkins is little less it is little slow
+
+48:23
+Just to make things clear, I am explaining all these things. Is everyone clear, guys? What is PV? What is PVC?
+
+48:37
+Shall we go to the next topic? Is everyone clear? The volumes we were discussing almost for last two and a half day, almost three days. This is very, very important when it comes to the stateful applications. Now let's understand some other concept called config maps and secrets.
+
+49:04
+config maps and see.
+
+49:08
+config maps and secrets. I'm going to stop this one. I'm going to stop this one because it doesn't have enough CPU and memory. So that's why
+
+49:20
+the performance of the Jenkins is little slow. Cubectl top nodes, cubectl top pods, we have a matrix server also running.
+
+49:36
+So it is having very less memory, right? I just given less memory. So the performance is little slow. You can leave that for now. Let me delete this. Cubectl. Guys, if I delete NS is everything will be deleted. Whatever is part of that namespace, like PVC service, pods, deployments, config map, secrets, whatever you have created in that namespace. I'm deleting the namespace itself.
+
+50:04
+I am deleting that namespace itself is everything is deleted the deployments the persistent volume claims the services all those things now since my application itself is deleted now I will get some error because this is not reachable now.
+
+50:29
+because I don't have that namespace itself that applications itself.
+
+50:36
+Now, since the reclaim policy was delete, since I deleted namespace within that namespace, PVC was there. Is that associated PV also got deleted? The associated PV, that Jenkins persistent value, whatever we created for that storage class? Yes. So this is how it works. Now let's understand the concept of config maps and secret.
+
+51:04
+Let's understand the config map and see what is config map. What is secret in kubernetes application configurations application configurations. Is it going to vary from one environment to another environment the configurations of your applications is it going to be vary from one environment another environment like a database user names passwords your application properties.
+
+51:34
+your settings files like any XML file YML file just to give an example any settings file like XML file YML file are your properties file or your database credentials like user names passwords is it going to vary for one environment another environment for which the applications which you are deploying.
+
+51:58
+Yes. So do we need to externalize do we need to externalize the application configurations from your application code to reuse the same package to be deployed in all the environments do I need to externalize as a developer do I need to externalize my application configurations from my application code so that I can reuse same package to deploy in multiple environments.
+
+52:26
+Yes. So when I was using Docker we have already done well, you know using environment variables are using bind mounts using environment variables are using bind mounts. Am I able to pass the key value pairs environment variables at runtime and also is it possible for me to attach files also to my container from outside like any configuration file like XML file YML file
+
+52:56
+Is it possible for me to mount from outside from my server to the container? Like any XML YML property file which your application is using.
+
+53:10
+Yes. So the application configurations, the application configurations will vary from one environment to another environment. It will vary from one environment to another environment. So application configurations will change between environments, like dev environment, different configurations, staging environment, different configurations, production environment, different configurations. You will have.
+
+53:39
+and you want your applications to be portable. You want your applications to be portable. And it is good practice to make container images reusable as possible as reusable as possible. So which means you should be able to use same image you should be able to deploy or you should be able to save me image for a development environment or stage environment or production environment.
+
+54:09
+application configurations will change. Let's say you have some XML file just to give an example. Let's consider your Tomcat server dot XML or your Tomcat users dot XML. Now that application configuration that the service dot XML are users dot XML. I want to have a different different for each environment where I am defined. Suppose while creating a image itself if I make the changes.
+
+54:37
+If I make the changes in that server dot XML or user dot XML or any property file while creating a image itself if I make changes and if I have that image if I try to deploy that image is that configurations will be same in this environment this environment this environment if I do in the image itself.
+
+54:58
+Yes, I mean to say while creating a image itself. I have done the configuration changes Now is it going to be same file same XML file in this container in this container in this container wherever you are deploying Yes Now is there a way? Where we can externalize the things if it is a files in Docker using bind amounts concept Using bind mount concept did I explain?
+
+55:27
+Suppose I have a server.xml in my server here. Will I able to mount that file using bind mounts to the container? So if I have some changes here, is this file will be used by your container? Now in this server, if I have a separate server.xml here I have updated some configurations. And if I mount that from outside, will I able to pass configurations as a files?
+
+55:55
+Will I able to mount my configuration files from outside of that container? Will I able to mount files also? I have explained using bind mounts in the doctor. That is one thing. One more thing is environment variables like a key value pairs. If it is a key value pairs of data, can I use this iPhone E at runtime at runtime? Can I pass environment variables? If your application code is reading from environment variables?
+
+56:24
+If your application code is reading from environment variables, your script is reading from environment variables. I can use if any option, but if your code is reading from the property files XML files, can I use bind modes? Can I mount that file from outside to the container?
+
+56:45
+Yes, so let's consider this is dev environment can have a separate server.xml with whatever configurations in this server.xml or user.xml can I mount that from this dev server to the container which is running in this server.
+
+57:02
+using value mounts that bind mounts is for production can I have a different settings in that server dot XML will I able to mount from the server that server dot XML file to your container which is running in the production server. Yes, that is files that is files configurations as a files. Otherwise, if your code is using environment variables. Can I pass environment variables at runtime?
+
+57:29
+using iPhone E option when we are using Docker.
+
+57:35
+Yes. So it is a good practice to make your container images as reusable as possible. You should be able to use same image for stage production dev environment. Now, sometimes in the interviews also, they're asking this question. Are you creating a Docker images for each environment individually? Are you going to have a Docker image, separate Docker image for dev, separate Docker image for stage?
+
+58:02
+separate Docker image for production? No. Same image, but when I am deploying in the respective environment, will I pass my configurations as an environment variables as a files using mounts concept? Yes. But if the developer hard coded everything in the code, is it possible for us to reuse that same images in all the environments if the developer is not written a code in such a way that he's not reading from environment variables?
+
+58:31
+or he is not reading from property files or XML files, then is it possible for us to reuse the same image? No. As I already told, you should store configurations like database connection details, passwords, or API keys outside of your application code. So we need to externalize the things. We need to externalize the things that will change from environment to environment. Does it keeps our code?
+
+59:00
+portable does this will keep or help us to keep our applications portable if I externalize the things By referring from environment variables or property files or XML files. I can keep this application reusable portable So this is critical in Kubernetes world where your applications are packaged as a images Now with the Docker and containers
+
+59:30
+we can keep this configurations out of the image. I mean to say developers will not hard code the configurations instead will they able to refer or use environment variables or will they able to read from some files like property files, XML files. Then at runtime, can I pass environment variables to the container or can I mount the files also to the container from outside if your code is reading the files properties from that file? Yes.
+
+59:58
+We have already done this in the doctor. We have already done in the doctor. But when it comes to Kubernetes, there is a different way of passing. There is a different way of passing these configurations to your Kubernetes pods containers. That is what we have a config maps and secrets. Does this config maps and secrets will help us to pass the configurations to your pods, your containers?
+
+01:00:32
+Yes. So config map is again one Kubernetes object. Config map is again one Kubernetes object. Config map is again one Kubernetes object. So using config map we can maintain two types of data. One is key value pairs of data. I can create a config map with key value pairs of data or I can create a config map with the multi line string, a kind of a file content. I can create a file content.
+
+01:01:03
+multi-line strings are key value pairs of data. ConfigMap is one Kubernetes object. The config map, the Kubernetes config map. ConfigMap in Kubernetes is one object.
+
+01:01:21
+So config map is one Kubernetes object used to store non-confidential data. Non-confidential data config maps will be used to store non-confidential data. Non-critical or non-confidential data that can be stored in a key value pairs. Then does the parts will be able to consume these key value pairs, whatever I am creating in the config map as an environment variables.
+
+01:01:50
+or command line arguments or configuration files as a values.
+
+01:01:56
+Yes. So does this config map allow you to decouple environment specific configurations from your container images so that your applications are easily portable?
+
+01:02:12
+Yes, so we can use this config maps to maintain the configurations data just to give an example. Let me take this yml. Now let me take very simple application. I don't want to make things complex here. Let me take this simple application.
+
+01:02:33
+Now I am deploying this application. Let's say these values. I am already passing as an environment variables. But instead of passing like this, can I create a config map for these values instead of directly passing values here? Can I refer from the config map here? Because now let's consider I want to deploy same application in QA, same application in production.
+
+01:03:02
+same application in Dove. But do you think is this user names password? These type of values will be remain same for all the environments.
+
+01:03:12
+Does these things will remain same for all the environments? No. Now, let's say I want to apply for QA. Again, do I need to modify this one and apply?
+
+01:03:26
+Yes, this way I will I need to duplicate these resources now instead of doing like this. Can I create a config map config map config map is again one Kubernetes object where we can maintain data in a key value pairs and file data also something like this. Can I create a config map API version V1 kind is config map data key and value.
+
+01:03:56
+key and value key and value like a key value pairs. Now, can I use these config map keys? Can I refer this config map keys as an environment variables or command line arguments in my part something like this in environment variables in my part environment variables is of directly hard coding that value. Can I refer from that config map? I created a config map like this with key value pairs.
+
+01:04:25
+Can I use this config map key value pairs? Can I refer that config map key value pairs in my pod container environment variables are command line arguments? Is it a decoupling? Is it decoupling your configurations from your pods? This way.
+
+01:04:49
+Now I can create a config map like this just to give an example let me demonstrate for this application instead of hard coding in my pod manifest like that can I create a config map let's say config map some name spring gap config key value pair any key value pair any key value pair can I give abc xyz this is abc.
+
+01:05:18
+this is xyz can I give test anything something like this this is a key value pairs of data can I create a config map like this key value pairs of data then can I use this config map keys in my pods in my pods environment variables instead of passing like this can I refer from the config map this config map this key here.
+
+01:05:47
+is a directly passing like this. Yes. So here I can create a config map with any key value pairs of data. Let me give something like this MongoDB username. I will give my username something like this. Dev DB. MongoDB password something like.
+
+01:06:11
+devdb at the rate 1 2 3 don't use hashes hash will be considered as a comment here something like this devdb devdb 1 2 3 something like this config map i'll create a config map also in a same namespace where my application i am deploying my pod now i have a config map like this now here in my pod manifest in your containers
+
+01:06:39
+Can you refer those config map key value pairs inside your container command line arguments or environment variables also? Like this is your pod here. If it is environment variable, instead of directly passing value, can I refer something like this value from config map key reference? This is the name of the config map. This is the value. Now internally, is Kubernetes is going to get that value from this config map from that?
+
+01:07:07
+key and pass it to that environment variable internally.
+
+01:07:15
+I can pass I can refer this in environment variables or you are using some command line arguments this command Here in the command line arguments also can refer that config maps
+
+01:07:31
+Yes in the environment variables are in the command line arguments. You can refer those key value pairs those key value pairs So whatever you are defining like this Now something like this. I don't want to hard code. Can I say something like this value from? Value from config map key reference Name name of your config map
+
+01:08:01
+Can I use this name whatever name I have used to create the config map? Can I use this config map name here value from config map key reference name of the config map key? What is the key? Can I use this key? Whatever key I have used here the data key value. Can I use this key? Whatever I have given here now is internally Kubernetes is going to get the value from this config map from this key.
+
+01:08:28
+and will it pass to this environment variable internally by Kubernetes.
+
+01:08:34
+Yes. Now similarly here instead of hard coding like this. Can I do something like this value from?
+
+01:08:45
+config map key reference name of the config map Name of the config map whatever you have used Now key what is the key? Can I use this key? Whatever I have used here something like this MongoDB password Word there is a typo that is fine MongoDB password MongoDB password like this now
+
+01:09:12
+wherever wherever I am using let us say here also other also can I do same thing like this value from.
+
+01:09:23
+config map key reference name of the config map Key, what is the key? So name of the config map is this name of the config map is this and the key whatever key this key
+
+01:09:47
+now similarly here value from value from config
+
+01:09:58
+map key reference name of the config map name of the config map is
+
+01:10:08
+this one name of the config map is this one key whatever key something like this now you are externalizing the configurations from your pods by referring the valve configurations from config map now let's consider without creating this config map if I try to deploy like this do you think your pod will work do you think your pod will come to running state
+
+01:10:37
+Do you think your part will come to running state? No. So you are referring a config map. You need to have a config map. Now let's say this is my dev cluster. In dev cluster, can I create a config map like this and deploy like this, my application? Now let's say I have a production cluster. In the production cluster, can I create a config map with the different configurations?
+
+01:11:02
+proddb proddb123 Can I create a config map with different configurations in the production cluster like this? Now if I deploy this application in the production cluster
+
+01:11:17
+If I'd apply the same application in the production cluster, but I have config map like this is your application configurations will be like this is your application is going to use these things in the production cluster. If I have a production I created a config map like this and if I'd apply the same application in the production is it going to use these values these values based upon the changes in your configurations to environment environment. Can I create a config map with those configurations?
+
+01:11:46
+key value pairs or file contents also.
+
+01:11:51
+This way, we'll be able to externalize the QBurnit, I mean to say configurations from my QBurnit is pods containers.
+
+01:12:02
+It's very important. We are going to use all these things in the applications if you are using Kubernetes. Are you guys clear what is config map? Why do we need config map? What was the problem without config maps and secrets like that? Because as I told environment to environment, your configurations will change. They need to externalize the configurations from my applications, my containers.
+
+01:12:29
+yes now I want to deploy like this I want to deploy like this I want to deploy like this now I don't have a config map for now let me delete that application let me delete that deployment and replica set whatever I have you've CTL get all now let me delete that replica set
+
+01:12:59
+As of now am I using that config maps concept in this pods as of now no let me delete that deployment also deployment is fine because if you recreate it will delete and recreate
+
+01:13:23
+delete deployment this deployment I'm deleting just to make sure you are clear about the concept now I don't want to hard code like this I don't want to hard code like this whatever it is like key value pairs or any environment variables now instead of this way instead of this way
+
+01:13:48
+Now can I do something like this?
+
+01:13:55
+delete everything.
+
+01:14:05
+Now can I have something like this? Can I refer from config maps as a key value pairs in the environment variables? Now if you see, without creating a config map, is it possible for me to refer like this? Is it possible for me to refer that like this without creating this config map? Is it possible for me to refer like this? Now if I try to deploy, if I try to deploy, do I have a config map?
+
+01:14:32
+config map this is also one kubernetes resource they have any config maps for that application this is created by for some other purpose do i have a config map with this name in that namespace as of now no now let me try to apply that let me try to apply qctl apply
+
+01:15:02
+line number 34 there is a problem indentation line number 34
+
+01:15:12
+here you have a problem that indentation might be
+
+01:15:18
+hidden tabs or spaces will be there guys.
+
+01:15:29
+Now let's see.
+
+01:15:35
+if I have a problem let me do one thing instead of wasting the time I'll go to this editor here it will be easy for me to edit
+
+01:15:57
+Now here it will be easy for me.
+
+01:16:11
+there might be some hidden tabs or spaces that won't work
+
+01:16:23
+I think it is not completely copied on second it is not completely copied
+
+01:16:34
+it is not completely copied, it is copied only from line number this one only.
+
+01:17:07
+Let me copy one by one.
+
+01:17:11
+So.
+
+01:17:14
+Here there might be some indentation problems also.
+
+01:17:21
+Let me copy one by one.
+
+01:17:30
+There might be some hidden spaces hidden tabs that will cause the issues. No services also. Let's take this service.
+
+01:17:48
+Let me take this one.
+
+01:18:04
+Well, let me take that one.
+
+01:18:09
+these two.
+
+01:18:14
+No.
+
+01:18:18
+This is because of resources that is fine you can ignore that one.
+
+01:18:55
+let's do the YML validation YML YML validator this is not going to check any keywords guys only the indentation and other stuff will be verified yeah it's a proper YML now there is no issue now let me do that
+
+01:19:30
+Now let me do the dry run.
+
+01:19:44
+Now I have still issue in one of the manifest that is deployment is there services there a pay version is not set for this one when I copy pasted there is two is there are two is available. So that's why let me do this. Yeah, perfect. Now I don't have any config map, but I'm trying to refer a config map.
+
+01:20:13
+Now I'm trying to apply that application. Now if you see.
+
+01:20:20
+My parts in which state now the new status. What is the new status of my parts? Now you can see create container, create container, create container config error. Why this error? How to troubleshoot? Why I have this error?
+
+01:20:44
+How to troubleshoot? Why I have this error? If I want to troubleshoot, can I do something like this? Describe a pod and describe your pod and verify.
+
+01:20:56
+why it is
+
+01:21:00
+in that error what it is trying to say what it is saying error config map spring gap config not found why I am getting this error because am I referring something from that config map if you see environment variables am I referring from that config map is this environment variables are pointing to this config map but again there is some typos so do I have that config map
+
+01:21:30
+They have that config map created in my cluster. They have a config map in that namespace with that name. No. Now there is some typo. Let me correct that typo because username and password, both are pointing to the same key. So here it is fine. Username, I'm pointing to username, password, I'm pointing to password. But in another here, both are, I'm pointing to same key, but that is not correct.
+
+01:22:00
+So username, I'll point to that username only. MongoDB user name. Now I don't have a config map, so that's why we are getting the error. But since it's a replica set, it will not work guys. You need to delete because I have changed some keys. I need to delete that replica set.
+
+01:22:27
+because I have changed some configurations I delete the triplicate set and it applied now I don't have a config map created I don't have a config map created but I am referring that config maps in my pods in my pods I am referring that config map because there is no config maps available the pods are in that container config error now can I create a config map like this you can do declaratively or imperatively also
+
+01:22:57
+using command line also you can do that using command lines also you can do that now I am doing it in a declarative way something like this if it is my dev environment can I create a config map like this with the dev credentials these I am using in my pod environment variables now I will create a config map like this kubectl apply ifnf that config map
+
+01:23:26
+in the same namespace. Now I have a config map. Do I have a config map now with that name spring app config in that namespace? Now is this config maps are used in your pods where you are referring as an environment variables, whatever key values you have created here. Now if you see, since that config map is created, now is my parts are using that config map and those values.
+
+01:23:53
+as environment variables and use my body running state.
+
+01:23:59
+Yes now same application same application. If I want to deploy in a production can I have a production config map created like this and can I deploy this deployment Replicas sets? Whatever it is in the production cluster.
+
+01:24:16
+This is key value pairs. Similarly, any files, suppose I want to mount as a file, property file, XML file, I don't want to directly edit inside my pod, inside my image, inside my container. Is it possible for me to mount the files to my pods from outside using this config maps. So you can create a config map with file content also.
+
+01:24:44
+You can create a config map with file content like this any property file XML file. This is multi-line string. This is multi-line string in your by ml. I can have some property file XML file yml file like this the content of file here. Now, can I use this config map as a value like this? Can I use value value map type config map volumes of type config map here? For my pod.
+
+01:25:14
+I can use that as a config map as a value where I am referring the content or the file the file whatever file I am using here that I am giving that details here now is this value can be mounted with my container like this value mounts this value that config map volume to this container now is this file will be mounted to this path inside your container if that application if that image.
+
+01:25:44
+if that application is reading something from this property file from that location. Now am I able to mount files also from outside to my applications using this config maps as a volumes. Any property file XML file YML file any configuration file. So this way can I use config maps as a volumes also not only just using as a key value pairs in the environment variables or command line arguments.
+
+01:26:13
+Can I use this as a volumes also to mount file content or files to your pod containers?
+
+01:26:22
+Yes, so we can use this I will explain this config map as a file later Now the way we have a config map do I have a one more Kubernetes object called secret? The way I have a config map. Do I have one more Kubernetes object called secret?
+
+01:26:42
+Now config map is one object the config map is one object the way I have a config map. They have a one more kubernetes resource called secret secret. So what is the difference between config map and secret. What is the difference between config map and secret. This is also asked in the interview. What is the difference between config map and secret when I'm maintaining when I'm maintaining data.
+
+01:27:12
+key value pairs of data or file content as a data. If I'm maintaining as a config map, is it going to be maintained in a encrypted format in Kubernetes in ETCD? No. So in ETCD, in Kubernetes, ETCD, data store, database of Kubernetes, is that config map content will be maintained in a plain text format, human readable format.
+
+01:27:41
+Now I created a config map. I created a config map when I execute kubectl cm in the short form cm config map in the short form cm config map in the full form config map. Now, if you see, I have a config map. Is this config map content is maintained in a encrypted format when I'm describing the config map.
+
+01:28:09
+Is it maintained in an encrypted format or human readable format that key value pairs of data?
+
+01:28:17
+Now when I get something like this cubes GTL get config map I fun. Oh YML. I want to see that config map in a YML format. Now can I see that in a human readable format the data this is your key. This is your value like this. So config maps are used for maintaining or storing what type of data has a told in the beginning itself in the definition.
+
+01:28:43
+It is used to store what type of data in a key value pairs or file content.
+
+01:28:51
+Non confidential data suppose you have some confidential data. You have some confidential data. You want to hide Confidential data in Kubernetes what? Kubernetes object can be used If you want to hide that confidential data in Kubernetes what object can be used secrets Now if I am storing if I am maintaining that key value pairs or any data any files as a secret
+
+01:29:19
+Does that kubernetes will maintain in a encrypted format some kind of a base 64 encoding or any other encoding?
+
+01:29:27
+Yes. So secrets are used to store what type of data is the way we have a config map. There is a Kubernetes secret. Secrets in.
+
+01:29:43
+in kubernetes now secrets in kubernetes secret is again object that contains a small amount of sensitive data sensitive data such as passwords token your certificates keys your crt file crt keys so it is sensitive data so how to hide confidential data in kubernetes which
+
+01:30:14
+secret sometimes in the intro they are going to ask in ansible in ansible also, how can I hide confidential information in ansible in ansible there is a concept called a wall similarly in kubernetes similarly in kubernetes can I use secrets to store the confidential data and refer that secrets in my pods as an environment variables again as an environment variables again can I refer the secrets which is created in kubernetes.
+
+01:30:44
+Maybe you might be using this one, but some enterprise applications will have a different a secret different way of managing the secrets. There are different tools like a central servers. You might have heard about hashy cop Walter hashy cop what so this is again kind of one secret management tool hashy cop Walter. So this is kind of a altogether different concept some applications might be using.
+
+01:31:12
+They are creating a secret in hashy cup vault and you are integrating your hashy cup vault with Kubernetes so that you can read the secrets from vault, hashy cup vault. But this is very complex process. If your application is using this one, you need to use this one. Otherwise, can I create a secret within my Kubernetes using this secret object instead of using another tool, another central tool where I can maintain the secrets, I can use the secrets within Kubernetes.
+
+01:31:43
+So if I want to hide confidential data in Kubernetes, can I use secrets concept?
+
+01:31:51
+Yes. No.
+
+01:31:56
+If you see can I consider this as some confidential data? Can I consider this password? As some confidential data that config map whatever config map where I have created that the password. Can I consider this as a confidential data instead of creating like this? Can I use secrets to create some confidential data?
+
+01:32:20
+And again, Kubernetes supports different types of secrets again.
+
+01:32:35
+different different types of secrets. There are different types. It supports one is key value pairs of secrets types of secrets types of secret when we are creating a secret we can say specify what type of secret it is. So there are some types like opaque you opaque
+
+01:33:04
+key value pairs of data, I can create a secret of type OPECQ. Let's consider, I want to maintain my SSL and TLS certificates. Can I consider that SSL and TLS certificates content also as a confidential data? Your certificates, your SSL certificate keys, CA file, key file? Yes. If you want to maintain that SSL and CSL, sorry,
+
+01:33:32
+PLS and SSL certificates also in my kubernetes. Can I create a secret of type this PLS type secret? Now let's consider you are using Docker private registries. You are using Docker private registries. Does your kubernetes needs to authenticate with your registry to pull the images if they're in a private registry? Now in that case.
+
+01:33:59
+Can I consider my Docker registry credentials also as a confidential data? Can I consider my Docker registry credentials also as confidential data? Now, can I create a secret of that Docker config? Can I create a D secret of Docker config? So can I use that secret in my pod manifest? Can I use that secret in a pod manifest so that that secret will be used by your cubelet to authenticate your registries?
+
+01:34:28
+So Kubernetes secret has different different types TLS type opaque you type Docker registry type SSH keys basic or different types of secrets is offered by. Kubernetes I will explain that a secret of Docker registry how to authenticate with private registries. I will explain tomorrow tomorrow session, but for now, let me demonstrate this opaque you opaque you user data arbitrary data.
+
+01:34:57
+like a key value paste. No.
+
+01:35:02
+something like this instead of maintaining that as a config map. Can I create as a secret like this?
+
+01:35:11
+Can I create as a secret like this instead of referring as a config map? Can I create that as a secret? Instead of config map the type opaque you the type is opaque you the type is opaque you string data again key value pairs. Now once I create this secret when I describe the secret when I get the secret in a YML format. Will I able to see this in a human readable format in Kubernetes?
+
+01:35:44
+No. Now, let me separate that one. Let me separate that one. Now the way I have a config map, I want to have some confidential data. Now instead of having as a config map, can I create a secret, maybe another YML or in the same YML can I do like this? If you want to do declare
+
+01:36:12
+creating a secret like this if you want to do imperatively if you want to do imperatively you can do like this using comments or declaratively can I use like this by ml.
+
+01:36:26
+If it is multiple I can has multiple key value pairs. If it is multiple I can have multiple key value pairs like this. Imperatively, imperatively if it is declarative something like this. Secret something like this secret. So I am creating a secret like.
+
+01:36:48
+in same YML or another YML. Now MongoDB password secret. Now instead of referring from config map in my YML, can I refer from secret that password?
+
+01:37:11
+Now can I refer from secret that password instead of referring from config map? Can I refer that from secret here instead of config map key reference? Can I say secret key reference?
+
+01:37:25
+that name of the secret the name of the secret suppose my secret name is this one I created a secret like this can I refer that name secret name and a key this is the key this is the key spring data something like this may be in another location also instead of config map key reference can I refer from secret
+
+01:37:58
+secret key reference the name of the secret.
+
+01:38:05
+The name of the secret is this one.
+
+01:38:09
+the key guys here it is the string data here it is string data I am using now like this
+
+01:38:23
+Now without creating that secret again, will I able to refer?
+
+01:38:29
+As of now, do I have a secret with that name? Again, is the scope of the secrets and config maps, is it a namespace level? Is it a namespace level? Is this resources or works at a namespace scope? Yes. Now I don't have a secret. First, let me create a secret. Let me create a secret.
+
+01:38:52
+Let me create a secret. Now do I have a secret also created in that namespace? I have not mentioned the namespace name, guys. I have not mentioned the namespace name. So since I have not mentioned the namespace, in which namespace this secret got created?
+
+01:39:13
+Default so it won't work. It won't work. Let me create a secret in that namespace only now to have a secret Now if I describe the secret If I describe the secret
+
+01:39:33
+Or if I get in a YML format also. Am I able to see that actual values?
+
+01:39:41
+Is it actually showing that when I get YML also cube CTL get secret?
+
+01:39:49
+that secret name is this iPhone over a ml iPhone in this namespace. Now am I able to see what is that secret basically.
+
+01:40:02
+When I am getting in a YML it is showing sorry when I am getting in a YML format it will show.
+
+01:40:10
+But will I able to restrict will I able to restrict the access to this config map who can create who can modify who can view this secrets using our back concept again using our back concept is it possible for me to grant permissions who can edit this config maps who can view this you know config maps again that is possible that is possible I can apply a security at that config map our back policies.
+
+01:40:40
+No.
+
+01:40:44
+I have a secret.
+
+01:40:46
+Now, if I apply this one, since I'm using deploy, I know some objects are map managed as a replica sets. Do you think easier parts will be recreated by using those secrets? Does this part will be recreated using those secrets? But if it is a deployment, it will work. If it is a deployment, it will work. If it is a replica set, to use those secrets, they need to delete that replica set and again recreate.
+
+01:41:20
+Now, CubeCtl apply.
+
+01:41:25
+I am doing like this there is a indentation problem let me fix that problem let me fix that problem indentation problem is there not here that spring up spring up that why am I
+
+01:41:49
+there is some indentation problem secret key it is not a map there is a typo here secret key reference secret key reference and another location also seek correct key reference correct now let me apply
+
+01:42:11
+Now is my parties referring something from config map is my parts are referring something from secrets. Now in production cluster if I want to deploy in my production cluster if I want to deploy can I create a config maps and secrets with whatever configurations I want to create and apply that this way will I able to will I able to externalize the configurations which is going to be changed from environment environment.
+
+01:42:41
+environment variables. I can use this approach if your code is reading something from any environment variables. I can use this approach if your code is reading some reading from some property file XML files are YML files. Can I use these config maps and secrets as a volumes? Can I create a config map with file content? Can I mount that config map as a volume to my pod container?
+
+01:43:07
+Yes, that is also possible that I will demonstrate tomorrow is that I'll demonstrate tomorrow. I'll create a config map with file content and we will see how to mount those config map as a final value to the pod container. I'll show that tomorrow. So these are very, very important topics. Do we have all these use cases when you are working in actual applications?
+
+01:43:31
+all these config maps, secrets, concept, all these things. If you understand, is Kubernetes is making the things very simple for developers and operations teams, development teams and DevOps teams and that operations teams to manage your applications, configurations, communications, values. It is helping us to manage your containers. It is helping us communication for your containers.
+
+01:43:57
+And it is helping us to maintain the data of your application using Valumes. You can pass your configurations using ConfigMap and Secrets. Is it taking the abstraction away from development team and operations team to manage all these things?
+
+01:44:15
+Yes, are you going you know, we are going to use all these things in the applications based on your requirement. Is it mandatory like this? All the applications will use config map secrets values for any part you are deploying are you going to use all these things? No, based on your requirement based on your use case, are you going to use all these concepts? Based on your requirement your application you are going to use all these things. So that's it for today guys.
+
+01:44:45
+Tomorrow I will show you how to use config maps as a values and once that is done. I will go to one more important concept very important concept called liveness probe.
+
+01:44:58
+and readiness probe. liveness probe and readiness probe. tomorrow i will discuss this one also. thank you guys. that's it for today. i will try to continue this one tomorrow. and make sure you are going through the recordings multiple times. make sure you are practicing. so that it will be easy for you. all these concepts will be very simple. if you go through the recordings multiple times. practice the same thing multiple times. you can understand troubleshooting also.
+
+01:45:28
+Easy to remember, easy to explain, easy to troubleshoot, easy to clear the interviews, easy to manage your work also. If you are already used, if you are already practiced all these things, if you have similar requirements or same type of use cases in your actual application, will it become easy for you to do all these things in the actual projects, actual Kubernetes clusters and applications? But practice is required.
+
+01:45:56
+dedication and practice is required. So try to practice as much as possible. Thank you guys. That's it for today. I'll see you tomorrow.
+
