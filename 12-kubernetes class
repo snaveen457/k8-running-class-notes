@@ -1,0 +1,843 @@
+00:00
+This conference will now be recorded.
+
+00:05
+In yesterday's session, we were discussing about what is value, what is MTDIR value, what is host path value.
+
+00:17
+and what is NFS value we are discussing and recently one more thing people started facing issues while setting up the kubernetes cluster. So while setting up the kubernetes cluster you might have created a service like this creating instances right you guys selected maybe like this Ubuntu AMI so with this AMI with this AMI.
+
+00:45
+whatever we are using here with that AMI it is not working the Kubernetes your API server is keep on getting restarted because of some compatibility issues. So whenever your API server is keep on restarting whenever it is down when you are executing kubectl comments it is saying connection refused on that IP on that port but after some time again it will up that time it will work. But again it will go down.
+
+01:15
+So that is what happening. So if you guys are facing the issues while setting up the Kubernetes cluster, don't use that AMI. Don't use that AMI while creating a service. Your Kubernetes service. While creating a service, you give that AMI ID, whatever AMI ID I have given, right? So search in the search box, search in the search box.
+
+01:44
+It will show that result like that AMI ID, whatever I have you shown. So select that AMI and proceed the servers. Is that issue resolved? Most of the guys yesterday reported, sir, my kubernetes cluster. It is showing cubes, ETL, get nodes where I'm executing. It was showing like connection refused. I already updated the issue. Is that resolved for you guys? Whoever faced that issue? Couple of people.
+
+02:12
+I have that issue yesterday.
+
+02:19
+None of them are there in the class who faced the issue yesterday.
+
+02:29
+Okay, that is one major problem guys. Attending the classes is important. Don't only depend on the recordings.
+
+02:42
+I cannot say anything more than this. So follow that instructions it will resolve the issue. Now let us proceed with.
+
+02:53
+Next topic, we were using values. We have a different types of values like empty they are host path value, NFS value, AWS Elastic Block Store.
+
+03:12
+AWS Elastic Block Store Azure File Azure Disk
+
+03:22
+Google persistent is like this. There are lot of values most importantly. There is one concept called persistent value claim. persistent value claim.
+
+03:41
+This type of storage is also there.
+
+03:45
+And similarly, we have some volumes called config map secrets. I will explain all these things later. What is this config map? What is the secret? I'll cover this later. As of now, we are using values. But is Kubernetes is maintaining that storage information anywhere in the cluster? Is it maintaining the state or information about that storage anywhere in the cluster? Like the way it is maintaining deployments information.
+
+04:15
+the way it is maintaining values in firm, sorry, the way it is maintaining services information is Kubernetes is maintaining what type of values you are using, how many values are there in the cluster like that? Is it maintaining anywhere as of now? No, you are using values, you are using values that the value information is not maintained in the Kubernetes cluster.
+
+04:43
+So you are like you are using a kind of a bind mount. You are directly using the storages with your pods. Instead of doing that way, there is a different way of using the volumes called persistent volumes and persistent value claims.
+
+05:02
+It is recommended to use persistent values and persistent value claims in Kubernetes. I'm using values directly with my pods. I'm not using kind of a recommended way of using the values. Now if you see we are using values. We are using values directly with our pod. But
+
+05:30
+Is Kubernetes is maintaining like this how many values are there the way it is maintaining how many deployments are there how many services are there is Kubernetes is going to store any information about the values in the cluster as of no no your values are directly associated with your pods your values are directly associated with your pods once your that deployment is completely deleted.
+
+05:58
+Let's consider this replication controller is completely deleted. Does Kubernetes has any information about the volumes which was using earlier? Suppose if I delete this controller completely, it is going to delete the parts. The data volumes will be there but does Kubernetes has any information about whatever volumes we were using earlier? If I use directly like this? No. So, in Kubernetes.
+
+06:28
+There is a different way of using values that is persistent values, persistent values and persistent value claims. There are two important things here.
+
+06:41
+Kubernetes persistent, Kubernetes persistent, value and value claims. So in Kubernetes, this is the recommended way of using value.
+
+07:05
+Values is nothing but storage values is nothing but a storage which we already discussed There are different different types of values like AWS elastic block store. We can directly use like this Based on the infrastructure you can directly use like this Yes, even though you are creating a pod sir. Can I use volumes? Because this volumes and value mounts are part of your container specification your part specification. So
+
+07:33
+Even though you are directly creating a parts also you can use all these details as is whatever we are using under part template that will work even though you are directly creating a part. Now there are different different values like this Azure file Azure disk empty day or host part like this values and value modes, but this is not recommended way to use values
+
+08:03
+In Kubernetes there is a concept called persistent values. What do you mean by persistent value and persistent value claims?
+
+08:17
+So managing a storage is a problem.
+
+08:25
+So managing a storage is a problem from managing the compute instances. The persistent value is again one Kubernetes API, Kubernetes object. The persistent value provides an API for users or administrators that abstract how storage is provided and how it is consumed. We are going to hide from the users of the Kubernetes.
+
+08:52
+how storage is provided and how storage is consumed. We can hide using this persistent value concept. There are two API resources here. One is persistent value and persistent value claim. One is persistent value. Another one is persistent value claim. So first let me explain what is this claim.
+
+09:22
+What do you mean by claim this persistent volume claim? I'll come to this one later. So persistent volume claim is basically it's a request for storage. It's a request for storage. It's a request for value. So this persistent volume claim is kind of a request for storage. It's kind of a request for storage.
+
+09:49
+So using persistent volume claim, we call it as a PVC. In the short pub, we call it as a PVC. Using PVC.
+
+10:04
+We can specify We can specify our we can request we can specify
+
+10:14
+or request how much storage you need how much storage you need and with what access mode what access mode you need we can specify using persistent volume claim we can request who the guys who is going to need a volumes the the guys who need a volumes the guys
+
+10:42
+who need a volumes to mount for their parts, they need to create a request. They need to create a request using PVC. So it's a request. PVC it's a request for a storage. It's a request for a storage by user. Yes here the user means don't consider this as a end user. Persistent value means the request for a storage by a user. Don't consider here.
+
+11:10
+user as an end user. Who is the user means here? What do you mean by user here? The guy, the user, the guy who is using Kubernetes, kind of developers or DevOps engineers or administrators. The user series, like developers or DevOps engineers or administrators who are requesting a storage for their applications, their pods.
+
+11:36
+So it's a request for a storage by a user. So.
+
+11:42
+while creating a pod the while creating a pod the way we are specifying how much CPU how much memory you need while creating a part of the way we are specifying how much CPU how much memory we need for that part. So while creating a PVC can I specify the size and access mode how much size the storage with how much size I need and with what access mode I need can I defy that while creating a PVC. I can specify the size.
+
+12:12
+and the access mode. I will explain what is this access modes later. What do you mean by read write once? What do you mean by read only many? What do you mean by read write many? I will explain later. So PVC is a request for a storage.
+
+12:30
+we can specify size and access mode.
+
+12:36
+How much size you need, how much access you need. Does PVC as a user, you are requesting how much size you need, what size of capacity you need, what access mode you need. But for you, does it matter in the background whether they are providing any type of storage like maybe local storage or network storage or the cloud storage, does that matter for you when you are deploying the application? You are focusing only, I need a storage. But as an administrator,
+
+13:06
+As an administrator, can I provide of whatever storage of size? Maybe I can provide a storage like a local storage or network storage or cloud storage that is up to administrators. You just need a storage. The guys who is deploying the applications need a storage for them. Does it matter whether they are giving a host path storage, whether you are getting a NFS storage or EBS storage?
+
+13:35
+Does that matter for you? You just need a storage. You are requesting. As an administrator, can I provide a storage of my choice, whether it's a local or network or cloud, any storage for that request?
+
+13:54
+Yes, so PVC is a just a request for a storage PVC is just a request for a storage while creating this PVC we can specify how much storage you need with what access mode you need we can specify the guys who is deploying the application they can create a PVC then can they use that PVC as a value in their pod manifest.
+
+14:23
+in the pod manifest in the pod manifest they can use that PVC. Let me show that. Let me connect to my kubernetes machine.
+
+14:49
+Let me connect to my Kubernetes machine. Yesterday also we are using Valumes. But yesterday when I'm using Valumes, did I directly mention like Postpart or did I directly mention like NFS? Like this.
+
+15:11
+This is not persistent values. This is not persistent values because the Kubernetes is maintaining any information about this volume data. I mean to say what how many volumes are there what type of values nowhere it is maintaining. So it is not recommended to use like this. It is recommended to use persistent volumes or persistent volume claims concept. Now if it is a persistent value claims and persistent volumes.
+
+15:39
+Suppose I am deploying this application. I am deploying this application. Here instead of doing like this, instead of doing like this, can I say persistent value claim persistent value claim and I can mention claim name claim name like a something like this. And also
+
+16:08
+this persistent volume claim object also because in which I am going to mention how much storage I need what type of access mode I need so do I need to create a persistent volume claim object because I need a value so I am creating a claim and I am referring that claim so do I need to create a persistent volume claim like this API version V1 kind persistent volume
+
+16:37
+metadata name of the persistent value of claim. So this is the claim name which I am using in my pod. Now spec here can I specify size, size how much size I mean to say how much storage I need for this
+
+17:01
+claim basically as I already told persistent volume claim is a request for a storage using PVC we can specify or we can request how much storage you need how much what type of access mode you need that I can.
+
+17:24
+specify using PVC Using PVC I can specify what type of access mode how much storage you need that I can specify using this PVC in the PVC specification something like this access modes requests so requests That is under resources again
+
+17:54
+resources under resources request but storage this is storage can I say something like this storage based on my requirement let's say I need 1 GB storage can I say something like this I am looking for a value with 1 GB storage for this application I am trying to use this
+
+18:22
+saying that I need 1 GB storage and access mode. In some time I will explain what is this access modes also. Access modes.
+
+18:34
+like read write once access mode
+
+18:41
+So this is a request for a storage. The guys who is deploying, can they use persistent value claims? Now let's say I am trying to deploy this application, stateful application. Instead of using the volumes directly, can I use the concept of persistent value claim here? So I'm saying persistent value claim, this is my claim name. Since I need a value, do I need to specify using this PVC?
+
+19:10
+Do I need to specify how much storage I need? How much, what is the access mode I need? Because I need a value, I need to specify. Now, I am requesting this much. Now, do I need to have a value available in my Kubernetes cluster so that that value will be associated with this PVC? I need to have a PV, that persistent value available
+
+19:41
+If any volume available, any storage, any volume available with this much capacity, 1 GB capacity with this access mode, is that value will be mapped with this PVC? Is your part will use that value? Whatever it is going to get.
+
+20:01
+Yes. Now, PVC is just a request for a storage. Is it represents any storage? Is this PVC directly represents any storage that can be host path, that can be NFS, that can be EBS? No. This is just a request for a storage. Then, which Kubernetes object represents a storage? We are just requesting using this PVC. Which object represents the actual storage? That is.
+
+20:31
+persistent value that is persistent value. Now persistent value basically a storage persistent value is basically a piece of storage. It's a piece of storage persistent value is basically it's a piece of storage.
+
+20:59
+It's a piece of storage disk that can be anything that can be host path volume or that host path storage or that can be NFS storage that can be EBS storage anything. So this persistent volume represents some storage that can be host path NFS, EBS, whatever it is, etc. Now.
+
+21:30
+When we are requesting a value using this value claim, do I need to have a value available in my cluster? Do I need to have a value available in my cluster so that this PVC will be associated with that PV? This PVC will be associated with that PV, whatever value is available. But does it matter whether it's a host path, whether it's a NFS, whether it's an ABS, does that matter here? I just need a storage.
+
+22:00
+with that much. Now, as an administrator, as an administrator, can I create a values? Can I create a values and make it available for the users who need a values? As a Kubernetes administrator, can I create the values in my Kubernetes cluster? And can I make that available to the users who is going to claim those values?
+
+22:26
+as an administrator, I can manage values, I can create and make those values available to the people, whoever is claiming the values based on that requirements, based on their requirements, if there are values available, is that PVC will be mapped with that respective PV which is available and which is matching with their requirements with this much storage, this access mode if the values are available, is that value will be mapped with that PVC.
+
+22:55
+Is your party is going to use that value, whatever is allocated as per that requirement.
+
+23:03
+Yes, this way are you abstracting the storage away from your pods and your users of Kubernetes using this persistent value claims and persistent values are you abstracting the storage away from your pods or the users of the top Kubernetes like developers DevOps engineers are you taking the storage abstraction away from them. You have a full control how to manage the storage for your Kubernetes.
+
+23:32
+stateful applications. So, this is the recommended way. This is the recommended way. As of now, if you see as of now, if you see do I have any persistent values, persistent value claims,
+
+23:58
+What do you mean by PV in the short form? Persistent Values. What do you mean by PVC in the short form?
+
+24:13
+persistent value claim. So these are Kubernetes resources. These two are also Kubernetes resources. The way we have pods, the way we have services, the way we have the deployments, replicasets, they have a Kubernetes resource called persistent value and persistent value claim. These two
+
+24:42
+Yes, if you see persistent value namespace it is false. What does it mean? Is a persistent value is a cluster level resource irrespective of namespace. It's not a namespace level resource. It's a cluster level resource. It's a cluster level resource that is storage. Does that person's instant volume represent some storage that can.
+
+25:09
+can be host path storage that can be NFS storage or EVS storage. Yes, so I can create a storages. I can create that volumes in the cluster. Can any namespace? Can any namespace from any namespace if someone is requesting that volumes using claim irrespective of in which namespace that persistent volumes are there does any namespace also can will be allocated with that value.
+
+25:40
+yes now persistent volume claim is
+
+25:45
+namespace scope which means suppose I am creating a persistent volume claim in default namespace will I able to use that in the namespace like this now will I able to use that persistent volume claim in this namespace in my pods no so persistent value claim is namespace level suppose I want to use this persistent value here pvc that mango pvc
+
+26:15
+I am creating a parts in this namespace. They need to make sure this PVC also created in a same namespace where my parts are getting created. PVC? Yes. PVC, yes. You need to have in a same namespace where you are using that PVC.
+
+26:36
+This is.
+
+26:40
+not for a communication. This is storage. This is not for a communication that fqdn is only communication. This is storage. You are request for the storage. So I am creating a pod. Do I need to also create a request for the storage in the same namespace? I am requesting a pod and I am referring this PVC. So in the same namespace, I am creating that PVC. Now suppose I have PVs.
+
+27:08
+Suppose I have this persistent value. Let's say I have one persistent value in default namespace. I have another persistent value in test namespace. Does this matter? Now, is it possible that this PVC may get one value, which is there in default namespace also? Is it possible that does this PVC might be allocated with the PV, which is in default namespace also? Yes.
+
+27:39
+But does this PV should be available? Conditions. First, this PV should be available. The volume should be available. What do you mean by available? If this volume is already mapped, this volume is already mapped with some other PVC, again, will you be able to get the same PV if this volume is already mapped with some other PVC? No. So one thing, volume should be available.
+
+28:09
+volume should be available and does the requirements of this claim suppose these guys are looking for 1 GB and with this access mode one condition the volume should be available next condition let's say I have a volume with 2 GI and I have a access mode different access mode read write many access mode read write many access mode this volume is available
+
+28:39
+but this value is available but this is in a different access mode, read write many access mode.
+
+28:50
+Then building.
+
+28:53
+Does Kubernetes will assign this value for this claim? Does Kubernetes will assign the storage for this claim if this is the case? You are requesting 1 GB with this access mode, but there is a storage available with 2 GB with this access mode. Do you think this will be available, I mean to say assigned for this claim? No. Suppose I have 2 GA. This is already used, which means
+
+29:23
+This is already allocated, which means this is already allocated to some other PVC access mode is read write once only read write once only, but this is already mapped with some other PVC mapped with some other PVC. Do you think does Kubernetes will assign this value to this claim again?
+
+29:48
+some other PVC it is allocated. Do you think it will work? No. Now let's say I have one more value that is available that is available. The storage is created with the 2 GB that value is created with 2 GB but I am requesting 1 GB but still access mode is also fine storage available I meant to say I created with the 2 GB that value but I am requesting only 1
+
+30:18
+But is that issues I mean to say is there any issue with this one? No. Does QBARnetase will map this? Does QBARnetase will map this value for this claim?
+
+30:30
+Yes, it will map but you have one more GB available. Will you be able to claim that one more GB using different PVC again? No No, it's one-to-one mapping which means One PVC will be allocated at with one PV at any point of time It is like a one-to-one mapping one PVC one PV and vice versa
+
+31:01
+vice versa. So it is like a one to one mapping PVC to PV is like a one to one mapping.
+
+31:10
+one to one mapping. So even though you have a storage with 2 GI you are requesting 1 GB Kubernetes will assign this value for that PVC. Kubernetes will assign or map this value for that PVC. Is there any other PVC which again I can map with this value? No. So PVC is a request for a volume.
+
+31:38
+PVC is a request for a value. Does that PVC need to have PVs available in the Kubernetes cluster so that the PVCs will be mapped with PV? So when you are creating a pod, when you are creating a pod in your Kubernetes, you are deploying one application.
+
+32:03
+you are deploying one application, you are deploying one stateful application. Let's say you are deploying one stateful application. Do you need to deploy your controller? I mean to say that controller can be RS or RC or deployment that doesn't matter along with that one in my deployment manifest or in my pod manifest I can say is it recommended to use like this.
+
+32:32
+Instead of directly mentioning the values is it recommended to use like this in my pod manifest. It is recommended to use like this. Like this. Values persistent value claim, but since you are requesting a forest storage, you are referring a persistent value claim. Do you need to create a PVC also? If I don't create this PVC.
+
+33:01
+Will it work? Will you get a message saying that no persistent value claim found with this name? Let's say you don't have any PVC created already with this name. Do you get a message saying that no persistent value claim found with this name? Your parts will not be created. It will throw error saying that.
+
+33:31
+without this PVC created your pod will not work. First in your pod manifest your pod manifest what you are referring in your pod manifest what you are referring you are referring a PVC. Suppose if this PVC is not created if this PVC is not created do you think your pod will get scheduled first. No. So you will get a message saying that PVC not for.
+
+34:00
+Now you are creating a PVC also because that is your requirement. That is your requirement. Since you are deploying the application, you know what type of storage I need, how much storage I need. So you are going to create a PVC also like this. You are going to create a PVC also like this. Along with your pod, you are going to create a PVC. So this is PVC.
+
+34:29
+referring
+
+34:32
+PVC but without PV does this works again without persistent volumes again does this work.
+
+34:43
+Without persistent values does this work again? No. So you need a values. You need a values, that persistent values. So as a Kubernetes admin, can I create a lot of persistent values and make it available for the users of my Kubernetes who need a value for their applications? As an admin, I can create the values. I can create the values. Let's consider you don't have values available. You don't have a value available.
+
+35:12
+then do you think does this part get scheduled? I mean to say does this part will be running successfully if there are no volumes available?
+
+35:23
+If there are no values available, it won't work. Now you need to have a values. Then how to create these values? This can be done two ways. There are two types of values here. There are two types of persistent values here. It's very important concept and interesting concept also.
+
+35:53
+that has been provisioned by an administrator. That has been provisioned by an administrator. What do you mean by administrator? Administrator is like a DevOps engineer. The guys who is managing the Kubernetes cluster. Suppose you are managing the Kubernetes cluster. Can I call you as an administrator?
+
+36:17
+So this persistent volumes can be created. This persistent volumes can be provisioned provisioned in the sense created by an administrator manually by an administrator manually static values. Static values. What do you mean by static persistent volumes? The values created by
+
+36:50
+Admin's manually.
+
+36:55
+manually this is static persistent volumes. Created by administrators that administrator can be a DevOps engineer or DevOps guy. Basically developers will not be our administrators developers will never become an administrators does developers becomes users of Kubernetes because they want to use Kubernetes to deploy their applications. The developers.
+
+37:20
+are like users of that Kubernetes who wants to deploy their applications in Kubernetes. So we will not give permissions to manage a lot of things for developers. So as an admin, can I create a volume, and can I make those volumes available to the developers so that they can request like this, they can refer like this in their application?
+
+37:47
+Yes, now these are static values created by administrators manually manual values. There is a one more type called dynamic values. What do you mean by dynamic values? What do you mean by dynamic values automatically creating a storages automatically creating a values.
+
+38:17
+dynamically provisioning using storage class. There is a one more concept called storage class.
+
+38:25
+provisioning provisioning in the sense creating creating values dynamically.
+
+38:39
+using storage class storage class is one software kind of one program storage class what do you mean by storage class in Kubernetes again storage class is kind of one kind of a driver to make it simple kind of a driver the storage driver some piece of stuff where so if I have storage class configured whenever someone is requesting for a PVC
+
+39:07
+whenever someone is creating a PVC, let's say we don't have any values available. We don't have any values available, but I have configured the storage class, some kind of a provision, some kind of a driver is that storage class is the driver is going to create a values dynamically.
+
+39:30
+Yes. So there are two types of values. One is static values static values in the sense as a Kubernetes admin you are creating values manually so that claims can use those values. Another one is dynamic values. Let's say I don't want to manually manage the values. Can I configure a storage class kind of a driver or provisioner which will provision the storage for us whenever anyone is requesting for a value by a claim.
+
+40:00
+Does that volumes can be automatically created by that storage class?
+
+40:06
+yes so let's say i don't have any values available let's say i don't have any values available someone is requesting a claim they are referring that claim in the pod they're referring that claim in the pod like this they're referring the claims in the pod like this
+
+40:29
+they're referring the claims in the pod like this. And at the same time, they're creating a PVC like this. This is PVC. Now this PV, Kubernetes will try to assign one value. Let's say if I don't have any values available.
+
+40:46
+then it won't work then it won't work if you don't have any values available. You need to create these values manually if there is no storage class configured if there is no storage class configured you need to create these values manually thus Kubernetes will assign the value based on the specifications in this PVC based on the storage we created here as Kubernetes will map one of them.
+
+41:14
+Let's say have value created manually with this size like 1 GB or 2 GB. The size of this value is 2 GB and let's say access mode is read write once access mode is read write once I created this manually. Thus be this PVC will be assigned with this PV if they are matching the specifications. Yes. This is manual unit to create.
+
+41:42
+But let's say you don't have a volume available. You don't have a volume available in the cluster.
+
+41:52
+It won't work. But if there is a storage class configured storage class is like one driver one software if I have storage class configured basically provisioner provisioner it is going to provision the storage simple case if I have a storage class configured storage class is nothing but it is going to provision the storage. Now if I have a storage class configured.
+
+42:19
+If this PVC is not able to find any PV does this storage class will create a PV object dynamically is it going to create that persistent volume dynamically by the storage class. Then does this value claim is mapped with this value the storage class will provision this value. So this PVC will be assigned with this PV. Similarly if some other one is requesting again PVC.
+
+42:47
+if some other application other team is requesting a PVC for their pod. And again, there is no volumes available for this PVC again, the storage class will provision the volume dynamically that PV will be provisioned dynamically is this gets associated with this one.
+
+43:15
+If you have a storage class configured, if you have a storage class configured as an administrator, do I need to create volumes myself manually as an administrator? Do I need to create and manage the values myself manually? No, the storage class will manage values for you automatically. Yes, but does Spots can directly use values? Does Spots can directly use values like this? No.
+
+43:44
+parts cannot use values directly like this parts will use PVC. Does PVC will be getting a value for that part? Does PVC is acting as a bridge? Does this PVC is acting as a bridge between your part and storage?
+
+44:06
+Yes, so theoretically is everyone clear what is PV what is PVC what is static value what is dynamic value how it works theoretically is everyone clear this is very very important.
+
+44:21
+Now, as of now, if you ask me, do I have any storage class configured in this Kubernetes cluster? Storage class is also on Kubernetes API. Storage class also is on Kubernetes API, API resources. They have a concept called storage class here. They have an object called storage class. If I grab somewhere, you can see that storage class.
+
+44:54
+storage class here in the bottom. So storage class, this is also one Kubernetes resource. As of now, they have any storage class in the short form SC or you can use something like this storage classes. They have any storage class or storage classes by default here, no. There is no provision configured here. But when I go for a managed Kubernetes clusters like EKS,
+
+45:21
+When I go for a managed Kubernetes clusters like EKS, AKS, GKE, they have some default storage classes configured in that cluster already.
+
+45:32
+Yes, so there will be some provisioners there will be some provisioners if I go for managed Kubernetes cluster like EKS, what is the storage class or provisioner which I will have by default that provisioner basically storage class or provisioner I will have EBS provisioner EBS provisioner which means whenever anyone is requesting a claim.
+
+45:59
+when any whenever anyone is requesting a value via claim. So am I going to get EBS values is that the storage class is that EBS provisioner is going to create a EBS value in the cloud and is that EBS value will be used by your part via that PVC. If I have a Kubernetes clusters like EKS EBS provisioner will be there. So I am going to get EBS values created in the cloud.
+
+46:29
+in your AWS cloud, you have that EBS volumes created, that EBS volume will be used by your product with the help of PVs.
+
+46:38
+So if I go for a AKS cluster, do I have some provisioners? Azure file and Azure disk. Two provisioners will be there. Both provisioners. Both provisioners will be there. So you will have Azure file as well as Azure disk. Two types of provisioners. Now let's say if I have more than one storage classes, can I mark?
+
+47:07
+one storage class as default if required if I have more than one storage class more than one provisioner can I mark one as a default storage class. Now while creating a PVC while creating a PVC. I am not mentioning the storage class name. So is the default storage class will be used to create a value for this PVC.
+
+47:33
+Suppose I'm not mentioning the storage class which storage class to be used is it going to create a value by that whatever storage class I marked as default for this. Yes, if required can I mention the storage class name also along with all these details can I mention the storage class name also if there are multiple storage classes multiple provisioners like this Azure file Azure disk like this if I have can I mention here itself
+
+48:05
+So is this storage class will create a value for this claim?
+
+48:11
+But do I need to have this storage class available in the cluster created and configured in this cluster with this name? Otherwise again, it will not work. Now as of now, this is self-managed Kubernetes cluster. This is self-managed Kubernetes cluster. Do I have any storage classes configured by default? No. Now, if I just create a PVC,
+
+48:41
+and I am referring that PVC here. Do you think you will get a storage for this claim?
+
+48:53
+No, let me show that let me show that now. Let me show that I'll slowly make things clear.
+
+49:15
+Now I don't want to do like this. I don't want to do like this.
+
+49:22
+I want to use that concept of persistent values. Now here instead of defining what type of value storage you want to use, can I use a concept called persistent value claim.
+
+49:39
+I'm talking about this piece. I'm talking about this one. Persistent volume claim. I'm talking about this one.
+
+49:51
+Can I use something like this persistent value claim in my pod manifest instead of using like this post path NFS like this. Can I use this one here in my pod manifest persistent value claim.
+
+50:10
+persistent value claim name claim name I can give some name like this mango any name mango PVC but do I have this PVC created they have this PVC created as of now no but is this will be done automatically by storage class or administrator will create this PVC or storage class will create this PVC.
+
+50:38
+administrator will create this PVC no. So it is a request for storage. Do you need to specify how much storage you need for that application that value what type of access mode you need do you need to create that PVC? I mean to say the guy who is managing or deploying this application the guy who is deploying and managing this application do they need to create a PVC by specifying how much storage they need how much.
+
+51:08
+what type of access mode they need.
+
+51:12
+or this will be done by administrators or storage classes that PVC creation.
+
+51:19
+PVC the guys who is requesting a value or who is using the value they need to create.
+
+51:29
+Now without creating that PVC if I refer this PVC in my pod manifestor, do you think it will work? Let me show that I'll show it step by step. I'll show step by step so that you can understand easily the relation. First let me delete the existing application in this existing replica set. How am I directly using volume like kind of a directly values host path NFS directly? Yes. So I don't want to do that.
+
+51:59
+I am deleting this I am deleting that replica set the existing replica set.
+
+52:09
+Now, let me deploy using this PVC concept now. Let me deploy using this PVC concept. Cubectl apply-f
+
+52:23
+Now if you see...
+
+52:27
+I created a replica set and replica set is creating a pod. Now pod is in which state now that database pod is in which state the status pending. What could be the reason that there might be many reasons there might be many reasons that can be because of CPU or memory or that can be because of storage now. Now how can I see what is the reason why it is in pending state.
+
+52:59
+Now I will describe the pod. Describe pod, my pod name I will describe. The pod is in this namespace. Now what it is saying? 0 by 3 nodes are available. What it is saying?
+
+53:18
+that PVC not found because in my pod manifest in my pod manifest am I referring persistent volume claim type volumes type persistent volume claim a reference to the persistent volume claim in the same namespace they have this PVC in the same namespace where my pod is created in which I am referring this PVC. So do I have a PVC with that name?
+
+53:48
+They have a PVC with that name in that namespace. They have any PVC? No. But does this PVC has to be created by the guys who is deploying the application? Because based upon their requirements only, they will specify how much storage they need, what type of access mode they need, the guys who is deploying that applications in the cluster. It is not an administrator's job. So along with like this.
+
+54:17
+Do they need to create one more Kubernetes resource also where they can elaborate more about that persistent value claim, where they will specify the size, the access mode like this.
+
+54:34
+Like this.
+
+54:38
+persistent value claim like this but same namespace. Let's say I create this PVC in a different namespace again. Will it throw same error PVC with this name not found again? If I create this PVC in a different namespace. Yes, I am creating in a same namespace where I am specifying storage 1 GB access mode 1 G8. But if I mention the storage class, do I have any storage class which can create this value for us?
+
+55:08
+value for this PVC? No, there is no storage class. Now I'm just creating a PVC. I'm just creating a PVC with that name. Now cubes detail apply, I for a springer PVC. Now if you see, now do I have a PVC? Do I have a PVC created in that namespace?
+
+55:35
+Now if you see the status of this PVC, if you see the status of this PVC, again in what state that PVC is there?
+
+55:50
+Now even though I created a PVC why still my part is in pending state even though I created a PVC now why my part is in still pending state I have a PVC but still my part is in pending state because is this PVC is waiting for PV volume
+
+56:12
+is that PVC is waiting for value now do I have any values available in the cluster persistent values available in the cluster no at least is there any storage class available so that it will provision that value is it is going to create that PV object dynamically no now if you see let me describe the pod let me describe the pod now you see different message
+
+56:42
+You see different message after some time. Mongo PVC. What is the name of the PVC? Mongo. There is a typo, guys. There is a typo error. Let me modify that.
+
+56:58
+because there is a typo here here it is vpc here it is pvc so let me modify that I'll delete that I'll delete that pvc I'll delete that pvc this this one I'll create with correct name I'll create with correct name now there is a typo here I am referring mango pvc here I have created with a different name
+
+57:29
+Now I am creating a PVC with whatever name I am referring here.
+
+57:46
+mango, PVC. Now let me apply this again cubectl apply
+
+57:56
+Now I have a PVC also now I have a PVC with this name mango PVC. Now that PVC I am referring in my pod mango PVC. If you see still pod is in pending state still pod is in pending state. Why it is in pending state? Let me describe my pod. If you see now you see different error. What it is trying to say.
+
+58:26
+What it is trying to say?
+
+58:36
+Is there still typo?
+
+58:41
+one second nice is there still typo error
+
+58:46
+In this test namespace I have Mongo. One second guys I have still not modified. One second. Give ctl delete PVC.
+
+58:59
+This is mango PVC here mango PVC correct there is no typo but let's see after sometime you describe your pod it is saying could not found binding binding problem so mango PVC is there mango PVC is there in the defa the test namespace we have mango PVC in the test namespace
+
+59:29
+but it is having a problem with the binding. What do you mean by binding?
+
+59:36
+Now you see this error now what what do you mean by this error it has a immediate unbound persistent volume claims. Now I see some message called unbound immediate persistent volume claims unbound immediate persistent volume claims. What do you mean by this error.
+
+59:57
+Pod is referring PVC, PVC is there, but is that PVC has bounded with any volume.
+
+01:00:06
+Is that PVC is bounded with any value? Is that PVC is in pending state? If you see that, is that PVC in pending state now?
+
+01:00:19
+Now why it is in pending state. Let me describe PVC. Let me describe this PVC. You can describe PVC also now no persistent volumes available for this claim. It is saying no persistent volumes available for this claim and also what they're saying no storage class set. There is no volumes available and no storage class set.
+
+01:00:50
+There is no storage class set in that PVC object. There is no storage class set. Even though I define storage class, do I have any storage class configured in my cluster here? If I say something like storage class, EBS provisioner or NFS provisioner like that, do I have the storage class configured like this? No. So there is no storage class available and marked as default, and at the same time, no values available. Now.
+
+01:01:19
+Is my part will get any storage? No, does my part will get scheduled and is my part will get storage? No, no. Now as a Kubernetes admin, I have two options here as a Kubernetes admin. I have two options one is one is creating a volume statically that is manual volumes and another option. Can I configure a storage class?
+
+01:01:46
+and can I mark that as a default storage class so that the values will be created by that storage class.
+
+01:01:57
+There are two options. First, first let me create a values manually, which means the way I am creating this PVC as an admin do I need to create a PV, the static values in a sense manually you create a value. Persistent value, persistent value you need to create. So can I specify persistent values? Here what type of value might want to create as an admin? Can I create a value?
+
+01:02:26
+whether I can use host path NFS based on your setup based on your setup. You can create a persistent value.
+
+01:02:37
+infrastructure now can I create a PV like this whatever something like this NFS PV or this name can be anything ABC XYZ that doesn't matter.
+
+01:02:53
+NFSPV something like this now here this is persistent volume claim specific persistent volume specification here can I say capacity the capacity of this volume now here it is not resources it is capacity capacity of this value it is not resources capacity capacity of this storage now I am saying something like this
+
+01:03:23
+1 GB or 2 GB the capacity of this value. Now here access modes access modes the type of access modes the access modes there are different types read write many read write ones like that read write many I am saying read write many now this can be anything here can I say this is persistent volume of NFS can I do something like this as an admin.
+
+01:03:53
+Can I create an NFS persistent volumes? If required, can I create a EBS persistent volumes? Or can I create a host path persistent volumes as an admin?
+
+01:04:04
+What type of storage I want to offer in this cluster that is under my control. We are abstracting that away from the users of Kubernetes. I mean to say the guys who is deploying the Kubernetes. Now I can say NFS server whatever my NFS server. Whatever my NFS server.
+
+01:04:32
+So can I use that NFS server IP address to create this persistent value?
+
+01:04:44
+this NFS server, private IP address and whatever path. What path that NFS server, I think that is slash MNT slash NFS underscore share. So using this manifest, I'm creating a volumes as an admin. Let's say you are admin. Can I call this as a static volumes? You are manually creating a persistent values in the cluster. Can I call this as a static value?
+
+01:05:14
+I'll create I'll create a values. I'll create a value.
+
+01:05:22
+NFS PV dot yaml just sorry NFS PV dot yaml something like this but there is some indentation problem
+
+01:05:38
+But as I already told, is this value of namespace specific? These persistent values are namespace specific? No. Even though I have a value created as an admin, I have a value created in a different namespace. The claim which is created in a different namespace also can get this value.
+
+01:06:03
+Yes, even though as an admin you are creating this value in a default namespace the claim which is waiting for the value in a different name space will be allocated with this value even though this is in a different namespace. The values are not namespace level. It's a cluster level. So that is possible. Now if you observe even though I am creating a TV now as an admin you see it'll apply I
+
+01:06:34
+I am creating a value now I have a value if you see even though I have not mentioned iPhone n tester am I able to see value without mentioning iPhone else then also am I able to see value because as I already told these volumes are bound to namespace level.
+
+01:06:57
+no now even though volume is created even though volume is created why my pvc is still not able to get this value why my pvc is still pending why it is not associated with this value
+
+01:07:19
+storage class. There is no storage class concept here. Storage class is to create a volume dynamically. I created a value manually. It is not because of storage class. It is not because of storage class storage class is just to create a volume dynamically. Now I have created a value manually. I have created a value manually. Why why this PVC is not
+
+01:07:49
+will get associated this is also one question. How PVC and PVC will get associated that is also one question. Now exact answer is because of the what I am looking with what actually available is it same. Actually whatever I am looking the PVC which I created what I am looking is with same thing.
+
+01:08:16
+is volume is created or available in my cluster.
+
+01:08:22
+No, in my requirement in my requirement
+
+01:08:29
+Did I I am looking for 1 GB storage? As per my PVC, I am looking for 1 GB storage with what access mode?
+
+01:08:42
+with what access mode read write once but I have a PV I have a PV I have a PV but if you see this PV if you see this PV persistent value in YML format also you can see is that persistent volume capacity is 2 GB fine in capacity is 2 GB fine no issues I have a more than this much whatever I'm looking but why it is not mapping because of the
+
+01:09:12
+access modes this value is what type of access mode that persistent value which we created manually what access mode read write many but the PV which the PVC which we are looking the PVC is looking for what type of value what access mode read write once because of that
+
+01:09:37
+is kubernetes is mapping that pvc with this pv even though that pv is available
+
+01:09:44
+No. Now how PV and PVC gets associated this is also an important interview question. How PV and PVC gets associated with each other that is depends on access modes and storage that is depends on access mode and storage. First your volume should be available the volume should be available then the capacity and access modes should match.
+
+01:10:12
+Even though I have more capacity is that fine? Even though I have a PV with 2 GB I am requesting 1 GB is that fine? Yes, but let's consider reverse. Let's consider reverse. I have a value with 1 GB, but I am looking for 2 GB. Do you think is that value gets associated with that PVC?
+
+01:10:35
+No. So is everyone clear how PV and PVC gets associated?
+
+01:10:46
+how PV and PVC gets associated. Let's say they may go to the next level. Let's say I have a lot of volumes available with access modes also matching capacity also matching then how it will assign. I have three, four PVs available. Access modes also matching capacity also matching. Then which one it will have a which one it will map.
+
+01:11:12
+randomly randomly randomly it will assign guys are you getting my question let's say I have multiple persistent volumes available with same access mode and capacity also matching and all the volumes are available then which one will get associated for that PVC if I have multiple volumes available randomly it will pick randomly but is there any option to pick specific one is there an option to pick specific one again.
+
+01:11:42
+yes what concept you need to use again here selectors concept labels and selectors concept again can i create a persistent value with labels can i create a persistent value with the labels and can i use those labels as a selectors in my pvc can i use that labels as the selectors in my pvc that way it will work that way it will work if you want to pick specific persistent value
+
+01:12:12
+But that doesn't matter here. That doesn't matter. You just need a storage. You don't need to pick specific unless until your access mode and your storage is matching that can be any value. Now since it is not matching even though volume is available is my PVC is mapped with that volume. If you see PVC still pending state.
+
+01:12:36
+even though I have a value my part is still pending my part is still pending. So if you have these type of issues encountered as a DevOps engineer as an administrator if you are working as a DevOps engineer you are working you need to troubleshoot and understand what is what if you want to troubleshoot do you need to know each and every concept we are discussing here like what is value what is PVC what is PV.
+
+01:13:03
+What is resource request limits, spots, services, deployments, all these concepts you should be familiar.
+
+01:13:13
+Now let me create one more PVC. Oh sorry, let me create one more PV.
+
+01:13:22
+that can be any type that can be any type just to demonstrate I am creating a host path pv I am creating a host path pv now here the name doesn't matter here this can be any name
+
+01:13:41
+Now here instead of doing like this can I create a persistent value with this access mode read write once maybe 2 GB 1 GB now here that can be NFS that can be any other thing now can I do something like this host path or NFS or EBS whatever storage if it is a host path there is no server here path that path can be anything that path can be anything something like this mango
+
+01:14:10
+or mango DB data something like this. Now I am creating a host path PV host path PV. Let me apply that PV. This is again static value only as an admin. I am creating a value.
+
+01:14:26
+Now, if you see...
+
+01:14:30
+The moment I create that PV is it claimed is that claimed you know is that claim mapped with this PV whatever PV I just created now whatever claim it was pending for so long is that associated with this PV.
+
+01:14:48
+How come it is associated because is it matching with that access mode is that matching with that access mode read write on sexist mode and also I am looking for 1 GB but here the capacity of the storage is how much 2 GB that is fine. Now this PV is associated with this PVC is this PVC is used in your pod is this PVC is referenced in your pod.
+
+01:15:16
+Is that party using this value now to store read and write the data from this value? Now if you see Is my party in running state now? If you see the pod Cubectl get all
+
+01:15:37
+Now do you see his body is in running state now? Because your body is using PVC, PVC is mapped with PV, now my body is in running state. One more PVC is still available. One more PV is still available. Suppose if any other application want to claim this one, can they claim based on the access modes and capacity?
+
+01:15:59
+Yes, but this is static value. This is static value. But is that is is it possible for me to have a storage class? I mean to say some kind of a provisioner configured as an admin so that I know need to create these volumes that values will be dynamically created whenever they whenever any application is waiting for PV PVC will be. That PVC is in pending state. And if I have a storage class.
+
+01:16:28
+value will be automatically created. What do you mean by automatically created? Is this object gets automatically created by that storage class? If I have a storage class, but what type of storage that will offer? What type of storage that will offer? Whether it will offer NFS, whether it will offer a post-part, whether it is offer EBS, that depends on what? That depends of the...
+
+01:16:55
+The provisioner the provisioner which we are using in that storage class. Suppose I am using EBS provisioner is that storage class is always going to provision EBS volumes. If I am using EBS provisioner in that storage class is that storage class always going to provisioner EBS volumes. Yes, let's say I'm using different storage provisioner like Azure file Azure disk is that storage class is going to provision that respective storages in the cloud.
+
+01:17:25
+Yes, so that is how the dynamic volumes works before I explain this storage class. Now let's understand one important concept here access modes access modes access modes another one is reclaim policies another one is reclaim policies.
+
+01:17:50
+access modes and reclaim policy or policies Access modes what type of access modes we have in Kubernetes these persistent values persistent value claims Read write once read write many read only many Like this rwo in the short form. What is the full form of rwo read write? Once
+
+01:18:19
+What is the another? rwx read write many rox. What is this rox? Read.
+
+01:18:35
+only many read only many now AWS sorry Kubernetes has introduced one more access mode one more access mode one more type of access modes you have a lot of access modes like this read write once read only many read write many and one more access mode they have introduced but not all the volume supports this one not all the volume supports this one read write once pod read write once pod
+
+01:19:03
+So this type of access mode is introduced recently in the Kubernetes 1.2 version, but not all the value supports, not all the value supports this type of access mode. This is RWOP, this RWOP read, write once forward. This is not going to support all the types of values. What do you mean by value here like EBS, NFS, Coast Path?
+
+01:19:32
+Azure file Azure disk. Can I call this as a values?
+
+01:19:38
+Yes, but not all the volume supports this access mode not all the volume supports this access mode. So these access modes is again depends on what type of value what type of storage you are using first. Let's understand. What do you mean by read write once what do you mean by read write once so the read write once access mode the value can be mounted as a read and write by a single node single
+
+01:20:09
+Suppose I have a read write once access mode value. What does it mean? Let's say I am having one part here. That part can read and write the data to that read write once access mode. Is it possible? Like two parts running on the same node also can use that value, that PVC and PV, same PVC and same PV. Is that possible if they are running in a same node? Read write once access mode.
+
+01:20:37
+read write once access mode if you understand read write once access mode the volume can be mounted as a read write by a single node don't confuse with node and pod they are saying the volume can be mounted as a read write by a single node read write once access mode can still allow multiple pods multiple pods to access the volume but when
+
+01:21:06
+when the parts are running on the same node which means is this possible two parts can use same PVs and same PV if they are running in the same node if they are running in the same node is these two parts can use same PV same PV read write once access mode but is this possible is this possible now the part is running in this node
+
+01:21:34
+Does this part and this part can use this PVC and PV same PVC and PV by these two parts?
+
+01:21:42
+no read write once read write once basically like this only now again does all the value supports all these things read write once read write many read only many like there are lot of values like host path NFS, EBS, EFS does everyone supports all these access modes again no.
+
+01:22:12
+What do you mean by read write many read write many access mode read write many can I mount the value as a read write by many nodes also if that a value access mode is read write many is this possible is this possible if the value access mode is read write many is this possible.
+
+01:22:40
+yes multiple pods even though they are running in a different nodes also can use same pvc and associated pv this one this one and also this one can use same pvcs and respective pv if the access mode is read write many read write many read and write what do you mean by read only many what do you mean by read only many
+
+01:23:12
+Same thing, but parts can only read the data from this value. But does this parts will have a permissions to write the data to this value to the storage. But whatever data pre-configured or pre-loaded data, pre-configured or pre-loaded data, will I able to read the data? Whatever data I have pre-configured pre-loaded in this storage, will I able to read the data from this part? Multiple parts simultaneously.
+
+01:23:40
+But does this part will have a permissions to write the data? No. So that is read-only many. That is read-only many. Now, QBurnity has introduced one more type of access mode, read-write once pod. Read-write once pod, which means only one pod. Is this also possible? Even though parts are running in same node, if the access mode is read-write once pod, is this possible?
+
+01:24:09
+even though they are running in the same node is that possible if it is a read write once pod if the access mode is read write once pod
+
+01:24:20
+Read write once part understand the question if the access mode is read write once part Can I have multiple parts using the same pvc pv if this access mode is read write once part?
+
+01:24:36
+No.
+
+01:24:38
+So only one pod, only one pod, only one pod. That is read write once pod. But again, does all these things will be supported by all types of values, whatever I have like host path, NFS, EBS, Azure file, Azure disk. Does everything supports all these access modes?
+
+01:25:01
+azure file, azure disk like this is everything supports all these access modes does all these values supports all these access modes
+
+01:25:11
+No, not only this read write once also. Apart from this one, don't think this will be supported by everyone.
+
+01:25:20
+Now host path host path is these two possible? Can I create a host path value with read write x read only many is that possible if I use a host path value? Is it going to support that read write many read only many if it is a host path the name itself it is saying host path is that possible? No and also EBS case EBS you guys already used EBS when we are using get WS EC two instances
+
+01:25:50
+If I am using EBS value for my pods, will I able to use that EBS value as a read write many or read only many access modes? Is that possible? When I am using EBS values also, is that possible to use with access mode read write many read only many because does EBS can be mounted or attached with multiple nodes? Can we attach with multiple nodes, multiple servers that EBS value?
+
+01:26:20
+So is it going to support? Is it going to support last two, that EBS? Is it going to support these access modes, read, write, x, read only many? No. But if I go for an NFS or EFS, NFS or EFS, does that NFS or EFS supports all these three? Read, write, ones, read only many, read, write many also? NFS or EFS? Yes. If I am using Azure, this Azure file is like NFS.
+
+01:26:50
+This Azure file is like NFS in AWS. You have a EFS in Azure. We have Azure file does that Azure file supports all these three read, write once read, write many read only many.
+
+01:27:02
+again so that is how it works you can see the table also here access modes table read write once read only many the value if I am using AWS block store is it going to support these three if I am using EBS type of storage do you think is it going to support these three no only read write once but when I am using Azure file is it supporting those three
+
+01:27:29
+read write once read only many read write many this azure disk is like a ebs in aws right this azure disk is like a ebs in azure kind of a block storage again is this azure does is supporting all those three no so this ffs this nfs if suppose if i am using nfs is it supporting those three
+
+01:27:58
+But if you see this this read write once pod this read writes read write once pod only this type of drivers CSI drivers only supporting that read write once pod this is recently introduced. So is everyone clear what do you mean by access mode what is read write once what is read write many what is read write once pod and what type of volume supports which access mode is everyone clear.
+
+01:28:28
+Now, let's say you have these type of requirement. I want to use same storage for multiple parts. I want to use same storage for multiple parts that parts are running in a different different nodes. Then do I need to go for a read-write many access mode supported volumes kind of a shared volumes?
+
+01:28:50
+If you have that type of requirement, yes. Now, the way we have access modes, the way we have access modes, there is one more concept called the reclaim policies. There is one more concept called reclaim policies. If you see.
+
+01:29:12
+When I see this PV, they have something called reclaimed policy here on the persistent volumes.
+
+01:29:28
+We have reclaim policy like retain and recycle delete. We have reclaim policies retain, recycle.
+
+01:29:42
+and delete
+
+01:29:45
+retain, recycle, delete. What do you mean by this reclaim policies? When you are deleting the PVCs, what should happen with associated PV? Suppose I deleted this application. I don't want to run this database anymore. I deleted that application and I'm going to delete this PVC also. I deleted this application completely. But if I delete that controller, do you think this PVC will get deleted? If you delete that replica set,
+
+01:30:15
+Do you think the associated PVC will be deleted? Whatever PVC you are using is that PVC will be deleted if you deleted that replica set. No PVC will be still there. PVC will be still there again. You can use that PVC but here I am talking about when I am deleting the PVC when I am deleting that PVC also what will happen with us? What will happen the associated PVs? What will happen with that associated PVs?
+
+01:30:44
+that is depends on what suppose I am deleting this PVC the PV this PV is associated what will happen to this PV is based on what what will happen to that PV is based on the reclaim policies. Now if the reclaim policy is delete if the reclaim policy is delete then if we
+
+01:31:12
+If we delete PVC, the associated PV, the storage, the persistent volume also gets deleted, which means now
+
+01:31:29
+I deleted this application permanently but still volume claims and volumes are there. Now if I delete this PVC if the reclaim policy is delete is it going to delete that storage also if I am just deleting PVC is that respective PV gets deleted. Yes, if it is a reclaim policy is deleted. What do you mean by recycle? It is going to recycle.
+
+01:31:58
+if we delete PVC the associated PV gets recycled. What do you mean by recycle? Which means it is volume will be there but is it going to scrub the data? Is it going to scrub the data which is part of that volume?
+
+01:32:18
+Is it going to scrub scrub in the sense is it going to delete the data which is part of that value. Now I am deleting a PVC. I am deleting a PVC there is some data some files are there in the storage. Whatever your pod has written that data is there if the recycle the reclaim policy is recycle when I delete this PVC. It is not going to delete the PV.
+
+01:32:46
+but it is going to recycle which means it is going to scrub the data, delete the data then does this PV will be again available for any new PVCs for any new PVCs does this PV will be again available if it is recycled kind of a reusing kind of a reusing so that PVC will be reused by another claims kind of a recycling you are doing.
+
+01:33:15
+that recycle. So if it is a recycle, it is something like this. You can understand very simple basic scrubber. Is it going to something like this? Is it going to remove all the data which is part of that storage? Storage will be there. Storage will be there, but the data will get deleted in that storage kind of a formatting. Then if it is recycled, is that
+
+01:33:49
+Yes, so if it is a retain, if it is a retain what will happen? If it is a retain what will happen? Right, if it is a retain it is something like this. This is your PVC, you have your data, you have data here. If it is a retain, you are deleting a PVC. Is it going to delete PV? Is it going to delete PV? No, it will not delete PV.
+
+01:34:18
+and also is it going to delete the data which is part of that PV? Is it going to scrub the data which is part of that PV? No. The status I can see this PV status as a released. I can see this PV status as a released but can I claim this PV with any other PVC? Even though we are retaining that PV and the data. Can I claim this?
+
+01:34:48
+with any other PVC does this PVC will be associated with any new PV even though I have a PV the status is released but data is still there there because you are maintaining still some other application data is this PV will be available for any other new PVC.
+
+01:35:09
+So is everyone clear what is this reclaimed policies when I am deleting PVC associated PVs what will happen based on this it is going to work these type of questions also asked in the interview is everyone clear what is access modes and how it works what is reclaimed policies how it works. Now is this possible guys. Now I have a parts parts are running.
+
+01:35:37
+Pods are running, pod is using this PVC. Is it possible to delete this PVC? My pods are there. Is it possible to delete that PVC? Or is it possible to delete the PV if there is a PVC referring? If there is a PVC referring that pod, is it possible to delete this one? No. Now, if your pod is not there, you deleted that complete application, can you delete this PV?
+
+01:36:07
+without deleting this PVC can you delete this PV
+
+01:36:12
+No, you cannot delete this but if you deleted PVC, if you deleted PVC, if your reclaim policy is recycled or retained later, can I delete this PV also by manually executing that cube
+
+01:36:30
+Yes, is everyone clear? What is this persistent value? How it works? What do you mean by static value? What do you mean by dynamic value?
+
+01:36:44
+Now, do I have any dynamic values? Do I have any storage class configured in this cluster? This can create a values for me dynamically? No. But if I go for a managed Kubernetes clusters like EBS, EFS, sorry, EKS, GKS, all those things, do I have a storage class that provisioners configured? Yes. But if required, can I have a storage class configured in this self-managed Kubernetes clusters also?
+
+01:37:13
+Let's say I have some NFS server already. I have some NFS server already. I have some NFS server which is running somewhere. Even though it's a self-managed Kubernetes cluster, I have a NFS server already running. I configured my NFS server on my own. This is my NFS server, which is running on this system. Now, using some plugin, using some kind of a plugin or code, is it possible for me to...
+
+01:37:41
+configure NFS storage class basically NFS provisioner
+
+01:37:49
+NFS Pro is not
+
+01:37:56
+I can configure this NFS provisioner. So whenever anyone is creating a PVC is it going to create a PV like this automatically is it going to create a PV this object using that NFS server using that NFS share path. Is it going to create this PV object automatically if I have NFS? Instead of you create this manually is that storage class is going to create manually using those details this PV objects.
+
+01:38:26
+Yes that I will demonstrate tomorrow tomorrow. I will try to deploy storage class using some driver some kind of a code. I will apply the storage class using NFS storage class. In that case do I need to create this PVs manually as an admin static volumes? No, does that volumes will be automatically created by that storage class as for the provisioner? Yes, but as I already told.
+
+01:38:54
+When I go to managed Kubernetes cluster, am I going to get the storage classes also configured with my cluster? Yes. Tomorrow, I'll show this NFS provisioner, guys. Tomorrow, I'll show this NFS provisioner how to set up. Today, try to practice whatever has been discussed. Is everyone clear? What is persistent value? What is persistent value claim? What is access mode?
+
+01:39:20
+What is reclaim policy? How persistent values gets associated with values? This is very, very important concept. I try to cover in and out of these persistent value, persistent value claims internally, how it works in depth so that you can understand this. You can apply this in your projects. If someone asked in the interview also, you should be able to easily explain what is what.
+
+01:39:50
+That's it for today guys have a great day. I'll continue tomorrow with that storage class then I'll try to continue with the next set of topics we have some next set of topics like config maps secrets what do you mean by config map what do you mean by secret in Kubernetes and what is liveness probe what is readiness probe will understand some advanced concepts once I am done with that storage class
+
+01:40:22
+Thank you guys, will see you tomorrow. Try to practice as much as possible. That's it.
+
+01:40:34
+This conference will now be recorded.
+
