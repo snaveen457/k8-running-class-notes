@@ -1,0 +1,1068 @@
+00:00
+This conference will now be recorded.
+
+00:05
+In yesterday's session, we were discussing about what is Helm, what is Helm template, and what is values, what is variables, what is flow controls, what is functions. We discussed yesterday in Helm templates. We are trying to create a Helm template for our own application using Helm. I thought of deploying application into the Kubernetes cluster. We created a Helm chart.
+
+00:34
+we created HelmChat. Let me connect to the server where I have that HelmChat available locally. So this is the folder where I have my HelmChat files. This is a local file, a local folder using which we'd applied that application. But yesterday we removed that application also. We removed that application also.
+
+01:04
+Now again let me execute few commands to understand Helm commands. Now I have this folder, Helm chart folder locally. I want to know what and all Kubernetes resources will get rendered and installed when I use this Helm chart. What command I can use? I want to know what Kubernetes resources will be rendered and applied in Kubernetes when I actually use this Helm chart. What command I can use?
+
+01:39
+but command can be used instead also we use that command.
+
+01:50
+Helm template command and using this Helm template command will I able to see what templates will be rendered and applied whether it's a local local short folder or tar file otherwise I can use remote also like.
+
+02:18
+Helm repo name. And. Chart name in the Treppo. Using this Helm template command if it is a local file or folder also I can see what templates will be rendered. Even though it is a remote file also I can see just to give an example. This is a local. Template folder right when I execute this command you can use some name also this we call it as a release name. You can use this as a release name.
+
+02:47
+This is release name. It is optional. If you give this release name, it will use that release name wherever in the templates it is using. Something like this. Now when I execute that Helm template command, will I able to see what Kubernetes resources gets rendered when I actually use this chart? If you see, do I have a service account in the templates folder? Is that service account is getting created by default?
+
+03:20
+But there is no roles attached to the service account, just they're creating a service account, empty service account without any roles, role bindings that is not required for this application. So only service account is getting created and his service is getting created.
+
+03:40
+Yes and his deployment is getting created.
+
+03:48
+Yes, but this is there is one pod. There is one pod that getting created that is in a test folder, but this will not be applied when you are actually installing when you are actually installing this. Whatever it is there in the test folder, right? It is not going to be created. Just it is showing here kind of a testing whether that application works or not like that.
+
+04:12
+So this is not going to be created, but other things gets created here. Now, if you observe, even though I have some remote repositories added, how to see the repositories added to the client, helm repository, what command?
+
+04:33
+what command can be used to see the remote repository added to the client.
+
+04:52
+Now we added only one repository. Suppose I want to know what are the charts available in this repository. What command can be used?
+
+05:32
+I want to know what charts are available as part of this repository. How can I search?
+
+05:40
+we use that command also, helm search repo if you don't give any name if you don't give any name here repo name suppose I have added multiple repositories to the helm client is it going to search the charts in all the repositories if I don't give any repo name here after that search repo command if I don't give any name repo name it is going to search all the
+
+06:10
+repositories whatever charts available in that repository you know all the repositories if i want to search in a specific repo i can use something like that the repo name now as of now i have only one repo so when i am using this repo name it is showing what charts available in this repository now this is a remote helm chart is it possible for me to show you know see what is the templates what templates is going to be rendered when i use this helm chart
+
+06:40
+What is the values of that Helm chart? Is it possible to see those things also? Yes. So what command again? If I want to see the templates, Helm template, this is release name you can give whatever name. This is release name, whatever name you want to give. Then can I give this chart name completely? Something like this, repo name, as well as the chart name in that repo. Is it going to show what templates is going to be rendered?
+
+07:10
+when I actually install this one what is going to be installed you can see now if you see
+
+07:21
+When I'm using this command, Helm template command, do you see is that matrix server chart templates folder is it has one service account is service account is getting created.
+
+07:37
+Yes, and is it creating one cluster role in the templates in that matrix server templates folder? Do have one file called this one and is it creating a one cluster? Is it going to create one cluster role with these permissions? And do have another cluster role, another cluster role with these permissions? And is it binding? Is it binding that service account with these cluster roles?
+
+08:06
+cluster role binding. Do you have all those things in this file? In the templates folder, cluster role binding, role binding, then do you have a deployment for matrix server? Do you have a deployment for matrix server where that service account is used?
+
+08:25
+matrix server is getting deployed as a deployment and if you observe did we deployed all these things manually last time when I deployed matrix server last time I mean to say last time in the sense in the beginning when I deployed in the beginning when I was discussing about matrix server did I used Kubernetes manifest to deploy all these things YMLs beginning in the sense when we discussed about HPA.
+
+08:56
+Yes, but can I deploy all these things using Helm chart if it is already part of Helm chart if there is one Helm chart all these resources are part of that Helm chart templates we are able to deploy this. Now we can see the templates like this is it possible to show the you know see the default values the way we are seeing the templates what are the values inside that chart is it possible to show you know see the values also yes.
+
+09:26
+What command I can use there is a command called show values show values whether it's a local chart whether it's a remote chart I can see the values the default values now this is my local chart let's say.
+
+09:54
+I'm able to see what are the values we have in the default values is it displaying that default values content when I use this film show values is it showing the values of that values file. If you see here.
+
+10:12
+now is it possible for me to see the remote chart values also before installing I want to know what is what templates is going to be rendered what values is used is it possible for me to see the values also for this remote chart like this
+
+10:30
+So, help show values your chart, repo name and chart name. Now is it showing the default values of that Helm chart whatever is part of that matrix server Helm chart whatever values is there if you see can I see these values now this is the image that matrix server image. So tag is empty.
+
+10:59
+Since tag is empty, since tag is empty, they're getting, they're using maybe the chart app version, the chart app version as a tag in the template. Now, if you see all these things, service account create true. So that's why it is creating. If I make this service account, this create value as a false, is the service account gets created because that might be in a condition that rendering, if I make this false service account,
+
+11:28
+create value as well service account will not be created. If I make this RBAC create also false, does those roles role bindings gets created?
+
+11:40
+no so like this there are customizations which you can do like all these values are there liveness probe readiness probe all these things are there right if required I want to customize these values I want to customize these values can I take this can I take this into one file like this like you know maybe something like this matrix server values dot
+
+12:12
+YAML can I take this into one file and can I modify if I want to modify these initial period seconds delay seconds in the values file can I modify these things if required can I modify lot of things like whatever I wanted to modify is it possible for me to take this values and modify and use that values file while installing the chart.
+
+12:39
+while installing the chart is it possible for me to use this file first I'll take the file like this first I'll take the file like this now in this file can I modify whatever I wanted to modify maybe I want to have a two replicas let's say I want to have a two replicas let's say and.
+
+13:07
+something like this. Krishna prasad is asking we can do it directly in values file but where is my values file this is remote repository this is remote repository where is my values file.
+
+13:23
+I don't have any do I have that Helm chart locally. Let me show you. They have that Helm chart locally that matrix server Helm chart locally. Do I have?
+
+13:42
+No, we don't have any that matrix server Helm chat locally. This is remote Helm chat remote repository. Now I can take a values like this. If I want to modify a lot of values, I can do that. But if I want to only modify a few values, can I do while using if I find my function using if I find that option, can I directly do like this? That whatever value, let's say I want to have this replicas as a.
+
+14:10
+like replicas as 3 or 4 like that. Can I use this one if I want to only modify few values let's say.
+
+14:23
+like if I want to modify this liveness probe dot initial delay seconds like something like this if I want to modify only few values but if I want to modify lot of values can I take this approach passing a custom values file passing a custom values file
+
+14:51
+now here if I want to do lot of changes I'll do lot of changes
+
+15:01
+like replicas to now I want to change all these things initial delay seconds I want to say 30 seconds.
+
+15:18
+initial delay seconds 20 like that now if I want to modify a few things customization now while installing can I use something like this let me see if this is already installed I'll upgrade metric server is already installed now instead of installing let's say I will do this upgrade
+
+15:41
+iPhone iPhone install you can use it is not mandatory now this release name this chart name this release name this chart name can I use something like this iPhone F that custom you know whatever values file I want to use now in the namespace this is already in a cube system namespace now if you see is this values is used now
+
+16:12
+like because of this ifnf option
+
+16:21
+Now, if you see, I may have some changes.
+
+16:33
+Now if you see one more one more matrix server like since I have create I said two replicas if you see is two replicas are getting created and I have modified that live you know initial delay seconds that's why it is not yet performed that readiness probe liveness probe of that matrix server.
+
+16:52
+this way can I use values file instead of default values can I use our own values file by getting the default values and modifying
+
+17:05
+Yes, so this is a it works lot of customization lot of customization now
+
+17:18
+let's take our helm chart let's take our helm chart now
+
+17:28
+We deployed this application. I think yesterday we are installed again. We are uninstalled again. But let me show from the scratch by deleting all the ingress if I have any ingress.
+
+17:41
+These ingress rules are created manually. So I am deleting all these things. Let's say I don't have any ingress rules in the default namespace.
+
+17:55
+I have few applications, I have few applications, but these applications are deployed using manually, YML files. Now I have this Helm chart folder locally. Now I can install locally, but if I install, I want to know what is getting rendered by default. Now I will use this Helm template, command, some release name.
+
+18:25
+that chart name now when I use this one if you observe it is rendering deployment it is rendering service service account but if I want to access this service outside of the cluster
+
+18:44
+Service of type cluster IP is getting created. Is it possible for me to access this one directly from outside of the cluster? This application? No. Now we already have an ingress. We already have ingress. We are not going to use node ports, load balances directly as we already discussed. We already have an ingress controller. If I create an ingress rule, via ingress controller will I able to...
+
+19:13
+expose this application outside the cluster but is ingress rule is getting created by default even though even though I have a ingress yml even though I have a ingress yml in my helm chart folder this templates folder I have a ingress yml why this is not getting rendered in this helm chart even though I have a ingress
+
+19:41
+why it is not getting rendered if you observe yesterday itself we discussed is it in some kind of a conditions unless until the ingress is enabled is this ingress resource gets rendered.
+
+20:00
+no now this is defined in the values file this is defined in the values file now
+
+20:11
+while rendering also I can say something like this iPhone iPhone set iPhone iPhone set.
+
+20:21
+if and if and set that ingress dot enabled value I can make it as a true equals to true while rendering also I can see if I do like this now is ingress is getting rendered.
+
+20:38
+But is this hostname is correct?
+
+20:45
+This is just an example is the hostname is correct. No, so do I need to modify all these things in the values file because if you see the template normal template as is are they getting all these things host details path details all these things from the values file.
+
+21:04
+Yes.
+
+21:08
+I can modify those things in the values file. If you see the default value of that Helm chart, if you see by default, what is the value of this ingress enabled?
+
+21:23
+false I can make this true I can make this true the ingress class name we are using nginx ingress so can I mention here class name nginx here yes and here can I define what is my host for what host what path it has to route yes.
+
+21:47
+Now I can modify all these values since I am still developing my Helm chart still I am developing my Helm chart can I do directly in the default values file Still I am doing the I am creating or developing my Helm chart can I do all these things in my default values file like this
+
+22:08
+Ingress enabled, I will make this true.
+
+22:13
+class name and the next now host whatever host I already have a domain I already have a domain mythun tech devops dot co dot
+
+22:29
+in path type I can say something like prefix path type I can say prefix
+
+22:40
+and path something like this this is not the path right maven iPhone web iPhone application if this is the path path type is prefix this is the host then this ingress rule will be created this is a values file guys this is a values file but is this values is used in the ingress template in that helm chart is this values are used in the ingress template that ingress dot yml template
+
+23:10
+in that Helm chart, yes. Now, if you already have some TLS certificates, you already have some TLS certificates, can I mention that secret name if you created already secret, that TLS secret? If you want to enable TLS also. If you remember last time we created one secret, self-signed certificate secret. Can I mention that secret name here? Can I mention that domain here?
+
+23:40
+If I want to enable that TLS for that ingress, yes. For now, I'm not using TLS. I'm not using TLS. Let's use this one. I modified the values. Now when I render the template, I don't need to do true here because it is already enabled in the default itself. Now if you see, is my ingress rule is getting rendered? The way we created ingress rule, is it looking like same? Whatever we created kind ingress.
+
+24:10
+host is this, path is this, prefix is this, backend is this, port is this
+
+24:19
+Is Ingress also getting created now for that application?
+
+24:25
+Yes, now if I deploy this one already ingress controller is running do you have a engine nginx ingress controller already deployed in this cluster whatever cluster I am using.
+
+24:40
+Yes. So if I deploy this application using HelmChat, does Ingress rule also get created when I use that application? Nginx Ingress will route the traffic to this Kubernetes service. But still it's a local file. Still it's a local file. Now I can install locally like this. How to install that application locally? No, I mean to say I have a local folder. How to install that application? What command I can use?
+
+25:10
+Helm, Upgrade iPhone iPhone install or just Helm install.
+
+25:16
+some name name maybe that release name mavenwebapp your local chart and if i want to do dry run can i do dry run also something like this hyphen hyphen dry run
+
+25:36
+Now I can do the dry run also. This is just a dry run. This is just a dry run. Now I can install without dry run without dry run. First let me install and see if I can access the application or not. Since I have not mentioned any namespace where all these Kubernetes resources will be created this ingress resource this deployment resource this service
+
+26:04
+service account resource in the default namespace.
+
+26:10
+Now application is deployed application is deployed. In the one this namespace revision one. Now do I have all these things?
+
+26:22
+this deployment is this deployment but created out of that Helm chart is this deployment that created 40 seconds 14 seconds ago.
+
+26:34
+do have these two parts running but why it is not ready even though it is running.
+
+26:45
+probes probes are getting
+
+26:50
+Once that is ready, I can access if you observe do I have a ingress rule also got created by default I have enabled ingress and I have defined do you see is this ingress rule got created.
+
+27:09
+Now once this part is ready, once these parts are ready, still it is not ready. Once these parts are ready, can I go and access my application? I induce it, so I mean to say maven, sorry
+
+27:27
+Now since I used the last time HTTPS from the cache it is using HTTPS but it is not enabled HTTPS let me use HTTPS it is redirecting let me open in a private window browser cache is there browser cache is there now if you see am I able to access that application I open in a private window now am I able to access that application
+
+27:57
+Now if I want to enable HTTPS also, if I already have that secrets created. If I already have that secrets created.
+
+28:10
+This mytho ingress TLS we created in the default namespace itself. Can I use this secret in my values file to enable TLS?
+
+28:23
+If I already have a secret created in my values file in that Helm chart values file. Can I use those secret here. Here instead of empty bracket here I will remove this empty bracket.
+
+28:42
+So host, host name is my domain name, host name is my domain name, mithun tech devops.co.in that secret name.
+
+28:55
+What is that secret name? Let me.
+
+29:02
+I didn't copied that let move
+
+29:07
+So, let me mention that secret name here. This is again a values file. This is not your ingress YML. This is values file, but is this values are used in your ingress template in that Helm chart. This is not ingress YML. This is a values YML, but is this values are you know is this values are used in the template that ingress template. Yes. Now, let me save.
+
+29:36
+But before installing if I want to see can I do this kind of a dry run or a helm template kind of a dry run or helm template to see what is exactly getting rendered. Now I am doing a dry run. Now do you see is this also how know that a TLS section also in my ingress YML know.
+
+30:02
+Now let me deploy if I want to deploy I will remove this dry run since I am using upgrade iPhone iPhone install it is already installed is it kind of upgrade now revision tool.
+
+30:15
+Reason 2. Yes. Now,
+
+30:21
+here now HTTPS now HTTPS this is browser it is a browser warning it is saying error you know error certificate invalid because I am using a self-signed certificate some browsers will allow some browsers will not allow now let me access in a safari browser there is an option to proceed it will give a warning but I can use I can proceed now it is giving a warning.
+
+30:51
+and we already trusted that one that's why I am able to access now do you guys able to access this application whatever I have applied
+
+31:04
+via Helm chart. Do you guys able to access? Even though you are using HTTP, is that ingress is rerouting the traffic to HTTPS by using that self-sign certificate?
+
+31:21
+Yes.
+
+31:25
+This is how we can use but this is still a local chart. Now someone want to deploy this application. Will they able to deploy from their system that can be CI, CD server or other DevOps engineers, laptop or desktop. Will they able to deploy this application using this Helm chart? That Helm chart is there locally in my system. Will they able to deploy?
+
+31:51
+Now Helm chart is available locally. Now.
+
+31:57
+I can only deploy no one else can deploy but what options I have now can I maintain this as part of the source code itself in the SEM in the SEM itself where I have a source code something like this in my GitHub in my GitHub itself in my GitHub itself can I commit that into this project kind of a Helm charts folder that complete folder
+
+32:29
+something like this let me show other project already where I have done something like this can I deploy you know can I commit that Helm chart that folder whatever name it can be can I come you know commit all these things values file chart file templates folders this Helm chart
+
+32:48
+into the SCM-AZs.
+
+32:54
+like this along with your source code. Yes, some projects some projects will do two things source code. They will maintain in a separate repository. This build kind of a manifest like a Helm charts or Kubernetes manifest will be in a separate repository some companies what they do right there will be two repositories for each application. There will be two repositories for each application some companies they don't want to merge.
+
+33:23
+source code with operations related code. So same project like this, same project, let's say this project, some companies what they do, it will have only source code. Source code like Java files will be there. If it is Java, palm.xml will be there.
+
+33:51
+that the UI code whatever it is Docker file also will be there. This is kind of a source code. Now some projects what they do they will maintain this operations related deployment related Kubernetes manifests. Kubernetes manifests.
+
+34:14
+or this helm charts in a separate repu kind of a ops repu kind of a ops repu kind of a source repu ops in the sense operations.
+
+34:31
+something like this. Some projects will do this in the CI pipeline. In the CI pipeline, let's say this is your CI server, what they do. So they will get this source code. They will get this source code in the CI pipeline.
+
+34:50
+This happens if it is Java all these things happens.
+
+34:58
+Docker build that Docker build Docker push all these things happen if they want to do sonar scan also that sonar scan also they can do something like this in the CI pipeline in the CD pipeline in the CD pipeline as part of CD process in the CD pipeline that can be same same job.
+
+35:25
+Within a same job, you can have a CD and CI both or you can have a CI separate job and CD separate job. From one Jenkins job will be able to trigger another Jenkins job. Maybe Bhaskar sir might have explained upstream jobs, downstream jobs like that.
+
+35:42
+It's up to you, right? Whether you want to have a CA and CD in a same job, same pipeline, CA and CD in the same pipeline, or maybe you can have a CA as a separate and CD as a separate as part of CD pipeline.
+
+35:58
+Will I able to get these things into the pipeline that manifest our Helm charts then can I execute if it is a Helm chart if it is a Helm chart can I execute something like this Helm upgrade
+
+36:16
+Helm Upgrade, iPhone iPhone install that Helm chart
+
+36:27
+or whatever files you want to use or whatever namespace. Now if I have it as a source code, if I clone this, if I clone this Ops repo also, is this
+
+36:49
+If I clone this as ops repo is it available as a folder in the Jenkins pipeline Jenkins workspace? Yes, can I do like this now different different versions I am building while building the image while building the image can I use some unique thing like build number or branch name and commit ID like this Docker build with your registry name your registry name whatever registry I am taking example as this Docker hands-on.
+
+37:19
+let's say mave instead of hardcoding that one, can I use something like this for each build I am creating one image then docker push, docker push also same
+
+37:40
+Docker push also same I will do like this here while installing since the tag is being referred from the values file Can I use some option at runtime also if required? Iphone iPhone set image dot tag Equals to that build number can I pass that tag as a build number if this? Whatever image is being pushed is that image gets deployed if I do like this in my
+
+38:09
+CD pipeline if I have something like this
+
+38:17
+Now let's say this is my Jenkins. In my Jenkins, if I have a helm installed, if I have a helm installed, if I have a kubeconfig pointed to that cluster, is this helm can, if in my Jenkins servers or slaves, if I have a Jenkins, sorry, if I have a helm installed and kubectl configured, does this CD pipeline, is your Jenkins, will be able to communicate with your Kubernetes cluster.
+
+38:45
+let's consider this is your kubernetes cluster this is your kubernetes cluster where you have some nodes
+
+38:55
+your masters your workers. This is your cluster if I have a helm installed and cube CTL configured in my Jenkins system.
+
+39:07
+does this Jenkins can talk to?
+
+39:12
+The Kubernetes cluster, if I have a kubectl and kubectl and helm configured here, does Jenkins, even though you are just executing like this in Jenkins pipeline, does Jenkins will communicate with this API server and do the deployment like this? Now, if I have another cluster also, if I have another cluster like a production cluster, a different cluster.
+
+39:43
+if I have a production cluster also now if required I want to deploy in qa cluster qa cluster
+
+39:55
+Now you've required.
+
+39:59
+will be able to switch the context in your kubeconfig file in your kubeconfig file you can have a multiple clusters information. You have a stage, you can have a stage like this, a stage deploy to QA. Now within this stage, we'll be able to use some kubectl commands, kubectl update config. If I have a my kubeconfig file has multiple cluster details.
+
+40:28
+update config switch context something is there can I switch the context to the qva cluster and then execute this command so that your then execute this command if required something like this
+
+40:45
+If you remember when I was explaining about the cube ctl context. I explained all those things.
+
+41:00
+now I can set the context
+
+41:10
+something like this. So if I already have, if I already have other context also, can I say use context like a QA, QA cluster, something like this, then is your QCETL points to the QA cluster if you have a QA cluster details also in that QB config file, if I do something like this, is it going to point to the QA cluster now, QCETL if I do like this? Yes.
+
+41:40
+Then after doing that if you execute this command, the Jenkins will do the deployment in this one also your QA.
+
+41:52
+But if you want to use a different different files if I want to have a different different files values files if required QA different values file can I have those values file like dev values file QA values file like that in the source code here in the source code dev values file QA values file if I want to do lot of changes then can I use that one also something like this?
+
+42:22
+FNF devvalues.haml like this
+
+42:28
+if I have all those things here separate files. Now this way will I able to do the deployment also using Helm chart continuous integration and continuous deployment also like this by maintaining.
+
+42:43
+my Helm Shots in the version control system
+
+42:51
+Some projects will have two repositories, but some projects will have a single repository. In the source code itself, can I have something like this? That Helm charts, if you are using Helm charts, or if you are using Kubernetes manifests, that as is YMLs. Can I have something like this directly also, instead of having a separate ops repo, where we will maintain these things?
+
+43:17
+In that case, single project, single repo. So when I'm cloning this one, am I going to have a Helm charts if I am using that Helm charts folder? Or will I have a Kubernetes manifest files in the SEM if I'm using Kubernetes manifest? If you are using Helm chart, can you use this command, Helm upgrade or install like that if you are using Helm charts?
+
+43:47
+Yes. Now, this way, will I able to do the integration, continuous integration, and continuous deployment to the Kubernetes cluster using Helm charts for my own application?
+
+44:03
+with a lot of customization at runtime. By driving my deployments using values.
+
+44:13
+Yes. But if you want to share this project, if you want to, if this software has to be deployed, this application has to be deployed by different people, are you going to share this kind of a source code, a kind of an as-is source code? No. In that case, can I create a Helm chart into the Helm repository? Can I create a chart and push that chart to the Helm repository? Then whoever want to deploy.
+
+44:40
+We are one to deploy. Will they able to deploy by adding that help repository to the client and deploying that application?
+
+44:51
+Yes, so that is helm repository concept. So can I use nexus? Can I use S3 buckets or GCR buckets? If I am using Google, can I use GCR buckets or S3 buckets or nexus or ECR also to maintain helm charts? Yes, you need some kind of a artifactory. Now, let me demonstrate
+
+45:20
+I can use GitHub also as a Helm repo, not as a source code repo I am talking about. In the GitHub also I can create one option, there is an option called GitHub pages. So using GitHub pages I can host Helm repo. So let me explain that first. Later I will see nexus part.
+
+45:46
+No.
+
+45:51
+Let me show this option.
+
+45:55
+In the GitHub also I can maintain Helm charts. In GitHub also I can use as a Helm repo. So first what I will do, I will create one normal repository. First I'll create one normal repository in GitHub, the way you are creating a source code repositories. Same way I'll create a normal repository in GitHub, but I will enable GitHub pages, GitHub pages for that repository so that I can use that repo as a Helm repo. So let me do that first.
+
+46:24
+Let me go to github my github I am going to my github my own github. Now I already logged in. I already logged in.
+
+46:35
+Let me create a repository. I will create a new repository.
+
+46:44
+normal way normal repository so I want to use this as a public repository so that anyone can use this helm repository I am adding this readme file I am giving one name just let me give some name like Mittun.
+
+47:06
+Helm this name already used with Helm repo let's say December batch some unique because this name is already used I am saying something like this with Helm repo December batch like this I am creating a normal repository in GitHub public repository I am adding a readme file I created a repository.
+
+47:36
+For this repository, I'll go to the settings. I'll go to the settings. I will enable the GitHub pages. For this repository, I went to the settings. Here you have an option called pages. Here I have an option called pages. Let me click on that pages.
+
+47:55
+Here I have an option called pages here. Let's select the main branch and click on save. It will give one URL the moment I create that it will give one URL. Take this URL copy this link address and keep it with you. We will use that one.
+
+48:16
+This is your GitHub pages URL. Can I use this as my Helm repo URL after doing some changes in that, after adding the chart to that repository? Can I use this as a Helm repository URL? This GitHub pages URL as a Helm repository URL, yes. So I have enabled this GitHub pages like this. GitHub pages like this. I created a repository. I went to the pages. I selected and
+
+48:47
+created a get up pages first I will create that Helm chart. I will create that folder. I'll create that folder as a package in this system. I have this Helm chart folder normal folder this normal folder I have what I can do. I'll create a package out of that folder. If I execute Helm package.
+
+49:12
+If I execute Helm package on this folder, it is going to generate one tar file. It is going to generate one tar file is that tar file will have the templates values. All those things is that folder is packaged as a tar file. Yes, if I execute this command, but before creating a tar file, you verify you verify whether it is rendering properly or not. I can use one command called Helm lint.
+
+49:41
+If there is any indentation issues in your Helm templates, any issues, indentation issues or template issues if you have, then is it going to throw some error saying that failed validation kind of a validation of that Helm indentation and the templating validation. Now when I execute this Helm lint, is it saying any chart is failed?
+
+50:06
+Is it saying any chart is filled? No. This lint will do the kind of a validation on the indentation and templating. There is no issues. Then can I go ahead and create a package out of this folder? To push that into.
+
+50:23
+Helm repo, something like this, Helm package, Maven, web app chart. If I execute like this, now did I got one tar file like TGZ file wherever I have executed in the system. Do I have this TGZ file? Now if I have this TGZ file also, can I use for installing the application also something like this? Can I use this TGZ file also?
+
+50:53
+Helm template local tar file or Helm install also can I do something like this with this tgz file also yes local folder or that tar file but now I will not do that I created a tar file I created a tar file out of that folder here this is just an example don't copy paste as is don't copy paste as is because I have a different folder different name here
+
+51:23
+So don't copy paste like this as is understand the concept and use that if you I copy paste as this do you think will it work if I execute help package Java web app here do you think is it working.
+
+51:39
+No, so this is my Helm chart folder. This is my Helm chart folder. So for that one I'm executing Helm package. It is generating one TGZ file. Then I created a repository in the GitHub. I created one repository in the GitHub. I enabled GitHub pages. Then I will clone that repository normal source code. I'll clone this as a normal source code.
+
+52:09
+Let me go back to this repository. This
+
+52:15
+this I will use I'll clone this in into that system as a normal git concept git clone I'm cloning that I got this one with technology with tech helm report December batch as of now nothing is there except readme file except readme file nothing is there in that folder
+
+52:39
+I will clone that once I clone that I will move that tar file whatever tar file I have generated this tar file whatever tar file I have generated I will move that tar file to that repo that github repo this repo I will move that tar file something like this move you already know all these comments right.
+
+53:09
+to that folder now do I have that tar file in that repository in this folder with untick helm report December best do I have that tar file yes now I am going to generate I am going to generate one index dot ml file that index dot ml file will have a chart information that index dot ml file will have a chart information I need to generate one index dot ml file
+
+53:38
+for that Helm chart. So how to do that? I'll execute this command. But don't execute as is. Don't execute as is. So Helm repo index. Here instead of Helm repo, I'm going to use this name, this folder. In whatever folder I have the tar file, right? This folder I will use.
+
+54:06
+And this URL, what should be my URL here? What URL I need to use? The GitHub pages URL, whatever you got by creating a GitHub pages, I will use that URL. GitHub pages URL.
+
+54:21
+and make sure you are executing the command make sure you are executing the command from outside don't go inside this folder and execute execute from outside so that index.aml will get generated now after executing this command after executing this command now when I see that mithun tech this folder can I see one index.aml file now after executing this command
+
+54:51
+Now what is there in that index dot ml if you see what is there in that index dot ml if you see does it has one entry one entry helm chart entry this is the chart name this is the API version app version these are taken from that helm chart ml file and url is this which means is it having a entry where exactly that helm chart will be available if you are using this as a helm repo.
+
+55:22
+If you are using this as a Helm repo where exactly you have that Helm chart available that file. Yes, it has information about that chart.
+
+55:33
+After doing this, after doing this, go inside that folder and do a normal git add. Go inside that folder that mithun tech december that whatever. Go inside that folder. Do a normal git. Git add.
+
+55:55
+get Kermit.
+
+56:08
+git push. I'll do a git push.
+
+56:23
+Now I need to use a personal access token pat so I don't have any token let me go here
+
+56:37
+Let me go and generate.
+
+56:48
+to set things.
+
+56:58
+developer settings.
+
+57:02
+Personal Access Token I'll generate.
+
+57:06
+I don't have...
+
+57:16
+Okay. Hello.
+
+57:24
+some name.
+
+57:28
+I don't want to expire this token no expiration I'll give only repo access for the token I'll generate a token I'll use this I'll use this token here
+
+57:46
+now we are done so that tar file that index dot aval everything is committed everything is committed to this one everything is committed to this
+
+58:01
+repository that source code repository whatever you have right so
+
+58:10
+Here it is available now like this. Now whenever I want to use this Helm chart from remote Helm machines, you should not use this URL now. You should not use this URL. Can I use this URL? GitHub pages URL. Can I share this one with someone? Whoever want to install that Helm chart using Helm repository remotely? Yes. Now let me show that. Let me show that.
+
+58:40
+Now this is one machine. This is one machine where I have a helm. As of now I have only this repository added. Now can I add this repository also helm repo add mithun tech any name any name mithun tech helm or mithun helm repo whatever can I use this URL as a helm repo URL.
+
+59:05
+Can I use this as a Helm repo URL? Yes. Now, when I execute Helm repo ls, now can I see two repositories available in this Helm client?
+
+59:22
+Can I see two repositories available in this Helm client? No.
+
+59:29
+Helm search repo when I am doing Helm search repo I am not giving any repo name am I able to see in this Helm repository do I have one chart they have one chart
+
+59:46
+Now in this MithunTech Helm Repo, can I see one chart now? Now if you guys want to install this application, will you guys able to do like this? Add that Helm Repo add in your Helm and will you guys able to do Helm install also? Something like this. Now let me remove that application whatever I have deployed locally using local.
+
+01:00:15
+This is deployed using local folder. Help uninstall. I'll remove this one which is deployed using local folder. Now I don't have that application because I uninstalled.
+
+01:00:36
+because I have uninstalled I don't have that application even that ingress rule also got deleted.
+
+01:00:45
+because that ingress rule also created using helm that ingress rule is also deleted. Now instead of using local now I added this helm repo I added this helm repo now if you want to search you can use helm search repo if you want to search in a single repo you can give that repo name so that it will search only in that repo now can I use this one something like this helm.
+
+01:01:15
+upgrade, iPhone iPhone install, iPhone iPhone install, that whatever name maven web app this chart if you do the dry run also you will come to know
+
+01:01:32
+Now is it rendering whatever is part of my Helm repo, whatever templates and values is part of my Helm repo, is it rendering that as per that template. Now if I really want to install, I can use install. But if you want to see the default values, can I use show values? Can I use show values?
+
+01:02:01
+show values now show values it is showing the default values if required I want to customize if required I want to customize while installing can I do the customization if it is less values let's say if an iPhone set I don't I want to enable auto scaling can I say auto scaling enabled equals to true if required now auto scaling enable equals to true.
+
+01:02:33
+Now this version of the image is being used this version of the image is being used tag one right now if I want to do lot of values can I get those values if I want to modify lot of values can I get those values and modify the values file and use iPhone F option also if required.
+
+01:02:55
+Now, again, I am installing like this with auto scaling enabled. I'm installing like this with auto scaling enabled. I'm installing like this since ingress is also enabled with all these values. Now, they have an ingress rule also got created.
+
+01:03:16
+Now again, will be able to access that application once it is ready because it is happening liveness probe readiness probe is still not completed. Now it is showing not ready. If you try to access you will get some errors from ingress am I getting this error why not too bad gateway because that application that pod is not ready to take the traffic. There is no endpoints available for that service. But once that is ready.
+
+01:03:45
+Am I able to access that application which is deployed in my cluster?
+
+01:03:54
+But when you guys are deploying, when you guys are deploying, will you be able to use your host names here instead of my host name if you want to deploy in your cluster this application? Then the secret is not available. Will you be able to create a secret and maybe use a different secret wherever you have a TLS certificate? Or you create a secret and use that name here? Modify the values as per your requirement also if required.
+
+01:04:24
+Yes, that's how you can do it once it is ready. Now am I able to access that application now?
+
+01:04:34
+This way you can do this if required. Can I maintain in a nexus also? If you see if you already you are already familiar with nexus, you are already familiar with nexus in nexus you created repositories like maven hosted Docker hosted like that. Do you have a help hosted repository also here when you go to the nexus and admin section and repositories will be able to see one option called help hosted.
+
+01:05:05
+Yes, you can create a repository like Helm hosted, Helm hosted. Once that repository is created, you can see something like this. I'm giving a name like this. I click on that. I click on that Helm hosted. Then I gave one name called Mithun Tech Helm. The repository name is Mithun Tech Helm. I created. I created that.
+
+01:05:34
+Helm hosted Then again you have that local folder you have that local folder again by using Helm package using that Helm package command. Do I need to create that TGZ file? If you have that local folder by using Helm package command you create a TGZ file that attar file once that is done I am using curl option. I am using curl option like this curl
+
+01:06:04
+I fund you my nexus username I fund you my nexus username colon my nexus password what is this is this is the repository URL of this mythun tech helm repo if you click on this if you click on this copy button you will get that URL is this is my nexus helm repo URL here
+
+01:06:30
+Is this an access Helm Repo URL? Yes. That is the URL. I am using one option called iPhone iPhone upload file. Curl option, iPhone iPhone upload file. That a tar file. Now, does this curl will upload or copy this Helm Chart TGZ file to this Helm repository if I execute this command with username and password like this? Yes. Once that is done, will you able to add your Helm repository like this?
+
+01:07:01
+Since it's a private repository, since it's a private repository, you can add it to the client like this helm repo add nexus HTTP username colon password HTTP username colon password at the rate your URL at the rate your nexus URL. If I do like this is that help repository is added to the client, then can I install that application that help chart which is available in that repository like this.
+
+01:07:33
+there are different different ways to upload
+
+01:07:39
+There are different ways to upload to the nexus, jfrog, s3 buckets, gcr but the concept of helm chart remains same. Is everyone clear guys? What is helm? Why do we need helm? What is helm cli? What is helm client? What is helm repository? What is helm templates values? Is everyone clear? So most of the applications nowadays they are using helm.
+
+01:08:07
+Some projects are not at all using help. Some projects are using help. Is it mandatory again, as I already told?
+
+01:08:18
+No, but is it kind of a good to use? You will have a lot of customization templating we can do while doing the deployments.
+
+01:08:28
+So in simple words, Helm is a package manager for Kubernetes applications. Helm simplifies the process of deploying, managing, updating the applications in Kubernetes. Helm has three important concepts. Helm CLI, Helm chart, Helm repository. Helm uses a Go templating language. Your Helm uses Go templating language.
+
+01:08:55
+Your kubernetes manifest as a templates in the templates you can use go templating language. You can use variables. You can use loops conditions all those things.
+
+01:09:08
+So that is all about help.
+
+01:09:13
+Now, let's discuss about one more important concept.
+
+01:09:20
+monitoring.
+
+01:09:23
+monitoring and alerting.
+
+01:09:30
+Guys the way we have a continuous integration, the way we have a continuous integration, the way we have a continuous deployment or delivery
+
+01:09:51
+What is the another important principle in the devops? These are the principles of devops. Devops built on some principles, continuous integration. I hope you already know what do you mean by continuous integration. Whenever the developers are modifying the code, that code has to be continuously integrated, tested, built, deployed. This deployment is for deploying whatever.
+
+01:10:20
+Changes has been happening. Now, the way we have a continuous integration, continuous deployment, what is the another important principle in DevOps? The process which you need to follow is continuous monitoring, continuous monitoring, continuous monitoring. Here, deployment or delivery.
+
+01:10:45
+But you are not going to continuously deploy to the production in most of the projects. You are not going to continuously deploy to the productions in 99% of the projects. Not every change will go to the production immediately. You are going to do manually. But manually in the sense there will be a pipeline. Manually in the sense you are not going to execute any commands any scripts manually. There will be a pipeline. But do you need to trigger that pipeline separately?
+
+01:11:15
+manually once you got all the approvals from all the stakeholders like project managers, you know project manager product owners or the BA QA team has given the approval business analyst has given the approval product owner has given the approval the senior directors managers has given the approvals once all the approvals are there then you will trigger that last one to the depth production but lower environments you are continuously going to deploy.
+
+01:11:46
+that is based on the requirement again.
+
+01:11:50
+Now what is the one more important principle in DevOps? What is the another process which needs to be followed as we already told DevOps is not a technology. It's not a tool DevOps is not a technology DevOps is not a tool or any programmatic language. It's a process DevOps is a process or a methodology or a strategy using the DevOps. We are going to.
+
+01:12:18
+build and apply the applications we are going to quickly release the project you know product to the market with high quality.
+
+01:12:28
+within a less span of time. So if I have to do all these things, do I need to use a lot of tools, technologies as part of DevOps like source code, SEM tools to maintain the source code, security, security like static code analysis, dynamic code analysis, static code analysis like SonarQube.
+
+01:12:49
+right then build tools like maven gradle if you are using node.js npm if you are using python pi builder or pip like that then artifactory tools like nexus jfrog where you will maintain the artifactories and infrastructure infrastructure the infrastructure can be on-prem infrastructure otherwise
+
+01:13:16
+Instead of on-prem infrastructure, you can use a cloud infrastructure, where you will have your servers, networks, storage, all these things created. And again, if I want to do the automation for infrastructure also, infrastructure automation, configuration management, all these things are the concepts in DevOps. Infrastructure automation, configuration management, all these things are concepts in DevOps. If I want to do the infrastructure automation, can I go for a Terraform?
+
+01:13:44
+which is widely adopted tool where I can provision my infrastructure, update my infrastructure as a code. Yes. And configuration management. If I need to configure that infrastructure, if I have to do a lot of configurations, then can I go for some configuration management tool like Ansible to do the configurations in that server if required?
+
+01:14:10
+Yes. Then containerization then containerization. If you don't want to deploy your applications in a virtualized environment, like your databases, your web servers, your application servers, you don't want to run it in a virtualized way, virtualized deployment. You don't want to have a separate separate machines. Then can I do a containerization? Can I run my application whether it's a stateless or stateful? Can I run that as a containers also if required?
+
+01:14:41
+If you are using containers, do I need to do a lot of configurations in the servers because containers is abstracting the underlying infrastructure from you. Since the container image itself, since the container image itself has everything, whatever is required for your application to run, do you need to do a lot of configurations in the servers using configuration management tools if you are using a containerized way?
+
+01:15:06
+Do you need to do a lot of configurations in the service? Not required. You are not going to do a lot of configurations, but you will set up only the Docker clusters or Kubernetes clusters. But to deploy your applications, does your image itself has all the configurations, required softwares as part of the image itself? Configurations and all those things? Yes. If you are using containerization, if you are using containerization, then do we need to use container orchestration also?
+
+01:15:39
+to manage the containers scale the containers load balance the containers.
+
+01:15:45
+Yes, so either you can use Docker Swarm or Kubernetes. So which is widely used container orchestration software nowadays Kubernetes.
+
+01:15:57
+Now you have learned all these things. You have learned all these things, bits and pieces. But if I have to use all these things in automation, DevOps is nothing but automation. DevOps is nothing but an automation. So can I automate all these things, building my application packages, creating a Docker packages, deploying those packages into the Docker clusters or Kubernetes clusters? Can I automate by writing a pipeline, CI pipelines, CD pipelines?
+
+01:16:27
+Yes, suppose if you want to create a infrastructure also, can I have a separate repository where I can have all my infrastructure ops related repository where I have a terraform files using the terraform files? Can I again using Jenkins? Can I run the terraform files to provision the infrastructure like Kubernetes clusters, CKs clusters, networks, VPCs, all those things also if required? Yes. Once the infrastructure is ready, once the infrastructure is ready,
+
+01:16:56
+Using application pipelines, using application pipelines, your CI pipelines for your application, will I able to integrate and deploy those applications into that infrastructure, whatever I have provisioned?
+
+01:17:12
+Yes, so continuous integration continuous deployment continuous delivery and last and but not least. What is the important one? Last but not it is
+
+01:17:27
+not least at monitoring do I need to continuously monitor also do I need to continuously monitor also
+
+01:17:38
+What is happening in my servers? What is happening in my applications? What is happening in my infrastructure? As well as what is happening in my clusters like Kubernetes, applications like my own applications, what is happening? The continuous monitoring also very, very important. So these are the principles of DevOps. Now, continuous monitoring. Now I have deployed a lot of applications, a lot of clusters are there like this.
+
+01:18:07
+Do I need to have a other side? Do I need to have some kind of a continuous monitoring where it will monitor my servers or my clusters?
+
+01:18:19
+the other side I need to have a continuous monitoring also. Though I need continuous monitoring also in place so that this will keep monitoring your servers, your you know clusters and if something is happening within your cluster within your server does that needs to be alerted immediately.
+
+01:18:44
+this continuous monitoring has to monitor your servers or clusters like this what is happening in the clusters in the servers what is happening in your cluster like Kubernetes what is happening in your servers whether servers is running out of CPU whether servers is running out of memory
+
+01:19:05
+Do you have a Kubernetes cluster, any issues with your pods, whether any pods are in pending state, whether any pods are in a crash loop backup. So I need to continuously monitor my infrastructure as well as my clusters so that I can take some action. Monitoring also very, very important. Now we have a lot of monitoring tools. We have a lot of monitoring tools.
+
+01:19:33
+lot of monitoring tools. To name few one so do have a monitoring tools like Magius
+
+01:19:42
+Neuralic
+
+01:19:46
+App dynamics, data dog.
+
+01:19:55
+In AWS we have a CloudWatch. Is CloudWatch also kind of a monitoring software to monitor AWS resources?
+
+01:20:07
+years. Like this we have Prometheus, like this we have Prometheus, like this we have Prometheus also. So
+
+01:20:25
+We have a lot of monitoring tools like this. Now we'll try to discuss about Prometheus. Before I discuss about Prometheus, let's understand what is monitoring. Why do we need monitoring? So enterprise, enterprise in the sense companies, applications, any enterprise applications, any enterprise organizations, companies look to decrease. They are looking to decrease the downtime.
+
+01:20:52
+downtime of their applications and optimize the resources. They want to optimize, they want to utilize their resources more efficiently and they want to decrease the downtime. Can implement monitoring, server monitoring and application monitoring also. There are two things, server monitoring, that infrastructure monitoring and application monitoring. Can I monitor my infrastructure like servers, storage? What is happening in the servers? What is happening in the storage? Yes.
+
+01:21:21
+At the same time, is it possible for me to do the application monitoring also, whether my application is running or not, whether application is stopped, whether I have any issue in my Kubernetes cluster application monitoring also. Yes, server monitoring. We call it as infrastructure monitoring. At the same time, application monitoring, we can monitor the applications or clusters like Kubernetes also. So we can use monitoring tools like Prometheus.
+
+01:21:50
+Prometheus is a monitoring tool, but is Grafana is a monitoring tool? If anyone is asking what monitoring tool you are using, don't say Grafana. Grafana is not a monitoring tool. Grafana is a visualization tool.
+
+01:22:09
+Grafana is a visualization tool Prometheus is a monitoring tool. Prometheus is a monitoring tool. Grafana is a visualization tool. So we can use tools like Prometheus and Grafana first of all, what is server monitoring? Why you need to monitor servers? Server monitoring is a way server monitoring is a way to look into what your servers are doing in real time.
+
+01:22:38
+Server monitoring is a way to look into what your servers are doing in real time. So it provides if I have a server monitoring, it provide you with some actionable data. The server monitoring. Right, it will provide you with some actionable data. So will I able to take some action on the data, whatever gathered by that server monitoring.
+
+01:23:09
+Yes. So whatever data is gathered by that server monitoring software, we can use that data for troubleshooting and capacity planning. We can use that monitoring data for troubleshooting and capacity planning. Suppose I have a server monitoring or application monitoring in place, day before yesterday or yesterday, something went wrong with my servers. Day before yesterday or yesterday, late night.
+
+01:23:37
+something went wrong with my server, my server went down, my application went down. If server monitoring or application monitoring is in place, using the data, will I able to troubleshoot what happened when the server went down, before server went down maybe 10 minutes before, 20 minutes before, what was the CPU utilization, what was the memory utilization, what was the disk utilization on that server, will I able to use the data for troubleshooting purpose also?
+
+01:24:07
+yes at the same time can I use for capacity planning capacity planning in the sense
+
+01:24:16
+The infrastructure planning. Suppose I have monitoring data, last one month data is there, continuously I have a lot of CP utilization, memory utilization, there is a lot of load on the current servers, whatever servers I have. Then can I plan the capacity? Since there is a huge load, consistently a lot of requests are coming to that application, that servers. Can I plan the capacity? Can I add a few additional servers to meet that load?
+
+01:24:44
+can I use the data for capacity planning also? Yes. Let's say you have servers, but your servers are underutilized. Your servers are underutilized. Your infrastructure is underutilized, which means very less load, less CPU, less memory. There is less load. Then can I reduce my infrastructure resources? Can I cut down my infrastructure cost also by removing the additional servers, which I am not at all required?
+
+01:25:15
+Yes, so you can use this data. You can use this data for troubleshooting, capacity planning, all these things. Now using server monitoring, can I monitor the network? Like how much traffic is coming? What is the latency, network latency, bandwidth? And also can I use machine? Can I determine CPU and memory utilization and storage?
+
+01:25:41
+like CPU utilization, memory utilization, and storage utilization in that machine, network and storage, network and the CPU memory, all these things. And also, will I able to monitor my application also, like how many requests are coming, what, how much load is there on that application, all these things, I can monitor. First of all, why we need to monitor the servers?
+
+01:26:11
+Server monitoring has a lot of benefits. Server monitoring has a lot of benefits that continuous monitoring has a lot of benefits. The biggest benefit is avoiding the reactive panic. What do you mean by reactive and proactive? I can avoid reactive panic. Which means if I have a monitoring and alerting in place
+
+01:26:43
+If I set some alerts saying that whenever server is having 80% CPU utilization, 80% memory utilization, if that monitoring also triggering the alerts before something went wrong, before that server crashes, before something went bad, will I able to take some action?
+
+01:27:04
+before something is about to went wrong can I take some action if I have a monitoring and alerting in place
+
+01:27:15
+So I can take some action before something went wrong. But if I don't have any monitoring and alerting in place, servers are taking a lot of CPU utilization, memory utilization. If you don't take any action, after some time the servers will crash. I mean to say some applications will crash, your servers will crash.
+
+01:27:35
+yes so I can avoid that reactive panic proactively will I able to take some action whenever I am getting some alerts from that monitoring system if I am getting some alerts your server is having 80% utilization 90% utilization like that proactively can I go and see why it is having that much memory utilization cp utilization is it because of really there is a lot of load or something is wrong if there is a really lot of load
+
+01:28:03
+Will I able to take some action, maybe increasing the capacity of the servers or adding some additional servers to that application? Can I take some proactive action? Yes. So you can go ahead and start working on the issues in your servers or applications before users are impacted. Before users are impacted, you can go ahead and start working on the issues occurring in your servers or applications.
+
+01:28:32
+And also, if I have a monitoring in place, can I increase the uptime of my applications as well as servers? If I have a monitoring in place, you are continuously monitoring and you are getting alerts, you are taking action. So will it increase the uptime of the servers as well as applications?
+
+01:28:51
+Yes, and it will improve the hardware and software performances. You can plan the future. You can plan the future by making use of these resources, this data.
+
+01:29:04
+Implementing monitoring will give an almost immediate return. Implementing monitoring will give almost immediate return on investment. You can observe the trends. You can observe the trend. What do you mean by trend? Like how many people are accessing my application and at what time people are accessing application, in what season there is a lot of load on my application. I can observe the trend. I can observe the spike.
+
+01:29:33
+and I can start working on the issues you can drill down to discover the root cause of the issue if you have a monitoring data so monitoring is very very important just to make things simple like nowadays everyone will monitor your premises by fixing the cc camera cctv surveillance because you want to be safe right who is coming who is coming to your home who is going out of your home.
+
+01:30:03
+Similarly, do I need to monitor my applications, my servers also like what is happening in my servers around my servers within my applications? What is happening? Yes. So monitoring is very very important.
+
+01:30:19
+So server monitoring and application monitoring is very, very important. That is one of the principle of DevOps again. The way we have a continuous integration, continuous deployment or delivery, we need to have a continuous monitoring also.
+
+01:30:37
+in place with that background you are you have a lot of monitoring tools like app dynamics Prometheus graphon Prometheus Neuralic Nagios data dog. There are plenty of monitoring software available with that. We will start with what is Prometheus monitoring and what is Prometheus.
+
+01:31:00
+What is Prometheus as a definition? What is Prometheus? Prometheus is a open source. Open source monitoring and alerting toolkit. Prometheus is an open source monitoring and alerting toolkit. Prometheus consists of several components. Prometheus server, alert manager, exporters.
+
+01:31:29
+Prometheus has few components Prometheus server alert manager and exporters. First of all, first of all Prometheus is an open source monitoring and alerting toolkit. What do you mean by open source here?
+
+01:31:52
+free of cost free of cost you don't need to pay you don't need to purchase any licensing
+
+01:32:02
+So you can use this Prometheus without any fee. Now Prometheus has three important components in the architecture. In the sometime I will discuss in the architecture. Prometheus has three important components. Prometheus server, exporters and alert manager. Alert manager. These exporters are nothing but agents.
+
+01:32:32
+Prometheus server exporters and alert manager. So what is Prometheus server? The main important component Prometheus server, which will scrap and store the time series data, which is going to scrap and store the data, store the metrics. What do you mean by metric here? Metric is nothing but some information about some component.
+
+01:33:00
+some information about some component, metric is nothing but some data, like memory data, CPU data, CPU utilization, memory utilization at a given point of time.
+
+01:33:14
+So Prometheus will scrap scrap in the sense what some technical words. That's why I'm giving again some detail here scrap in the sense it is going to collect. Prometheus will scrap which means it is going to collect and store it is going to collect at the same time. It will store the data in a time series database. What do you mean by time series database? It's a time series data.
+
+01:33:44
+at a given point of time continuously at a given intervals continuously it is going to get the data and maintain the data this point of time.
+
+01:33:56
+given point of time. What is the information about that metric? So it is going to store the data in a time series database and it is going to follow a pull mechanism. It is going to follow a pull mechanism is Pramithi S is going to pull the data, collect the data that monitoring data. Yes, from where it will collect targets, targets. What is your target?
+
+01:34:25
+Does the Prometheus targets can I consider server as a Prometheus target? Like Kubernetes cluster as a Prometheus target or your application as a Prometheus target Are your databases as a Prometheus target servers applications clusters? Databases all these things is considered as a targets for Prometheus Does Prometheus can collect which means pull the data scrap the data and store it into a database called time series database?
+
+01:34:56
+Now in the Prometheus we will have a rules engine also some kind of a rules engine in the Prometheus using that data using the data whatever is gathered by Prometheus using the data can I generate alerts can I generate alerts based on the data like let's say Prometheus is gathering the CPU utilization memory utilization of your servers can I generate alert saying that whenever the memory utilization is 90 percent trigger alert.
+
+01:35:27
+same CP utilization is 80% trigger alert. Can I generate the alerts also in Prometheus using rules engine, which is embedded in the Prometheus ES. Prometheus will just generate the alerts. It will push the alerts. It will generate alerts and it will push the alerts to one more software called alert manager. One more component called alert manager. Prometheus will push the alerts to the alert manager,
+
+01:35:57
+send alerts, who will handle those alerts? Prometheus will just generate and push the alerts to the alert manager. But who is going to handle those alerts? Whom to notify? How to notify? That will be taken care by alert manager. So, alert manager will notify. Prometheus will generate alerts and push the alerts to the alert manager. Alert manager will notify. How can we notify using alert manager?
+
+01:36:24
+In Alert Manager, can I configure email notifications or Slack notifications if required, or PagerDuty calls also. In the Alert Manager, whom to notify, whether via email you need to notify that alerts or whether you want to notify via Slack, whether you want to notify via PagerDuty, can I configure that in the Alert Manager, whom to notify, how to notify.
+
+01:36:51
+Yes. Now Prometheus is going to scrap the data, collect the data. But does Prometheus need some kind of exporters or agents in your targets, like your servers, your clusters, your applications to gather that data? Does Prometheus need some kind of exporters or agents in the targets, like your servers, your clusters to gather the data for Prometheus? Yes. So that is what we have in exporters.
+
+01:37:20
+exporters so Prometheus will pull the data from that exporters so what is the heart of this content you know complete system this Prometheus is heart of the complete system Prometheus is heart of the monitoring here Prometheus will contact these exporters and get the data and Prometheus can generate the alerts based on the whatever data it is gathered the Prometheus will push the alerts to the alert manager alert manager will send the
+
+01:37:51
+No.
+
+01:37:55
+Prometheus is an open source monitoring system, as I already told. Prometheus is an open source monitoring system that will collect and manage servers as well as application metrics. It will collect servers as well as application metrics. And also, can I configure to notify the teams? I mean to say operations team, like DevOps team, or supporting team, or development team. Can I notify the teams?
+
+01:38:24
+like development team or support team or DevOps team whenever any issue arises.
+
+01:38:31
+Yes, you can monitor and also you can notify whenever any issue occurs here. And what is Grafana as I already told is Grafana is a monitoring tool.
+
+01:38:48
+No, Grafana is a visualization tool, data visualization tool.
+
+01:38:56
+So Prometheus will gather the data, but Prometheus doesn't have a nice UI. Prometheus doesn't have a nice UI. Suppose some non-technical guys want to see what is happening exactly within your application, within your cluster, within your servers. Some non-technicals guys want to see. Prometheus doesn't have a nice dashboard, but using Grafana, can I create a dashboard in Grafana? That Grafana will take the information from monitoring.
+
+01:39:24
+server like Prometheus to display the data in a nice dashboards. Yes. Grafana will contact or Grafana will get the data from Prometheus and it will show in a nice dashboards. Just to make things simple, if you are anytime if you have been to hospital, right? If you anytime if you have been to hospital, like some patients will be there in ICU.
+
+01:39:50
+Does doctors will keep monitoring in those kind of a monitors kind of a dashboards? What is the heartbeat of that person? What is the BP of that person? All the cables will be connected to the patient and in the doctors will see what is happening inside his body. So similarly, do have a kind of a visualization tools to what is you know display what is happening in that system.
+
+01:40:18
+or in that application in a nice dashboards like a graphs pie charts graphs. All those things.
+
+01:40:30
+Yes.
+
+01:40:32
+kind of a pictorial representation what is happening whether that server heartbeat is good whether the server BP is in control or they need to take some action.
+
+01:40:45
+So kind of a pictorial representation of your infrastructure.
+
+01:40:51
+what is happening. So we can display that using a graph on a nice visualization. Now this is the architecture. This is the architecture of Prometheus. Now this is the heart of the Prometheus. This is the heart of the Prometheus. Does Prometheus will pull the matrix? If you see this diagram, this is the heart of the monitoring. Does Prometheus will pull the
+
+01:41:20
+from the targets here the targets are exporters I am saying here now let me let me display in a nice dashboard and I see why this is one server you have some servers like this
+
+01:41:37
+you have some servers like this.
+
+01:41:43
+you have some servers like this you want to monitor these servers using Prometheus using Prometheus you want to monitor these servers let's say this server
+
+01:41:57
+Prometheus will pull the matrix. It is going to scrap the matrix. Do I need some agent here kind of a exporter who is going to prepare and send the prepare the data which is expected by Prometheus from this target? Do I need some kind of a agent here? We call it as a exporter who is going to export the data in a format that Prometheus can understand. Is this exporter is going to get the data?
+
+01:42:26
+from this server like within the server itself you have this exporter node exporter node exporter hardware related data is this node exporter is going to gather hardware related data like CPU utilization memory utilization network latencies bandwidth and also storage utilization this exporter and is this exporter will prepare the data that can be understandable by Prometheus in the format.
+
+01:42:55
+that can be understandable by Prometheus. Yes. So does this Prometheus is going to pull the data with the help of exporters here.
+
+01:43:08
+Yes, it is going to pull the data with the help of exporters, with the help of exporters or targets. Now let's say you have Kubernetes also you need to monitor your Kubernetes resources also like a pods information, deployments information, you have a Kubernetes cluster. So I need someone who can gather the data with the help of metric server.
+
+01:43:37
+Metric server will have all the Kubernetes information, Kubernetes API. Do I need someone who can communicate with API server and gather the Kubernetes related information, cluster related information, like how many parts are there, how many deployments are there, is there any parts are in a pending state crash loop backup. Do I need someone who can prepare the data also? So there is a concept, there is a exporter called cube state metrics.
+
+01:44:08
+There is a exporter called cube state matrix. If this Prometheus contacts cube state matrix, if that cube state matrix is already getting the data from the API server and preparing the data, then does Prometheus has a information about your cluster also? What is happening in your cluster? How many deployments are there? How many parts are there? Any parts are in a pending state crash look back of? Any values are in a pending state?
+
+01:44:36
+Will I able to have that data also monitored with the help of Prometheus using this exporter?
+
+01:44:45
+Like there are a lot of exporters. There are a lot of exporters. Node exporter is one. CubeStateMatrix exporter is one. Suppose you want to monitor your databases also, like MySQL database, Mongo database. Do I have exporters available? I can use those exporters or agents installed in the server where my database is running. Is that exporter is going to monitor your database operations also? Is it make it available for Prometheus also? If I have those type of exporters, yes.
+
+01:45:16
+exporter is nothing but a agent exporter is nothing but a agent but there are different different exporters node exporters cube state matrix exporter mysql exporter mongo db exporter console exporter like that based on what software what application you want to monitor do you have exporters available to monitor that software or that server or that application yes so do you need
+
+01:45:45
+Are agents configured for Prometheus to gather the data?
+
+01:45:50
+Yes.
+
+01:45:53
+Now this Prometheus server is going to get the data from those exporters or agents. Now here as I already told this Prometheus will have a rule engine. Can I create a rules alert rules whenever that condition is satisfied based on the data whatever it is gathering. Can I create alerts whenever server CPU utilization is 80 percent 90 percent. Can I create alert.
+
+01:46:21
+is that alert will be pushed to the alert manager?
+
+01:46:25
+is that alert will be pushed to the alert manager. Yes, so does alert manager will handle the alerts does alert manager will handle the alerts like notifying like email notification slack notification or pager duty calls. Yes.
+
+01:46:42
+Now, as I already told Prometheus doesn't have a nice UI. Prometheus doesn't have a nice UI. So can I use some tool called Grafana, tools like Grafana? Does Grafana can get the data from Prometheus and display the data in a nice visualization? Yes. So one more important concept here in the Prometheus.
+
+01:47:09
+Discovering the targets because Prometheus is pulling the data from exporters. Prometheus is pull-based. Prometheus is pulled based. So does Prometheus know, you know, should know from where it has to pull the data, which server it has to monitor from where it has to pull the data. Does Prometheus should have all those details from where, you know, what and all things it has to monitor. Does Prometheus should have these details which server to monitor or which
+
+01:47:38
+cluster to monitor like that.
+
+01:47:43
+Otherwise, how Prometheus knows whether it has to monitor this server, whether it has to monitor this server or other server. Do we need to have information what targets it has to monitor by Prometheus? So that is done here. There is one kind of a settings file. There is a file called Prometheus dot aml file kind of a settings file here. In this settings file.
+
+01:48:12
+Can I define targets? Targets, let's say this server will have some IP address. This is the IP of this server.
+
+01:48:23
+And this exporter will run on some port. Just to give an example, I am giving some port or some random port, something like this, some random port. Now, do I need to mention those here as a target monitor that server on this port. So it will communicate with that exporter. This Prometheus will contact this server on this port to gather the data about that node.
+
+01:48:51
+if I want to monitor other servers can I have those details need to be defined here in kind of a settings file kind of a settings file here promethios.aml
+
+01:49:07
+like this so that this will get monitored. This Prometheus dot aml file is kind of a settings file for Prometheus. There are two types of discovering the targets. One is static targets. One is static targets. Another one is service discovery dynamic service discovery dynamic targets.
+
+01:49:36
+There is a concept called a service discovery in Prometheus also. So dynamically service discovery, it can dynamically discover the targets, what targets it has to monitor service discovery using Kubernetes or file SD file SD in the sense of static static targets. Can I define static targets like this? What server it has to monitor like this static targets? Yes.
+
+01:50:03
+There is a concept called service discovery dynamic targets also. Instead of you are manually defining all these information dynamically it can identify. Dynamically it can identify using service discovery concept. Is everyone clear about the architecture of this Prometheus? If you understand the architecture you can understand the concepts very easily.
+
+01:50:29
+Is everyone clear what do you mean by exporter? What do you mean by Prometheus? What do you mean by alert manager? What do you mean by Grafana?
+
+01:50:38
+Now, can I use this Prometheus in any type of infrastructure like on-prem infrastructure or cloud infrastructure, whether you are using a virtualized deployment, traditional deployment, or containerized deployment, can I use this Prometheus for any type of infrastructure in any type of applications? Yes.
+
+01:51:01
+If required, can I install Prometheus software in a virtualized deployment manner also? In one of the virtual server, can I download and install this Prometheus server software in one of the Linux machine or one of the windows machine or Linux machine? Will I able to download and install this Prometheus software the way you installed Tomcat, the way you installed Jenkins? Can I install this Prometheus also in a virtualized manner? Downloading this Prometheus in installing one server?
+
+01:51:32
+Then in a same server in a same server or maybe different server in a same server or maybe different server Is it possible for me to download and install alert manager software? Maybe in the same server where your Prometheus is running or maybe in a different server also fine Can I install that alert manager and provide that alert manager information to this Prometheus where to push the alerts
+
+01:51:57
+in another server I can install Art Manager on same server also. Can I take one more server and install Grafana? And in the Grafana settings file, can I mention my Prometheus server IP address and port where exactly Prometheus is running so that Grafana can contact Prometheus and get the data? Can I install Grafana in another server?
+
+01:52:20
+if required directly in the server. Yes, and whatever servers I want to monitor, whatever servers I want to monitor, do I know can I install those exporters that node exporter software in whatever servers I want to monitor? Can I install that node exporter software if I want to monitor the servers that targets? Yes. So can I mention those targets details in the Prometheus settings file that Prometheus
+
+01:52:49
+what and all targets it has to monitor the actual target server IPs and ports that node exporter port and that IP where I have that node exporter installed. So actual servers you want to monitor there I can install Prometheus Grafana. If required can I run this Prometheus alert managers exporters Grafana also as a containers can I do this?
+
+01:53:16
+Deployment also as a containers this Prometheus also can I run as a container this graph on also can I run it as a container? Can I run this alert manager also as a container instead of virtual deployment if required? Can I run these exporters also can I run these exporters also as a containers? Instead of directly doing in a virtual servers Can I do this? Yes, we can do this if there is a Docker image created
+
+01:53:44
+So this is also one software Prometheus is one software. Alert manager is one software. Grafana is one software like a Tomcat Jenkins. Can I create a Docker images? Or if we already have a Docker images, can I use those images to install this Prometheus, alert manager, Grafana, this exporters, all these things? If I have images already available, yes. So since I'm using Kubernetes, since I'm using Kubernetes,
+
+01:54:14
+Can I run these as a pods Prometheus pod, Grafana pod, Alert Manager pod, this node exporter pods.
+
+01:54:23
+If I have images available, yes. If I have images available, I can run as a pods also. So I'll continue from here tomorrow, guys. From here, I'll continue tomorrow. So tomorrow, what we will do? We will deploy this Prometheus. We will deploy this Grafana. We will deploy these exporters. That matrix are that cube state matrix also to monitor the Kubernetes resources.
+
+01:54:52
+I'll continue from here tomorrow. Tomorrow also we have a class same time and tomorrow is the last session for your batch as well as this Kubernetes. So tomorrow is very, very important. Attend the last day. You have an opportunity to kind of communicate with me tomorrow. Also, so don't miss tomorrow session. Tomorrow is the last session. Attend tomorrow session also same time. We'll continue from here tomorrow.
+
+01:55:21
+If you have any questions, feel free to unmute yourself and ask the questions. Otherwise I will continue tomorrow.
+
+01:55:39
+Okay, if you don't have any questions, I am good to close the session.
+
+01:55:46
+So what is CRD in Kubernetes? CRD is a custom resource. Now pod.
+
+01:55:55
+Pod is one resource, deployment is one resource, volume is one resource, that PV. I'm talking about PV, PVC. Can I call all these things as Kubernetes resources? Like stateful set service.
+
+01:56:13
+These are built-in resources. Built-in APS, I can say built-in resources are APS. The way we are having a pod deployment PVPVC, is it possible for me to create a custom resources? That we call it as a CRD, custom resource definitions.
+
+01:56:41
+custom resource definitions, but if you want to write a custom resources, do you need to know programmatic language like go because this part is one go code this deployment is one go code in the background this PV PVC is one go scripting. So if you want to create a custom resources, you should be familiar with the go programmatic language.
+
+01:57:12
+go programmatic language and you should be able to extend the Kubernetes APS.
+
+01:57:21
+Extend the Kubernetes APIs. You can extend the functionalities of Kubernetes by writing your own custom resources using Go programmatic language. That is kind of a full development, kind of a developer. You will kind of a Kubernetes developer. You need to have a programmatic background for that if you want to write custom resources.
+
+01:57:46
+Clear any other question?
+
+01:57:57
+Okay, if not, thank you guys have a great weekend tomorrow also we have a class to tomorrow is the last class kindly attend tomorrow's class will wrap it up tomorrow. Thank you. We'll see you tomorrow.
+
