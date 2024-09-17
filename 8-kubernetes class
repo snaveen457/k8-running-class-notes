@@ -1,0 +1,918 @@
+00:00
+This conference will now be recorded. In yesterday's session, we were discussing about what is a replication controller, what is a replica set, and what is the monset we discussed. Now, let's try to understand what is a.
+
+00:27
+deployment.
+
+00:31
+What is deployment? We will try to understand.
+
+00:36
+So as I already discussed yesterday, when I am creating a replica set or replication controller,
+
+00:46
+The replication controller and replica set is creating the ports.
+
+00:51
+So I am deploying.
+
+00:58
+by applications in this Kubernetes cluster.
+
+01:06
+so you already know the flow ap server, what ap server does what scheduler does I know need to explain again and again now I created a replication controller or replica set
+
+01:23
+Now that replication controller that RC this is my cluster. This is my cluster that RC that replication controller is it creating and managing the parts that RC or RS whatever it is. So it is creating the parts it is creating the parts and managing your parts inside the part you have a container.
+
+01:51
+Inside the pod you have a container.
+
+01:59
+Inside the pod you have a container. Now there is a change in that code. Let's consider inside that pod you have a container. Pod is a wrapper of container we already discussed.
+
+02:15
+No.
+
+02:18
+This is my container. Now this container is created out of let's say this image. Let's say one version that can be any registry. Don't consider always it is Docker Hub. Can I have the images in any registry like Nexus, JFrog, ECR also yes. Now this is running. This is running.
+
+02:48
+this is running
+
+02:54
+in my kubernetes cluster in my kubernetes cluster this is running with same image let's say I have two replicas now let's say the developers the other side the other side developers the developers are modifying the code
+
+03:18
+This is developers. These guys are developers.
+
+03:27
+they are modifying the code. So they're modifying their code and where they will maintain or where they will maintain that code, you already know. Now you can understand the importance of CACD. What is C, what is CD, all these things. Now the developers are modifying the code.
+
+03:47
+they will commit the code, they will push the code to the SCM. What is SCM?
+
+03:57
+they'll commit or push that code to the SCM. What is SCM? Source code management. We have a lot of like git, a bitbucket, bitbucket. So, like this. As a DevOps engineer, do we need to familiar with this one also? Because you are the one who is going to create and manage the SCM repositories for the development teams. You need to be
+
+04:27
+familiar with what is git, how to configure, what is branch, what is tag, how to push, how to resolve, all the Git related stuff. Now the developers are modifying the code. Now that code I need to deploy in my deployment servers. We already discussed what is virtualized deployment, what is containerized deployment, what is physical deployment, the traditional deployment. Now I'm not following traditional deployment.
+
+04:56
+And also I'm not following virtualized deployment. Now I am using container deployment. Do I need to deploy my application as a container? Whatever code the developers are writing as a containers? Yes. Now for that source code, are you going to build a image? Are you going to build a image, Docker image? You are going to build one image, Docker image.
+
+05:24
+But you don't want any manual intervention manual process. Can I follow DevOps methodology DevOps process continuous integration continuous integration continuously integrating your changes your code executing the unit test cases creating application artifacts like that. Now using CI CD.
+
+05:49
+using CI CD like Jenkins tool. Can I continuously integrate and run the compile the code, run the sonar scans like static code analysis, run the test cases. And if everything is proper, can I create a Java artifact that source code artifact and also Docker artifacts like Docker image. And I will maintain that Docker image in the Docker repositories, in the Docker registries.
+
+06:20
+that registry can be that registry can be easier that can be nexus that can be JFrog like that in real time are you going to maintain in the Docker Hub as I already told hundreds times no no Jenkins will take that code Jenkins will take that code I don't want to do it manually so I can do it using Jenkins can I do all these things using Jenkins automation
+
+06:50
+using continuous integration, continuous deployment model? Yes. Now, I have a new version of the image. Let's say I have created a new version of the image. I have a new version of the image now. Now, to release that change, whatever enhancements development team has done, whatever bug fixes development team has done, I want to deploy that. So if it is a Kubernetes.
+
+07:19
+I am running my application as a pods as a containers. Now do I need to recreate these containers pods with the latest package where I have a latest code the latest application code as well. Yes now if I am using a replication controller. Guys as I already told can I do this deployment using Jenkins also if I have here in my Jenkins
+
+07:48
+as a Jenkins user, as a Jenkins user, can I install kubectl? Can I install kubectl? I switch to the Jenkins user. Can I install kubectl here? And can I configure that kubectl? Which means can I create a.kube directory in which user home directory? In Jenkins user home directory.
+
+08:15
+because your Jenkins pipeline will be executed as a Jenkins user in Jenkins user home directory, not in your EC2 user or Ubuntu user home directory. It should be in Jenkins user home directory if I do like this. In my pipeline, if I execute kubectl apply, does Jenkins will connect to your control plane for applying that manifest Kubernetes manifest? Yes. If required, can I maintain that manifest also
+
+08:44
+My SCM itself, Kubernetes manifest like deployment YMLs, service YMLs, whatever for that application for that application deployment YML service YML whatever you want to have. Now does this YMLs also will part of your Jenkins workspace? Can I execute kubectl apply with this folder name or file name from Jenkins pipeline itself because that is also part of your Jenkins workspace. You are cloning that.
+
+09:15
+I can do like this, but if I am using replication set replication controller, even though I updated my image tag like this, even though I updated my image tag like this in my replication controller manifest or replica set manifest, even though I updated and apply, do you think does these parts will be deleted and recreated with this instead of this image does parts will be created with this one?
+
+09:50
+So what needs to be done? Do I need to delete that completely? Replicaset or replication controller, if I delete, does that parts gets deleted? Does this parts gets deleted when I delete?
+
+10:07
+that part gets deleted when I delete? Yes. Now, let's say during this process, during this process I have a service. I have a service, my end users, or my end users are other dependent application, maybe internal applications, or end users are accessing via that service. Does that service has any parts which can solve the traffic? Maybe internal pods, other applications, other pod.
+
+10:36
+Another microservice is trying to reach this microservice or external customers are accessing that application. Does this service have any endpoints to solve the traffic?
+
+10:49
+No. So, do we have a downtime? Do we have a downtime now? Yes. Now, I need to delete and again apply. I need to delete and again apply. But I do not want to do that. I do not want any downtime. Is that possible with replication controller or replica set?
+
+11:13
+No, that might be possible that might be possible. But instead of updating that replica set, do I need to completely create a new replica set or new replication controller instead of updating that can I create another replica set for same application with a different tags. But in that, do I have a both old as well as new, they have a world as well as new parts. If I create another
+
+11:41
+If I create another replica set for that application. Think guys, I'm saying I don't want to update. Can I create another replica set or replication controller using that image? The version to image another controller. I am not saying I don't want to update. I can create another one. So you will have a both. The service will point to all these four. If this one also has the same labels and this one also has the same labels. Service will point to all the four.
+
+12:12
+all the four but once these are ready you can delete this whole replication set completely you can delete this whole replication set completely this way also you can do that but do we have a problem here do I need to have more resources in my cluster.
+
+12:32
+Yes. So instead of doing that way, instead of doing that way, there is one more concept called, there is one more concept called a deployment. Deployment. Kubernetes deployment.
+
+12:46
+Guys I am manually explaining all these things. This Kubernetes concept, I am not explaining with Jenkins because you already know Jenkins. What is Jenkins? What is pipeline? Now, whatever I am doing manually, will I able to do that using Jenkins? Like applying that manifest, creating images, pushing the images. But now, one use case I want to cover here. One use case I want to cover here. In your Jenkins pipeline,
+
+13:16
+You are building image like this. Let's consider.
+
+13:23
+Just to give an example, you are building like this without any tag. What will be the tag always colon latest, but I want to maintain all the versions of my images. Can I use some dynamic behavior like in Jenkins? Can I use something like this? Maybe build a number or commit ID branch name iPhone commit ID like that build a number now in your manifest. Let's say you have this manifest.
+
+13:50
+let's say you have this manifest in your kubernetes manifest in your version control system so let's say you have this manifest in your version control system like this
+
+14:03
+you have in manifest in your version control system like this.
+
+14:14
+something like this you have in your version control system. So even though you are building this image, even though you are pushing that image, if this is my manifest, if I am applying this manifest, even though you are applying, do you think the latest images, the new images with whatever build numbers you are tagging, will that will be deployed? If you have something like this in your manifest.
+
+14:38
+No, in that case, how can I do that? How can I make sure whenever I am creating a new image that image needs to be applied or deployed in Kubernetes? What needs to be done? I think I have already explained. I have given assignment also in Docker compose. So in my version control system, can I have some placeholder like this? Some placeholder. In my version control system, I will have this file like this.
+
+15:07
+Before I execute kubectl apply, can I update this placeholder with whatever tag I want to update using some kind of a sced command on the fly? On the fly within your Jenkins, you can update before you apply, before you apply. Before you are executing kubectl apply, can I use that sced to update something like that?
+
+15:34
+these type of things, sir, no one will teach basically. But you already know what is a CD, what is Jenkins, what is Kubernetes based on the requirements, do you need to apply all these knowledge? How can I make sure as per the given requirement? How can I do this? Do you need to understand all the concepts and apply that concept? Because these are concepts, if you buy hot always like this, if there is any new requirement, will be able to apply
+
+16:02
+Will I able to create or apply a pipeline as per that requirement if you buy hot only this no. So you need to understand what is Jenkins what is Kubernetes if I am doing in Jenkins how can I do this in pipeline if there is a different requirement based on whatever knowledge you already gained from so far from the beginning you need to apply that knowledge and implement the solution. That is what the actual learning is.
+
+16:33
+Execute this command execute this command like that if you buy hat it will be very difficult to survive in software Not only as a devops. Sorry, not only as a devops engineer whether you are a developer whether you are a Infrastructure engineer you need to understand the concepts and apply no hard coding. No, butty by hurting
+
+16:58
+because these are like a requirement. So do you need to apply the requirement today this requirement tomorrow you will get another requirement you need to implement that requirement as per whatever knowledge you have.
+
+17:16
+Is everyone clear? If I want to do like this using Jenkins, how can I do? Continuous integration and continuous deployment to my Kubernetes clusters or Docker clusters. If you are not at all using Docker or Kubernetes, do you guys already know how to deploy that var file into your virtual machines directly using in virtualized environment? You guys already done while discussing Jenkins.
+
+17:49
+That is virtual deployment because AWS is AWS is not following the traditional because whatever EC2 instances we are giving creating is it a virtual machines or is it a physical machine? It's a virtual machine on top of AWS data center. It's a virtualized deployment.
+
+18:10
+Now we have a problem with this replication controller and replica set. Let me show you. Now let me connect to my kubernetes cluster. Let me connect to my kubernetes cluster.
+
+18:27
+Guys if you understand the concept and practice that concept more it will be very interesting and it will be very simple also. You need to have that I mean to say zeal to learn something new do something new. So if you keep practicing understanding these concepts by going through the recordings multiple times you will have a lot of interest to learn also and you will able to.
+
+18:56
+understand in detail how it is going to work. Now
+
+19:02
+I have my three node kubernetes cluster. Let's say I had applied some application in this kubernetes. Maybe let me delete this. Let me demonstrate with the new application. Let me demonstrate with new application because I don't have a new version of the image for this. I don't have a new version of the image for this. Let's say.
+
+19:32
+let's say this application itself whether I am using RC or RS that doesn't matter now let's say I have this version of the image now let me deploy for the first time I am deploying this for the first time
+
+19:49
+because I don't have this I deleted and applying this for the first time. Now is my parts are created with that specification is my parts are created as per the current specification if I describe my pod if I describe my pod you can see is this parts are created as per the specification is it using that version of the image that pod has this container it is using that version of the image.
+
+20:19
+Now, let's say there is a change in the code. Let's say there is a change in the code. I have created a new image also. I push that image already to the registry.
+
+20:34
+I push that image already to the registry. Now I want to deploy that latest code.
+
+20:43
+I want to deploy that latest code. Let's say this one has another tag. Now I want to deploy, let's say, another version of the application, whatever is available.
+
+20:59
+Let's say if I have image tag called 3 or 2 like that. Let's see. So I don't have 3. Let's see something whatever is available. Oh, I have image with colon tag. Now let's say I want to apply that one. Now I'm changing the image tag manually, but building the image, pushing the image, and also
+
+21:26
+updating this manifest and applying this manifest also can I automate continuous integration continuous deployment using Jenkins whatever I am doing manually yes now I am applying like this I am applying like this.
+
+21:44
+I'm applying like this. Now if you see, is my parts are getting recreated, even though it is saying configured, is my parts are getting recreated? Is my parts are getting deleted and recreated with that new version of the image, with new specification?
+
+22:03
+If I describe my pod, can I still see it is using world specification, world image.
+
+22:22
+If you see is it still using old one does your parts gets updated if there is a change in your replica set specification or replication controller specification if there is a change is it going is your parts are going to be recreated if there is a change in your replication controller specification they play cassette no but if I delete this part now if I delete this part.
+
+22:50
+whatever parts comes now the new part does that new part will be created using that.
+
+22:58
+Does that new pod will be created using that? Because I applied, yes, but this is not this is not going to work. Instead of doing this way, can I use another concept called a deployment? Now what I need to do? I need to delete and apply before I apply I need to delete and again I will apply. But do we have a downtime as I already discussed? Yes. Now I don't want that one.
+
+23:25
+Is Kubernetes is offering any other option, any other API or object where I can apply.
+
+23:34
+where I can update my ports update my deployment CS. So in kubernetes there is a one more service called deployment. There is a one more service called deployment.
+
+23:48
+Guys we already discussed what is daemon set. I hope you are already clear what is daemon set. I no need to explain again what type of applications we will deploy as a daemon set we already discussed.
+
+24:03
+Now let's understand deployment in Kubernetes in Kubernetes deployment is the recommended way to deploy your pod or replica set. So even though I am creating a deployment internally what it is going to create deployment will create a replica set replica set will manage what replica set will manage what replica set will manage the pods.
+
+24:34
+I am creating a deployment. Deployment will create a replica set. Replica set will manage the pods like this. Why deployment is recommended way in Kubernetes? Because one thing, deployment will deploy a replica set. Most important thing, can I update my pods? If I am using deployments, can I update my pods? Which means pods gets updated if there is any change.
+
+25:02
+Does parts gets recreated or updated? Yes. And also, is it possible for me to roll back to the older versions? Let's say I am creating a deployment. Deployment is creating a replica set. Replica set is managing the parts. Now, if I try to update my deployment, it is going to create another revision, another revision of replica set.
+
+25:32
+kind of a revision to this is revision one. Now when I am creating for the first time, this replica set will be created. The parts will be managed like this. Now if I update my deployment, I updated my image tag, does deployment will create another replica set like this, another replica set like this and first it will create one for the new version.
+
+26:01
+then is it going to remove one old part like this, like a rolling updates. It is going to first create one new part. It is going to delete one old part. Now, if someone is accessing in this phase, if someone is accessing in this phase via service, do we still have a parts to solve the traffic in this phase? We have still, we have parts to solve the traffic. Once this is ready,
+
+26:29
+Is it going to create another version, new version of the pod again, another replica, then is it going to terminate this one? But here also, do we still have a pods? Do we still have a pods to solve the traffic your new pod? New pod? Yes. So one more use case here, one more use case here, if something is wrong with this latest change, your latest containers, your latest pod containers.
+
+26:57
+your application is not working properly. There are defects. There are some issues. Can I roll back to the previous revision? Can I roll back to the previous revision, which means, can I again roll back so that the old parts come again? Kind of a control jet. So I can roll back to the previous region. So can I achieve this rollbacks and rollouts using deployments?
+
+27:26
+I can update the parts can I achieve rollbacks and roll rollouts using the deployments. Yes and also can I scale up scale down the parts if required the way we are scaling up the replication controller replica set. Similarly, I can scale up scale down all these parts. Now do I have all these features if I directly go for a replication controller or replica set. No. So, that's why it is recommended.
+
+27:56
+It is recommended but is it mandatory?
+
+28:00
+Is it mandatory? It is not mandatory, but your requirement is like this. Your requirement is like this. Then can I go with this deployment?
+
+28:19
+So that is how deployment works. Before I explain deployment, let me explain deployment strategies. We have some strategies in the deployment. It's very very important interview level also is everyone clear at a definition. What is deployment? If someone asked what is deployment in Kubernetes will be able to explain two three lines at least.
+
+28:46
+Deployment is the recommended way to deploy applications in Kubernetes because
+
+28:55
+There should be something don't stop like deployment is recommended way to deploy the applications. But why why it is recommended? Do you need to explain that one also?
+
+29:13
+Why it is recommended? We have some advanced features in deployment. What are those advanced features? Can I update my pod templates? Can I rollback, rollout?
+
+29:28
+Roll back, roll out.
+
+29:33
+Can I do the zero downtime deployments? Zero downtime, which means without bringing my application down, I can update my application containers.
+
+29:52
+Now in deployment we have some strategies deployment strategies deployment strategies one is recreate another one is rolling update this is also important deployment this kubernetes deployment has the two types of strategies recreate and rolling update. So what do you mean by recreate.
+
+30:23
+Now this is my first revision. This is my first revision. Let's consider I deployed first time. I deployed using some image, maybe that new version of the image, that image, the first release. Now let's say there is a change in my code. I want to deploy another version. Let's consider this tag I want to deploy, or some other tag. Now if the deployment strategy is recreate,
+
+30:53
+What is going to happen if you understand this diagram? If it is a recreate, is it going to first when you are updating that part specification when you are updating that part specification? Which means you are when you are updating the deployment, what is going to happen if you see this diagram? If the deployment strategies recreate, is it going to terminate old parts? Is it going to terminate old parts first? It is going to completely terminate old replicas.
+
+31:22
+But in this phase, do we have any applications or any ports available to solve the traffic now?
+
+31:31
+Do you have any applications or any pods available to serve your traffic for your service? No. Then first it will delete old pods, old replicas. Then is it going to create a new replicas? It is going to start deploying the new pods in this phase or in this phase. If someone is accessing, do you have any application which can respond? Do you have any pod which can serve your traffic here? In this phase or in this phase?
+
+32:01
+So it is going to delete old replicas world revision. Then it is going to create a new region if the deployment strategy is what
+
+32:12
+recreate if the deployment strategy is recreate it is going to first delete old version of application then it is going to create a new pods so in this phase in this phase your application is down so again do you have a downtime if i am using deployment with strategy as recreate
+
+32:36
+Yes deployment with strategy as a recreate you have a downtime and again do have this rollback option suppose this is not working your parts are scheduled but there are some defects in this code in this new version can I roll back to the previous revision again can I simply execute some command so that these parts will be terminated these parts will be terminated again you have a parts with the world specification world specification
+
+33:06
+This is recreate. This is recreate deployment strategy. Is everyone clear what is deployment and what is the deployment strategy called recreate in Kubernetes? Is everyone clear how it works?
+
+33:24
+These are very, very important in the interview perspective also.
+
+33:30
+Now the way we have a recreate we have one more deployment strategy called what rolling deployment or rolling update rolling deployment or rolling update. So there are several types of deployment strategies. You can take advantage of deploying on your requirement on your goal. There are no different types of deployment strategies. One is rolling update. Another one is recreate.
+
+34:00
+Now the rolling deployment is the default deployment strategy for Kubernetes which means when I am creating a deployment I have not mentioned what is the deployment strategy what is the default deployment strategy if you do not mention also if you do not mention also what is the default.
+
+34:26
+rolling rolling deployment now but the problem here even though you are not defining the deployment that is rolling but what happens like you know in the default behavior first it will create like this but will it wait for some time will it have a enough will it give enough time to this part to get settled down will it give enough time to part two you know this part to get settled down and start the container.
+
+34:54
+if it is default even though you are not passing anything it is going to follow like this but is it going to give enough time for this part and this container to get settled down your container will take some time to come up right your application may take some time maybe 30 seconds 40 seconds to fully ready it will not give sufficient time it will create this part even though this is not completely ready your container is still coming up is it going to terminate.
+
+35:23
+old pod and is it going to create another pod like this
+
+35:30
+Yes, that is default. Even though you are using default, it is going to work like that. But do I need to customize the default behavior saying that once this part is scheduled, maybe wait for 30 seconds. Don't go to this phase immediately. Don't terminate this immediately. Wait for 30 seconds or 60 seconds. So wait for 30 seconds or 60 seconds like that. I can customize.
+
+36:00
+If I wait for 30 seconds or 60 seconds like that, within that time, does this part get settled down, which means that application in this part container, will it be ready so that it can terminate the old one? So even though that is default, you can customize. You can customize. You need to customize. So what is the rolling deployment strategy here?
+
+36:30
+works slowly it works slowly one by one one by one replacing the parts of previous version of your application with the parts of new version without any downtime if I am using rolling deployment strategy replacing the old parts replacing the parts of previous version of your application with parts of new version of application without downtime if you see this diagram.
+
+36:59
+Is it first terminating these two like that? Is it first terminating? No first it is creating. Is it creating new version of the pod?
+
+37:10
+Once this is ready, once this is ready, is it terminating one of the old pod and is it creating one of the new pod like that?
+
+37:21
+Yes, so in this phase also in this phase also do we still have a parts to solve the traffic for your service is your service will be able to route the traffic to this part as well as this part in this phase. Once this is ready does your service will route the traffic to this part and the other part like this one.
+
+37:43
+Yes, once this is also ready. Is it going to terminate another one? So do you have any downtime here? Do you have any downtime here if I am using deployment strategy as rolling update? No. So because of these features it is recommended now first let me demonstrate with let me demonstrate with the recreate option.
+
+38:10
+Now same application I don't want to deploy as a replica set or replication controller. Can I use this as a deployment instead of replication controller? Can I use this as a deployment instead of replica set also? Can I use this as a deployment?
+
+38:29
+Now, let me do that.
+
+38:38
+Let me do that. I am going to do. Let me do that.
+
+38:42
+This file name doesn't matter, but what you are creating or what you are defining in that file matters here. Now, instead of replication controller, can I use deployment or replica? Instead of replica set also, can I use deployment kind? Kind is deployment. But what is the API version for deployment?
+
+39:09
+What is the APA version for an app?
+
+39:22
+The API version for deployment is app slash V1 apps slash V1. Now here, whatever name, that name doesn't matter. Can I give something like this? Maven web app deployment. Or just Maven web app also fine. Maven web app also fine. Anything is fine here. This is my deployment name.
+
+39:48
+The deployment gets created in which namespace the deployment and respective respective replica sets and parts gets created in which namespace.
+
+40:01
+So how many replicas it is going to create?
+
+40:10
+If I don't mention number of replicas, how many?
+
+40:18
+Now, here is it going to define allow like this defining the selectors if I am using deployment also is it allow me to define like this. No here you need to use.
+
+40:32
+Same as the daemon set or same as a replica set. Either you need to use match labels or match expressions. So something like this, match labels, equality based selector. Now here, can I define additionally the strategy? Can I define additionally the strategy, deployment strategy? There is a concept called strategy. Strategy.
+
+41:03
+If I don't mention this strategy, what is the default strategy? What is the default deployment strategy?
+
+41:14
+rolling update rolling update Now let me demonstrate this with the recreate first strategy type strategy type Recreate strategy the type recreate First I am demonstrating this one Guys if you buy heart manifest you cannot understand this is sample this is sample
+
+41:43
+sample deployment manifest. I am using this image these many containers, but as per your requirement can you use whatever images you want to deploy as part of that pods your actual images instead of this sample application. So this is just a sample don't buy hot line like line by line like this you need to understand what is this template that is part template whatever I am going to create.
+
+42:13
+Does this deployment will create three replicas or three pods using this part template kind of a three copies of these pods.
+
+42:24
+Yes, so this can be as per your requirement. These parts can be as per your requirement, whatever containers you want to have, understand the concept. Don't buy anything here. Now the type, what is the type I can say here? Recreate but in that document there is a indentation problem. Can I define like this recreate? Is it going to allow like this in that PDF in that PowerPoint? There is a indentation.
+
+42:54
+Can I do you think can I define like this? No, so that is a child of strategy something like this. That is a child of strategy something like this. This is my deployment. So let me delete I don't want to use this. I don't want to use this RC or RS whatever it is. Whatever I already applied I don't want because
+
+43:23
+I am not able to achieve that features whatever I am getting. So I don't want to apply like this.
+
+43:32
+Guys since I am explaining the concept I am explaining one after the other but in actual applications are you going to follow same thing since biology sir has created first part so let me create a part then since biology sir has created RC let me create RC like that no so which will match your requirement whatever you can directly go for a deployment or you can directly go for RS or RC based on your requirement.
+
+44:02
+Now here this is my manifest file.
+
+44:11
+Now what kind of Kubernetes resource I am creating now.
+
+44:21
+deployment with replicas to pass strategy as recreate these are the things now as of now do I have any deployments in that namespace which I want to deploy do I have any deployments as of now no so this service I have not deleted this service I have not deleted so service is there.
+
+44:49
+Does that service has any endpoints any parts as of now?
+
+44:57
+No, now let me apply this Cubectl apply ifnf that maven web app Guys a dry run if you want to do you can do all these things. I know need to mention again There is a problem. No matches
+
+45:17
+per kind of deployment in version app slash double V1. There is a typo. There is a typo in that manifest.
+
+45:31
+So here.
+
+45:38
+Leave a comment below.
+
+45:42
+Now while creating a deployment is it going to follow the deployment strategy guys whether you are using rolling update or recreate is it going to follow the deployment strategy while creating for the first time is parts will be created one after the other when you are creating the parts for the first time even though you are using rolling update even though you are using rolling update do you think the parts will be created one after the other for the first time when you are deploying no.
+
+46:12
+But that strategy will be applicable when that strategy will be applicable when when you are updating when you are updating the deployment then that strategy will be applicable. Now I have a deployment let me execute kubectl get all now do I have a deployment with this name as per my manifest whatever name I have given do I have a deployment created in my cluster in this namespace.
+
+46:42
+If you observe internally, is this deployment internally created a replica set also?
+
+46:53
+Is the deployment internally created a replica set? Now is this parts are managed by the triplicaset?
+
+47:04
+Now we can see the revision also. We can see the history, cube CTL.
+
+47:12
+rollout status these are something like this cubectl rollout status deployment my deployment name excuse me what is my deployment name.
+
+47:27
+cube CTL rollout cube CTL rollout deployment cube CTL rollout status deployment deployment name. What is my deployment name? I have given my deployment name like this. I have given my deployment name like this maven web app. Now why I am getting this error. I want to see the status of the deployment using this command rollout status deployment this deployment status. I want to see why I am getting this error.
+
+48:01
+namespace. So where I have that namespace, you know, where I have the deployment in which namespace I have the deployment in this namespace. Now I can see a message saying that rollout is successful deployment successfully rolled out, which means do I have any issues with that deployment parts is my parts are in this state. This will be shown the deployment.
+
+48:31
+successfully rolled out if it is like this only it will be sure but if that parts are in pending state crash loop backup or any other status, it will it so failed this deployment is failed like that. If I execute this one. Yes. Now the way I can see the status. Can I see the history also the way I have a status. Can I see the history? How many times that deployment has?
+
+48:59
+created or revision deployment revision history. Now how many revisions I can see as of now when I use kubectl rollout history deployment, deployment name one revision. Why only one revision? Because just now we created is the deployment got updated with any changes as of now? No. So the change revision. Now if I want to see the template of the revision,
+
+49:29
+If I want to see more details about this revision, part template of this revision, there is one more option
+
+49:40
+revision.
+
+49:43
+one now when I'm using that option along with history command when I'm using the division number can I see the part template what is the part template for the division what was the part template used to create the division
+
+50:00
+where exactly all these details are getting maintained is your Kubernetes deployment object is maintaining all this information, revisions information, this part templates information in ETCD.
+
+50:16
+Yes. No.
+
+50:20
+Let's take that use case now. I am able to access my application. Will I able to access my application using that service? I have a service also with same labels whatever I have used. I use those as a selectors in my service. Now is my service has endpoints now? Is that service has endpoints now? Is it pointing to those two ports? Now I can access I can
+
+50:49
+31518
+
+50:53
+31518
+
+51:03
+So let me use that whatever machine wherever I have opened that port.
+
+51:10
+3 1 what is that put from outside 3 1 5 1 8 my application context now am I getting response from one of the replica one of the pod 10 dot 40 dot 0 dot 1 one of the replica because my application is running as a pod container I am getting that pod IP now let's say let's say there is a change in my
+
+51:41
+just to show you what is happening in the background I am connecting to the same machine where I have a cube CTL guys don't take it differently I am just opening one more SSH terminal here I am just opening one more SSH terminal here I am just opening one more SSH terminal here maybe let me show down you know side by instead of side by side let me show
+
+52:10
+below and above. Let me show below and above.
+
+52:19
+I've done vertically already. Let me do it horizontally. I'm just opening another SSH terminal. That's it. I'm just opening another SSH terminal. I'm connecting to same machine where I have a cube CTL just to show what is happening in the background. When I am updating what is happening in the background.
+
+52:42
+Now let me connect to same machine this SSH I will SSH to that machine where I have a cube CTL where I have a cube CTL I am SSHing to same machine now I will use one Linux command called watch I am watching my pods cube CTL get pods I fun in test type on NS this watch command is Linux command guys. So what this watch does.
+
+53:11
+is this command will be repeatedly executed like every two seconds this command gets executed and I can see what is there every two seconds this kubectl get parts commands will be executed using that watch. Now my parts are running as of now I am able to access my application also I am able to access my application also because my parts are running via service I am able to access
+
+53:41
+via service, I am able to access that application.
+
+53:47
+Now let's say there is a new code there is a new code the new image is created now can I update my deployment? Imperatively also I can do that. What do you mean by imperative by executing command itself directly? Can I do something like this? Can I use something like this? This is one sample. This is one sample command. Can I do same thing?
+
+54:17
+Imperatively also cube CTL set image deployment. This is your deployment name. Whatever I have highlighted. This is your deployment name within the deployment. This is your container name. This image. Imperatively also can I update the image of the deployment for that container something like this by executing. This is my deployment name sample container name image.
+
+54:47
+I can do something like this for my application also that is imperatively, cubectl set image. Then
+
+55:00
+deployment set image deployment what is my deployment name maven web app container name what is my container name if you don't know can I describe that quad and see or can I see the manifest also in manifest I have mentioned the container name same name has been used I can see in the manifest
+
+55:30
+or I can describe my pod and see also.
+
+55:36
+So this is my container name somewhere we have that name but in the manifest you only give that name name of the container is this one for that container you want to update the image can I do something like this whatever registry.
+
+55:57
+that maven, iPhone web, iPhone application. Let's say I want to apply this version of the image now. Can I do it manually also, imperatively? And this namespace again, because that is in the namespace, I can do like this. Now, there is one more option here, iPhone, iPhone record equals to true. What is this option? What exactly does? When I see the revision history, when I see the revision history,
+
+56:27
+Am I able to see any change cause as of now? Let me clear the screen. I'm executing that history. Cubectl, rollout, history, deployment, the deployment name. Here, am I able to see any change cause here? No. So while applying or while executing a command, if I use this option, can I see this complete command under the change cause?
+
+56:57
+for that revision. Now the revision to will be created. Can I see this complete command under the change cause if I use this option, if an iPhone record to also if I use can I see this complete command under the change cause what caused the change. Imperatively you can do this or declaratively also can I do this which means a declarative way in the sense can I update my manifest that deployment manifest.
+
+57:27
+Now can I take this one image.
+
+57:33
+whatever image I have but you need to make sure this image exists in the registry. Now currently this version of the image is used now let me see what image I have instead of 2 they have a version with the 3 4 like that in that.
+
+57:52
+Maybe any version whatever you have 3 I have a 13 only there is no 3 let's see if I have a 4 any version guys any version I don't have a 4 also 1 is there 17 any version any version of the tag 2 is there 1.0 is there ok let me use maybe 15 16 whatever it is maybe let me use this tag 15.
+
+58:24
+Now I am updating my image. I am just updating in my manifest, but will it reflect automatically? Does that parts gets created? No. Now, let me minimize this. Now you observe this case. Now you observe this.
+
+58:43
+No.
+
+58:49
+you observe this what is happening let me open another shell also so that you can easily understand let me open one more shell also where I will show the service endpoints where I will show the service endpoints so same machine I am connecting same machine I am connecting that master machine only
+
+59:15
+where I have a kubectl here before updating let me show you watch kubectl get ep endpoints endpoints now as of now can I see these two one second can I see these two ips basically the current pod ips as endpoints for that service
+
+59:44
+the current ports. You can see these ports.
+
+59:51
+You can see these ports are showing as endpoints. I have not yet done the changes. I just updated my manifest. Now I have not applied. Now when I apply this one, that manifest, what is my deployment strategy now? What is my deployment strategy now? In my manifest, what is my deployment strategy?
+
+01:00:18
+Now if it is a recreate does this current pods get deleted to create a new version of the pods.
+
+01:00:27
+Does this current parts gets deleted when I apply this one? Is it going to delete this current version of the parts to create a new version of the parts? If these parts are deleted, do we have a service endpoints? Do we have these details in the service for some time? No. Now, during that process, if someone is accessing internally or externally, do we have an outage?
+
+01:00:53
+Do you have a downtime? Yes. Let me show that. You observe all the screens. You observe this screen as well as this screen here also.
+
+01:01:04
+If you'll see.
+
+01:01:08
+is my application is done
+
+01:01:14
+Here I should have executed watch guys. I should have executed watch. I have not executed with watch That's why I was not able to see here. I just executed this one. So that's fine. But if you see there was a downtime There was a downtime And here if you observe your IPs also got deleted and recreated I mean to say endpoints now new application is deployed Here I should have used that record option
+
+01:01:43
+I should have used that record option that is fine even though you don't use that is fine now you see the revision you see the history now how many revisions are there how many revisions are there first that for the deployment two two revisions
+
+01:02:01
+two revisions are there now let me drag this
+
+01:02:09
+two revisions are there if you see cubectl get all hyphen n test hyphen ns if you see why there are two replica sets why there are two replica sets one replica set it is saying zero desired zero current zero ready zero another replica set it is saying desired two current two ready two what is this replica set is it a replica set of first revision
+
+01:02:40
+Is it a replica set of first revision that old revision? So is it a it is scaled down the parts. It is scaled down the parts, but is it completely deleted that revision information? What was the part specification of that information? No. Another replica set got created. Now do I have these parts from the new replica set that new revision?
+
+01:03:05
+yes now if i want to see this replica set information this revision information can i use that number and no i fun i fun revision option along with history revision
+
+01:03:20
+So, is this was the part template for that revision? Is this is the part template for that revision to whatever we just deployed now and if it is a revision one, can I see this was the part template of that revision one? Now if something is wrong with these parts, your parts are running, your parts are running, but there are small defects. You are there are small defects. Your containers are running.
+
+01:03:48
+Containers are running but there are some issues defects. So you don't have a time to fix that defects. Can I simply roll back to the previous revision? I don't want my customers to be impacted because of the defects. Can I roll back to the previous revision if required?
+
+01:04:08
+So what is that command? What is that command? Now here let me use watch now. Even though I am rolling back does this rollback also fall, you know, use that recreate strategy.
+
+01:04:28
+Yes. Now how to roll back? There is a command like this. There is a command like this. Rollout, undo, undo. Undo like control Z, like a control Z. Cubectl, rollout, undo, deployment, your deployment name. Your deployment name. To which revision you want to roll back?
+
+01:04:56
+If I don't mention this revision, how many revisions it will go back? If I don't mention this at all, if I don't mention from here, how many revisions it will go back? Let's say current revision is three, current revision is three. If I don't mention this one, to which revision it will go back? Is it go go go back to the second revision? But let's say the current revision is three, but I want to directly go back to the first revision. Can I use this option?
+
+01:05:26
+Which revision I want to roll back? Yes. Now, let me do that. Let me do that by accessing the application also. By accessing the application also. Let me do that.
+
+01:05:48
+Now I am able to access application but I want to rollback. Can I do something like this? Rollout instead of history can I use undo? Undo deployment, my deployment name. If I want to record this as a change cause Can I use this option? Iphone Iphone record true this option So that under the change cause I can see that one.
+
+01:06:18
+Let me access the application also now. One second.
+
+01:06:34
+Well done.
+
+01:06:44
+I need to take advantage of this one.
+
+01:06:49
+Let's go.
+
+01:06:55
+I want to properly align so that I can show you side by side also but that is not happening.
+
+01:07:08
+One second, just give me a second.
+
+01:07:12
+This is hiding somewhere that I want to drag up.
+
+01:07:22
+Let me say.
+
+01:07:28
+I'll open this again.
+
+01:07:33
+I love her so that you can easily understand what is happening in the background.
+
+01:07:59
+Now let me connect the same machines.
+
+01:08:07
+So I will show you when I am doing this rollback also what is happening I will show you.
+
+01:08:18
+so that you can easily understand.
+
+01:08:25
+I am connecting to same machine where I have a cube CPL in these are all these terminals also now here let me watch watch cube CPL get ports I found worldwide I found in that namespace this watch is one Linux command every two seconds that commands get executed now here I will watch the endpoints cube CPL get EP I have onion test I have an endless
+
+01:08:54
+Now these are the current ports 10.40.0.1 10.38.0.2. Now I am trying to roll back. I am trying to roll back now. Let me access the application also.
+
+01:09:09
+Now here.
+
+01:09:13
+Let me access the application also. Yes.
+
+01:09:20
+No.
+
+01:09:24
+My application is down. Now I am doing a rollback. I am doing a rollback, but my deployment strategy is recreate. You see here, these parts will be terminated. This will be removed. And again, it will recreate a world parts when I execute this command. OK, this iPhone iPhone record.
+
+01:09:46
+Okay, some options sometimes it won't take this one. Let me leave this for some comments. This row, you know, record will not take. I will explain that later. Now without that record option, let me execute this one. You observe is my application is down is parts are deleted world parts is am I getting a new parts again? It is getting created. Do you have some downtime when I'm rolling back also?
+
+01:10:19
+Yes, so this is recreate strategy. This is recreate strategy. Now, revision when I see the revision rollout history, I want to see when I see the revision history. Now,
+
+01:10:39
+Third revision is created. I mean to say third revision is created, but is that revision is created using first revision part template. This third revision is created, but is this region is created using first revision part template. Yes. And also if you observe by default, how many revision histories deployment is maintaining by default in Kubernetes how many revisions of history it is maintaining by default only two. Now
+
+01:11:08
+Is it possible for me to increase that revision history limit? I want to maintain like last five regions or last 10 regions like that. Is it possible for me to increase that revision history limit? Yes. So in your mind, you know, in your manifest, in your part manifest, in your part manifest, you can use one more thing in your deployment manifest. You can use one more thing.
+
+01:11:35
+Let me close this for better visibility in your deployment manifest. I can use one more field. What is that field revision history limit. Now if I say revision history limit as 5 or 10. Now let's say I have make it as 5. So how many revision histories will be maintained by your Kubernetes for this deployment.
+
+01:12:03
+fire regions last fire regions. Now is everyone clear what is deployment and deployment with this strategy how it works and what is this revision history limit?
+
+01:12:19
+Is everyone clear now? Yes. But if I am using this deployment with the strategy as recreate, when I am updating my deployments or when I am rolling back my deployments, do I have a downtime outage?
+
+01:12:35
+If I don't want that to happen, instead of this one, instead of this one, what option I can use? What strategy I can use?
+
+01:12:46
+Instead of this I can go with rolling update. So let me show that. Let me go with rolling update. This is just a file name nothing else. Now instead of.
+
+01:13:04
+Default I mean to say recreate. Can I go for a rolling update?
+
+01:13:11
+even though I don't mention here. What is the default strategy?
+
+01:13:19
+rolling update but can I customize can I customize like this can I customize like this like how many parts can be down when I am doing the update like this strategy with all these customization with all these customization so I can do something like this customization strategy rolling update
+
+01:13:46
+What do you mean by this max search max unavailable? So whenever you are updating your deployment maximum how many parts cannot be available unavailable let's say I have two parts currently I have two parts if I say max unavailable as one so what does it mean out of these two maximum how many parts can be down when you are updating the deployment.
+
+01:14:15
+If I say there are two replicas, if there are two replicas, if I say maximum unavailable as one, when I'm updating the deployment maximum how many parts can be deleted when we are updating only one. If maximum unavailable is one, does it mean do you have one more part still available? That can be new part or old part that doesn't matter. Which means do we still have some parts?
+
+01:14:45
+during that update process, whether that is a new pod, whether that's a old pod, you will have one pod during the update process. So that is the meaning of max unavailable. What do you mean by max surge? These type of questions are also they will ask in the interview. What do you mean by max surge, max unavailable in this rolling update strategy? Unavailable in the sense, let's say for this deployment,
+
+01:15:15
+maximum how many parts can be unavailable. Let's say my replica counties to my replica counties to when I am updating my deployment minimum, how many parts cannot be unavailable, which means how many parts can be down. During this update process one, which means will have still one part this part can be old part or this can be new part.
+
+01:15:41
+that doesn't matter you are total you are total expecting two parts only one part can be down that other part can be old part or new part which means when I am updating if maximum unavailable is one.
+
+01:15:56
+this part may go down you have this part maybe that is old part then I will get a new part once this new part is there then can this part goes down still you have one part and other part gets created is it like a one by one like that
+
+01:16:17
+Yes and what do you mean by this max surge what do you mean by this max surge How many new parts can be created over the current parts how many new parts can be created over the expected replicas Over expected replicas how many new parts can be created but is it always like this one one? Can I give any value here? Let's say my total replicas is four My total replicas is four
+
+01:16:46
+Can I say max unavailable as 2 also, which means 2 parts can be down. Maybe the rest of the other 2 parts will can be available that can be new parts or old parts. Can I go 2 by 2 also if required maximum unavailable as 2 like this?
+
+01:17:05
+So, will I able to control the behavior of rolling updates using these options, max unavailable, max search.
+
+01:17:15
+And what is this min ready seconds? What is this min ready seconds? Now in this phase, how many seconds it will wait before it goes to the next phase?
+
+01:17:28
+in this phase how many seconds it will wait once the new pod is created if I say minimum ready seconds as 30 will it wait 30 seconds before it goes to this phase and terminate the old pod why that is important why that is important because does the container in this pod does the container in this pod will take some time your application may take some time to fully ready the moment you start your tomcat process do you think your application will be
+
+01:17:58
+immediately available to solve your traffic.
+
+01:18:02
+So it may take some time. So can I wait for some time so that this part of this container will be completely ready so that the next phase it can go to this next phase it will delete the old part. By that time, this new part will be ready. That container will be ready. Your application is ready.
+
+01:18:22
+So again, if your container is taking some time, your application is taking some time, instead of 30 seconds, then I give 60 seconds, 120 seconds also, based on your requirement.
+
+01:18:35
+Yes. So even though I don't mention this is the strategy, but is it going to wait any time like 30 seconds like that?
+
+01:18:46
+no so I can customize this behavior using this strategy called rolling update now let me guys in detail documentation is there but you need to understand the concepts so in the kubernetes in kubernetes.io that website
+
+01:19:12
+There is a detailed document what is deployment how it works. What is the deployment strategy and how it works and here also they have detailed dimension. What is max search max unavailable max search?
+
+01:19:30
+max surge max unavailable so if you see max surge so what do you mean by that max surge right so max surge will create it will calculate the number of expected parts over the current ports now similarly you have a max unavailable max unavailable
+
+01:19:58
+max unavailable what do you mean by this max unavailable if you see when you are updating the pods when you are updating the pods so this max unavailable option this max unavailable option it's an optional field again it's an optional field it is not mandatory specified that maximum number of pods that can be unavailable.
+
+01:20:26
+unavailable during the process updating process that value can be absolute number like 123 and can I give in the percentages also like 20% 30% 40% again as the correct you know number of replicas percentages also it is allowed.
+
+01:20:47
+Now, search, max search again, it's an optional field the maximum number of pods that can be created over the desired number of pods.
+
+01:20:58
+that can be created over the design number of ports right the new ports so these are optional fields you can use based on your customization now let me define that strategy
+
+01:21:14
+strategy Type now what type of strategy now I want to use rolling update something like this rolling update something like this Rolling update you should be caps here now again. You have an option called rolling update here again something like this rolling Update so here can I define that max search max unavailable?
+
+01:21:45
+available max unavailable something like this
+
+01:21:57
+something like this max unavailable I can say one.
+
+01:22:04
+something like this max surge max surge absolute number can I give in percentage also 50% 50% like this
+
+01:22:17
+What do you mean by 50% now currently how many replicas we are expecting two replicas. So max unavailable is 50% which means how many number how many percentages of parts cannot be available like one if there are four if there are four 50% in the sense two so I can give in the numbers or percentages also but again when this will be applicable
+
+01:22:46
+this will be applicable when you are creating a port cities applicable I mean to say when you are creating a deployment is this applicable no only update process when you are updating when you are updating now here can I give one more field called the min ready seconds min ready seconds minimum ready seconds like that t60 like that there's are you are required
+
+01:23:14
+Let me create existing deployment. I want to demonstrate from scratch again. Let me delete existing deployment. The current deployment is created using which deployment strategy.
+
+01:23:28
+The current deployment is created using which deployment strategy whatever I already have. That is deployed using recreate. So let me delete this I will. Apply from scratch so that you can understand again. Yes can I update this one also without deleting also can update from recreate to rolling update also if I apply that again it will update it from recreate to rolling update but.
+
+01:23:57
+I thought of showing from scratch so that's why I'm deleting.
+
+01:24:03
+No, I don't have anything. I don't have anything as of now. Let me apply.
+
+01:24:14
+let me apply this revision history revision there is a typo there is a typo error revision
+
+01:24:31
+revision history limit so there was a typo
+
+01:24:38
+Now when we are creating for the first time, do you see both parts are all the parts created at same time when you are creating for the first time.
+
+01:24:50
+Yes now cubectl rollout history history
+
+01:24:58
+cubectl rollout history deployment. This is my deployment name. So I deleted completely. So what is the revision? How many revisions I have?
+
+01:25:10
+kubectl rollout history deployment deployment name
+
+01:25:16
+I fun in this type of an inance. Oh, no.
+
+01:25:23
+study there is a type error
+
+01:25:28
+So how many revisions I have because I just deleted and recreated first division. Now, let me do this now. Let me do the same process. What do you mean? I want to update my application. Now I want to update my application. Let me show that.
+
+01:25:49
+again.
+
+01:25:52
+Or maybe...
+
+01:25:59
+Let me connect to same machine. My master machine where I have a cube CTL. Where I have a cube CTL I'll connect.
+
+01:26:12
+From this one also I'll connect to same machine. So that you can understand what is happening in the back.
+
+01:26:22
+Now, let's correct one more tab also.
+
+01:26:47
+So here, let me execute watch kubectl get ep endpoints of that service. I can see this currently there are these pods kind of a revision one first revision kubectl get pods.
+
+01:27:10
+iPhone worldwide you can use iPhone in test iPhone in this currently there are two parts. Now I am able to access my application also I am able to access my application also this one because my application is running my application is running I am able to access this application
+
+01:27:34
+Now let's update my deployment. No again. I am updating my manifest. Now, let's say instead of this image is that this image there is a new image which I want to
+
+01:27:51
+watch command I have not used it okay let me use watch command here okay now I am using watch for both that's fine thanks for reminding now let me use different image now let's say instead of this image I want to deploy another image guys one more important point for some reason perceive some reason the new parts are not getting created is it going to completely
+
+01:28:21
+For some reason you are not your new parts are in a pending state or a failed state crash loop backup. Do you think all of your old parts gets deleted? No still you will have that max unavailable if it is one which means do we still have one more part available? The current replicas is to you are saying max unavailable as one the new part is failed new part is failed to come up.
+
+01:28:49
+Do we still have at least one part, another world part still available unless until unless until your new parts in a ready state running state is it going to terminate that one of the world part which is still available. No that is also one more important thing. Now let me give some time. Now let me give 16 tag as 16. Now let me apply cube serial apply.
+
+01:29:19
+Here I can use this iPhone iPhone record option iPhone iPhone record equals to true The card or is e o r d record true now you observe here here and here When I am updating if you see Do you see is it still having one old pod? Max unavailable is one so it has terminated one old pod. Do we still have one more new pod?
+
+01:29:48
+Is my application still accessible?
+
+01:29:52
+Now it has created. Can I see total three endpoints here because these two new pod endpoints also showing here now is request is going to any one of those three pods any one of those three pods? Yes, but after 30 seconds after 30 seconds as for the minimum ready second is it going to terminate this world pod? Whatever it is still available because it is running it is ready.
+
+01:30:20
+Now, do you see one of the world parties getting terminated this way? Will I able to achieve zero downtime deployments using deployment in Kubernetes with a deployment strategy? Rick rolling update.
+
+01:30:37
+Now if I see the history. If I see the history since I use that option iPhone iPhone record true while executing this command. Can I see the change cause also what caused this change region to?
+
+01:30:52
+If I want to see that more details about that revision, can I use this option, if I find revision option, if I find revision, that number. Can I see the part template of that revision? What was the part template of that revision? Yes. Now, since it is revision history, I have made it, since I have made it revision history as five, I am updating another image.
+
+01:31:20
+Guys when you are doing you need to make sure these images are there in your registry without having these images these tags in your registry. It will throw that image pull error. Right. Now, let me apply again. Let me apply again.
+
+01:31:38
+Now if you see again do I have a downtime when I am updating new again new image I am getting updated if you see I have at least one end point one part that old part I don't have any downtime
+
+01:31:54
+When I roll back also same behavior, same behavior. If you see still I have one world part. Once that minimum ready seconds is crossed, once that minimum ready seconds is crossed, then only the world part gets terminated. Then only the world part gets terminated.
+
+01:32:19
+now do you see the word pod got terminated now so service is doing its job deployment is doing its job pod is managing your container so are you clear how all these things are interrelated
+
+01:32:37
+Now since I have changed the deployment that revision history as 5 can I see now can I see third revision also 1 2 3 also can I see 1 2 3 also because I have increased the revision history limit is everyone clear what is deployment deployment with strategy recreate what is
+
+01:33:03
+this one. Okay, now.
+
+01:33:09
+Which one we will use again in the actual applications? Which one we will use again? Do we always use deployment? Or do we always go with some other thing? That depends on your use case again, your requirement again, whatever you want to do. Now, there is another concept altogether. There is another concept altogether. Did you guys heard about blue green deployments?
+
+01:33:39
+blue-green deployments can read applyments can read applyments
+
+01:33:47
+This is altogether another concept another concept does Kubernetes have a strategy called blue green strategy called canary the way we have a recreate and rolling update the way we have a recreate and rolling update to have a direct strategy like this blue green or canary. No, but if required can I do this blue green deployments or canary deployments also in
+
+01:34:16
+approaches using some process using some approaches. Yes. So what is the problem with the re I meant to say rolling update why we have a blue-green deployments. What is the problem with rolling update even though without downtime you are able to deploy your application without downtime you are able to deploy your application but why blue-green what is the problem with rolling update. Let me tell you one thing.
+
+01:34:45
+You are doing loop, you know, rolling update deployments. Let's say in the latest image, latest code, there are some bugs, there are some defects. Before you identify that issues, before you identified that issues and before you roll back that application, does already end users will start facing the issues? Are you stopping end user traffic to the new parts in the rolling update strategy? Are you stopping end user traffic?
+
+01:35:15
+to the new parts in the rolling update strategy. No. So before you already identify before you identify there is a issues in the new code before you realize and before you rollback does end users will start facing or experiencing these those issues or defects.
+
+01:35:34
+Yes. But instead of that, instead of that, can I follow a blue green approach?
+
+01:35:43
+What is blue? What is green? What is this blue green approach? We will discuss in a separate class. Can I follow this blue green approaches in a normal virtualized machines also guys forget about Docker forget about containers. Will I able to do this blue green deployments in a virtualized deployment or traditional deployment also.
+
+01:36:06
+Yes, so this is one deployment strategy, blue green deployment. Can I do that blue green deployments in Kubernetes also?
+
+01:36:19
+Yes. So what is this blue green? What is this canary? I will explain later in the next class that is tomorrow's class. But can I directly use strategy as blue green the way I am using recreate and rolling update in my manifest if I say blue green does Kubernetes can understand and use that. No. So this is a different concept altogether that I will explain in a tomorrow's session.
+
+01:36:47
+tomorrow's session what is this blue green what is this canary right how it works we will discuss this in a tomorrow session thank you guys that's it for today try to practice whatever has been discussed in today's class I will continue tomorrow tomorrow also we have a class
+
+01:37:07
+Don't miss tomorrow's session. I said don't miss any session. Typically, I say don't miss any session. Tomorrow's session is also a little important so that you can understand what is that blue, green, what is that canary. These type of questions are being asked in the interviews, and you are going to follow these type of deployment strategies in your project also.
+
+01:37:34
+Thank you guys, we will see you tomorrow.
+
