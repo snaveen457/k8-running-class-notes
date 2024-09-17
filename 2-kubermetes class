@@ -1,0 +1,1287 @@
+00:00
+This conference will now be recorded. In yesterday's session, we were discussing about what is Kubernetes.
+
+00:14
+that is Kubernetes.
+
+00:18
+and architecture.
+
+00:24
+Advantages are features.
+
+00:33
+features of Kubernetes. So
+
+00:44
+Kubernetes is also called as K8S. In the short form, people used to call it as a K8S. Don't get confused if the people are saying K8S. K8S is nothing but what? K8S is also nothing but Kubernetes. So what is this K8S, right? So why they're calling as a K8S?
+
+01:13
+between K and S, between K and S there are how many letters basically alphabets there are eight so that's why people are calling it as a K8S in the short form so K8S or kubernetes both are same.
+
+01:33
+don't get confused now yesterday we were discussing about the architecture of Kubernetes what are the components are there in the master what are the components are in the worker
+
+01:47
+So what is API server? What is scheduler? What is ETCD? What is control managers? What is kubelet? What is kube proxy? What is kubectl? All those things we discussed yesterday. And also, as I already told, kubernetes deprecated Docker. Did you guys went through that video? Whatever I asked you to went through to understand why kubernetes is deprecating Docker. What is the reason behind that?
+
+02:17
+Does it mean it's end of Docker? Did you guys went through that video?
+
+02:24
+Did you guys able to understand why they are deprecating? Does it mean it's end of Docker? Or can I still use Docker? Can I still learn Docker? Yes, Docker is still powerful software. We can still use Docker to do the CI part. For continuously integrating and building the images, container images, we can still use. Those images, whatever we are deploying,
+
+02:51
+Even though we are using Kubernetes and Kubernetes is not supporting Docker, can I still deploy those Docker images in the Kubernetes cluster on a different container runtime? Yes, we can do that. We will also do that now. Now, we discussed about all this architecture. I don't want to waste much time. Now, let's come to the setup installation. Can I run Kubernetes anywhere? Anywhere in the sense?
+
+03:19
+any cloud or any data center like on-premise or cloud or anywhere.
+
+03:36
+Yes, Kubernetes, we can run Kubernetes anywhere, run in the sense we can install Kubernetes anywhere. If you see, as I already told, this is the official website. This official website has very good documentation is it has very good documentation.
+
+03:55
+You can understand each and every concept in detail using this documentation also. But you should have a patience to read this document. That's it. Very good documentation. Documentation, understand Kubernetes, try Kubernetes, set up Kubernetes, how learning Kubernetes, all these things in detail, concepts of Kubernetes, overview, architecture.
+
+04:24
+All these things we can understand in detail, but let me explain with my documents. Now QBurnett is.
+
+04:34
+Run Kubernetes anywhere. What do you mean by we can run Kubernetes anywhere? Kubernetes is an open source, giving you the freedom to take advantage of on-premise or hybrid or public cloud or private cloud, which means can I run my Kubernetes in any type of infrastructure, whether I am using on-premise, whether I am using hybrid, public, private infrastructure?
+
+05:00
+So will it allow you to effortlessly move your workloads? Does Kubernetes will allow you to effortlessly move your workloads to wherever it matters to you? What is the meaning of workload here? Don't get confused with workload. Workload is nothing but your applications. Your applications, whatever you want to deploy. Can I deploy those, I don't, can I move those workloads or can I deploy those applications?
+
+05:30
+wherever whether you are running Kubernetes and on-premise or hybrid or public. Yes.
+
+05:37
+You can run Kubernetes wherever you want to run. I just need a group of servers. Do I need some group of servers to configure Kubernetes, to configure control plane, to configure worker machines? I just need some servers. Can I have those servers in my own data center on-premise environment? We have ESXi servers, VMware servers, VMware ESXi servers, or that can be.
+
+06:05
+the servers in the cloud like AWS or Azure or GCP or IBM cloud, anywhere you can run Kubernetes. So when it comes to installation, when it comes to installation, primarily there are two types of Kubernetes cluster. One is self-managed Kubernetes clusters, self-managed Kubernetes clusters and the managed Kubernetes clusters.
+
+06:35
+self-managed Kubernetes clusters and managed Kubernetes clusters. Examples for managed Kubernetes clusters EKS, AKS, GKE, IKE etc.
+
+06:54
+So these are the examples of managed Kubernetes clusters. What do you mean by managed Kubernetes cluster? What do you mean by self-managed Kubernetes cluster?
+
+07:09
+Self-managed, the name itself it is saying self-managed. So if it is a self-managed, who needs to install, operate and maintain the Kubernetes clusters? Who needs to install, configure, maintain the Kubernetes cluster self-managed? We. So do we need to install ourself and install and maintain and upgrade manage ourself? Yes. So that is self-managed.
+
+07:39
+Kubernetes cluster. So examples, I can set up a self-managed Kubernetes cluster using QBDM or CubeSpray. There are some softwares. Using this, I can configure and manage my own Kubernetes cluster myself. QBDM, CubeSpray, we have a mini cube also. I will explain what is that mini cube.
+
+08:05
+mini cube also. I will explain what is that mini cube in some type. So these are the examples for self-managed.
+
+08:14
+We need to install Kubernetes. We need to manage the control plane. If something goes wrong with your control plane, your master, do we need to take care of ourselves? Do we need to identify and fix the problem ourselves? Yes. If something goes wrong with your worker machines, your worker machines are having some issues. Your worker machines went down. So do we need to fix the problem? Do you need to manually identify what is the problem with that worker machine? Is it a network issue? Is it a storage issue?
+
+08:43
+or CPU or memory is not there. Do you need to fix the problem yourself? Are you going to get another worker or another master automatically in self-managed Kubernetes clusters, which you are managing on your own?
+
+08:59
+No. But in that self-managed Kubernetes clusters, whatever parts I deployed, does those parts will be managed and maintained by Kubernetes? If something goes wrong with your parts, your containers, that parts will be recreated and replicated. But you need to set up the cluster and manage the cluster. But when it comes to managed Kubernetes clusters, the name itself, it is saying managed. So do we need to manage?
+
+09:27
+Do we need to install and operate and manage that cluster or that will be created and managed by someone else for us? That will be installed managed by someone else. Can I just focus on just deploying the applications or workloads in that Kubernetes cluster? We can just focus on just deploying our workloads, our applications in that cluster. But who is going to take care this managed Kubernetes clusters, the respective providers?
+
+10:02
+So this E case, what is the full form of E case?
+
+10:11
+Elastic Kubernetes Elastic Kubernetes Service Elastic Kubernetes Service. So in which cloud platform we have a service that Kubernetes cluster also as a service.
+
+10:29
+This is in AWS cloud. Guys, the way we have a EC2, the way we have a EC2, we have another service called EKS. EC2 is what? When I create a EC2, EC2 is just a computing. I mean to say server.
+
+10:51
+If I create a EC2, I am going to get a server. Now, if I create a EKS, the way we have a EC2, we have a EKS. If I create a EKS, what I will be getting? Will I get a Kubernetes cluster? Does Kubernetes cluster will be created, configured in the background? But who is going to install the required Kubernetes softwares and required Kubernetes components in the background? Does AWS will take care?
+
+11:23
+Yes, so it's a managed Kubernetes cluster in the AWS cloud. Now, if I create a EKS in AWS, does Kubernetes control plane will be up and running in the background? AWS will take care that if something goes wrong with that control plane, that API server schedule or ETCD, if something goes wrong with that master, do we need to worry? So who will replicate or recreate?
+
+11:51
+that control plane that master completely AWS and also worker nodes, worker nodes, whatever nodes I'm going to add to that EKS cluster. If something goes wrong with that worker nodes also, does AWS will recreate that worker node? If any node failure has happened, am I going to get another node automatically get added to that cluster?
+
+12:16
+EKS cluster? Yes. So that is managed Kubernetes cluster in AWS. So what is the meaning of AKS? What is this AKS?
+
+12:29
+What is the full form of AKS?
+
+12:47
+So it's Azure Kubernetes service, Azure Kubernetes service. In which cloud we have a service called AKS? In the Azure cloud. Suppose some projects, some applications are not using AWS, some projects are using Azure, but they want to deploy their applications as containers and they want to use Kubernetes to manage those containers. In that case,
+
+13:15
+If there are people who ever is using Azure cloud, in the Azure cloud also do we have a service for Kubernetes where Azure will create a cluster and manage the cluster for the people who is using Azure.
+
+13:31
+Yes.
+
+13:33
+So, GKE, what is the proof form of GKE here?
+
+13:41
+Google, Kubernetes.
+
+13:47
+engine Google Kubernetes engine in which cloud GCP cloud what is the meaning of GCP Google cloud platform Google cloud platform.
+
+14:03
+All these are cloud providers. Like the way we have AWS, we have Azure cloud also. If the way we are creating a servers, load balancers, storages in AWS, if people are using Azure, in the Azure also, can we create a compute storage, networks, load balancers, databases, all those things? And also Kubernetes. This AKS. Yes.
+
+14:33
+like Google Cloud also does the same thing. IKE, IBM, IBM Kubernetes Engine. In which cloud? This is in the IBM cloud. So each cloud provider has a managed Kubernetes clusters. So if your applications, your projects, are hosting their applications in the cloud-based infrastructure, then which one is recommended?
+
+15:04
+Suppose your client is okay to run their applications in someone else's infrastructure like AWS. They're ready to host their applications in the cloud infrastructure. And their applications, they're not doing a virtualized deployment, they're doing a containerized deployment. They're running their applications as a containers. So if it is a containers,
+
+15:30
+If they're using again Kubernetes, which one is recommended in that respective environment if the project is ready to host in the cloud infrastructure? Is it recommended to go with managed Kubernetes clusters based on whatever cloud they are using? Can they use respective service in that cloud?
+
+15:57
+Suppose one of the company, one of the project is using Azure cloud. They want to run their applications as a containers and they want to manage those containers using Kubernetes. Then instead of you create a server, instead of you set up the Kubernetes on your own, can I let Azure to create a cluster and manage the cluster? I can just focus on just deploying the containers in that cluster.
+
+16:36
+Suppose your company, your project, your project or client is using AWS cloud. They don't want to run their applications in the virtualized deployment. The way we guys deployed a till Docker, they don't want to deploy their applications and virtual machines. They want to run their applications as a containers. Instead of you create a EC2 instances, instead of you install and configure Kubernetes on your own.
+
+17:06
+Can I go with EKS instead of you create a EC2 instances, install Docker or Kubernetes softwares and set up the cluster instead of I do on my own. Can I go with EKS instead of EC2?
+
+17:24
+then who will install, who will manage the Kubernetes for us? Does AWS will create and manage the Kubernetes for us? Yes. Now, managed one is recommended. But again, are we going to always use EKS, AKS, or GKE? Or again, it depends on your infrastructure? Let's consider your client, they don't want to run any applications in the cloud infrastructure for security and compliance requirement of the project.
+
+17:53
+They don't want to run their applications in the cloud. They want to run their applications within their own data center on premise environment. In that case, can you go with self-managed Kubernetes cluster within your own data center servers? Then can we install and configure Kubernetes on our own self-managed Kubernetes clusters?
+
+18:19
+Yes, so in the interview sometimes they are going to ask are you using self-managed or bare metal this self-managed or we call it as a bare metal Kubernetes clusters.
+
+18:32
+Both are same self managed or bare metal Kubernetes clusters. Both are same. So in the sometimes in the interview, they are going to ask you are using Kubernetes. Are you using self-managed or bare metal Kubernetes clusters? Or are you using managed Kubernetes clusters? Is everyone clear? What is managed Kubernetes cluster? What is bare metal Kubernetes cluster?
+
+19:03
+But for same application, do you use both? I mean to say for same application, are you going to deploy in your own data center as well as in the cloud?
+
+19:14
+For same application you can apply in either of the location.
+
+19:20
+either self-managed or you know or managed but again for high availability can I have something like replication in the Kubernetes itself which means can I have a prod and dr kind of a clusters whether I am using self-managed within the self-managed also can I set up one cluster for production in one data center in my own and another data center can I set up dr if my prod is having issues can I switch the traffic to the dr.
+
+20:04
+guys if someone switched on your cam video cam kindly switch off don't enable any video cam I'm not sure who is that let me see for me I am not able to see who switched on their video cam
+
+20:22
+I cannot see here make sure you unmute your your video cam is not on.
+
+20:32
+Okay, now what I was asking, suppose I have a prod cluster, if something went wrong with your prod cluster, can I route that traffic to the DR cluster? If I have another cluster, DR disaster recovery, can I route my traffic? Can I switch my traffic or route my traffic from prod to DR? If there is issues in the prod. So,
+
+21:01
+that is like other use cases. Now, self-managed Kubernetes cluster, your own Kubernetes cluster, you are installing, you are managing, this managed Kubernetes cluster, it will be created and managed by someone else. But where I can achieve more high availability, fault tolerance in the cluster, Kubernetes cluster, if something goes wrong, that automatically it is going to recover.
+
+21:29
+where I can achieve high availability fault tolerance in my cluster, highly available control plane, highly available worker nodes.
+
+21:39
+My control plane will be highly available. My worker nodes also will be highly available. That is in the managed. But again, as I already told, the decision is based on what type of infrastructure your client, your project is trying to use. Is it based on that decision, whether I want to go for managed or bare metal?
+
+22:07
+is it depends on what type of infrastructure your current project current client is using.
+
+22:16
+Yes, but if the client is already using, if the client is already using cloud-based infrastructure, then can we suggest to go with managed Kubernetes clusters instead of we create a server and we install and manage. Instead of we go with EOS infrastructure as a service, can I go with the PRS platform as a service? I will take Kubernetes as a platform that EKS.
+
+22:45
+We discussed all these things. What is UAS infrastructure as a service, platform as a service? Can I go with this EKS that Kubernetes cluster as a platform? Instead of I create only infrastructure and I install software and manage, can I go for a platform instead of infrastructure that Kubernetes platform?
+
+23:07
+So if anything goes wrong with that platform, that server uptime, any failure in the server, any failure in that software, who is going to take care of that platform completely? Provider. So I can go like this. Now, first I will explain self-managed Kubernetes cluster. First I will configure or install self-managed Kubernetes cluster at the end of the Kubernetes.
+
+23:37
+I will explain this EKS how to set up EKS cluster and how to deploy the applications in EKS at the end of the. Kubernetes session I will explain EKS, but again whether I am using EKS or AKS or GKE or IKE or I'm using Minikube cluster or QBDM cluster does the concept of Kubernetes will change. Does the concept of Kubernetes will change the way we are going to.
+
+24:06
+deploy the applications? No. The Kubernetes is Kubernetes. Whether you run in on-premise, whether you run in cloud, the Kubernetes is Kubernetes. There is no changes in the concept. But only difference comes if I am using managed Kubernetes clusters, will I able to use some cloud concepts also there? Will I able to use some other cloud services also in that managed Kubernetes clusters, like load balancers, storage?
+
+24:37
+IAM will I able to leverage other cloud services if I am deploying using managed Kubernetes clusters?
+
+24:48
+That is the only advantage. Now, let me explain self-managed. As I already told, who is going to manage, who is going to install and manage this Kubernetes cluster V. Now, we have Minikube. But before I come to Minikube,
+
+25:09
+There is one way to practice Kubernetes. This is one URL. This is one URL, one website. So I can open this website, labs this URL. Now I can log into this application using my GitHub credentials or Docker Hub credentials. I can log into this application using GitHub credentials or Docker Hub credentials. Now on the fly.
+
+25:38
+Can I create servers and can I practice Kubernetes here in this application, in this website on the fly? Can I create some servers like this? If I click on this add new instance, I am going to get one instance here. Similarly, I can click on one more time add new instance. I'm going to get one more instance, something like this. These instances are already pre-configured with the required Docker software and Kubernetes software.
+
+26:07
+In any one of the machine, either in this machine or this machine or this machine, can I execute this QBDM init command so that it will initialize that control plane, that master. It is going to set up the API server, scheduler, ETCD, and all those things. If I execute this command in any one of the server, I can execute this one in any one of the server, just one server, not all the servers. They have given instructions.
+
+26:38
+comes with the pre configured softwares like QBDM software is already configured required cube CTL software also configured. Now I can execute some command like this QBDM in it. Is it going to initialize that control plane like that API server, etcd control managers and all those things? Yes. Now, once this is done, it is going to give a token. It is going to give a token.
+
+27:08
+If I take the token and execute the token in these two servers, does these two servers will report to this one as a worker?
+
+27:18
+once this is completely ready once this completely ready
+
+27:24
+It is initializing that control plane, API server, scheduler, ET, CD and all those things.
+
+27:32
+Now, if you see, it has clearly told your Kubernetes control plane is initialized successfully. To start using your cluster, run the following commands as a regular user. So using this one, what we are trying to configure? The commands itself, you can understand what I'm trying to configure. Am I configuring kubectl? The client software also part of this one itself.
+
+28:01
+So am I configuring that kubectl?
+
+28:07
+I'm creating one dot cube folder. This confile this confile has that cluster details. So in the same machine in the master machine itself, that cube CTA is there.
+
+28:21
+So.
+
+28:24
+I can execute this as a regular user instead of root user. Let me switch to regular user. Regular user.
+
+28:35
+then I can execute those commands. They're saying this sudo command not found. So execute as a regular user. So let me see.
+
+28:48
+Now this is as we choose.
+
+28:53
+You can configure all these things, and you will get that token. You see there is a token also. If I take this token, if I execute this token in these two machines, it will report to this cluster. I can practice here. But how long this session is active? How long this session will work? Which means I can practice this Kubernetes in this cluster. How long each time? Four hours. Once this is done.
+
+29:22
+is this instances is this servers will be deleted for you.
+
+29:28
+This is just for practicing. Without you have servers, without you have servers, you can practice here. But are you going to use these type of clusters to deploy your actual applications in the live environments? No. So I don't want this to be used. I don't want you to use this one. So I am not recommending this one. I'll close this one. I don't want you to use this one.
+
+29:58
+instead of this one can I set up my cluster on my own can I run my Kubernetes cluster on my own in some servers my own servers that servers can be your own database data center servers even though I don't have any data center now can I use this AWS EC2 instances instead of I create EKS can I create a servers in AWS since I don't have any data center
+
+30:27
+Can I create servers in AWS EC2? Can I install and configure Kubernetes in that EC2?
+
+30:36
+I just need a servers. Does EC2 is a server? Is EC2 is one server basically? One virtual machine? Yes. So can I create a EC2 instances and can I install and configure Kubernetes kind of a self-managed or bare metal on my own? Yes. So I will recommend to do this. I don't want you to use that play with the Kubernetes.com.
+
+31:07
+Now let me create a servers first. Let me create a server self managed. But before I do that, let me explain what is this mini cube and what is this keybedium. What is this mini cube? Anyone has any idea already mini cube.
+
+31:36
+This is single node, single node, single node Kubernetes cluster. Single node Kubernetes cluster, which means only one node, only one node, single node. That is your master node. That is your worker node, which means, will I able to practice or will I able to set up and practice Kubernetes using
+
+32:02
+This is single node Kubernetes cluster, only one node. That node will act as a master as well as worker, both. But are we going to use this Minikube cluster for deploying your actual applications again? No. Because it's a single node. Will you be able to deploy all your applications, all your microservices as containers in Minikube cluster?
+
+32:29
+No, but can I use Minikube for developmental purpose and POC purpose? Suppose I want to do something in Kubernetes. I want to learn, I want to do some kind of a POC locally as a developer, as a developer, as a DevOps engineer, can I install Minikube in my local laptop also? Can I set up the Kubernetes cluster in my local laptop using Minikube for developmental and POC purpose locally?
+
+33:02
+Yes, so Minikube is one software. Minikube is one software.
+
+33:10
+You can use this Minikube for local developmental purpose. This is the official website of Minikube. So it's a single node Kubernetes cluster. Minikube, can I quickly set up a local Kubernetes cluster on whatever operating system, whether it's a Mac OS, whether it's a Linux or Windows? Can I set up quickly local Kubernetes clusters using Minikube?
+
+33:41
+Yes, so but you need to have some prerequisites. You need to have some prerequisites. Let's say you want to install. Let's say you want to install. What is minimum requirement you to install minikube in that whatever local laptop or server also.
+
+34:02
+how much CPU should be there, how much memory should be there, how much disk stress should be there minimum if you want to install that Minikube.
+
+34:15
+minimum 2 CPU, 2 GB and 20 GB of disk space. Do you know you need an internet connection also, you need an internet connection. And in that server where you want to install minikube, do you need to have some container runtime or virtualization software like a Hyper-V or Oracle Virtual Box, Hyper-V or Oracle Virtual Box or containers also like Docker in that server?
+
+34:45
+cube mini cube before you use mini cube do you need to have hyper V or Oracle virtual box installed in that Windows laptop if it is a Windows laptop or you need to have a Docker as a container you once you have all these prerequisites then can I install if I want to install in Windows laptop then can I do something like this can I download this package manager I mean to say dot exe file.
+
+35:15
+Can I download if I want to download in Windows? 64-bit Windows system. I can download this exe file. I can install but before I install this one, do I need to have all these things?
+
+35:32
+there. So you no need to have everything like this. You no need to have everything. All these things. Either you need to have a Docker or you need to have a virtual box. If you have a virtual box, does that Minikube will create one VM internally in that VM? Will it install that Docker or the container software, Kubernetes software? And will it start the cluster in that VM within that Windows machine?
+
+36:02
+Yes. Or you can use Docker also. You can have a Docker in Windows. That cluster, that Minikube cluster will run as a container if you have a Docker also. Now, once you download, you can execute something like this, Minikube start. Once you download and install, you can execute this Minikube start. Does this Minikube start command will create a cluster and configure the cluster locally in whatever system you have done?
+
+36:32
+Yes, but if many QBs fail to start, do you need to use compatible virtual machine manager? You need to use some options like this. So suppose in your Windows laptop, you have a hyper V installed, right? You can use something like this while starting many Q while starting many Q. Do you need to use if you have a hyper V software enabled in your Windows laptop? Do you need to start like this?
+
+37:01
+If you have a hyper V installed and enabled, you need to start like this, which means is it going to start Minikube by creating one VM, one virtual machine within your Windows machine? Is it going to create and install in that VM? Yes. Suppose you have a Docker installed, Docker installed, VM plus Docker. In that case, can I use this option? So.
+
+37:28
+your Minikube cluster will be running as a container in the Docker.
+
+37:34
+This is only for local. This is only for local setup for developmental purpose for developmental purpose. Now I already have a you know minikube installed in my local laptop. I already have a minikube installed in my local laptop. So something like this minikube start. Sorry minikube.
+
+38:01
+minikube start. Now is it starting my cluster in my local laptop is one kubernetes cluster is getting created and configured in my local laptop. Locally.
+
+38:15
+It's a single node Kubernetes cluster.
+
+38:19
+If you see, is it using hyperkit that kind of a hyper V to create that cluster provision that cluster locally?
+
+38:31
+Yes, it may take some time. It may take some time, but it's a single node Kubernetes cluster. Now, if I want to do some kind of a developmental purpose, TOC purpose, can I practice Kubernetes within my local laptop also? If I have this Minikube cluster, it's a single node cluster. It's a single node cluster.
+
+38:57
+Is in the background, is it installing all those cubes, ETL, sorry, QBDM, that API server is getting configured, scheduler is getting configured, is everything is taken care by that Minikube?
+
+39:14
+But again, in real time, are you going to use these type of minikube clusters to run your actual applications, production workloads?
+
+39:25
+No. So can I set up multi node Kubernetes cluster? Can I set up multi node Kubernetes cluster using cubidium or cube spray? These are some other softwares. These are some other softwares where I can set up.
+
+39:49
+multi node Kubernetes cluster. This QBDM is different software altogether. Yesterday we discussed architecture. In the architecture, does this came into picture anywhere, this QBDM?
+
+40:08
+No. So...
+
+40:12
+using cubidium we can provision or we can set up provision or basically set up both are same we can provision or set up multi node multi node Kubernetes cluster multi node Kubernetes cluster multi node Kubernetes cluster
+
+40:38
+So this is one software does this software will help you to create a control plane components is this cubidium will help you to configure that control plane components like API server scheduler etcd and all those things does this will help you to do that. Yes. So this cubidium will help you to do this. So this is one software using the software we can provision the multi node Kubernetes.
+
+41:08
+cluster.
+
+41:17
+Now I have configured by this minicube. Now if you see this cubectl is also configured. This cubectl is also configured. We have that cube config file in my local laptop. Everything is taken care by that cubidium only. I have that cube folder within it. I have a config file.
+
+41:44
+So is it pointing to this cluster? I mean to say, where is this API server? Yeah, this one. Is it pointing to this IP, this port, which means is it kind of my Minikube Kubernetes cluster? API server is running on this IP and this port. Now, whenever I execute any kubectl comments, is it communicating with that Minikube cluster, which is running locally in my laptop?
+
+42:14
+As of now, how many nodes I have? This is just a minikube cluster. How many nodes I have? Only one node. Now, can I start practicing or deploying my applications in this cluster?
+
+42:33
+Can I start applying my pods? Can I start using my pods? All these things locally, yes. But that is for local developmental purpose. I will not suggest this one also. This you can use once you get into a job, if you want to do some kind of a POC, if you want to do some kind of a developmental work or POC.
+
+42:59
+You can install Minikube in your local laptop also for doing the POC. But while learning, I'll recommend you to go through this Qbedium approach.
+
+43:12
+Now I will set up multi node Kubernetes cluster using QBDM. What is this cube spray? It's a ansible way of configuring.
+
+43:30
+multinode kubernetes cluster.
+
+43:34
+Instead of you execute lot of commands to set up the cluster instead of you execute lot of commands to set up the cluster. Can I use CubeSpray? CubeSpray will internally execute some Ansible playbooks that Ansible playbooks will install required software in your master node and worker nodes. It will configure using Ansible.
+
+43:55
+Anyway, so cube spray is another way of configuring cube or netis cluster. Cube spray.
+
+44:05
+Deploy Kubernetes cluster using CubeSpray. So CubeSpray, we have some playbooks internally. So CubeSpray have some playbooks internally. So.
+
+44:18
+If you execute that cube spray, right? You need to have Ansible installed in that machine where you want to execute this cube spray. So cube spray has Ansible playbooks. So you need to update your inventory before you set up using cube spray. You need to update your inventory details.
+
+44:47
+and tags like this. So you need to have all those details like this. You need to update your inventory details like this. Then that cube spray will use these inventory details, and it will execute playbooks in the background. Ansible way of installing Kubernetes. Now I'll just demonstrate only this QBedium. I'll just demonstrate using this QBedium. I'll set up a Kubernetes cluster using QBedium.
+
+45:17
+Sir, is my voice breaking for everyone? Someone is saying, voice is breaking.
+
+45:24
+Am I audible for everyone?
+
+45:30
+Maybe check from your side also guys check from your side also maybe renege check from your side also you have some issues maybe
+
+45:47
+Now, let me set up the multi-node Kubernetes cluster using QBDM.
+
+45:56
+Now, can I create some servers because I don't have any data center, my own data center where I can set up the cluster. Can I use AWS EC2 as a servers in my data center kind of servers in my data center. Yes. What is minimum requirement? What is minimum requirement for your master machine, your master server, that control plane server minimum requirement, your master should have
+
+46:26
+two core CPU two core CPU and 4 GB RAM minimum two core CPU and 4 GB RAM for master minimum. This is minimum guys does it mean in the actual projects in the real projects also you will have same CPU same memory. This is just a minimum.
+
+46:56
+So in the actual environment, it is more than that. It is more than that based on how much you want to deploy. Now, this is for master. But workers, can I go with minimum 1 GB RAM and one core CPU also just for understanding and practicing Kubernetes? Workers, can I go with one GB and one core CPU also for practicing?
+
+47:22
+Yes, but in real time, are you going to have these type of capacities in the cluster? No. If I have this much, will I able to deploy hundreds of pods in that cluster? Will I able to deploy hundreds of pods, hundreds of applications in that cluster basically?
+
+47:42
+no but based on the instance capacity does again Kubernetes concept will change
+
+47:53
+you are using 1 GB or 100 GB servers. Kubernetes concept remains same. But the number of applications, the number of pods which I can deploy is based on the number of machines you have in the cluster. The size of each machine in the cluster is it depends on that one. Number of applications, number of pods you are going to deploy is depends on number of machines you have in the cluster and the capacity of that cluster, capacity of that servers.
+
+48:26
+But for practicing, I don't want you to take very high configuration server. We will go with less configuration servers.
+
+48:36
+So minimum this much is required. Now let me set up the cluster. But before setting up the cluster, here also do I need to open some ports or firewalls? Do I need to open some ports basically because master has to communicate with worker, worker has to communicate with master. Do I need to make sure these ports are opened? Whatever ports I have listed here.
+
+49:06
+whether you are using on-premise, whether you are using cloud. If you are using cloud, in AWS, we call it as a security group. In AWS, we call it as a security group. In that security group, do I need to open these ports?
+
+49:23
+If you are using on-premise data center, if you are using on-premise data center, do we call it as a firewall?
+
+49:32
+So do we need to open the required firewalls? I mean to say ports.
+
+49:41
+If you don't open these ports, does the communication will happen between the nodes in your cluster? Does master can communicate with worker or worker can communicate with master?
+
+49:55
+no so you need to open these ports first in the control plane nodes in the control plane nodes what is the meaning of control plane node or nodes which means the master the master in this master node do i need to open this port six double four three
+
+50:24
+For what purpose, for what purpose or what will be running on 6443? What will be listening on 6443 if I set up a cluster?
+
+50:35
+that API server will be listening on 6443 and also do I need to open this 2379 and 2380 both ports.
+
+50:48
+For what purpose? Who is going to use and listen these ports?
+
+50:56
+237 and 2380. So if API server has to communicate with ETCD does internally is this API server will reach the ETCD on this port or this port.
+
+51:12
+Yes now and this one 10250 what needs to be what is for what purpose we are opening that 10250 what is running on that 10250 or what will be listening
+
+51:31
+So what is that cubelet? That is primary node agent as I already told even though it is not shown in the architecture are we going to have a cubelet also running in the master
+
+51:48
+yes so for cubelet 10250 for what purpose this one 10251 what will be running on that 10251
+
+52:02
+the scheduler, the scheduler. Now, 10252 do have a cube control managers, those control managers like a node control manager, replication control manager, those control managers who is going to control something in the cluster.
+
+52:19
+So that will be running on this one. So do I need to make sure all these ports are opened in the node which I want to make it or use it as a master in whatever node, whatever node I want to configure control plane, I want to use that node as a master in that node, in that server, do I need to open all these security groups, firewalls, ports? Yes. When it comes to worker nodes, when it comes to worker nodes,
+
+52:49
+what ports I need to open in the worker node 10250 for what purpose 10250
+
+53:00
+So does your control plane will reach your workers on this port does your control plane does your master will reach this worker nodes on this port if you don't open this port does master will be able to communicate with workers for deploying scheduling and managing anything no so you need to open 10250 only this port this is not mandatory guys this is not mandatory
+
+53:31
+This one from 30,000 to 32,000 767. This is not mandatory. This is a node port service. So what is this node port service? What is this range? Why do we need to, why we will use these ports, the ports within this range? I will explain later, but just to set up the cluster, you no need to open this one. This is just for accessing your applications. Suppose you want to access your ports.
+
+54:01
+You want to access your parts your applications whatever deployed in the cluster. Can I create some service called a node port service? Can I use the whatever node port assigned within this range to access that application from outside the cluster? Yes kind of a host port guys. This node port is nothing but kind of a kind of a host port in the Docker. We have that host port right that node port is nothing but a host port, but is it mandatory to open while setting up the cluster?
+
+54:31
+no so this is not required but sometimes in the interview they are asking what is node port range what is node port range in Kubernetes they are asking this question what is node port range in Kubernetes in which range I can use node ports what in which range I can allocate a node port or I can use a node port so 30,000 to 32,767 within this range I can use node ports.
+
+55:01
+Is everyone clear on the required ports what ports needs to be opened?
+
+55:10
+Guys I have taken this from official document only. I have taken this from official document only. Kubernetes.io. So here, right? I have taken from here only. Installing Kubernetes, right? So let me search here.
+
+55:42
+So I opened from this one only, I've taken from this one only. So they are saying.
+
+55:51
+using Qbedium we are setting up the QBurnett is cluster.
+
+55:58
+I followed this one only whatever they have given in the instructions. But if you see the prerequisites also if you see the prerequisites.
+
+56:12
+They have given all the details like what ports needs to be opened. All those things they have given here in this official website only they have given.
+
+56:29
+all the prerequisites. Let me show you.
+
+56:47
+installing using cubidium or creating a cluster so they are giving what is the prerequisites for that one how much cpu how much memory so do I need to also have a network connectivity between all the machines in the cluster which means whatever machine I wanted to be part of that cluster does each machine does each machine should have a connectivity with other machine whether public network or private network also fine
+
+57:21
+Now all these things has to be. Matt, so check required ports. So here if you see what ports these ports needs to be open in order to Kubernetes components to communicate with each other. So this is the page right? I have just taken this page only. I have just kept this one only as a slide there. Whatever is available in this one so.
+
+57:50
+As I already told, do you need you can follow or can you go through the official document of any software? What is a prerequisite to install software? How to install that software and configure that software in the official document itself? Yes.
+
+58:10
+So all these instructions, all these instructions, I am keeping in some order. Since you are new to this Kubernetes, it might be very difficult for you to go through this official document and understand what you are doing. So I collected all this information. What is the prerequisite? What port needs to be opened? What commands can be used to install the software? I collected all this information and kept in a single.
+
+58:40
+file kind of a text file in proper order. But that is only while learning but once you get into a projects actual projects once you are familiar will be able to go through these official websites and understand what needs to be done. If I want to install and configure once you are familiar you need to follow the official websites not with an technologist blog because people are still asking sir. Can I follow your blogs?
+
+59:07
+or your instructions to set up the softwares in my actual project, actual environment, you can set up. But I might be using Docker or I might be using Kubernetes 1.18 or 1.20 in that instruction. If you follow that, your project is expected to install 1.20, but if you follow my instructions, you will end up having...
+
+59:30
+You will end up having one point 18 is that's what expected in your project in your actual work. So that blog whatever we are giving that instructions whatever we are giving just to make you comfortable and understanding the concept. But once you are familiar with what is what will be able to install as per the requirement will be able to configure as per the requirement after completing the course.
+
+59:57
+After completing the course, you are familiar with each and every software.
+
+01:00:05
+So you can follow official websites. Some people are asking, sir, do I need to buy hot all these commands in the interview? They will ask you to install the cluster. Do I need to buy hot pseudo APT space gate like this? Do I need to buy hot and remember all these comments line by line? No, this no need. No one will remember all these things.
+
+01:00:32
+But do you need to understand what is Kubernetes? What is the components of Kubernetes? What is API server? What is scheduler? What is ETCD? If you know all these components, what is master? What is worker? Can you follow the website, official websites or some Google websites also to install and configure? Yes. Concept is important, not the command.
+
+01:00:58
+From day one I am saying same the day I started my class in for your batch not only for your batch for any batches start from day one I used to tell not the comments focus on the concept what is what then you can understand easily but some people are by heart in this command biology sorry is executing this one then he is executing this one then he is executing this one like that.
+
+01:01:27
+So don't follow that way understand the concept. But while learning this is also important while learning. This is also important. But once you are comfortable you can understand how it is going to work actually. Now I don't want you to go through this website and install because you will confuse what to do where what to do when you will get confused. I am going to say the instructions.
+
+01:01:56
+installation instructions.
+
+01:02:00
+like this your favorite approach stepwise first step do this second step do this third step do this
+
+01:02:11
+But this is also important while learning. While learning this is important. I am not saying you should not follow this one. But not after completing the course also you have to follow this one that will not work out for you. This will be easy to understand. But this is not the final one. Once you get into a project also don't do this. Since I have learned something some training they have given step one do this step two do this.
+
+01:02:40
+Since you are assigning some task, can you give me what step I need to do where I need to do if you ask like that in the job also. Will they do these type of steps like step one you execute this command step two you execute this command that is your work.
+
+01:03:01
+that is your work they hire you to do this work they hire you to apply your knowledge whatever knowledge
+
+01:03:11
+you learn as per the requirement do you need to implement as per the requirement whether you are a developer or a DevOps engineer or infrastructure engineer as per the requirement in that respective area you need to apply whatever knowledge you have learned as per the industry best practices you need to do that. Yes.
+
+01:03:32
+So no stepwise will be given in the companies guys. If they ask you to write some pipeline, they'll not do this, write this one, write like this. As for the requirement, you need to implement. So this is while learning. So you follow this one, but don't blindly execute any command again. Don't blindly execute any command. Understand what is that command.
+
+01:04:01
+understand what is that command and also why that command. Definitely will get lot of errors. You need to have very good troubleshooting skill also.
+
+01:04:14
+One of the very important troubleshooting skill is Google. Searching in the Google is very important troubleshooting skill, guys, as a DevOps engineer, as a developer also. Copy paste that error message and see what are the possible options they are giving, why that error.
+
+01:04:38
+If Google is not working, if Google is not working for maybe one day or one week, not sure how IT will survive.
+
+01:04:54
+So this is also important first when you are getting any error first what you need to do. This is very very important first what you need to do first read and understand that error. Read and understand that error.
+
+01:05:11
+Most of the time, most of the time does that error message itself will say what is wrong? At least 40%, not 100% does that error message itself will at least give 40% of the hint what is went wrong minimum 40.
+
+01:05:31
+But for now, since you are learning, fine. Since you are learning, fine. What you guys are doing without reading any error message, you are just posting that message in the group. I mean to say, you are just copy pasted that error message in the Skype groups or I'm getting this error, fine. Now it is fine. I can help you. But once you get into a project, you hire for one company.
+
+01:05:58
+without reading error message if you directly go to your lead or your colleague, your manager.
+
+01:06:06
+What will happen you know, four or five times they will help. They will not complain. Four or five times they will help. They'll not complain anything. But without reading error message without doing analysis, if you go to your lead or your colleagues every time, will they felt what this guy is having, whether this guy is really having experience or whether this guy really.
+
+01:06:34
+have that knowledge they thought that this guy doesn't work somehow we get into IT. You can ask any colleague any manager but before you go to the manager do you need to do kind of a preliminary investigation like kind of a CID or CBI will do that right preliminary investigation basic analysis.
+
+01:07:03
+Even though you go to manager or lead, they will not complain if you have done the basic analysis. I got this error. I tried all these options to resolve that error. It is not working. Can you help me? In that case, does that manager or lead will happily help you because you have already done the basic analysis. But without doing basic analysis, if you go, will they complain to manager if you are going to lead?
+
+01:07:29
+in the offline lead will complain to manager this guy is not at all able to perform any activity any issue is getting any issue is getting he is coming to me or he is coming to some other colleague is not capable of doing the activities will they complain like that in the background to the lead or manager. Yes. So while learning this is fine. But once you get into a project do you need to understand error.
+
+01:07:58
+Make a friendship with errors and understand the errors. Try to see you can find something on your own from Google or from official website. You have a lot of official websites. You have a lot of Google documents, blogs. Try to do some basic analysis. Even after doing the basic analysis, if you are not able to resolve, then definitely you can go to even director also. Even director also, not only manager, you can go and work with director also, technical director.
+
+01:08:27
+I have done this I am getting these errors. I have done all these analysis. I am not able to resolve.
+
+01:08:36
+But this is very, very important. First, read the error message, understand the error message, then.
+
+01:08:43
+Try to see official websites. Why that error is there any configurations or any options I have missed
+
+01:08:52
+Search in Google and identify. If you're not able to resolve the problem, then you go to the lead. These are the tips I wanted to give, guys. I'll tell you one reason what happened. Actually, one of our students, this is two years back, one of our students learned DevOps. He's very good in technical. He attended classes. He cracked interviews. He joined in one of the companies.
+
+01:09:20
+Throughout the session, I mean to say throughout his course, he was using Windows laptop. He was using Windows laptop. So what he has done, he has installed a mobile external.
+
+01:09:33
+or git bash he has used and he has he was trying to connect to the linux machines using mobile x term as git you know git bash but the moment they joined one company they have given ubuntu's laptop ubuntu laptop they have given ubuntu laptop for that guy you know they have the lead has given very simple task connect to so and so's linux server
+
+01:10:02
+connect to so and so linux server
+
+01:10:07
+and install Java and Jenkins. This is the simple task they have given. Since he was throughout the session, he was practicing via Windows laptop. The moment they gave line in a Ubuntu laptop, he was not sure how to SSH also. How to SSH to that Linux server using Ubuntu laptop. And he was three years experience. He went to the leader. How can I SSH?
+
+01:10:40
+If you buy hot, you will have something like this. For SSHing to any server, Linux server, do we need some SSH client?
+
+01:10:53
+Now if it is a windows laptop, do I need to explicitly install some SSH client software like mobile Xterm or putty or git bash also will act as a SSH client Now he went to this He went to that guy Sir, how can I install mobile Xterm in this Ubuntu laptop
+
+01:11:18
+How can I SSH the manager got I mean to say that lead got shocked. Hey man, you are three years experience. You don't know how to connect to the Linux server also.
+
+01:11:32
+If it is Ubuntu or Mac will I have inbuilt terminal that command prompt the way we have a command prompt the way we have a command prompt in Windows laptop do we have a terminal that SSH terminal.
+
+01:11:48
+That is the first track to the manager. I need to say lead similar type of issues happened three, four times basic questions. He is going and asking to that guy, the lead, the lead complaint to the manager manager fired him.
+
+01:12:04
+within one week he came out of that company but again that is a learning for its learning experience for him but after one month again after two three months he get he got into another company he got into another company but he survived now but again he survived from last two years again in another company but small small mistakes don't do that.
+
+01:12:32
+At least if it has a minimum internet connection can you go to the window I mean to say google and search how to connect to Linux server from Ubuntu laptop like that at least like this
+
+01:13:01
+will you get plenty of results
+
+01:13:06
+plenty of results at least you would have followed this one
+
+01:13:12
+that would have not happened. Guys don't ask basic questions without preliminary investigation. But even though you have done like you have done the investigation and you can explain I have done this one I have done this one but still I am not able to solve then.
+
+01:13:29
+Then does anyone help happily your colleague or your lead or your SME whatever it is. Yes.
+
+01:13:39
+So now since you guys are learning, post any message because I am the trainer. I am it is my responsibility whether it's a basic question, whether it's a really a problem. I can happily help you but once you get into a job since they are paying money to you if you are going and asking basic questions, what is a what is B what is C like that then they will not tolerate.
+
+01:14:05
+But before going you can do the preliminary investigation. I thought of giving this as a suggestion. Is everyone clear? Once you get into a job, how to behave?
+
+01:14:25
+now let me take this I will follow this approach now we will install that
+
+01:14:34
+setup now. As I already told, I am going to install Kubernetes in AWS EC2 instances. Again, what type of AMI I am using.
+
+01:14:54
+Ubuntu but again can I install Kubernetes on any OS also here I am using Ubuntu if required can I install in CentOS, Amazon Linux or in fact Red Hat also using Red Hat also yes anywhere now I am taking Ubuntu servers I am taking three servers for one for manager other for workers one for manager other for workers
+
+01:15:24
+So for now, I'm creating in a default VPC. All my Kubernetes servers are creating in a default VPC. But in default VPC, do we have all servers, all subnets are public subnets? Does your Kubernetes servers will be created in a public subnet? Yes. Now I don't want to create a complex architecture. I don't want to create a complex architecture while learning. So I'm going to create in a public subnet only.
+
+01:15:54
+But actual Kubernetes clusters, are you going to have your Kubernetes servers in a private subnet, private servers?
+
+01:16:03
+Yes, since you already know, since you already know what is public subnet, what is private subnet, what is VPC, what is NAT, what is IGW. In the real time, if you get into a requirement, will you be able to understand and create a Kubernetes cluster, your Kubernetes masters and workers in a private subnet also? Yes. But now I don't want to make the things complex. Because
+
+01:16:30
+If I create my Kubernetes servers in a private subnet, do I need to have some again, kind of a NAT, I mean to say bastion host NAT, all those things configured.
+
+01:16:43
+If I want to demonstrate that application, if I want to access that application from outside the network, do I need to bring again kind of a one more kind of a server in public subnet kind of a load balancer? Do I need to access the applications which is deployed in my private Kubernetes servers via load balancer again? I don't want to bring that much complexity again here. I don't want to bring that much complexity again here while learning the Kubernetes.
+
+01:17:13
+I'm directly deploying my Kubernetes servers in a public subnet. So if it is a public subnet, can I access it from my laptop and install? Can I access using public IP of that server also? Because that server has a public IP? Yes. So while learning, I don't want to make things complex. But when you are working on actual projects, do you need to follow all the best practices, whatever has been discussed in the infrastructure?
+
+01:17:42
+networks, firewalls and all those things.
+
+01:17:48
+Yes.
+
+01:17:51
+So let me do this. For now, I am creating a server in the default VPC.
+
+01:18:06
+Now, I think I already explained recently AWS has changed the UI. Recently AWS has changed the UI. Are you guys familiar with this new UI? If not, I can switch to the old UI. If you are familiar with this UI, I'll continue with this UI. Otherwise, let me switch to the old experience so that you will not get confused. This is just a UI, but in the background, same concept, nothing is getting changed.
+
+01:18:36
+So let me opt out to the world experience. Let me click on this one. I will go to the world experience.
+
+01:18:44
+now I am back to old UI here I am selecting Ubuntu Ubuntu server
+
+01:18:57
+now for master machine for master machine what is the capacity minimum I need 4 GB RAM so can I go with the T2.medium 4 GB RAM and 2 core processor
+
+01:19:27
+Yes. So.
+
+01:19:32
+one server in the default VPC in the default VPC. I'm not creating any in another VPC. Now one server.
+
+01:19:42
+This much storage is sufficient for now. I don't need much storage. Now AWS tags, AWS tags, whatever you want to do. I want to give taggers like this Kubernetes master something like this.
+
+01:20:01
+in this master in this security group. I want to use this machine as a master machine. Do I need to open all these ports? Whatever I have explained already all these ports.
+
+01:20:13
+Not only this, apart from this, I am going to use some kind of a network plugin. I am going to use some kind of a network plugin, CNI, Container Networking Interface. So is that networking is required for container communication within your cluster? If one pod, I mean to say pod network, pod networking, if one pod has to communicate with another pod, do I need some kind of a networking?
+
+01:20:42
+between your pods within the cluster.
+
+01:20:46
+Server networking is taken care by VPC. If I have all my servers in my VPC, does one server can communicate with other server?
+
+01:20:58
+Yes, now I have my pods. This is my cluster. This is my cluster. I am running my pods. I am running my pods. Now one pod has to communicate with other pod like a container. This container running in that pod want to communicate with other container which is running in this pod. Do I need some kind of a networking between my pods within the cluster for networking?
+
+01:21:28
+within this cluster pod networking. So in that one, in the Docker, we were using Docker network concept. In the Docker, we were using Docker network concept, container networking. Here, do I need to use concept of pod networking? There is a concept called CNI, container networking interface, container networking interface. This is the standards. So do I need to have some drivers?
+
+01:21:56
+whatever is implemented by these standards, this is standards. There are a lot of implementations like a VU net Calico flannel. Can I use any one of the driver that part networking solution like a VU net or Calico or flannel like that? Yes. So if that networking driver, if that networking plugin also needs to enable some ports based on the networking driver, networking plugin I am using.
+
+01:22:26
+Do I need to open that ports also along with these ports? If that part networking has to work along with these ports, do I need to open other ports also? Yes.
+
+01:22:38
+So that I will explain in some time. For now, what I am doing, I am opening, instead of opening these ports individually, for now can I say all traffic, but this is not suggested again, all traffic again, instead of opening for everywhere, instead of opening for everywhere, can I do somewhat better like this.
+
+01:23:03
+I mean to say all my Kubernetes servers which are there in a same VPC. If my Kubernetes servers are within that network, does each server, whatever servers which is part of this range, will they able to reach this server on any port? Whatever servers are in this range, will it able to reach any port in this server? Because of this, yes. But again, is it recommended in the actual infrastructure, actual applications? This one also no.
+
+01:23:33
+only open whatever port it is required. They need to open this one separately, this one separately, this one separately, this one separately and this one separately and again whatever other ports. Yes, but for now I am opening like this. But is it anything to do with the Docker or Kubernetes? Is it a best practice from infrastructure perspective?
+
+01:24:04
+infrastructure networking concepts. Yes.
+
+01:24:09
+Now let me do this. If you don't do this will it work again guys again. No so I am opening all the ports for now I am creating a server like this. I am creating a server like this.
+
+01:24:31
+Similarly, can I create two more servers if you need two workers? But if I need 10 workers, can I create 10 servers? If I need 100 workers, can I create 100 workers based on your requirement? What capacity you need?
+
+01:24:48
+Yes. No.
+
+01:24:55
+Again, I'm going to create a two more machine. Now, cloud concept. Suppose you are creating in the cloud. Is it recommended to create all your worker machines in same availability zone in that subnet? The cloud best practices. From the cloud standpoint of you, is it recommended to create all your machines, your Kubernetes worker machines in the same availability zone in that VPC in that region? No.
+
+01:25:23
+So does cloud is recommended to distribute your servers into multiple availability zone for some reason, if one availability zone is completely not reachable, do we have still some servers and applications running in some servers in different availability zone in that region?
+
+01:25:43
+Yes, you need to apply all your knowledge as per the best practices as per your requirement guys.
+
+01:25:54
+You already know AWS. You are working on AWS. You are creating a service. Even though I am explaining Kubernetes here, do you need to remember the best practices or standards while doing the resource creation in AWS? No one will explain again. You need to apply that knowledge. Now I am creating a workers. Like this, again, I'm selecting Ubuntu servers.
+
+01:26:24
+For now I am taking t2.micro
+
+01:26:29
+Now for now I am creating both instances but will it end up creating in a same availability zone now let's see both instances let's see will it end up creating in a same availability zone
+
+01:26:46
+Here.
+
+01:26:49
+Here this is my I am tagging this machines as a Kubernetes worker.
+
+01:26:58
+Here also for now, here also for now I am opening all the traffic, all traffic. But instead of opening for everywhere, I will open only for that CIDR range. Is this CIDR is my VPC range in which I am creating these servers, my Kubernetes servers is getting created in the same network in this range. Yes.
+
+01:27:23
+Now let me create two servers like this.
+
+01:27:37
+Now I have my servers ready. But is the required Kubernetes software and setup is done in these servers? Is the cluster is created as of now? No. So this is self-managed. Do I need to install required software Configure Master and report those workers to the master?
+
+01:28:03
+just to make it this page simple what I will do this I will delete this Docker cluster. So we practiced already Docker swarm cluster. So I'm going to terminate these servers. I'm going to terminate these servers. Because at least I will have a less number of servers shown here.
+
+01:28:24
+I'll terminate this instances.
+
+01:28:31
+So I will have less servers at least so that I can explain. Now these are three machines as of now. Can I go to this machine? Can I access to this machine and install required software's as per the official document?
+
+01:28:59
+Yes, let me connect to this machine. Let me connect to this machine.
+
+01:29:09
+Guys when you are doing don't do parallelly don't do multitasking or parallel tasking. What do you mean don't execute commands parallelly execute commands one after the other in one machine you do this then go to other machine and do that but just for saving my time here I am going to do multitasking parallel tasking which means all these three servers I'll configure
+
+01:29:38
+But when you guys are doing execute these comments in one machine first these instructions is common from here to here is this instructions are common. Whether it is a master machine you want to make that as a master whether you want to mark that as a slave or you want to use that as a slave slave is nothing but worker whether you want to do use that machine as a master or worker.
+
+01:30:07
+Does all these commands whatever I have highlighted from here to here. This is end. This is start. So is this commands common for both the machines I mean to say master machines as well as worker machines. Do you need to execute all this? Guys don't miss any command a single command don't miss if you miss any command again does the setup will work as expected. You will end up having errors.
+
+01:30:39
+execute the command and see whether that command is executed successfully or not. What you guys are doing you are executing this command you are again executing this one you are not checking whether this is executed successfully whether it has thrown any error you are not checking that one also again copy paste copy paste copy paste don't do that see that whether that command is executed or not first.
+
+01:31:09
+Can I go to the next command and execute?
+
+01:31:13
+yes so follow that one now i want to save my time i don't want to waste much of your time also i am going to do all these things parallelly multitasking but you don't do that first connect to one server like this first connect to one server like this first connect to this server this server may be your master server you connect to that sss to that then
+
+01:31:46
+Follow all these instructions. Follow all these instructions first. Common instructions, whatever I have highlighted here.
+
+01:32:00
+take from do this in that server once you have done this step again connect to another server connect to another server connect to this server this server and do that again connect to this server and do that that is just a installation but for now what I will do I will do it parallelly
+
+01:32:25
+Let me do that.
+
+01:32:34
+Let me connect to this one also parallelly.
+
+01:32:41
+Guys this is my laptop configurations. Okay, you don't ask sir. How come you are doing this because I am using MacBook in MacBook. I am using one software called item the way you are using mobile X term the way you are using mobile X term in my MacBook. I am using this item. So I am splitting this item screen. I am splitting this item screen one second.
+
+01:33:10
+I can parallelly do lot of things using this software. So let me open another shell.
+
+01:33:22
+Let me open one more cell.
+
+01:33:29
+So I'm trying to connect to all these three machines at the same time and I am going to execute.
+
+01:33:37
+So I'm connecting to these machines.
+
+01:33:49
+Now here also I will connect
+
+01:33:52
+to another machine to another machine but you don't do this guys you do it one after the other and you don't have that software also in your laptop you cannot do that simultaneously also in your laptops you don't have this software.
+
+01:34:12
+Now I am going to use one option in this Boba in in this software. I am using I am enabling one option here. So the keyboard input will be sent to multiple sessions. Now here I am typing something is it sending into other shells also other servers. I mean to say other shell here. So this way I will do multitasking. But this is my laptop this software feature.
+
+01:34:38
+It is nothing to do with your Docker, your Kubernetes, your Linux server. This is one software.
+
+01:34:47
+I am using to save my time. Okay. It is there in your mobile X term also it is there in your mobile X term also, but I don't recommend because since you are learning I don't recommend that one. It is there in mobile X term also you need to explore mobile X term. Now you do it one after the other. Now I am first switching to the root user. Why I am switching to the root user.
+
+01:35:14
+Does most of the commands need to be executed with sudo permissions or root user. I don't want to use sudo for every command here. So instead of using sudo for every command, am I switching to the root user and executing these comments? Yes, so let me switch to the root user. Guys, if you observe I am typing here. This is being sent to the other servers also, which means whatever I am doing in one server
+
+01:35:43
+It is happening in the other server also. So kind of a multitasking I am doing.
+
+01:35:50
+We need to disable the swap memory next one. We need to disable the swap memory. Why we need to disable the swap memory?
+
+01:36:04
+because as per the official website of Kubernetes, if you have to, you know, your Kubernetes to work properly, you need to disable the swap memory. Again, what is swap memory? You might have already heard this one when Bhaskar sir might have explained Linux. What is swap memory? As per the official website of Kubernetes, they're recommended to turn off the swap memory. What is swap memory?
+
+01:36:42
+Anyone swap memory what is mean by swap memory.
+
+01:36:49
+When your server is running out of memory, I mean to say RAM, whatever data is there in the RAM that is in the memory, will it try to swap to system? I mean to say storage, some data, whatever is there in the memory that is in the RAM, it will try to swap that memory to the storage. I mean to say disk. It will try to move kind of a temporary data. It kind of it is going to move some data to the storage.
+
+01:37:19
+but that should not happen. So when you are using Kubernetes that swap memory should not happen. It should not swap the memory from RAM to storage disk. So I have to disable. So this is temporarily. This is temporarily I'm disabling, but even after restarting these systems also, this system, even though I'm restarting that swap memory should be disabled. Even though I restart, permanently I have to do.
+
+01:37:49
+case in which file we are making the changes.
+
+01:37:55
+in which file we are making some changes we are turn offing this swap memory using scd command I am just editing that using scd command I am editing that in which file I am making the changes
+
+01:38:09
+ETC FSTAB file I am making the changes. So if I change this if I make the changes in FSTAB file will it even though you reboot is that will take into effect permanently.
+
+01:38:25
+Yes that is done then I am installing some packages first I am updating the package manager first I am updating the package manager guys I am doing parallely you have to do this in all the servers one by one
+
+01:38:47
+These are common for all the servers.
+
+01:38:53
+Package manager is updated.
+
+01:38:57
+I'm installing one software called APT transport HTTPS. This is required to install some other software. This is a dependent software for some other softwares. So first I'm installing this one. Now, you already know all these things, guys. If I don't have these entries, what I'm trying to do using this command, am I adding the APT keys, that repository keys to my package manager?
+
+01:39:26
+these type of things you have already done, but you have executed without learning when you guys install Jenkins in red hat. Did you guys added that APT? I mean to say M package manager keys your Jenkins repository keys. Similarly, similarly, do I need to add those package keys? My Kubernetes package keys to the package manager without doing these three steps without doing the steps.
+
+01:39:56
+If I execute this command, do you think cublet cubidium will be installed?
+
+01:40:03
+No, I have taken this from official website only.
+
+01:40:14
+I have taken this from official website only. If you see.
+
+01:40:21
+here.
+
+01:40:25
+Do you see these things? I am using Debian based distribution, which means Ubuntu or Debian. Did I done this? APT update? Did I done this? Now am I doing this one? Am I doing this one? Once this is done, am I doing this one? Am I doing this one like this? Same I have documented here. So this is done. Now let me do this.
+
+01:40:55
+Can I follow these instructions to install that cubelet cubidium in the red hat? Something like this red hat based or Debian based. You can follow these instructions. Now I'm following this instruction here.
+
+01:41:13
+So that is done. I got a message. Okay. Guys, what we are doing in these three lines, you already know all the Linux commands. What we are doing this one using these three lines. What I'm trying to do.
+
+01:41:36
+Are you adding the repository that apt repository information in this apt source file.
+
+01:41:47
+where exactly that packages are there that Kubernetes packages are there in which APT repository. So am I entry, you know, am I aid, you know, adding entry? This APT repository information to the source file of my package manager.
+
+01:42:04
+I have this cat. Is it going to create one file cat EOF? Is it going to create a file in this location in that file? Am I adding this entry this line end of file? If I execute these three together, does this file will be created? And does that file have this line in that?
+
+01:42:26
+I can execute these three individually or I can execute together also I can execute together also now is this file got created is this file got created now does that file has this entry where is your package this line this entry yes now then again I am updating the package manager.
+
+01:42:54
+Again, I'm updating the package manager.
+
+01:42:59
+Now after this can I install these software's cublet, cubidium and container D. What is this container D.
+
+01:43:15
+what is this container D someone is saying Docker it is not Docker container D is a different container runtime container runtime container runtime the way we have a Docker the way we have is rocket do we have container D
+
+01:43:36
+Why I am installing container D why not Docker? Why not Docker? Why I am installing container D as we already discussed is officially deprecated is Docker is officially deprecated by Kubernetes. Yes, but if I still want to use Docker, can I still use Docker even though they deprecated? Yes.
+
+01:43:57
+but I don't want to use now I'm installing container D what is cubelet? What is cubelet?
+
+01:44:10
+What is cubelet agent? Do I need that agent in each and every machine, including master also? Do I need a container runtime in each and every server, including master also, that container runtime? Yes. But what is this cubidium? You have not explained in the architecture, sir. Why this cubidium? Do I need this cubidium to provision that control plane? I mean to say initialize the master. And also, do I need this cubidium to join?
+
+01:44:38
+my workers to the master. Does this QVDM will help us to configure the cluster?
+
+01:44:48
+This Qbedium is one software which will help us to create and configure the cluster. So that's why I'm installing in all the machines even in the master as well as worker. This Qubectl is it mandatory to install Qubectl in all your machines whether master or worker? Do you need this Qubectl in the master and workers? This Qubectl
+
+01:45:16
+As per the architecture we discussed yesterday, they need this kubectl in any machine, even in master also not required. Even in the master also it is not mandatory. Can I have a kubectl configured in a different machine, separate machine also if required? Can I have this kubectl outside of any machine?
+
+01:45:40
+For now, I don't want to create a one more machine just for communicating with my master. Can I have CubeCTL also installed in my master?
+
+01:45:53
+Can I have kubectl installed in my master? I don't want to do this. So using this kubectl, which is installed in the master, can I communicate with my API server? If I install kubectl here, kubectl is also there. API server also there. So I can communicate like this. But are you going to do like this in the actual environment? Does anyone will connect SSH to the master and do execute kubectl commands?
+
+01:46:23
+SSS to the master and execute Cube C-tail commands in the live environment. No So can I have a Cube C-tail in a separate machine? That can be Jenkins server that can be your local laptop anything
+
+01:46:41
+only client for now. I don't want to create another machine, but I will explain this one also later. I will explain this one also later for now. Can I install client also in the same machine where my server is there, which means where my API server is there. Can I have a client also in the same server for now? For now, I'll do that. I don't want to have this one. So can I install cube CTL like this?
+
+01:47:08
+Now I want to install again only in the master. So for now, I'm executing only in the master, including kubectl. I'm executing this only in the master. But in the workers, I'll not install kubectl because I don't need. Even though you install, will it cause any issue? Even though you install kubectl, will it cause any issue or problem?
+
+01:47:33
+No.
+
+01:47:36
+That is just a client software. You no need in each and every server. Even though you install, it will not cause any issue. Again, if you just install kubectl without having that kubeconfig file, will it able to communicate with your cluster, your API server if you don't have that kubeconfig file again, even though you just install kubectl? No. So I don't want to install. I have not installed in these two machines. Only in the master I have installed kubectl.
+
+01:48:08
+Now, once this is done,
+
+01:48:14
+It is installing latest version of Kubernetes. It is installing latest version of Kubernetes softwares. Now if I see QBEDM.
+
+01:48:27
+Each version of QBDM I am going to say one second.
+
+01:48:33
+So what version of QBurnett is I mean to say QBidium is going to be installed now. What version of QBurnett is will be installed now. I am using this QBidium this version. So what version of QBurnett is will be installed now if I going if I set up.
+
+01:48:51
+version 1.23.6 the latest version.
+
+01:48:59
+Now if you want to install old versions, if you want to install old versions, can I mention that version like this? You can list the versions of these packages. Here you can mention the version also if you want to install which version you want to install. You can install old version also. For now I have installed latest version.
+
+01:49:21
+Now let me again come back to same multiple mode.
+
+01:49:28
+Then what I'm trying to do here what this command does I'm explaining that command also what this command is apt mark hold cubelet cubedium kubectl containerd. So I am executing this command which will mark these packages to be not automatically upgraded which means does that package manager will automatically upgrade to new versions.
+
+01:49:56
+If any new version is released, does that package manager will not, you know, will upgrade automatically because of this command? No, I am marking on hold, which means even though the new releases has happened, is it going to automatically upgrade to that release that version? No. So, in the package manager, I am marking this on hold so that it will prevent these packages being automatically upgraded.
+
+01:50:25
+I don't want automatic upgrades on these packages. That is done.
+
+01:50:35
+then.
+
+01:50:38
+What we are trying to do here, we are configuring container D. We are configuring container D to use necessary modules, necessary kernel features, kernel modules. So that container D will use some kernel features, overlay features. So I am configuring that container D to enable these features. Again, it's a file. Am I creating one file in this location?
+
+01:51:09
+is that file will have these two lines.
+
+01:51:15
+Yes, again, I am taking this one from official website only. So I'm executing these comments together. I'm executing these comments together.
+
+01:51:27
+see that output is it thrown any error?
+
+01:51:32
+No, once this is done, I am doing this one. So this is again one Linux command. So it is going to load these modules kernel features. It is going to enable these kernel features. Those are required for your container. I'm executing that command. There is no error. I'm executing this command. There is no error. Fine. Then one more step.
+
+01:52:02
+What we are trying to do here again. Again, here we are creating one more configuration file. We are enabling IP tables. IP tables is one feature in the kernel. As I already told, is kube-proxy. Is kube-proxy is going to store all the networking rules, connection rules in the IP tables.
+
+01:52:31
+If you remember when I was explaining Q proxy is Q proxy is responsible for doing the connection forwarding within the cluster or outside the cluster. Yes. So is that Q proxy is going to leverage again some Linux feature that kernel feature IP tables. We need to enable those IP tables. If you don't do this step again, if I don't do this step again, does your Kubernetes cluster setup will work as expected again?
+
+01:53:03
+No, so make sure you are doing all these things. Let me do this. Guys again, if you see, did I take those all things from the instructions? Do you see all these things? Whatever I'm executing is this already given in the official website? Am I doing same here?
+
+01:53:23
+yes so let me do this
+
+01:53:29
+but in a proper order. So no error. Then I'm executing this command so that this will come into picture. This will take into effect. IP tables will be enabled. I'm executing this command. So
+
+01:53:48
+Ignore about this warning. Ignore about this warning. That is not an issue. Execute. Forget about this warning. It is saying invalid argument. You no need to worry. The rules are applied. The IP table rules are applied. So this is also done. This is also done. Then I am configuring
+
+01:54:15
+using these commands I am configuring container D as a default container runtime, which means is kubernetes going to use container D as a runtime.
+
+01:54:28
+yes so I am creating one folder I am creating one folder I am executing this command again I am configuring container D as a default it has generated some configurations after executing this command it has generated some configurations in this file
+
+01:54:49
+then I'm executing this one system restart. I'm restarting the container deep process. All the commands got executed. Now, finally, can I start the cubelet process? Can I start the cubelet process? The cubelet is running as a Linux process in the server. So I'm going to execute this system CTL reload. I'm going to start this cubelet.
+
+01:55:19
+Start this cubelet and I am going to enable this cubelet.
+
+01:55:28
+Now you started the cubelet, but if you see the status, it might be down, but that is fine. It might be down, but that is fine. It might be down. It is activating. It is showing as activating, but it is exited. If you see it is exited, that is fine. No need to worry about this because I am going to initialize the cluster after this. Even though it is down, no need to worry.
+
+01:55:58
+leave it again it will be started when I execute some command called QBDM.
+
+01:56:06
+This is common for all the servers. Make sure you have executed all these commands in all the servers. Once this is done, can I initialize my control plane? Can I initialize my master?
+
+01:56:20
+Can I initialize my control plane now? Now, do I need to execute this command only in the master? Whatever machine you want to make it as a master, only in the master mode.
+
+01:56:31
+Now I will stop sending the commands to all these servers. I will only execute the commands in the master. This one I want to make it as a master. So that is 2 GB RAM at that server has 2 GB sorry 4 GB capacity.
+
+01:56:50
+that server has 4 GB capacity. So first I am switching to the root user. Is it already switched to the root user? I already in the root user even the execute command. It is not an issue in the master. I'm executing this then what this command does QBDM init command what it does.
+
+01:57:16
+Is it going to initialize that API server? I mean to say that control plane. Is it going to initialize API server, scheduler, ET, CD, and all these things? Yes. Now, if I execute like this, on which IP address that API server, that control plane will be initialized, is it going to use that server private IP, that master machine private IP?
+
+01:57:41
+is that API server is that control plane will be initialized on private IP if I execute like this. Yes.
+
+01:57:49
+If it is a private IP, even though you have a cube config file in your local laptop, you have that cube config file. Does your local laptop will be able to communicate with that cluster? Even though you have a cube config file, you have a cube CTL, will be able to communicate from your local laptop if the API server is initialized on private IP? No. But if you really want to initialize on public IP of that server, can I use something like this?
+
+01:58:18
+QBDM init, iPhone iPhone control plane endpoint. Can I use that server public IP instead of private IP? Can I do something like this? What is that port? API server port 6443. If I execute like this, is your API server, your control plan will initialize on public IP?
+
+01:58:41
+If you have a kubeconfig file now, if you have a kubeconfig file now in your local laptop, does your local laptop will be able to communicate with this server on a public IP from internet? Yes. But are you going to initialize on public IPs in the actual clusters? Are you going to reach your API server from anywhere? No. So don't do this. Don't do this. For now, I'm executing kubeidm in it. Just kubeidm in it in this machine.
+
+01:59:11
+Now is my Kubernetes control plane will be initialized on this private IP on this IP the system private IP. Yes.
+
+01:59:21
+It will take some time. Guys, if you have not done any of these instructions properly, if you have not done any of these instructions properly, does this command will throw error again? Will it fail to configure the cluster? Yes.
+
+01:59:41
+So make sure you are executed properly. It is going to take some time.
+
+01:59:57
+It is going to take some time. Is it generating all the required certificates? Is it downloading and creating or that API server, scheduler, etcd, all those things? Is it generating all the required components of API server control manager, scheduler, etcd? Is this QBDM is helping us to provision the cluster, configure the cluster?
+
+02:00:22
+Yes.
+
+02:00:25
+Now I got a message. I got a message. Did I got a message saying that your Kubernetes control plane has initialized successfully?
+
+02:00:38
+which means is my control plane is configured is this is configured is this control plane I mean to say is this configured properly now
+
+02:00:50
+yes now what they are saying to start using your cluster you need to run the following as a regular user as a normal user what we are trying to do using this one to start using your cluster you need to run the following as a regular user what we are trying to do using these three comments
+
+02:01:16
+and again they are saying run as a regular user.
+
+02:01:21
+not root user what they're saying here what we are doing here guys we already explained what we are doing this using this am i configuring kubectl
+
+02:01:33
+Am I configuring kubectl? I mean to say, am I creating a config file for kubectl using these commands? No.
+
+02:01:44
+Why they are running they are suggesting to run as a normal user. Are you going to perform all the operations all the activities with the root user? No, right. So they're saying run these commands as a normal user. Now, if I want to come back to normal user, can I type exit here so that I will be back to the normal user?
+
+02:02:05
+One more time I am typing I am normal user is cubes detail is installed.
+
+02:02:15
+is kubectl is installed in my laptop. I mean to say in this server, can I see kubectl version? But if I just have a kubectl, does it mean will I able to execute any kubectl command? Is it able to communicate with your API server? I just have a kubectl. Now do you see is my kubectl is able to communicate with the API server? Am I getting any response from the API server? No. So why?
+
+02:02:43
+What this kubectl is expecting is that kubectl is expecting one file called config file in the current user home directory kube folder.
+
+02:02:54
+Now they are saying they are saying create a folder like this as a normal user as a Ubuntu user. Now do I have a folder in the current user home directory do I have a folder called cube yes but within that folder do I have a config file as of now.
+
+02:03:14
+No, but here what they're saying this command in my master machine in my master machine do I have that config file information that cluster information like in this ETC Kubernetes admin dot com does this has a cluster information that complete cluster where exactly a P server is running what is the certificates to connect to that API server. They have all those details in this file. So am I copying that file?
+
+02:03:43
+Within my master within my master I have this one. So I have that file. I have that file.
+
+02:03:54
+that admin.conf file does that file has my cluster details like server. Server is nothing but api server is my api server is listening on this port on this ip address.
+
+02:04:10
+That's our work. Now, is it also having a certificate details for authentication and authorization? Is it also having a certificate details? It will use certificate based authentication. Whenever it is connecting to the API server, it is going to send these certificates. That file has all those details. Since I am in same machine, if I execute this command, if I execute the CP command, will it work? In the same server, that config file is there in my master.
+
+02:04:39
+I'm executing this in the same machine. Now, is that file is copied to this user, phone directory now? Can I see that file in the current user, Ubuntu user, kube-config?
+
+02:04:56
+Permissions are not there. Let me execute one more command also. Let me execute one more command also, where I am changing the ownership, where I am changing the ownership for that kubeconfig file.
+
+02:05:12
+Now do I have that in this system in the current user phone directory do I have that kube config file now
+
+02:05:21
+So that's what I am asking to do that. So here exit as a root user. Once you execute QBDM in it, exit as a root user and as a normal user execute this commands. But people sometimes what you are doing, I observed you are not exiting as a root user. You are executing these commands in the root user itself.
+
+02:05:44
+You are executing these commands in the root user itself. Then if you execute again kubectl commands as a normal user, will it work? Do you have that config file in this user? No. It won't work. So make sure you are following these instructions. Now, how many nodes I have, guys, as of now? How many nodes I have as of now in the cluster? I am able to communicate with my API server. How many nodes I have? One node.
+
+02:06:14
+is that node is completely ready? No Why it is not ready? Let me explain
+
+02:06:27
+Guys don't worry about all these comments. What is parts or what is the siphon and I will explain in detail for now. Don't worry too much about this one. I will explain later. If you see is my API server control manager scheduler is are running is those also running as a pods is my API server scheduler control manager ETC. They also running as a parts in the cluster.
+
+02:06:54
+is those are running in the master is those are running in the master can I see this IP this IP is nothing but master IP is this API server is this control manager is this a ETCD running in the master you have a cube proxy is that cube proxy also running in the master I mean to say cube proxy that networking proxy yes but the cubelet why cubelet
+
+02:07:24
+How cubelet is running is cubelet is running as a pod in the cluster or is cubelet is running as a normal Linux process? Did we instant cubelet and started cubelet as a normal Linux process?
+
+02:07:39
+Is cubelet is running as a normal Linux service or Linux process? Yes. Now, if you observe, there is a DNS, service discovery and DNS. Within the cluster, there is a DNS concept. Is your DNS parts are ready? If you see, is this DNS parts are ready?
+
+02:08:02
+no why they are not ready did I applied any networking here did I deployed any networking solution that CNI implementation as of now did I deployed any pod networking as of now whether calico flannel view net like that no so there is a concept called CNI there is a concept called CNI container networking interface
+
+02:08:30
+CNI stands for Container Networking Interface. There are a lot of implementations. There are a lot of plugins. CNI stands for Container Networking Interface. It's a standard design for inter portability. It's a standard around networking in the Kubernetes. There are a lot of implementations.
+
+02:09:03
+There are a lot of implementations for that. If you see the official website itself, that Kubernetes official website itself, there are a lot of implementations available.
+
+02:09:19
+So we have a Calico, we have a Flannel, we have a Vnet like that. We have a lot of implementations like Calico, Flannel, Vnet like that. Any one of the networking implementation I can deploy. For now, I'm deploying this Vnet. For now, I am deploying one of the networking solution called Vnet.
+
+02:09:46
+So, VueNet is also kind of an overlay driver. VueNet is also kind of an overlay driver. So, overlay driver. So, I can apply that VueNet.
+
+02:09:59
+using some command like this using some command like this can I deploy calico can I deploy flannel or some other network also not only just view net can I use any one of the implementation like a flannel or calico instead of unit yes that is just a networking driver so this is not there that's why my pod is not ready so can I execute this command
+
+02:10:27
+which will install that networking CNI solution that networking driver I'm executing this command now this vunit
+
+02:10:38
+We've net is again one networking solution. We've net is one networking solution in Kubernetes. So if you are using WeaveNet, this is the official website of that WeaveNet. If you are using WeaveNet, same command I have used guys. Same command I have used. If I am using WeaveNet, do I need to open these ports also? If you see this requirement, this networking requirements, are they saying?
+
+02:11:06
+Open TCP 6783 UDP 6783 and 86784 in your firewalls again. But as of now, since I open since I open all traffic since I open all traffic is this is also open.
+
+02:11:24
+not only all TCP, not only all TCP, I have open all traffic, whether it's a TCP protocol or UDP protocol, is it open all the ports?
+
+02:11:36
+Yes. No, once that networking solution is ready. Now, can I see that networking related part also got created now in this machine in the master that networking related part also once this is ready. Am I able to see this my core DNS parts that DNS part service discovery parts also ready?
+
+02:12:00
+use now is my node is ready which means is my server is ready now completely that master is this node is ready what is the role of this machine
+
+02:12:14
+master now how can I join these two machines to this master does master will give a token for me I cleared the screen I cleared the screen it has given the token when I executed QBDM init itself it has given the token I have cleared the screen but again can I get the token again by executing this command
+
+02:12:39
+some command like this QBDM.
+
+02:12:45
+token like this QBDM QBDM command QBDM token create print the join command. So if I execute like this in the master is it giving one token if I execute this token here is this machines will report to that master in the token do I have this master machine IP I mean to say where exactly your API server is running on which IP on which port from this server.
+
+02:13:13
+If I don't have a network or firewall opened, if there is a no network or firewall opened,
+
+02:13:23
+again will I able to join this machine to that cluster if I do I am not able to reach this port here from this machine
+
+02:13:33
+and that port if I am not able to reach will I able to join this machine to this cluster but since this one and this one is in same VPC is it able to communicate with private IP and since firewall is open port is opened also will it able to reach now
+
+02:13:54
+Yes, now let me execute this token. Let me execute this token. Guys, all these things will help you in troubleshooting network troubleshooting also. Sometimes you have a problems with network and firewalls. In that case, do you need to understand what is IP? What is port? How to reach? How to test whether I am able to reach that IP or port or not? If there is any issue with networking again, do you need to work with network team?
+
+02:14:22
+to open the firewalls or create a networks between those servers and routers. Yes. Now I'm executing this command as a root user. Again if I execute this QBDM command as a normal user, is it going to throw error? Run this as a root user or pseudo permissions? Yes. Now let me execute this one also. In the other machine also I'm executing. Now if I execute here in the.
+
+02:14:52
+in the kubectl if I execute kubectl get nodes now can I see total three machines
+
+02:15:02
+Now, this is still not ready. This is not ready completely. It is going to be ready in some time. So what is going to be happening in the background when I'm executing QBDM giant? Is it going to initialize that Q proxy in that server? And also that QBDM also getting started as a service, Linux service? Yes. Now, if you see, is my notes are ready? All the notes.
+
+02:15:35
+Now, if you observe in the master, they have this API server control manager, Q proxy, ETCD and scheduler in the master in the 215, that is my master. In the worker node, can I see that Q proxy, that Q proxy in the worker node, in all the worker nodes also, and also this networking related stuff, this V unit related driver. Is my cluster is ready now?
+
+02:16:04
+Completely.
+
+02:16:10
+Is my cluster is ready is my cluster is ready. Yes. My cluster is ready. How to deploy the applications to this cluster. I will explain tomorrow. It's already too late. So I will explain the Kubernetes concepts, actual Kubernetes concepts tomorrow. What is namespace? What is pod? How to create a pod? How to create a namespace?
+
+02:16:37
+how to access your applications, how to deploy your applications. I will start tomorrow. So today, only set up. Try to set up the cluster before coming to tomorrow's class. Tomorrow, I will explain the actual Kubernetes concepts, please. The setup is already there in the YouTube channel also. I am again, I am going to share this one again today. Try to set up the cluster properly. We'll continue tomorrow. Thank you, guys.
+
+02:17:07
+If you have any questions feel free to ask otherwise I will continue tomorrow.
+
+02:17:19
+Okay we'll continue tomorrow. Thank you.
+
