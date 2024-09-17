@@ -1,0 +1,993 @@
+00:00
+This conference will now be recorded.
+
+00:05
+Hope I'm audible for everyone. We'll get started. In a study session, we were discussing about what is Helm, what is Helm chart, what is Helm CLI, what is Helm repository, how to manage applications, the Kubernetes applications, the applications developed to deploy in Kubernetes, how to deploy using Helm we discussed. Using Helm.
+
+00:35
+we can apply third party applications as well as our own applications also. Yesterday we already deployed some third party applications third party application like metric server we deployed right if required any application like nginx ingress controller
+
+01:05
+or any application which you want to deploy can be deployed using a Helm Chart also if the Helm Chart is available. Now if required, will I able to create a Helm Chart for my own application also?
+
+01:25
+Yes, so you can create a Helm chart for your own application. Now let's say you are a developer. Let's say you are a developer or you are a DevOps engineer.
+
+01:37
+So developers might not be aware about all these helms, helms concept. As a DevOps engineer, do we need to support the developers or do you need to write, create a Helm charts for that applications to get deployed into the Kubernetes clusters using Helm? Yes, it is our responsibility as a DevOps engineer, you are going to work on the Helm also based on the requirement. Let's say I have this application.
+
+02:06
+Let's say I have this application.
+
+02:11
+I have this application. I'm taking this as an application example. Now I want to deploy this application as a Helm chart. Can I create a Helm chart for this application our own application instead of writing a YML like this detailed YML because we're liable to parameterized these YMLs will able to use different different options different different configurations to deploy in different different environments if I use like YMLs like this.
+
+02:45
+Will I able to use this as is if I want to do kind of a parameterization and all those things. No, at the same time, if you want to.
+
+02:58
+share this application for someone you want to kind of you are developing one application one software and you some other companies other people also you know need to deploy this application then is it a best practice or is it a best idea to share these YMLs to them and apply like this are you going to do like that sharing these YMLs to other companies and ask them to deploy like this
+
+03:25
+if you are developing some own software or product no but instead of doing that way can I create as a Helm chart can I make that applications available via Helm charts to the other companies other people also if required by creating these things as a Helm charts and maintaining these Helm charts in the repositories so that they can add and they can deploy the way I
+
+03:55
+the matrix server is already available as a Helm chart whoever wants to deploy that matrix server or they can use that Helm chart and apply that wherever they want to deploy
+
+04:09
+So we can create a Helm chart for this application also. Now.
+
+04:16
+In my local laptop also, if I have a helm CLI installed, in my local laptop also, if I just have a helm CLI, will I able to create that folder structure? Will I able to create that folder structure if I have a helm installed in the local laptop? Will I able to create that folder structure, whatever folder structure I was talking about yesterday?
+
+04:45
+to the helm.
+
+04:48
+here, something like this.
+
+04:53
+Now once it is created can I modify my values my templates as per the requirement. This is going to just create a folder structure, but once the folder structure with the default values and default templates do I need to again customize these values and templates to deploy my application as per the requirement again.
+
+05:15
+this Helm templates, yes we can do that locally in your local laptop also in local laptop also if you have a Helm installed what you can do you can execute some command.
+
+05:32
+You can execute some command. Let me go to some folder. Any folder is fine. I can do something like this. Help create. Help create whatever folder name you want to do. Something like this. If I execute this command, if I have a helm CLI, just a CLI is sufficient. If I just have a helm CLI, if I execute this command helm create, does this folder structure gets created?
+
+06:01
+The folder name will be this name. The folder name is this name instead of this Java web app. The folder name is this name. Within that folder, do I have this chart file, charts folder, templates folder, and values file like this?
+
+06:18
+Yes, then as a developer or as a DevOps engineer, can you modify your values your templates using any editors like Visual Studio code or maybe any text editors like Sublime Text or Notepad++
+
+06:35
+Editors like Visual Studio code editors like Eclipse IntelliJ in your local laptop. You can modify these variables was the templates are ready. Once the templates are ready will be able to maintain these templates in the version control system also as is are will be able to create this as a helm chat and maintain in the helm repositories also if required.
+
+07:02
+In the helm repositories also you can maintain as a helm packages. If required, can I maintain this in a source code also as is this a folder structure in the source code SEM also if required. Normal source code like SEM also if required I can maintain whatever way you want to maintain. So you can create a folders and modify in your local laptop also like this.
+
+07:33
+you can create a folder like this now when I execute this help create in my local laptop I got something like this I got something like this the chart name now they have that folder structure like values file templates folder shards folder chart dot ml
+
+07:56
+3 command is not there in this is my local laptop. So can I modify, you know, modify my values templates as per the requirement. This is just a folder structure default folder structure.
+
+08:08
+Now you can use any editors. You can use any editors.
+
+08:15
+You can use any editors like Visual Studio code where you can modify all those values and check in all these things.
+
+08:27
+now let's say this is my project let's say this is my project
+
+08:34
+This is my project, let's say.
+
+08:43
+This is my project if required what I can do I can clone this project to the visual studio code also.
+
+09:01
+I can clone this project to the visual studio code also
+
+09:07
+Like this Visual Studio code will have a lot of plugins also, like plugins. So what I can do, I can clone that project to this Visual Studio code directly. Like instead of executing git clone, you are executing that git clone via this Visual Studio only. So I can clone that project. I can clone that project to whatever location in my laptop. And I can open that project.
+
+09:36
+Here can I modify like whatever Docker file Jenkins file if I want to modify you can modify and commit. Similarly, if I want to create a Helm charts within this SEM, I want to maintain that charts as a folder that Helm charts as a folder I want to maintain. Can I go to this folder?
+
+10:00
+maybe let me go in a terminal I'll open integrated terminal here now I'll go to that folder that my project folder like here now here if required can I create a Helm chart that by using Helm create command that folder structure but I need to have Helm installed in this system in this laptop now can I create something like this Helm create Helm create
+
+10:29
+may be like the folder name is charts you can give I am inside the src folder let me come outside of src folder now I am in this project now here let me execute help create something like this
+
+10:50
+something like this chart or helm chart like that.
+
+11:00
+Now I got one folder, one folder like this. Now if you see, I got one folder like this chart folder. So to have these files, values.ml, chart.ml, templates folder like this, charts folder like this, that folder structure. Using this IDE, can I modify my values and templates as per the requirement? These templates, these values as per the requirement, can I modify? Then can I commit?
+
+11:29
+Can I commit this? Template changes once I modified as for my requirement. Can I commit all these changes to the SEM also as is as a folder? In the source code. If you don't want to maintain in the SEM, can I create a tar file out of that? Helm chart. Can I upload that into Helm repositories? If you don't want to maintain in the source code, can you create a tar file out of that Helm chart and can you push that Helm chart into the Helm repositories?
+
+11:59
+Instead of a CM repositories, will able to maintain that in a helm repositories. Also if required. Yes, you can do that. Krishna Prasad is asking, sir, is helm installed in your local Mac book? Yes, that's what I have shown, right? This is my local terminal. This is my local laptop terminal. My command prompt. I am in my local laptop. Do I have a helm installed in my local laptop?
+
+12:29
+Yes, so I can create like this. Now I will demonstrate directly in this server. I'll demonstrate directly in this server. I'll create that Helm chart directly in this server, that machine, whatever I have, wherever I have a Helm already installed. In this system, did I install Helm yesterday? This Kubernetes client machine?
+
+12:58
+So I will install, I will create a, you know, Helm chart in this system itself. Yesterday we installed Helm. So let me connect to that server.
+
+13:12
+But typically when you are working in projects, are you going to create a Helm charts in these servers? Basically, no. In your local laptop as a developer, like you are also kind of a developer. Do you become a Helm chart developer if you need to work on Helm charts? As a DevOps engineer, do you become a Helm chart developer because you are developing that Helm charts? Yes. So as a DevOps engineer, also we need to write some codes or some scripts, but not the way developers are writing.
+
+13:41
+Are you going to write some scripts in the form of YMLs like Kubernetes YMLs or Helmchart YMLs cell scripts for automation? Groovy script Groovy scripts for pipeline automation like Jenkins uses Groovy script only the declarative scripted. So you are going to write all those things from your laptops. Then are you going to maintain those things in the SEM? Like if it is a Docker file Jenkins file?
+
+14:10
+Will you maintain in the SCM itself as part of source code? The Jenkins file, Docker file, Docker compose files if you are using, Docker compose files if you are using, or Kubernetes compose files if you are using, or Helm charts you are using, you can maintain in the SCM. But if it is a Helm chart, instead of maintaining in the SCM, can I create a Helm chart and upload that Helm chart into the Helm repositories also?
+
+14:39
+Yes, for now I'm just using this machine. I'm just using this machine here. Do I have a helm installed? Yes.
+
+14:51
+in this system also to have a helm instant as of now I have a typical normal YML files now let me create a helm chart for that application I am saying helm chart something like this maven web app chart something like this sorry helm create helm create helm create that name now I am getting a message saying that creating
+
+15:19
+Now do I have a folder with this name? Do I have a folder with this name here? In this system wherever I have executed this helm command, helm create command Do I have a folder with that name? Now in that folder, do I have some default files default templates? Kind of your Ansible role When you executed Ansible Galaxy init, does the folder structure got created for your Ansible
+
+15:51
+Once the role is created, will be able to use that role as is if you use that role as is do you think it will work? If you just executed ansible galaxy in it and if you use that role as is do you think it will work? No, right? Do you need to modify? Do you need to modify as per your requirements? Do you need to create a tasks handlers? Where you know variables all these things as per your requirement? Yes. Similarly,
+
+16:19
+This is just created a folder structure with the default values, default templates. If I use this chart as user, do you think that application gets deployed in Kubernetes? If I use this chart as is.
+
+16:34
+No.
+
+16:37
+that application will not be deployed as is. But if you see, if I install what is going to be deployed, if I use this Helm chat as is, what is going to be deployed, I want to see.
+
+16:51
+There is some data there is some files also because let me show you tree structure Let me show you in a tree structure if you have a tree. I Don't have a tree software. Let me install tree software so that I will show you in a tree structure
+
+17:15
+now let me show tree that maven web app helm chart now do i have some you know one file called values dot ml in that maven web app chart folder do i have one file called values dot ml and do i have one more file called chart dot ml
+
+17:35
+and do I have one folder called charts do I have one folder called charts and do I have one folder called templates in this templates folder do I have some files like depl like this different files now if I use this Helm chart as is what is going to happen let me show you
+
+18:03
+Guys I can see what is going to be rendered what is going to be rendered by using this command helm template this chart name helm template this chart name is it going to show what is going to be rendered what templates are going to be rendered what templates are going to be applied when you actually use this helm chart will I able to see what kubernetes manifest will be rendered and applied when I actually install this one if I execute this
+
+18:33
+and that chart folder. Now if you see when I'm using when I'm going to use this as is when I'm going to use this as is is one service account is getting created one service account is getting created if I use this as is the service accounts gets created one service account. If you see
+
+18:55
+Yes and also is one service is getting created is one service is getting created
+
+19:04
+type cluster IP port 8080 like this and again is one deployment is getting created is one deployment is getting created.
+
+19:16
+Yes, but if you observe for which image the deployment is getting created for which image the deployment is getting created if you see.
+
+19:30
+for which image deployment is getting created and then it's image. So this is just as some default files. This is just some default files default templates. Can I use this as is to deploy that application? Whatever application you are expected to deploy in Kubernetes is that application gets deployed if I use this as is no.
+
+19:53
+Now there is a deployments get created if I apply this but I have not yet applied I am just showing what is going to be deployed. Now if you see here.
+
+20:06
+I have this Helm chart folder within that folder. I have a templates folder within the templates folder. They have some files like this. Let me show that in a tree structure. Then I will do the cat. So this is my Helm chart folder within that I have a templates folder. So do I have some files in the templates folder deployment aml service aml deployment aml
+
+20:35
+service account ML, ingress ML, HPI ML like that.
+
+20:43
+Yes, now let me show the content of that deployment. I mean, let me show the content of the deployment. I mean that template. But if you see it is typically a kubernetes manifest file, it is again a kubernetes manifest file only. But if I apply this yml as is does kubernetes can understand if I execute kubectl apply on this file does kubernetes can understand anything?
+
+21:16
+No, why because is it using some kind of a templating language? That's why we are calling it as a templates is this file has some kind of a templating language. That's why we are calling it as a templates. So if you see they have some kind of a functions variables here.
+
+21:38
+Now if you see did the hard coded this image part if you see did the hard coded that image part what image needs to be deployed here if you see we have a containers we have a image this is my deployment specification this is my deployment specification under deployment specification I have a containers the name of the container the image is this hard coded if you see here.
+
+22:13
+Is this hard coded any image what image being deployed needs to be deployed no, but then where these values are defined if you see where what do you mean by this line how it is going to work from where this is kind of a template this is kind of a templating language instead of hard coding like this instead of hard coding like this what they are done something like this.
+
+22:43
+something like it is there valu valu from which repository
+
+22:58
+So they have referencing like this instead of hard coding. They're referencing like this valu There are a lot of things, colon, colon, values.image, tag, values.image, tag. So something like this they're referencing. Again, something like this. Valu colon, values.image.tag, something like this.
+
+23:30
+So from where these values are coming, where this image repository value is defined, where that image tag is defined, basically is that image tag and is that image repository is coming from values, wherever you see dot values, wherever we see dot values, we call this as a directories. We call this as a directories in templating. So wherever you see dot values is that, is this
+
+23:58
+variables or values are defined in the values file.
+
+24:06
+wherever you see dot values these are expected to be defined in the values file. Now if I see the values file whatever is there in the Helm chart root directory.
+
+24:25
+that Helm chart root directory here this is again one YML this is again one YML values YML do you see in the YML format image is a parent image is a parent under that do I have a child called repository do I have a child called repository in the values file if you see
+
+24:50
+image is parent under that there is a child called repository and what is the value of that repository this is key and this is value what is the value of that repository.
+
+25:02
+So when we are actually deploying that Helm chart is this getting replaced with something like this at runtime is it getting replaced like this at runtime when I'm actually deploying this Helm chart.
+
+25:22
+Yes, now that is image tag, you know repository then colon values dot image dot tag. So tag now when I rendered when I rendered that one when I say hello template when I actually rendered that using helm template I can see something like this. I am able to see something like this. In the deployment I'm able to see something like this.
+
+25:52
+Nginx is coming but from where this 1.16.0 is coming. This is coming from valu but this is coming from where if you see the template, you see normal template cat on that deployment YML, cat on the deployment YML if you see, this Nginx is coming from here, but from where that is coming that 1.16.0, they have again some kind of variables here.
+
+26:27
+So if you see, they have something like this. They have something like this.
+
+26:34
+there are something like this here. So is it coming from values.image.tag? Is it coming from values.image.tag? Now in the values file, in the values file if you see, do I have any value? Do I have any value under that image tag? Values.image.tag, nothing is there.
+
+27:04
+That's why if you see what do you mean by this symbol? What do you mean by this symbol? We call it as a pipeline. I mean, I mean to say pipes, pipelines or pipes. So this one is empty. Since this one is empty, there is a function called a default. This is one function in Helm templates. If this is empty, then what is the default value?
+
+27:35
+Instead of this one, since this is empty, pipe symbol, default is one function. So if this is empty, what is the default value of that tag? From where this value is coming? Now, instead of values, I see char So if this tag is empty in the values file, is it taking default value as chart.appversion?
+
+28:03
+So where is that wherever you see dot chart, wherever you see dot chart. So do I have a chart.yml also, one more file? Do I have one more file called chart.yml?
+
+28:18
+to have one more file called chart.ml so if you see that chart.ml if you see that chart.ml
+
+28:27
+As I already told what is this chart dot ML? Yesterday itself I explained what is this chart dot ML? This chart dot ML contains metadata, metadata information about that chart. Now the name of the chart, the name of the chart, this is the name of the chart. Now if you see, do I have some field called app version here? Do we see some field called app version? 1.16.0.
+
+28:58
+So is it taking as a default value since this is empty, since this values.image tag is empty. So is it taking this as a default value, this chart.app version as a default value here?
+
+29:16
+So if you understand this one, do we have some kind of a templating language used in the Helm chart templates? Do we have some kind of a templating language used in the templates, Helm chart templates, kind of a variables, kind of a functions, kind of a pipes? So will I able to write some logic in the Kubernetes manifest files? Will I able to use some kind of a logic variables, conditions, loops, all those things can I use in Kubernetes YMLs using this Helm templates?
+
+29:47
+some kind of a logic, dynamic behavior of my YMLs because of this templating language yes. Now image tag is coming from there. Image tag is coming from there.
+
+30:03
+That is how image tag is rendered. That is how image tag is rendered here. And what about all these names like replicas, from where it is coming, all these things also if you observe.
+
+30:21
+Let me show the deployment aml in the templates folder. Let me show the deployment aml as is. If you see from where this coming.
+
+30:31
+from where this is coming that name of the deployment.
+
+30:38
+the name of the deployment again it is kind of some function again it is kind of some function helper functions so it is including this chart dot full name this chart dot full name as your deployment name so where this is defined where this is defined that kind of a function your own function where that is defined if you see
+
+31:04
+Let me execute tree structure so that you can understand.
+
+31:13
+Do I have some dot TPL, one file called dot TPL underscore helpers dot TPL here.
+
+31:23
+one file called underscore helpers dot tpl. So that tpl is templating language. So in this file, in this file, do you have some kind of a functions, some kind of a helm functions, our own helm functions that is created by helm only. If you see, if you see that, under that you have some tpl that underscore helpers dot tpl.
+
+31:53
+This is kind of your own functions. Now if you see, now do I have that one? Whatever I am saying include, whatever is being used here, like include. Whatever is being used here, like include, include. Maven web app char.fullname. Whatever being used in your template, is it available as one function in that helper, in that TPL file? If you see here.
+
+32:22
+This is my TPL file helper file. So do you see there is one function. This is like a function. We are defining one function maven web app chart dot full name. You can see this one maven web app chart dot full name. This is kind of one function started here. And this is ended here. So do you have some logic here again? Is it going to do that full name the full name of that Helm chart?
+
+32:51
+as a deployment name. So this helper you know need to create already help itself created this one. So it is using some kind of a functions variables again. So it is trying to give the chart name and release name chart name and release name as a deployment name. So we have some kind of a templating language here. We have some kind of a templating language. Now if you see all the things whatever you are referring in templates.
+
+33:22
+whatever you are referring in templates like variables functions everything is dynamic
+
+33:29
+Here, if you see...
+
+33:33
+This is coming from values wherever you see dot values wherever you see dot values that is coming from where
+
+33:43
+wherever you see dot values that value is coming from values file. Wherever you see chart, wherever you see something like this dot chart that is that comes from there.
+
+33:56
+chart.ml and some locations you see release some locations you see dot release some locations you see dot release dot name
+
+34:11
+dot release dot name so what is this dot release when I am installing any helm chart when I am installing or upgrading any helm chart am I going to give one name like this release name my chart name
+
+34:27
+So whenever I am doing something like this, helm install, java web app or maven web app like that. So wherever in any template, in any template wherever this is being used, does this value will get replaced with this one? Wherever in any template, if this is used dot release dot name.
+
+34:50
+Does this value gets replaced with this value dot release dot name? Yes. So you can use templates from values. If it is a values in your templating, how you will refer? If it is a values, how you will refer? Dot values dot, dot keys, whatever. Dot values you will use. You have a chart. That is dot chart.
+
+35:19
+So you are using some kind of a name while installing that one. Can I use that one using dot release? Can I refer something like this dot release dot name like this capital? Yes.
+
+35:34
+kind of dynamic behavior. Now, if you see everything is dynamic. Is labels also coming? Is labels also coming from some function here?
+
+35:51
+So where this is defined, wherever you see include wherever you see include where that is defined
+
+36:01
+that is defined in your helper underscore helpers tpl file underscore helper tpl file if I show that tpl file last time we see you know we saw do have that function like that define maven web app chart dot labels kind of a function this is one function starting here ending here so is it going to apply these things as a labels this is one label with this value this is another label with this value
+
+36:35
+This is one more label. So if you see when I'm rendering the templates, when I'm actually rendering the template, when I execute that Helm template, that chart.
+
+36:50
+Now do you see those things as labels here?
+
+37:03
+Everything is dynamic. So if you want to customize these labels, can I go and modify in that helper functions? Now I want to have my own labels. Now can I go to that TPL file? Can I customize based on my requirement if you want to add different labels also? Can I go to the TPL file and modify?
+
+37:26
+that custom functions, yes, based on the requirement. Now.
+
+37:36
+Let me show that template again deployment template.
+
+37:44
+This is also kind of a function. And one more thing, if you observe, what is this guys? Again, some locations wherever you see this pipe, what do you mean by this pipeline or pipe symbol? Now, what is this again? N indented, N indented for what is this N indented?
+
+38:06
+What is this n independent? That is again one function. Four. If I remove this one, what will happen? If I remove this n independent, four, what will happen? Is this labels get added from the beginning of the line here itself? Whatever labels it is going to get, whatever labels it is going to get from that function, is it going to be added from the beginning itself? But is that correct? Is that correct?
+
+38:36
+if it is going to be started in the beginning itself. So is this function is adjusting that whatever is written by this function is an independent function is making sure there are four indentations to that values whatever being added here. Yes, let me show that to make you understand all these things. Let me make the changes in the template.
+
+39:03
+Let me make the changes in the template. I'm making some changes in the deployment. Here I am not using that nindentent. Let's say here. Let's say here I'm not using that nindentent.
+
+39:17
+I am editing the template. Let's say I'm not using this n in the end.
+
+39:27
+something like this I am just using. Now when I render this template when I say Helm template or when you directly install also you will get errors. When I say Helm template now you see the deployment is this correct. You see the labels of the deployment you see is this correct.
+
+39:52
+No. Now does this needs to be invented properly?
+
+40:08
+Otherwise, when you are using Helm install, do you think this will work? Do you think this will work when you are actually installing Helm chart? Do you think it will work if you have a template like this?
+
+40:22
+No, you need to make that proper. So that's why do have a that's why do have those functions here
+
+40:33
+So let me make those changes the way how it was earlier. So this is pipe symbol. This is pipe symbol. This n indent is one function. N indent is one function. If I say four, am I going to get four spaces from here? One, two, three, four. Is it going to be started from here?
+
+41:01
+all those labels is it going to be started from here from the beginning of the line am I going to get four indents.
+
+41:10
+something like this one indent, second indent, third indent, fourth indent. So, is this labels whatever I am getting from this function is it going to be started from here because of this line.
+
+41:29
+now let me render and show again let me render and show again now do you see is that correct
+
+41:42
+that is one function now what is this minus symbol some locations you see minus symbol what will happen if i don't use this minus symbol here let me show that also i am not using this minus symbol here i am just using like this include i am just using like this include let's see how it will render now let when i am rendering now when i do like this
+
+42:09
+am I getting one empty space here empty line there because that function is returning some value am I getting one empty line there so if I want to remove that empty line if I use a single minus is it going to remove that one empty line
+
+42:29
+So that single minus is it going to remove that empty line here in some locations you see that minus you see that minus that is also have some meaning. So when I am saying like this minus is it going to remove that empty line whatever I am getting out of this function. Now let me render the template again and show you. Now am I having that empty line now there.
+
+42:58
+No. So this is kind of a functions variables conditions. Everything is there in that template. Everything is there in the template. This is kind of one function you are calling where this function is defined where this function is defined.
+
+43:27
+where this function is defined in the helpers function. Now,
+
+43:34
+This is pipe symbol, this is one function. This is one function. Now wherever you are referring kind of a directives, wherever you are referring kind of a directives, dot values, dot chart like that is there. Now let me remove that dot here. So let me say I have some dot here. Let me remove that dot and see how differently it works. Now I'm removing this dot.
+
+44:02
+I am removing that dot here I have a dot I am removing when I render the template now how different it is there right.
+
+44:12
+It is looking as is but dot that dot represents to kind of a directive kind of a directive passing you know that dot represents kind of a directive that is the input for next one but most of the locations.
+
+44:31
+you see that dot also. Everything has a meaning in the Helm template.
+
+44:48
+Now to you no need to write this much complex because that help create itself has created with all the predefined kind of a templates the moment I execute help create is it created everything whatever is required kind of a functions all those things based on my requirement based on my requirement can I customize the templates and values based on my requirement.
+
+45:15
+But if you want to have more customization, you need to have a more customization. You need to know the templating language go templating language. So this is the example. This is the official website of go templating language. If you see am I using this pipelines pipeline is a sequence of comments a pipeline is a sequence of comments. A command is a simple value or a function.
+
+45:45
+right with multiple arguments. So I am using some kind of a pipelines here. This is kind of a pipeline in Helm template. Are we using these pipelines also in our Helm template here kind of a like this.
+
+46:05
+Let me show that actual template.
+
+46:09
+Am I using the pipelines kind of a continuation sequence of comments? This is one kind of a comment. Am I continuing to that another comment that sequence of comments this pipeline if you see this one, it's a sequence of comments like this. We have a pipelines. We have a pipelines and also do have a variables also.
+
+46:39
+like within this double quotes within this double quotes i am referring but in helm in helm we are referring as a dot values dot values dot chart like that we have a functions we have a function n indendent indendent all these things
+
+47:01
+Guys if you refer this official website you have all the details Helm.sh So here to get started right
+
+47:19
+What is that n intendant? What is that pipeline? All these things can be understood here. So this is the prerequisites for installing and chart chart right. So what is the directory structure of this chart? What do you mean by templates folder? What do you mean by values folder? Right and how it works? What do you mean by this?
+
+47:48
+Helper.tpl file. So in Helper.tpl file what I can put template helpers. Template helpers kind of your own functions is this helper.tpl also gets generated when I execute Helm create or that Helm create chart folder. Yes. That is also there. Now
+
+48:15
+step by step you can understand how it works here. Now this one this release.name so this is kind of one variable. So when I am saying helm install Java web app is this release.name gets replaced with that Java web app when I am saying helm install helm upgrade.
+
+48:36
+or Helm template also when I say that name it gets replaced here dot release dot name now similarly here you can refer lot of values from values file also so you have a lot of built-in objects built-in objects release dot name release dot namespace release dot
+
+49:04
+Can I refer chart.name chart.value I know I mean to say chart.version also has a values in my templates this one dot chart.name dot chart.version also in my templates and you have files you can load the files also like this and values file importantly values file. So I can define lot of values in my values file can I refer those values in my templates like this.
+
+49:33
+that values that variable name
+
+49:40
+Yes, and there is a concept of functions and pipelines. There is a concept of functions and pipelines. If I say this, this is one function quote. So if I use this quote function, whatever value I am getting, is it something like this? Will it be in double quotes? Because of this quote function here is this value will be kept in the double quotes? Whatever I will be getting because of this quote function.
+
+50:11
+If you want that value to be like this within the double quotes, you can use that quote function that will be kept in the double quote. This is one function.
+
+50:23
+Now pipelines pipelines in the sense something like this. I am getting a value then this pipeline again another function. This is one function. This is kind of another function is this function is going to return a value from this value file and is it passing it to this function because of this pipe symbol. Again will I get output like this within double quote whatever value I am getting it is passing it to the quote function.
+
+50:53
+continuation I will get like this in the double quote that is one function n indented is one function Upper is one function repeat is one function like this. There are lot of functions are there Default did we use this default also if this is empty if this value is empty Can I set some default value somehow? No one defined the values in the values file can I set the default value like this if this is empty?
+
+51:27
+Default is also one function. Default is also one function. Default values to define. Is that default also used in many places in your templates like this? Default here.
+
+51:48
+something like this if this value is coming as empty this value is coming as empty are we setting default value to this one.
+
+52:01
+Now you can modify as per your requirement also like we have a default function. We have a lookup functions like this. This helm has very good documentation, but you no need to go in this X, you know this much extent to modify you are just going to make minimal changes in your templates minimal changes in your templates. We have a flow controls flow controls flow controls in the sense kind of a conditions
+
+52:30
+kind of a conditions. Can I use some kind of if-else condition in my templates also?
+
+52:41
+kind of if-else conditions let me show that if-else condition also here now if you see in my template in my template let me show that
+
+53:00
+now if you see I got some error I modified that deployment aml in deployment aml it has wrong number of arguments wrong number of arguments in that yml
+
+53:19
+I modified recently something in this yml what I modified I removed this dot kind of argument kind of argument I removed I removed a dot here
+
+53:34
+so it thrown error
+
+53:39
+it thrown error now it has fix the problem now if you see flow controls what do you mean by flow control let me show you the content of some templates let me show the content of the template
+
+53:52
+in my deployment aml or some yml do you have some kind of if else condition also do you see some kind of if else conditions here if conditions here
+
+54:03
+Do you see something called if not end like this flow controls that is conditions kind of if else conditions. Now do you see something like this if do something else if do something else kind of a end of condition like this. Now do you see some condition here if condition if this is satisfied then only this gets rendered.
+
+54:33
+and end of the function end of the function. So if you see this what you can understand is what you can understand that condition whatever I have highlighted if if not if not values that auto scaling is enabled then only replicas will be set if auto scaling is enabled if it is auto scaling is enabled is this replica number will be set in the template.
+
+55:01
+in the deployment YML does the replica number will be set if the auto scaling is enabled you see the condition if not if not values dot auto scaling is enabled
+
+55:18
+then only set the value. If auto scaling is enabled, does the replicas will be set? The number of replicas will be set here? No. Now, if you see.
+
+55:30
+as of now when I am rendering the template when I am rendering the template I can see replicas as 1 which means is this condition satisfied whatever I have in the template is this condition satisfied because of that can I see that replica count as 1
+
+55:54
+Yes.
+
+55:57
+If you see I have a HPA YML also in my templates folder I have a HPA YML also If you see in my templates folder In my templates folder Do I have a HPA YML also Do I have a HPA YML, do I have a Ingress YML also But when I am rendering When I am rendering Why it is not rendering That HPA If you see Helm template
+
+56:25
+that folder that chart folder name if you see only deployment is getting rendered service is getting rendered but there is no HPA and ingress why it is not rendering if you see do have that one also in condition do have that one also in condition that complete YML also is in condition that HPA YML if you see now is this complete YML is part of one condition here do you see something like this
+
+56:55
+if condition. So why it is not rendering? Why that HPA is not getting rendered?
+
+57:12
+because values.autoscaling enabled if values.autoscaling is enabled, then only generate a HPA. But what is the default value of that auto scaling enabled that values in the values file I can see in that values file I can see. Now, if you see in my values file, do I have a property called auto scaling within that auto scaling? Do I have another property called enabled?
+
+57:41
+What is the value of that auto scaling enabled value here?
+
+57:47
+false. So since it is false, since it is false, is this condition satisfied? If auto scaling enabled it is false. So false condition since it is a false condition is this going to be rendered
+
+58:06
+No and again since it is false since it is false in my template is this condition is going to be satisfied because we are using if not we are using if not false but because of not it becomes true again so since auto scaling is not enabled is it setting the replicas as one.
+
+58:36
+Now similarly we have a ingress also we have a ingress also that ingress the way we have a HPA YML in a condition the way we have a HPA YML in condition we have a ingress YML also in that folder in the templates folder we have a ingress YML also is that ingress YML is also in kind of some condition here if you see when this will be rendered.
+
+59:13
+when this will be rendered if ingress is enabled then only it will render but what is the default value of ingress enabled value in the values.ml let me scroll up what is that ingress.enabled value again it's a false so can I use some kind of a condition like flow controls in my templates conditions also not only variables not only functions can I use conditions also in my templates
+
+59:44
+flow control. So do we have a lot of dynamic nature in the Helm templates based on the requirement, based on the values, will be able to drive what needs to be generated, what values to be used, what should not be generated, what value should not be used. Can I do a lot of customization in my Kubernetes deployment using this Helm chart and Helm templates?
+
+01:00:13
+it's using a templating language now at runtime also is it possible for me to set something like this while rendering the template now let's say is it possible I don't want to modify this values file is it possible to modify at runtime also something like this auto scaling dot enabled to something like this instead of modifying in a values file at runtime also
+
+01:00:43
+is it rendering HPA also no? is it rendering HPA horizontal part auto scalar also no? because the condition is satisfied
+
+01:00:54
+It is saying it is saying since I have not given any release name since I have not given any release name it is taking release ifr name as a default name. Now can I give some release name also like this while doing helm template or helm install.
+
+01:01:12
+something like this. May I have it?
+
+01:01:16
+web app kind of a release name now when I'm using that maven web app as a release name can I see that name wherever that dot release dot name is used can I use that maven web app as a release name earlier when I was not using this one when I was not using this one I can see something like this release dot name something like this
+
+01:01:40
+because I was not using anything it was using default value now when I am saying something like this wherever in the helm chart that dot release dot name is used is it replaced with this value whatever I am using as a release name
+
+01:01:58
+in the labels also wherever it was referring that release.name something like this. So because of this one is auto scaling also getting rendered is our HP also getting rendered here now where this has been defined again minimum replicas maximum replica CPU utilization 80% is that hardcoded in a template. If I see normal cat on that HP AYML.
+
+01:02:26
+Is that hard coded in the template that 80% minimum one replica maximum one replica is that hard coded again in the HPA template if you see when I see normal cat no from where again these are coming where again this minimum replicas are coming is it coming from the values.
+
+01:02:51
+values.ml, auto auto and again is this target percentages is this target percentages also coming from values file only in the values file do you have all those things
+
+01:03:10
+like target CPU utilization, minimum replicas, maximum replicas like this. But here it is false. But since I'm changing at runtime, is this instead of false, is it taking this precedence instead of this value false value is it taking this precedence.
+
+01:03:33
+It is overriding at runtime. Guys, this is default values. Can I add my own values also? This is just a default values. Can I create one more variable one more sections here? Can I keep referring all those things in my templates based on the requirement? This is just a default values. Can I create lot of variables in this file? Can I use use those variables in my templates based on the requirement again? Yes.
+
+01:04:02
+I can do all these things but this is a default one did I modified any value any template so far I just executed help you create I have not modified anything now I am using Helm template command what this Helm template command is doing is what this Helm template command is doing
+
+01:04:26
+is Helm template command is rendering the template and displaying is that Helm template command is actually deploying that chart in the Kubernetes? Is that Helm template command is actually deploying the application in Kubernetes? No. Is it just doing the rendering? I mean to say, is it the processing that template and values together and showing us the Kubernetes YMLs? So when you are writing Helm templates, can you use this Helm template command
+
+01:04:55
+To see whether whatever changes I am making in the Helm templates and values and Helm functions. Is it generating a Kubernetes manifest as for my requirement? If I want to see can I use this Helm template command making changes in your values and templates? Can you execute this Helm template command and see whether it is generating as for the given requirement or not? When you are actually writing the templates, yes.
+
+01:05:24
+you can use this Helm template command to do that. Now let me start modify as per my requirement let me start modify. Guys if required can I do the dry run also. I don't want to do this Helm template command. Can I do some kind of a dry run also see. Helm I can use this command Helm install maven web app my release name maven web app my release name.
+
+01:05:52
+my local chart folder. Can I use something like this? I fun, I fun dry run something like this with helm install also. Can I do something like this? My release name, chart folder, I fun, I fun dry run. Now when I do this dry run also, is it going to show? Is it going to show what is going to be deployed? If you apply that, if you install that helm chart, is it going to show what and all things gets created?
+
+01:06:21
+service account is getting created, service is getting created and deployment is created with these labels, with these replicas, with this image, with this image. Because of this dry run is your application is actually installed because of this dry run option is that application is actually installed. No, but without doing this dry run if I without using the dry run option if I execute same
+
+01:06:49
+Is that the Helm chart gets deployed in the Kubernetes cluster to whatever Kubernetes cluster it is pointing? Yes. But whatever application you are expected to be deployed, is that application gets deployed? If you'd apply? No. It is not going to deploy. Do I need to make some changes based on my requirement in the values file or in the templates files based on my requirement?
+
+01:07:18
+Let me start doing that. Now.
+
+01:07:26
+This is my folder Helm chart folder. First I will start making the changes in values file. Now. I don't want to use this image. Can I modify my image name? Sorry repository name. Suppose this is in the Docker Hub. Can I say something like this?
+
+01:07:47
+Can I say something like this? Docker hands on. Can I say something like this? Docker hands on this repository. But in real time you are not going to have in the Docker hands on. I mean to say Docker hub instead of Docker hands on and here can I use my Nexus repository J for repository or ECR repository? That ECR repository name if required.
+
+01:08:16
+This is just a repository name. As of now, my image is in Docker Hub, I am using like this. If I'm not going to define the tag here, is it going to use that chart app version? Whatever there in the chart app version, that 1.16.0, but do I really have an image with that tag, 1.16.0, do I really has an image with that tag? No. So here, can I mention the tag here?
+
+01:08:46
+maybe like one, two, whatever it is or latest like that.
+
+01:08:53
+Now since I have a value for tag, is it going to use the default value chart.app version or is it going to use this tag value?
+
+01:09:04
+it is going to use this tag value. I have just made only few changes. I just modified repository tag, repository value and tag value. When I render this template again with a dry run you can do with the dry run you can do or you use Helm template command also fine. When I'm doing a dry run with this Helm chart install command. Now can I see? Since I modified the value, is it taking that value?
+
+01:09:33
+that Docker hands on slash maven I fun web by fun application colon one.
+
+01:09:41
+Did I directly modify template? Did I touch any template here? Did I modify my template here? That vrml here? No, I just modified the values. But if you see again, is this correct case? The container port is it correct in our case?
+
+01:09:58
+it is 8080 now if you see if you see in the templates folder the deployment aml in the templates folder deployment aml the port is hardcoded here the port is hardcoded here so can i say from 80 instead of 80 can i say 8080 instead of 80 can i modify can i modify template itself directly can i modify templates itself directly here
+
+01:10:27
+earlier it was 80 now I am modifying to 8080 otherwise if you don't want to hard code can you do something like this also if you don't want to hard code can you refer some from values values dot container dot code something like this can I define this value in the values file if required that 8080 value if required
+
+01:10:52
+If required you can do that one also but most of the times container ports will not be changed because container ports will not be changed you are not changing any container ports you can directly hard code also like this 8080 now I am doing step by step so that you can understand now when I am executing again dry run or template whatever it is now can I see now is it 8080 port.
+
+01:11:22
+with this image.
+
+01:11:27
+Yes and if you observe is liveness probes and readiness probes are correct I mean to say it is just checking the path on the root. Do I need to customize this liveness probe readiness probes also to check my application context instead of root context.
+
+01:11:45
+Now if you see in the template, if you see in the template again, they have just given like this. They have just given like this. Now I can hard code here because in the template itself they have something like this. They have they're not done in the values file. They are not done in the values file in the template itself. They have defined like this if required. Can I hard code here? Whatever part I want to check. Otherwise, can I define this itself in the values file again?
+
+01:12:19
+what path needs to be checked also, I can define the values for it, or I can hard code also, whatever it is. Because this paths and all will not change, right? So you can do something like this, maven-iphone, web-iphone, application. Here also I'll say maven-iphone, web-iphone, application. And I need to use some additional things. Do have that period seconds, initial delay seconds, timeout seconds here.
+
+01:12:48
+They have just rendered some generated some sample, but they have not given any timeout seconds, period seconds as for my requirement. Do I need to define all those things?
+
+01:13:03
+period seconds.
+
+01:13:08
+maybe every 10 seconds.
+
+01:13:14
+Timeout seconds
+
+01:13:20
+maybe 5 seconds is your timeout and initial delay seconds
+
+01:13:29
+I will say initial delay seconds may be first 60 minutes it should not do for this one also I will use for this one also I will use like period seconds
+
+01:13:46
+Copy paste I can do but if there is any inundation problem again will it work
+
+01:13:55
+timeout seconds I will say 5 initial period seconds initial delay seconds I will say something like this now I have done the changes now let me do the dry run now is it doing like this now if you see port I have not given the port number I have not given as 8080
+
+01:14:21
+the port number I have not given as 8080 but instead of 8080 I have given HTTP what do you mean by this HTTP while creating the port mappings here the way I have given container port am I able to do the name also name for that port like this name HTTP.
+
+01:14:41
+So far we were using only container port like this 8080 along with the port container port Can I give a name also here? I can give ABC also here I can give ABC also here if this is ABC. Can I refer that as a ABC here, which means It is going to perform health check on this port that port is nothing but what here internally that port is nothing but what here? 88 that port is nothing but 88
+
+01:15:11
+So this is getting created. When I'm rendering, when I'm rendering templates, Helm template or Dry Run, now can I see all those things? Again, that liveness probe, readiness probe as per my requirement, yes. Now if you observe one more thing, resource request and limits, resource request and limits. As of now, do I have any resource request and limits? Resources is there, but empty bracket, empty flower bracket, which means,
+
+01:15:39
+There is no request and there is no limits. Now if you see the deployment YML, the template, I have a request, this resources, this resources. There is the resource block is there. But again, if you see what is this here, again, one kind of a function, this to YML is one function again, to YML is one function again. So that the YML content as is from where it is coming, where it is referring.
+
+01:16:08
+that resource block request block limits block where it is referring again.
+
+01:16:14
+from where it is referring values file. But in my values file, in my values file, do I have any resources like values.resources? Is this defined in my values file? Let me show that in the values file. I will show the values file of that Helm chart. Now if you see, there is a resources variable. There is a resources variable. But is it like a empty flower bracket?
+
+01:16:43
+in my values file.
+
+01:16:47
+Now I want to enable resources. Can I remove this empty bracket? Can I remove this empty bracket in my YML file? Can I uncomment these things and modify as per my requirement? These limits.
+
+01:17:04
+this limits request all these things.
+
+01:17:08
+Now whatever is coming from values file is it kind of a considering as a yml content because of that two yml function whatever text I have highlighted is it going to be considered as a yml content and keep as a yml content in the template because of the two yml function yes. Now is this comes in my template under resources.
+
+01:17:38
+let me show that I modified my values when I again I am rendering now can I see that resources now here in my template can I see that resources from where these are coming this limits a CPU memory request CPU memory from where it is coming now is it coming from values file now if you see the template there is one function there is one function called
+
+01:18:07
+Is this value is considered as a YML content? If I remove this two YML function, do you think it will be in that format, whatever you are expected to have? I'm removing this two YML function here, let's say. I'm rendering the template.
+
+01:18:29
+Now it is not considering as a ML content. You will have some indentation problems. You have some indentation problems. You see like YML content only, but you will have indentation problems. It looks like YML only. You don't observe it is something different. But if I apply this one, you will have a problem, kind of a tabs problem, indentation problem. This indentation problem will be there.
+
+01:18:58
+No.
+
+01:19:04
+I don't want that indentation problem. So that's why can I use one function called a to amal it is going to consider as a amal that text as a amal here. So I'm using something like this to amal to amal is one function inbuilt functions. These are inbuilt functions. It is going to be considered as a amal file only kind of a amal kind of a amal here.
+
+01:19:33
+Now what is this again I am using n independent again. What is this n independent again here. What is this n independent 12. How many spaces has to be there from here. How many spaces has to be there from here. For that block. 12 places 12 spaces suppose instead of 12 let's say I'm giving let's say 4 let's say 4 let's say 3 let's say.
+
+01:20:03
+let's say I'm giving 4, n indent has 4 now let me show that rendering the template and show that now
+
+01:20:16
+here in your deployment now
+
+01:20:22
+Did I modified in a correct location? Where I modified in the resources? Yeah N intended let me say 2 or 3
+
+01:20:42
+let me say 2 or 3 like that let me do the dry rub
+
+01:20:49
+that yml function is what I am doing you are already getting one second I am using helm install dry run
+
+01:21:01
+Yeah, if you see, do have a problem here, errors because of that.
+
+01:21:09
+unknown fields, indentation problems and here unknown field called limits. Now instead of install, instead of install let me show the template. Let me show the template way because it is going to show the YML. Let me use template way without dry run option. Without dry run option let me use template way of showing. Now when I am using Helm template. Do you see is this correct?
+
+01:21:39
+Is this correct because of that N-indentation?
+
+01:21:46
+Now n-indendation I will use like this n-indendation I will use something like this
+
+01:21:56
+Now without using YML let me show you without using this YML let me show you let me show the template how exactly it looks like let me show you without that to YML also let me show the template way of showing now do I have some kind of a problems because I am not using that to YML function they have a some problems
+
+01:22:23
+error through. So you need to use all these things.
+
+01:22:32
+Properly so if you want to keep that content as a aml content as is I am going to use to aml function with proper inundation To aml function with proper inundation if I say 12 Now let me show in a template way instead of either Do I have a 12 spaces from here to here? Do I have a 12 spaces here from here to here? one two three
+
+01:23:01
+4 5 6 7 8 9 10 like this 12 spaces is it properly intended now that content
+
+01:23:15
+So that is how it is working. Now, if I want to modify these limits and request, if I want to modify these limits and request, do I need to touch my template? Or do I can, I can, can I directly drive from values now?
+
+01:23:32
+can I directly drive from values by modifying values in values file so instead of this one I need more resources can I say I need 250 minimum 1 GB maximum like this and 1 core CPU limit can I say maybe 500 milli core request can I say 512mi like this now I am modifying my values
+
+01:24:01
+Now when I actually install that one is it taking that value use whatever values I am modifying in the values.
+
+01:24:14
+Now I have not enabled HPA. By default, what is the replica count? What is the replica count in your template? One. Now if you see in your template, the deployment AML, if you see in the deployment AML, the replicas are being referred from this field, values.replica count. Now can I modify that replica count variable in values file? Instead of one replica, let's say I have to have two replicas. Can I say like this?
+
+01:24:45
+two replicas like this.
+
+01:24:49
+now when I actually render can I see instead of 1 can I see replicas as 2 now because that replicas is being referred from the triplic account variable from values
+
+01:25:04
+Now I have modified as per the requirement, but let's say this application is expected to pass some environment variables. Can I modify my template? Can I use ENV in my template and can I refer those environment variables from values or can I refer those environment variables from config maps by creating a config map YML also in the template secret also in the template since I don't have a requirement to create a config maps and secrets.
+
+01:25:33
+Can I apply this one?
+
+01:25:37
+in my Helm chart templates folder in Helm chart templates folder I don't have a config map and secret but as per this application requirement I need to create a config maps and I need to create a secrets also can I create those config map yml's and secret yml's also in the templates folder then can I refer the values from values in that config map and secret also if required if you want to create a pvc
+
+01:26:05
+there is a requirement to create a PVC do I need to have a PVC YML also created in this templates folder and you can refer the values in the PVC also in the value from the values file if required
+
+01:26:20
+So the whole intent is, you know, the whole intention, what I'm trying to say here is based on the requirement, do you need to modify, create new templates, modify existing templates, create a values, modify the values based on the requirement, based on your requirement for that application? Yes. Now I have done lot of changes in the deployment. I have done the lot of changes in the deployment. Now,
+
+01:26:50
+can i install now like this now can i install this local chart also the local chart something like this can i do helm install
+
+01:27:05
+that release name, the local chart now like this. Before installing let me show you.
+
+01:27:16
+Let me delete any application which is already deployed.
+
+01:27:21
+Let me delete any application which is already deployed so that you can understand better in my Kubernetes cluster currently. Okay, this application is deployed this different application but this maven application is not deployed. Now can I execute something like this? Help install.
+
+01:27:42
+Help install
+
+01:27:46
+maven web app that chart name if I don't mention namespace if I don't mention namespace in which namespace this Helm chart get deployed I mean to say that application gets deployed default now I am not modifying any values whatever values is already part of this Helm chart is that values and templates gets rendered and I is it going to create all the Kubernetes
+
+01:28:17
+Yes. Now let me execute helm install maven web app. Now is my application deployed as a helm chat that maven web application is deployed as a helm chat now in the Kubernetes cluster.
+
+01:28:32
+When I say Helm LS in the default namespace, I see this one. Now if you see, cubectl get all. Cubectl get all.
+
+01:28:44
+cubectl get all now how come this deployment is created this maven web app this maven web app-maven web app chart how come that deployment got created did I manually created using cubectl apply
+
+01:29:05
+No. How come this service is created?
+
+01:29:15
+the Helm chart the Helm chart, but if you see why HPA is not created by HPA is not created by Ingress is not created even though Ingress is part of that Helm chart for you know template why HPA is not created why Ingress is not created even though that is part of your Helm templates folder that HPA YML is there Ingress YML is there why it is not created.
+
+01:29:44
+because what is the default value of that auto scaling enabled ingress enabled because that templates are in a conditions.
+
+01:29:57
+It's a false because of that is a SBA got created is ingress got created. No, now even though part is running why it is showing 0 by 1 this you already familiar even though part is showing in a running state. Why it is showing 0 by 1 because did we defend the readiness probes and liveness probes as part of the template health checks?
+
+01:30:21
+initial delay seconds, period seconds, all these things. Now by this time, hopefully it should be one by one. By this time, hopefully it should be one by one. So is health checks are successful? LiveNAS probe and ReadNAS probe is successful? Yes. Now whenever there is a change, I want to deploy. Can I do something like this? Can I do something like this? There is a new image.
+
+01:30:49
+without modifying the values also can I say image dot tag equals to two but if I use install will I get a message saying that will I get a message saying that error kind of a message saying that cannot reuse name that is already used so if I want to update what is the command I have to use guys instead of install.
+
+01:31:16
+What is the comment upgrade it is not update I need to use upgrade but can I use something like this upgrade iPhone iPhone install if it is not installed it will install if it is already installed will it do upgrade if it is not it is installed it is going to install if it is already installed it is going to upgrade now can I set values at runtime also like this image dot tag is to as of now what is the image tag
+
+01:31:43
+the current version of the application is running with which tag what is the image tag worth now when I say something like this upgrade is my application gets upgraded my parts get recreated with this version of the image
+
+01:32:00
+let me show that now let's say I want to enable auto scaling also this time can I use option like this one more option iPhone iPhone set auto scaling dot enabled equals to true something like this at runtime also can I drive something like this now is that auto scaling gets enabled and in the HPA minimum replicas is one maximum replicas is 100
+
+01:32:29
+Minimum replicas is 1 maximum replicas is 100 in the values file default value. So is HPA gets created with those values?
+
+01:32:41
+Yes, let me do the upgrade. Let me do the upgrade. Now, when I execute helm ls, helm ls, can I see two revisions? I mean, it was a secondary vision for that application. Now, revision number is two. Now, when I say kubectl get all, when I say kubectl get all, is it following some kind of a, by default, that rolling update strategy?
+
+01:33:10
+still one of the old pod is running till this becomes ready is this old pod gets terminated
+
+01:33:21
+no downtime because in my help templates have not mentioned any deployment strategy. What is the default deployment strategy in that Helm chart template deployment YML file we have not mentioned any deployment strategy. What is the default deployment strategy rolling update now since I am using health checks since I am using health checks unless until this becomes ready even though it is in a running state unless until this becomes ready does the old part gets terminated.
+
+01:33:51
+unless until this health checks become successful is this old part gets terminated? No. So do have a downtime any downtime here that is kubernetes concept nothing to do with help.
+
+01:34:04
+nothing to do with film that is kubernetes concept. Now do I have a HPA also if you see this time do I have a HPA also created.
+
+01:34:18
+I have a HPA also created. But why this the targets is showing unknown, why this targets is showing unknown because do I need to have a metric server installed? Yesterday I installed using Helm chart, but at the same time did I remove also to demonstrate Helm uninstall command I removed. To demonstrate Helm uninstall command I removed. As of now no metric server is running.
+
+01:34:46
+As of now no matrix server is running. Now let me install again. Help install matrix.
+
+01:34:56
+some name metric server this is repo name that repo also has a chart called this in cube system namespace I am installing that helm chart in cube system namespace I am installing that helm chart now metric server is also getting deployed after sometime can I see this instead of unknown can I see the actual cpu utilization on those pods
+
+01:35:25
+after some time once the metric server is functional I can see that one also now based on the loader does parts get scaled up scaled down minimum part one maximum part is 100 but I don't want to have a maximum part says 100 can I customize again that one using values in my values file instead of 100 can I say 510 like that
+
+01:35:51
+Yes, now after some time I can see that one percentage also almost 0% now there is no load if there is a load if average goes above 80% of the CP utilization am I going to get a second part third part automatically.
+
+01:36:12
+Yes, along with that, since I have a cluster auto scaler also, since I have a cluster auto scaler also, if the parts are not able to get scheduled in these nodes, if the parts are not able to schedule in these nodes, am I going to get another node automatically? Another node also because of cluster auto scaler.
+
+01:36:36
+that node will be also provisioned.
+
+01:36:40
+Now if something is wrong with this version of the application, this version of the change, something is wrong with this version of the revision, can I simply execute helm rollback, rollback to the previous revision, this application while rollback I no need to mention the chart name, while rollback I no need to mention the chart name just the release name is sufficient, is it going to go back to the previous revision?
+
+01:37:11
+Which means as part of the previous revision, do I have a HPA? Do I have a HPA as part of the previous revision? No. If you see, is HPA gets terminated? Is HPA is deleted now? Since I roll back to the previous revision. Yes. And also how many replicas I was having as part of the previous revision? Replica count.
+
+01:37:37
+I modified replica count in my values file as 2. I modified the replica count values file as 2 if you remember directly in the values file I already modified. So how many replica counts I was having in my values file 2. So do I have a two parts now. Do I have a two parts that old version of the parts using old image. What version of the image is being used for this version. For this version of the parts what image colon one image.
+
+01:38:08
+If you understand is it simplifying the process of deploying applications in Kubernetes upgrading applications in Kubernetes this helm lot of dynamic natural lot of dynamic behaviors. Now let's say same helm chart I am deploying in a production environment same helm chart I am deploying in a production environment. If it is a less customization if it is a less customization can I pass values like this
+
+01:38:37
+Can I pass values like this in the runtime itself? I have an iPhone set option. If I have to customize very less values, I can customize. But if I want to do a lot of customization, instead of passing at runtime, can I modify? Or can I have a separate values file for prod? And can I use that file? Lot of customization I have to do. I need to have a different values.
+
+01:39:07
+for resources, requests, limits. I need to do a lot of customization. We can.
+
+01:39:15
+do that now can we do helm upgrade now yes again if I do this helm upgrade what will happen again is it going to have something like this image tag is to enable auto scaling enabled like this again will able to make changes
+
+01:39:34
+You roll back and again you are making changes. Nothing will stop you. Now again I have upgraded with the which image tag again auto scaling enabled.
+
+01:39:51
+image tag as 3 and auto scaling is enabled. Now do I see auto scaling are created again.
+
+01:40:04
+auto scaling is created again yes, but now why I am getting this image pull error still one of the old part is running when it is creating a new part why it is throwing image pull error what could be the reason they have a image with that attack called 3 in the repository I need to verify. Now I see image pull error.
+
+01:40:27
+I see image full error now let me do this cubectl describe
+
+01:40:34
+cube ctl describe quad now do I have this image pull error
+
+01:40:42
+to double check let me go to hub.docker.com my registry
+
+01:40:53
+by registry this maven iPhone iPhone application. So if I see the list of tags, I have a image tag called one is there. So we deployed that image tag one, we have a image tag called two is also there. We have an image called two is also there. That is also got deployed. But when I'm trying to use image tag as three, they have that image here three, three is not there. So that's why.
+
+01:41:23
+am I getting that message saying that image full backup. Now if I want to again upgrade can I upgrade with the other image whatever I have maybe let's say have a 13 can I use something like this 13.
+
+01:41:38
+Now if you see again cube ctl get all now is it creating a container with that image called 13 the tag called 13 once this is ready then only old part gets terminated unless until this becomes into ready state this will not be terminated. So do I have a downtime in this approach.
+
+01:42:04
+No. Now any changes done into that image, if there is any change in the source code application or any change in the configurations, once this is deployed, will be able to access the new version of the application does end users will be able to access the new version of the application any modifications any fixes you have done in that change.
+
+01:42:31
+Yes. No, I have something like.
+
+01:42:39
+While doing a rollback, can I mention the revisions also? The execute helm rollback, will I able to mention the revisions also? That is what Christopher is asking. Now I have revision five. Is it possible for me to go back to?
+
+01:42:58
+revision one yes so while doing a rollback while doing a rollback can I mention revision release and revision also I am using this help command rollback hyphen hyphen help command the first argument rollback is name of the release and the second is a revision number
+
+01:43:26
+it will roll back to which release which revision just one revision back now when I say helm roll back when I say helm roll back something like this helm roll back can I say just revision as like this something like this to directly to the first revision currently it is revision 5 currently it is revision 5 can I directly go to the revision 1 like this
+
+01:43:56
+Now is it rollback to the initial revision? But when I say helm LS it will show as a revision six when I say helm LS it will show as a revision six but is this revision created from first revision the first deployment whatever we have done. Yes now again in the first revision in the first revision they have a HPA enabled they have a HPA enabled. No how many replicas how many replica counts.
+
+01:44:26
+in the first division I had two replicas two replicas days because values file two now is it created using first version of the image the colon one the first tag yes now if I want to completely remove this application can I execute helm uninstall instead of helm rollback like this
+
+01:44:53
+Can I use Helm uninstalled to completely remove that application?
+
+01:45:01
+Helm uninstall. So is that application, whatever Kubernetes objects got created using that helm. Is everything are deleted? The deployment service, everything is getting terminated, deployment service and its ports, whatever has been created.
+
+01:45:19
+this way we can do that but now since it's a local folder since a local folder since a local folder now will I able to deploy this one.
+
+01:45:38
+from other machines? Does other people can apply this Helm chart? That Helm chart is available locally.
+
+01:45:48
+No. Krishna Brose is asking can we apply again using revisions now. First of all you completely deleted that application does that revision information is available.
+
+01:46:01
+while installing guys while installing or while upgrading is it possible to mention the revision numbers while installing or upgrading will you able to use the vision numbers no when you can use revision numbers when you are doing a rollback when you are doing a rollback that time only you can use the revision numbers while installing or while upgrading can I say install with this revision number or deploy I know upgrade with this revision number can I do like that no
+
+01:46:30
+there is no option to mention the revision number with install and upgrade that mentioning the revision number is only when rollback
+
+01:46:43
+So this is how I can use locally, but how to maintain this image in the helm repositories, I'll continue in tomorrow class. In tomorrow's class, how can I maintain this helm chart in a central repository like Nexus, how to maintain and how to share this one with someone else so that they can apply remote helm charts. I'll continue tomorrow.
+
+01:47:06
+tomorrow we have a class we will start at 7.45 itself tomorrow we will start at 7.45 I will continue tomorrow thank you once the helm is done I will start discussing about Prometheus I will start discussing about Prometheus tomorrow so don't miss attend tomorrow's class also any question feel free to ask now if you have any questions feel free to ask
+
+01:47:43
+guys refer this official website refer this official website so that you have a better understanding about what is that values what is that flow control what is that pipeline what is that
+
+01:47:59
+All these things in detail there is an explanation here. So try to refer this official website only. Go to helm.sh
+
+01:48:11
+go to Helm.sh, go to the docs, go to this Helm.sh, go to the docs. Here you can see introduction, how to do that, how the templating guide, the chart templating guide. So you can understand what do you mean by variables, flow controls, pipelines, and also if you want to know about the comments, whatever I'm discussing, Helm comments. Did we discuss few comments like this Helm create, Helm install, Helm.
+
+01:48:41
+lin you know rollback helm repo comments like helm repo add helm repo list
+
+01:48:51
+All these comments if you want to understand you can understand all these things here itself. So official document has all the details to understand in detail. Any questions before I wrap up the session?
+
+01:49:10
+If not, thank you guys. I will continue tomorrow.
+
+01:49:17
+Whoever has not given the feedback, try to share your feedback at least by today or tomorrow. Thank you. We'll see you tomorrow.
+
