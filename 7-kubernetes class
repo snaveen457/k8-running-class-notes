@@ -1,0 +1,756 @@
+00:01
+This conference will now be recorded.
+
+00:05
+In a study session, we were discussing about what is part, what is static part, why we should not create a part, and what is the part lifecycle we were discussing. And also, we were discussing about different, different status, part status, like what do you mean by crash loop back off, what do you mean by image pull back off, or error image pull, what do you mean by pending.
+
+00:36
+Still I see people are posting messages I am getting error image pullback of error sir. Do you have a Sujay? Sujay Raja in the class?
+
+00:51
+So Sujay, are you there in the class?
+
+00:58
+So they're a job the Roger is not there in the class. The Roger want to attend only he don't want to attend the classes but he want to only go through the recordings. Yesterday in class did we clearly discuss what is error image pull or image pull back up in which scenario we are going to get that.
+
+01:23
+That's the problem with students. They are not regular. They don't attend the classes. They are thinking that they are experts, or maybe they are thinking that they don't want to learn, not sure.
+
+01:37
+they will have these type of issues if you are regular if you are attending the classes at least will be able to understand what is already discussed what do you mean by that error image pull or image pullback of these type of issues you can easily understand but anyhow I am not sure why he is not attending that's up to him and he is not there in the class also guys I will respond and also if you know the solution you can also respond
+
+02:07
+what is the problem you can also respond so that you can improve your skills also.
+
+02:14
+The more errors you read, the more errors you understand, you will improve the technology. You will become an expert in that tool also. So definitely you will get errors, but at the same time, you need to understand that error and identify and fix. I already told what is error image pullback up, but I was, I saw that message morning, but I could not reply. Later I will reply. But meantime, if anyone also want to reply, you can reply. What do you mean by that error? If you already know, not only this one, anything.
+
+02:45
+Now let's continue.
+
+02:49
+It is not recommended to create a pod. Yesterday we were discussing. That's why we have a controllers like replication controller. Using replication controller, am I able to create and manage my pods? Will I able to scale up, scale down my pods? Yes. So let me connect to my cluster. Let me connect to my cluster.
+
+03:25
+Let me connect to my cluster.
+
+03:42
+Now here I have a three node Kubernetes cluster. First and foremost thing is verify your nodes are ready or not. My nodes are fine. I don't have any issues. Now do I have some application hosted in this namespace? And do I have some application hosted in the default namespace also? Like this? But this is directly a pod. This is directly a pod, a normal pod. If this pod goes down, do I have any controller which will take care?
+
+04:16
+No, but the other application which I have applied this is is this parts are managed by this controller called replication controller.
+
+04:29
+now desired three rate current three ready three what do you mean by this desired three here is it are am I expecting three parts am I expecting three parts yes and currently do we have a three parts currently do we have a three parts three replicas and what do you mean by ready is all are ready is all are running
+
+04:57
+Yes now as I already told by default does your parts get scheduled on the master if you see I am using this option iPhone o wide option is my parts are getting scheduled in the master if you observe no why why must why in master the part is not getting scheduled whatever we are applying as I already told do we have a taint on the master some taint are we tolerating the taint.
+
+05:26
+in pod manifest? No. So I will explain what is gains, what is tolerations. I will explain later. And now it is not scheduled in the master. But in one of the node, do I have two pods? In one of the node, I have two pods, like 93. There are two pods. Now, any time, will I be able to scale up, scale down, imperatively or declaratively also? Manual scaling.
+
+05:56
+Now here, let's say in my YML, I have replica as 1. If I apply that, now how many replicas will be there? If I apply that, how many replicas will be there in my YML? Replica is 1.
+
+06:12
+So now can I see only one replica instead of three replicas? Now when I see the service, when I see the service endpoints, when I see the service endpoints, now do I have only one endpoint for that service, one pod? That is this pod IP. Now let me access from outside or inside. That doesn't matter. Let me access from outside or inside. That doesn't matter.
+
+06:39
+Guys understand the concept don't buy heart comments Balaji sir is explaining this command Bhaskar sir is explaining executing this command like that understand the concept don't buy heart anything.
+
+06:53
+So you can easily learn the subject. So now let me access that application via that service. What is the node IP?
+
+07:11
+What is that node port? Let's see. Cubectl get all and which port it is exposed outside. What is that port? 3151831518 I am going to use that 31518 and in whatever node I have opened that port. Suppose I have opened that port in the master node. Let me maximize for some time.
+
+07:42
+Let's say I have opened that node in the master 31518. Let's see I opened here. Yeah I have opened here. Let me take the master machine public IP. Let me access.
+
+08:00
+outside.
+
+08:05
+and my application context is this maven iPhone web iPhone application
+
+08:12
+Am I able to access that application which is running as a pod in my Kubernetes cluster?
+
+08:19
+Now I have only one part. I have only one part. Let's say I'm intentionally deleting that part. That part can go down for any reason. Let's say if this node goes down. Let's say if this node goes down, what Kubernetes will do? Maximum what Kubernetes will do? Whatever part which is running on that node, does Kubernetes will try to create in another node?
+
+08:45
+Yes, but will it do immediately? Will it do immediately? No, it will wait for some time. It will wait for some time like five minutes considering that that node may recover itself. That server may recover itself wait for some time. Even after five minutes if it is not ready, if it is still down, does kubernetes will take some action? We have different different controllers like node controller. Does that node controller will look after that node if it is not working?
+
+09:14
+Is it going to make some action?
+
+09:18
+Yes. So it will ship the pod. Now I am intentionally deleting the pod. I am intentionally deleting the pod in that namespace. I have only one replica. Now do I have a downtime? Since I have only one replica, do I have a downtime in my application? If you see, is my application is accessible for some time? Do I have some kind of a 10 seconds or 30 seconds outage in my application?
+
+09:47
+So in actual environments, are you going to deploy one replica, only one replica, any application, whether it's a critical application, whether it's a normal application, only one replica? No. Minimum, are you going to have two replicas? But maximum, that depends on what? Maximum, that depends on the load, the load on that application, how much load we have on that application.
+
+10:19
+Now let me scale. Let me scale. Now I can scale imperatively or declaratively. Let me scale it now to two replicas. This is manual scaling only.
+
+10:37
+I am scaling this one. Now how many replicas I have which means how many parts I have now.
+
+10:45
+How many parts I have to so now is my service has two endpoints. Whatever service I created for that application. They have a service with two endpoints. Now, now when I am accessing via that service from outside or inside, does this service will act as a load balancing in the cluster between these two parts?
+
+11:10
+yes now let me intentionally delete now also one of the port get ports i am intentionally deleting one of the port
+
+11:30
+delete word for name
+
+11:35
+in which namespace I have that one I am having in test ns but if you see still am I able to access my application other pod is it started routing the traffic to other pod but if you observe there was a small glitch there was a small glitch like a fraction of seconds because it was trying to route that pod that word pod was terminated but within a fraction of seconds was it redirecting the traffic to other pod because that endpoint is not there it is removed.
+
+12:06
+Service is doing its job. But at the same time, is your controller is doing its job? Is that controller recreated that part again, whatever replica was went down?
+
+12:20
+Is everyone clear what is pod? What is service? What service is doing? What pod is doing? What controller is doing that replication controller?
+
+12:33
+If I'm directly creating a pods, if pod goes down, does these pods will be replicated or rescheduled again? No. That is replication controller. Now, if I want to delete that application permanently, which one I need to delete, guys? If I delete the pods, does that application will be deleted from the cluster? No. I need to delete RC. Can I do something like this? Imperatively?
+
+13:02
+Can I do something like this imperatively? Cubectl delete rc, my rc name, replication controller name. Can I do like this? If I delete this controller, is it going to delete the parts created and managed by that controller?
+
+13:22
+Yes, it is going to delete that parts also because you are deleting the controller itself. Like in your AWS auto scaling group, you are creating autos. You are deleting auto scaling group. Is it deleting the servers also whatever is created and managed by that auto scaling? Yes. So now if I'm deleting this replication controller, is it going to delete the parts which is created and managed by that controller replication controller?
+
+13:52
+Now this is imperatively. Can I do like this also? Delete if and if that file name maven web app that RC. But this manifest file has a RC as well as service. Does both gets deleted now? If I execute like this, does both get deleted service as well as controller also? Yes.
+
+14:14
+So that is how you can delete. Is everyone clear what is replication controller? Now, like this, can I create N number of replication controllers to deploy N number of microservices? Suppose this is one application, can I create another replication controller?
+
+14:37
+for applying another application. Let's say this application. Let's take this application. Node.js application. Instead of creating a pod like this, can I create a replication controller for this one also?
+
+14:56
+But I need to make sure I have enough nodes, enough resources available in the cluster. We already discussed that. If I don't have enough nodes, enough resources, it will not be able to work. Now let's say it is recommended to use resources at least. So if I already have some nodes, I already have some nodes. Sorry, some pods.
+
+15:25
+Result some CPU and memory here if I am requesting again some CPU and memory does the cubelet the I mean to say does the scheduler will try to do some kind of a mathematics in the background. What is the current capacity of the node and already how many parts are there and each part how much CPU how much memory they have requested is it going to do some kind of a mathematics and identify how much is left and if whatever is left whatever is left.
+
+15:54
+it is greater than whatever we are requesting for this application, then will it allow.
+
+16:01
+Will it allow whatever is available is greater than whatever we are requesting here already some parts are scheduled and after calculating all these things, we have few resources left. If it is greater than whatever we are going to request here, then it will allow if it is less than whatever we are requesting here. Does your scheduler will schedule the parts to notes? No, it will be in a pending state.
+
+16:31
+But as of now, I am not using any resource request concept here. So is it going to calculate like that? How many parts are already running? How much it is going? So it will blindly allow. It will blindly allow. In that case, will you have problems? Will you encounter problems if you deploy a lot of things? Containers will get deployed. Containers will take CPU and memory from the server.
+
+16:57
+If the server doesn't have enough CPU and memory, does your cubelet also get impacted? The agent also gets impacted? Not only agent, does other applications, other parts, other containers also will be impacted? The whole system gets impacted.
+
+17:16
+So, you need to follow some standards. Now let me apply this one also for now.
+
+17:26
+like this let me edit this instead of pod instead of pod can i create a controller like replication controller
+
+17:41
+What is the API version for replication controller?
+
+17:48
+Weaver now metadata this metadata is for what?
+
+17:56
+for replication controller labels are not mandatory. But here is this specification is same. Is this specification is same for every resource? No. So yesterday someone was asking sir, how do I know what is the specification? Will you able to refer the official document? Will you able to refer the official document where we have?
+
+18:22
+the details what is what kubernetes
+
+18:30
+workloads.
+
+18:33
+Kubernetes workloads. If I go here, we have a deployment, we have a replica set like this. Now, if I go to that one, I can understand. Kubernetes API specifications. So we have some documents here. You can understand what is what under that, which one.
+
+19:04
+There are a lot of things here. You can understand all these things.
+
+19:11
+Otherwise, you can use some editors in real time. Can I use some editor like this visual studio code?
+
+19:19
+But I don't suggest now. I don't suggest now because if you use these editors, can I install some plugins? Can I install some plugins that can auto-populate or auto-suggest? Yes. But I will not suggest now when you are learning. When you are learning, I will not suggest, because you need to know what is what. Sometimes in the interviews, they'll ask to write manifest. If you start typing everything,
+
+19:46
+Will you able to understand what is what, what is part, what is service, what is deployment, why you are doing that? You will be able to understand if you start typing everything. Now here, in Microsoft, after this Visual Studio code, you can go to these extensions. You can go to these extensions. You can install one extension called Kubernetes plugin. Kubernetes.
+
+20:13
+Visual Studio plugin. So if you want to work with Kubernetes, you can install this plugin. I will give the link. This Kubernetes plugin, you can go to that Kubernetes, search with Kubernetes here and install whatever is provided by Microsoft itself. Kubernetes.
+
+20:40
+whatever is provided by Microsoft itself this one I already installed I already installed if I have this plug-in installed now you can open this visual studio code go to the file click on new file click on new file first you need to select the language you will see some option like this select the language as yaml select the language as yaml now if I type something like this deployment.
+
+21:09
+Is it giving some option like this kubernetes deployment? Suppose let me show it again. Select the language here, y-a-m-l. Now the moment I say pod, P-o-d, is it giving one option like kubernetes pod? Who is giving this option? Auto suggestion or auto population? Is this provided by that extension, that plug-in?
+
+21:37
+Yes. Now I can use something like this, this plugin. It is pre-populating. But do I need to update as per my requirement? What is my container name? What is my image? How much resource request and limits? What is my container port? Similarly, I want to create a service. Is it giving one option called Kubernetes service? Like this? Can I do something like this? If I want to create a replication controller also?
+
+22:10
+replication controller also yes yes you no need to worry if you start practicing this even though you don't have a plugin if you start practicing will be able to write everything on your own like the way i am writing am i using this plugin anytime am i able to type the experience that is what we call it as an experience right if you start practicing start typing all these things that
+
+22:42
+So these type of plugins will be supported by a lot of ideas like STS, Visual Studio Code, IntelliJ, Eclipse. These type of plugins will be offered in any ideas, integrated development environments. Otherwise, I can use one more option, kind of a dry run. Kind of a dry run. What do you mean by dry run? Let me stop this one. Now, kubectl run.
+
+23:12
+I fun I fun that cubes ETL run something like this engine X engine X I fun I fun image equals to engine X like this I fun I fun port or I think I fun I fun container for this one.
+
+23:32
+One second. Let me use that imperative because we don't need to remember all these things. Cube CTL comments. There is official website. I have gave the link also. Now I want to create some pod. Can I use something like this?
+
+23:52
+Can I use something like this labels also if I want to add port also have to add here you can see all the options. Now imperatively can I do something like this also. Now let's say I want to create a pod. This is my pod.
+
+24:10
+image whatever image and then x labels these are the labels like this you can add labels multiple labels also comma separated like this now some other options some other options so if an iPhone port that is your container port let's say this is running on port 80 if an iPhone port equals to 80
+
+24:40
+now ifan n whatever namespace whether it's a default or whatever can I do something like this ifan ifan dry run
+
+24:52
+Now let me execute this first these type of things will help you to make things fast. Now dry run, dry run equals to client or I can give something like this. Now can I do this something like this? I fun woe I fun woe y a m l option. Now is it going to show something like this even though I am executing with the dry run option.
+
+25:21
+I fun of YML is it's showing some kind of a YML like this now can I append this YML can I append this YML to one file like this testpart.aml
+
+25:34
+Now can I go and modify that test pod.ml can I update it as per my requirement whatever fields I want to keep I can keep those fields I can remove other fields like this can I update as per my requirement now this is also one option you can use dry run not only for pod can I do similar thing for similar thing for deployment similar thing for
+
+26:03
+service also kind of a dry run.
+
+26:09
+we can do like this also like if you want to create a service right there is an option called expose there is an option called expose so can I do something like this expose with whatever options I want to use let's say something like this if I want to expose pod I need to use something like this if it is a pod if I want to expose RC then it use something
+
+26:39
+That is your RC name. This is your target port like this. It will generate one YML. Will I able to update and modify based on my requirement? You can see options for this expose. Similarly, create. If you want to create a deployment also, you can do that. Creating a deployment also, you can do that. Create a deployment, whatever you want to do this. But you are no need to depends on all these things.
+
+27:07
+Based on the experience, we'll be able to write on our own.
+
+27:12
+Once you are familiar with all these topics. Yes, but if you want to save some time, I want to improve the productivity, my productivity. Can I use these type of IDs, editors with some plugins?
+
+27:28
+Yes, so but I don't encourage that now. I don't encourage that now. And again, does this plugins will support all the type of again objects that depends that depends. That depends.
+
+27:47
+that depends
+
+27:59
+First option I will use.
+
+28:03
+If you see when I'm saying replica set, it is not supporting this this plugin. I have a different plugin that is showing but does the whatever kubernetes plugin I have told is it supporting that replication set. I mean to say that replica set. No, so that depends on the plugin, but will be able to refer the documents Google documents Google official documents you can refer and take the sample or Google use some plugins like that.
+
+28:33
+Yes, based on that experience you will get guys all these things. That's why we are saying practice by practicing more and more will be able to improve the speed also to write this type of manifest deploying and all those things. Yes. So I don't suggest this plug-in for now. I don't want to install this plug-in this kubernetes plug-in.
+
+29:00
+Kubernetes.
+
+29:03
+Not only for Kubernetes guys. Do I have a plugins to work on Terraform? Do I have a plugins to work on Terraform also use?
+
+29:17
+Now you can use this plugin.
+
+29:21
+You just click on this plugin, Kubernetes extension. So you open this one in your system, but make sure you have a Visual Studio Code already installed. In your system, you should have a Visual Studio Code already installed. Once your Visual Studio Code is installed in your laptop or desktop, you open this URL. If I click on this install, is it going to show?
+
+29:49
+Is it going to open the visual studio code and is it going to install automatically like this for me it is already installed. That's why I know need to install again. You can install but I don't suggest this one now.
+
+30:03
+I don't suggest this now. Is everyone clear?
+
+30:14
+how to write manifest you can use this try run option or this type of ideas also you can use now let me start typing on my own let me start typing on my own so that you can easily understand what is what
+
+30:32
+Now, here.
+
+30:37
+replicas one as I already told if it is a replication controller is the selector is mandatory like this whatever no it is optional but instead of replication controller if I am going to use a replica set or deployment is this selector is mandatory yes that is mandatory if I am using.
+
+31:04
+instead of replication controller if I am using replica set or deployment or demon set this is mandatory now here we have a template what is this template guys what is this template this template is basically your pod template guys this is a YML how can I give the comments or how can I comment something or how can I give the comments can I use hash character
+
+31:33
+Yes, now metadata name name your pod name but even though I am giving a name like this a node app pod do you think your pod will be created with this name is your pods will be with this name even though you are giving a name like this does your pod will have a same name no why because do I have a option to create a multiple replicas more than one
+
+32:03
+Yes, if it is a more than one replica, does Kubernetes will allow multiple parts with same names?
+
+32:14
+no. So how then it is assigning the names is it assigning a name like your controller name this controller name and some random alphanumeric characters.
+
+32:29
+that controller name and random alphanumeric characters.
+
+32:35
+Now let me give labels here. What is this labels? Can I call this as a quad labels? Here I have given something else. Is it allowed to give something else here as a selector for replication controller?
+
+32:52
+No. Now, this is my pods metadata against spec. This is my pod specification. Can I have something like this?
+
+33:11
+Someone was asking, sir, what is this iPhone? As I already explained in YML basics, what is this iPhone? In the YML, wherever you see iPhone, that is plural, singular or plural, right? So we have a plural, that is array or list. So, ports also something like this, because they have some containers which will be running on two types of ports, like maybe two ports. If you take Jenkins, does Jenkins has like a...
+
+33:39
+UI port that web interface port and slave port like that.
+
+33:44
+So wherever you see S kind of a S plural that is like multiple. Now this is my replication controller. Now if I apply this does replication controller will be created and does that replication controller will create a pod.
+
+34:08
+Now if I see, cube cvtl get all hyphenated in that namespace. Now do I have one more replication controller here? Node.js replication controller, desired one, current one. So this part is managed by whom? This part, whatever part which is getting created, this is managed by whom? Is it managed by this replication controller? Whatever I have highlighted? Yes.
+
+34:38
+Now service, I already have a service. Service, I'm using same labels, whatever I'm using here as a selectors in my service. Now, can I see this part details as an end point in this service?
+
+34:56
+Now can I see one part detail like is that services pointing to that part?
+
+35:05
+is this service node.js service is it pointing to this pod that is 10.40.02 this pod because pod has a labels because pod has the labels.
+
+35:20
+part has the labels. Now did I use those labels as a selectors in the service?
+
+35:30
+Did I use those labels as a selector here? So this is my service selector. My pod has this label. Now if I scale this replication controller, if I scale this replication controller, is it going to create another pod? Can I see that pod also as an endpoint in this service now? Like more than one pod? Yes. Now this is how it works. I can scale up, scale down.
+
+35:58
+Imperatively also I can scale something like this cubes ETL scale RC my RC name This is my RC name replication controller name I fun I fun replicas something like this. Is it possible to scale down to zero also? something like this
+
+36:17
+Now if you see why it is saying not found because of the namespace. Now if you see I have a replication controller I have a replication controller but desired as 0 desired as 0. The replication controller is still there but desired as 0 so desired is 0 because of that is it terminating that pod. Is it terminating that pod.
+
+36:48
+Now, once the pod is terminated, even though I have a replication controller, I don't have a pod. Since pod is terminated, can I see any endpoints for that service?
+
+37:02
+no you can even scale it to zero also now if i want to scale it to two one like this imperatively or in yml also can i do like this can i update replicas as two in my yml and apply declarative way yes now can i see two parts now can i see two parts now both are running again if they are not in a running state if they are not in a running state
+
+37:31
+If they are not ready, if here it is showing zero, does that parts will be reflected in your service endpoints? Even though part is there, but will it reflect in service endpoints? No.
+
+37:45
+Is everyone clear what is replication controller how it works?
+
+37:52
+Now the way we have a replication controller the way we have a replication controller there are lot of other controllers other objects the next one is replica set the next one is the replica set.
+
+38:08
+replica set what is replica set what is the difference between replication controller and replica set this is common question what is replica set what is the difference between replication controller and replica set replica set also manages the pod replicas replica set is next generation next generation
+
+38:43
+or advanced version I can say advanced version.
+
+38:49
+Advanced version of what? Advanced version of next generation of replication controller It's advanced version of replication controller so replica set also Manages The pod lifecycle which means It will create
+
+39:19
+and manage pods and we can
+
+39:28
+scale in scale out the pod replicas.
+
+39:34
+we can increase and decrease the pod replicas whatever we can do using replication controller same thing with replica set but what is the difference only difference between RC what do you mean by RC what do you mean by RC replication controller and only difference between RC and RS what is RS stands for in short name.
+
+40:03
+RS stands for replica set. So only difference between RC and RS.
+
+40:10
+is in selector support selector support so rc supports rc supports only equality based selector equality based selector whereas rs supports
+
+40:32
+both equality and set based set based and selector.
+
+40:43
+set based select. What do you mean by equality and what do you mean by set based basically expressions.
+
+40:53
+So equality, what do you mean by equality? Equal conditions. What do you mean by equality? Equal conditions.
+
+41:04
+like a key equals to value here in my replication controller and again selectors are not mandatory and again selectors are not mandatory not mandatory in rc and in rs in rs selectors are mandatory selectors are mandatory
+
+41:33
+But even though it is not mandatory I can use equality-based selector. What do you mean by equality-based selector?
+
+41:43
+equals condition like a key value can I call this as a kind of equals condition like key double equals to value like this this is equality based condition now if you see this manifest if you see this manifest whatever replication controllers we have created so far.
+
+42:09
+this one is it a equality selector here is it trying to compare equals kind of equals condition key equals to value just to make things clear like a SQL in SQL equality condition can I call something like this select star from employee where employee name equals to something like this.
+
+42:38
+Is it kind of equals condition? Is it going to return whatever records it is going to match with this column, this value, only matching records equals. Is it similar to this here in Kubernetes, this selector? Is it kind of equal condition?
+
+42:57
+Yes, but when I am using replica set is it going to support set based expressions expressions like this Just to make it simple I am writing a SQL query something like this select a star from employee where where employee Name in in Something like this Balaji are
+
+43:26
+something like this Balaji ready something like this. Can I call this as a expression set based on expressions if not in operators in not in not in like this kind of operators does this type of selector supports by RC.
+
+43:52
+Does this type of things will be selected by RC? No. But you are not going to write like this. I'm just giving an example. So only difference comes in this one. So let me show you.
+
+44:06
+let me show you how different it is
+
+44:23
+So let's say this is my replication controller. Let's say this is my replication controller. What is the only difference between this replication controller and replica set? One second.
+
+44:41
+let me create one more file now let me split my window this is
+
+44:48
+window 1 this is window 2 now only difference is one is kinder when I am using replication set when I am using replica set what is the kind it will be something like this kind will be replica set and what is the API version for replica set what is the API version for
+
+45:18
+apps slash v1 it is not just app apps cube ctl api resources if you see the replica set what is the api version for replica set kind is replica set what is the api version apps slash v1 now you can give whatever name you want to give can i give something like this
+
+45:45
+whatever name here I can give ABC XYZ also this is what name is it a name for replica set.
+
+45:54
+whatever I am going to give that is for this one. Now namespace replicas is same here, only difference comes here. It supports two type of selectors equality and set. But even though it is equality, I should not use like this. I should not use like this. There is a concept called match labels, match labels. So under the selector, I need to use a match labels.
+
+46:23
+If I am using match labels, key and value, this is what type of selector in replica set? This is equality. Equality. But does replica set will allow like this as is? Without this match labels, can I define like this? Will it allow like this? No. It will not allow. You will get an error. So.
+
+46:51
+it should be something like this match labels if you want to use this one now here you are directly using but if it is equality in replica set you have to use like this match labels this is equality but if I want to use set based selectors they have one more option called match expressions here match expressions you may have a question sir how come it is
+
+47:20
+Do I have that plugin installed?
+
+47:25
+but I don't suggest that one I open this one just to I open this one just to show you side by side so that you can easily understand I open this one just to show side by side so so that you can understand now here when I am using match expressions can I do something like this key key operator operator and a value use.
+
+47:51
+key can I use whatever key that label key let's say something like this app here can I use operators like in not in in something like this not in something like this I can use in here can I match with multiple values like node app if required can I map with another value also like something like this the value can be either this one or this one like that
+
+48:21
+Can I consider can I call this as expressions or set based selectors?
+
+48:29
+Is this type of selector supported in RC?
+
+48:35
+no only rsn they are supporting again do you mean are you going to use like this anyhow you are giving a label here something like this again you are giving a label like this app node app you can't give same key multiple values here same key multiple values we cannot give here it is supporting but it is not mandatory can i do something like this
+
+49:03
+This one I can use instead of this one can I directly use that match labels instead of defining that can I use something like this match labels app something like this this one and also the other one is same this one and this one is same this one and other one is same something like this match labels you are using but is it supporting kind of expression based selectors.
+
+49:37
+Is it supporting some kind of expression based selectors here, match labels or match expressions? Other than this, is everything is remain same only difference here in the selector, the kind and API version. Other than this, does other fields remain same like replicas, pod, templates, spec containers, all these things? Yes. Is everyone clear? What is replication set? How different it is from replication controller?
+
+50:05
+In the interviews also they are asking what is the difference between replication controller and replica set. Is everyone clear? The definition of replica set and difference.
+
+50:17
+Now using replica set also can I create a parts can I scale the parts can I manage the parts
+
+50:26
+Yes. Now let me delete this because I don't want to apply too many applications. If I keep creating a lot of application, does my cluster will break because I already have a lot of applications deployed in this namespace only. If I want to see in all the namespaces, can I do something like this?
+
+50:51
+If you see already lot of parts are running if I keep deploying lot of parts does my cluster gets impacted because I am not using that resources concept. So
+
+51:04
+What I will do? I will delete these applications and I'll demonstrate other applications. But in real time, are you going to do like this? To deploy your application, are you going to delete other application which is already deployed? No. You are going to have enough CPU, enough memory, will increase the resources in the cluster. This is just a simple cluster. But in real time, are you going to have some cluster?
+
+51:32
+like this with just a 6 GB of memory and 4 CPUs like this no as I already told based on number of ports you want to deploy you have lot of nodes lot of servers for now let me delete is it do you know if I do like this what will happen delete all I fun I fun all is it going to delete all the resources like
+
+52:01
+Services also are and any other objects in that namespace. Yes, but if I want to delete only Replication controllers can I say something like this delete RC? I fun I fun all delete RC I fun I fun all is it going to delete only this replication controllers Yes, and is this replication controllers internally will it delete these parts because I am deleting this replication controller It will delete these parts
+
+52:29
+I'm deleting this one also it is going to delete this. What's this whenever there is a change in your image. Do you need to delete and create a service again? This services do you need to delete and recreate the services again not required. Can I only delete that parts? I mean to say that controllers and read apply the controllers with new image.
+
+52:53
+Yes.
+
+52:56
+Now I deleted controllers internally it is deleting your ports also, but I have not deleted services. I have not deleted services. You can keep that services. Does this service will consume any CPU and any memory from your cluster your nodes? No your services will not take any consume any CPU and memory only ports the containers inside the pod you have a containers.
+
+53:23
+This container will take some CPU and memory to run that process to run that application.
+
+53:31
+Yes.
+
+53:33
+Now can I deploy same application instead of replication controller? Can I deploy same application as a replica set also like this?
+
+53:46
+Now instead of replication controller can I use replica set
+
+53:53
+replica set the name may be some meaningful name but if I deploy as is will I get a message saying that the API version is not correct let me show that
+
+54:09
+If I apply will I get an error saying that is it clearly saying no matches for kind replica set in version V1 is it clearly saying no matches for kind replica set in version V1 which means is that YML correct is this API version correct no apps slash V1 now without directly applying also can I do some kind of a dry run like this.
+
+54:38
+I have a knife and dry run something like this without instead of applying directly if required I can do the dry run now am I getting again message saying that unknown field app under replica set under specification under selector here it is saying in your replica set specification under selector it is saying unknown field app because as I already told is it going to support like this selectors as is.
+
+55:06
+So can I, do I need to use either expressions or labels like this? Match labels, L A B E L S. Match labels with proper indentation again. Something like this. Now is it equivalent to that equality by selected?
+
+55:26
+this now let me do the dry run now everything is perfect now can I apply that like this now can I see now instead of replication controller do I have a replica set replica set one replica set now is replica set is creating and managing your parts if this part goes down does this
+
+55:55
+Now if I want to scale imperatively also, can I scale something like this? Do you think this is correct? You don't need to be expert in this area, minimum common sense. I'm trying to scale RC, but do I have RC with that name or it is RS?
+
+56:15
+it is RS right now I fun I fun replicas something like this I'm saying is it saying no replication controller for error now it is not RC it is RS can I give full name also like this replica set or sets instead of short form yes now instead of one part can I see two parts now
+
+56:42
+replica set desired to current to ready to like that.
+
+56:48
+Now again when I access this service does this service is going to point to these parts because labels and selectors concept comes there your service will identify the parts and route the traffic. Yes this is replica set similarly can I create n number of replica sets based on how many applications you want to apply can I create a replica sets for those many images.
+
+57:14
+If you have enough CPU memory available, enough nodes available, yes. Now the way we have a replica set, there is one more Kubernetes resource called DEMONSET. There is one more resource called DEMONSET. We have a RC and RS. Similarly DEMONSET, DS. DS stands for what? In the short form.
+
+57:43
+Now, what is the difference between these replica set and the demon set or what is the difference between this replication controller or demon set? How different it is from these two? Demon set in the Docker Swarm, we discussed about two modes, service modes, right? When when in the Docker Swarm, we discussed about two modes. One is replica mode. Another one is what?
+
+58:12
+In the Docker Swarm, we have two types of service modes. One is replica mode. Another one is global mode. Now, this RC and RSC is like what? This RC and RSC is like a replica mode. Is it going to manage number of pod replicas? Will I able to scale up, scale down my pods?
+
+58:33
+using this RC and RS. Yes. Guys, you cannot scale container directly. You cannot scale container directly. If you want to scale the container, will you end up scaling the pod here because you need to scale the pod. Pod will have a containers. Kubernetes is not managing the containers. Kubernetes is managing the containers with the help of pods. So this RC and RS is like a replica mode. Will I able to increase and decrease the number of pod replicas?
+
+59:05
+in RC and RS. Yes, this demon set this demon set is like what this demon set is like a global mode in the Docker Swarm. Now, if I create a demon set, does demon set will make sure each and every node in your Kubernetes cluster will have a pod. Will it make sure it will have a pod for the demon set in each and every node.
+
+59:33
+in each and every node do have one pod for the daemon set.
+
+59:40
+Will I able to scale up scale down demon sets? I mean to say will I able to increase and decrease the number of pods for the demon sets?
+
+59:50
+Will I able to increase and decrease the number of pods if it is a daemon set? No. It's kind of a fixed. Suppose I have 10 nodes in my cluster. If I create a daemon set in each and every node, do we have one pod? In each and every node, do I have one pod for the daemon set?
+
+01:00:12
+In later any point of time also, if I try to add any new node, do I need to do anything required manually to add that part of the daemon set to the new node not required? Does Kubernetes will automatically create an pod for the daemon set in that newly added node also?
+
+01:00:36
+So what type of applications I can apply as a daemon sets if I'm using Kubernetes, can I deploy agent-based applications like agent-based softwares, like log agents, monitoring agents, like a Prometheus agents, like node exporters, log agents like Fluentd or LogStash. Can I deploy those type of agent-based softwares for monitoring and logging or log aggregation?
+
+01:01:05
+Now our own microservices, our own microservices, can I apply it as a replica mode kind of a replication controller or replica set so that based on the load I can increase decrease those things. So this is how daemon set works. Now it is exactly like a replica set only. It is exactly like a replica set only. But what is the difference here? What is the difference here?
+
+01:01:37
+Also.
+
+01:01:46
+Now, daemon set will make sure that some or all of the Kubernetes will have a copy of that pod for the daemon set. When any new node is added to the cluster, does pod is added to that new node also for the daemon set? Yes. And if something goes wrong with that node, do you think daemon set pods will be shifted to another node? You have a daemon set pods. Do you think this?
+
+01:02:13
+Something goes wrong with this node. Do you think this part will be shifted to other node? No.
+
+01:02:20
+Because this node already has a pod for the daemon set. But if it is a replica mode or replication controller, is it going to make sure the desired number of pod replicas will always exist in the cluster? Yes. Now, deleting a daemon set, is it going to delete the pods which is created by the daemon set again? If I delete daemon set, the pods created by daemon set.
+
+01:02:52
+will be created, deleted. Now the difference here is if you see
+
+01:03:03
+The API version is same only kind is getting changed kind is getting changed. Now here is it going to allow that replicas is it going to allow that replicas field.
+
+01:03:19
+No, it is not going to allow the replicas field.
+
+01:03:25
+because each and every node will have a one quad for the demon set just to make it simple quickly create a demon set using some image but I am using this image in real time you are going to use the logging image or monitoring agent image that image created for logging agent monitoring agent like that now for now let me use some image some dummy image.
+
+01:03:58
+So it is exactly, oh sorry, it is exactly like a replica set.
+
+01:04:06
+Now this is not supporting the daemon set, maybe let me take.
+
+01:04:13
+Demon set
+
+01:04:17
+but in the daemon set is it going to allow here something like this replicas as one like that also is it going to allow replicas with one also no now this is my daemon set name i can give some name whatever name
+
+01:04:35
+namespace in which namespace let's say I want to apply this in this namespace now like this labels
+
+01:04:52
+Your container name is also nginx, image name is nginx. Now these resources I will explain later. I don't want to get confused you, now itself. Now something like this. Now kind is dmonset, API version is this. But if I apply like this, do you think this is going to allow? No, I'm trying to apply this one. Do you think it will allow?
+
+01:05:21
+that nginx.
+
+01:05:25
+what it is saying is it saying unknown field called replicas in the demand set you know set specification so it is not allowed there so it is not allowed because it is not based on the number of replicas now if I create a demand set how many parts will be created for this demand set now how many parts will be created now I have total.
+
+01:05:55
+How many nodes?
+
+01:05:58
+total how many nodes 3 nodes. Now, let me apply the demon set. Let me apply the demon set.
+
+01:06:09
+Now let me get all the objects. Now how many parts got created for the demon set.
+
+01:06:21
+And if you see, if you see
+
+01:06:27
+pods iPhone over wide. Can I see the demon set pods? This is my demon set pods. This is my demon set pods. Do I see one pod running in 93 and another pod running in 206?
+
+01:06:43
+But why it is not running in the master? Why it is not scheduled in the master? Even though it's a demon set, it is supposed to create a pod in the master also. Master also node. Because master has a taint. Master has a taint. Is our pod is tolerating that taint? In our pod manifest, am I tolerating that taint here?
+
+01:07:10
+Am I tolerating the taint here? No. Guys, if you observe, in the cube system namespace, do I already have some demon sets created? And some parts are managed by the demon set, if you see. In my cube system namespace, do I already have some demon sets?
+
+01:07:30
+that kube proxy, kube proxy and we've made. So as I told in each and every node, will I have that kube proxy? In the architecture also I have explained, in the architecture also I have explained kube proxy. And this we've made is networking proxy. So is that kube proxy is created as a demon set whenever any new node added to the cluster does that kube proxy pod will be get scheduled in that node also? But here, how come it is scheduled in the master?
+
+01:08:00
+I have that Q proxy parts in the master also. How come it is scheduled in the master? If you see, they have that Q proxy part in the master 245, the view net part also in the 245, how come it is possible? Because is that tolerating that the taint? Is that demon set? Is that parts are tolerating the taint? Whatever we have on the master.
+
+01:08:28
+guys I can do something like this cube CTL describe DS I want to describe this demon set let's say I want to describe this demon set the demon set is in cubes system namespace
+
+01:08:47
+Now if you see it is giving some details it is giving some details if I want to see more details can I use iPhone over YML option I want to describe and see in a YML but describe will not give that YML option instead of describe what I need to use I need to use get get now if you see
+
+01:09:16
+Is it tolerating? If you see, do I have something called tolerations here? Do I have something called tolerations here in this daemon set manifest? Do I have the tolerations in our manifest? In our manifest? No, so that's why it is not scheduled. But can I do something like this? That the toleration comes under your pod specification not here.
+
+01:09:44
+the toleration comes under your part specification. Can I do something like this tolerations? Here you have three things, key,
+
+01:09:55
+operator and value and one more thing is effect effect so key operator value effect now whatever taint we have on the master that doesn't have any value that doesn't have any value only key
+
+01:10:17
+Let me show you. CubeCTL get nodes. CubeCTL describe.
+
+01:10:27
+describe node I am describing the master
+
+01:10:35
+Now here master has a taint it has three things here again I will explain in detail guys again I will explain in detail for now so it has three things here one is key equals to value and the other one is effect this one is effect so this key and value can be anything but effect there are only three possible values one is no schedule.
+
+01:11:06
+Another one is prefer no schedule. Refer no schedule. Another one is
+
+01:11:15
+There is one more no schedule, prefer no schedule.
+
+01:11:22
+I forgot the other name, no schedule, prefer no schedule one second. Let me.
+
+01:11:31
+Refer the official document.
+
+01:11:36
+prefer schedule, no schedule no schedule is one option another one is
+
+01:11:45
+No execute other one is no execute. So we have three possible values schedule prefer. No schedule. No execute So now master has a taint Key is there but value is not there value is not mandatory. This is key Value is not there. This is the effect Now if there is no value I can I no need to give something like this. This value field is not mandatory if there is no value here taint
+
+01:12:15
+can I tolerate this key here? This is my key. I'm tolerating the effect. What is the effect I have on that node? No schedule. Operator here, two things, exist and equals. Since there is no value here, I have to use operator as exist, operator as exist, whatever they have used here.
+
+01:12:42
+whatever they have used here something like this when I describe we were able to see that right something like this exist but they are not at all using this key and value this key and effect also which means they are not at all using this key and effect also which means whatever taints is there are they tolerating all the taints because they have only effect only operator they are not using this key they are not using this value also which means
+
+01:13:13
+taints you have is that demon set parts is that q proxy parts will tolerate all the taints whatever effect whatever key because they don't have this one as well as this one. Now I am tolerating like this. Now when I deploy demon set like this now is my demon set will get scheduled part in the master also because I am tolerating that now.
+
+01:13:39
+Now I am going to tolerate I am tolerating now. Now here in my part spec I am tolerating I am going to tolerate like this I am going to tolerate like this. Now is it going to schedule in the node where I have this taints even though I have a taints on some machine since I am tolerating this one. Now let me apply now.
+
+01:14:10
+nginx ds now if you see Let me see the pods now. Do you see that? Sorry in this namespace In this namespace now do I have the pod coming in the master also that demon set part Do you see is it coming in the master also cube ctl get nodes?
+
+01:14:34
+Is everyone clear what is demon set? Taints and tolerations is different concept. Taints and tolerations is different concept, but I wanted to make sure what is demon sets. That's why I was using this toleration in my demon set quad manifest. Now, will I able to scale up, scale down my demon sets? The way I have scaled up, scaled down my pods, will I able to scale down, scale up my demon sets?
+
+01:15:04
+Will I be able to scale up, scale down my daemon sets the way I have scaled my replication set replication controller. Now in future if I add any node also does that part will be automatically created for the daemon set whatever daemon sets I have in any namespace whatever daemon sets I have in any namespace does parts for each daemon set will be created. Now I have a lot of daemon sets.
+
+01:15:32
+two demon sets in this namespace one demon set in this namespace for all these demon sets does the parts gets created in that newly added node whatever node I'm going to add.
+
+01:15:45
+Yes, is everyone clear what is the DEMONSET what type of applications I can deploy as a DEMONSET
+
+01:15:56
+now is this allowed is this allowed something like this is this allowed something like this
+
+01:16:06
+No is everyone clear guys what is demon set
+
+01:16:17
+very important concept.
+
+01:16:21
+Now if I want to delete that daemon set parts if I delete the ds in that namespace does the parts of the daemon set get deleted if I do something like this cubectl delete
+
+01:16:36
+ds that the demon set is it going to delete the parts of the demon set from all those nodes from all those nodes is everyone clear what is demon set and how it works
+
+01:16:57
+Now, there is a one more Kubernetes object called a deployment. There is one more Kubernetes object called a deployment. This is very, very important. So deployment is a recommended way. Deployment is a recommended way to deploy.
+
+01:17:20
+applications basically pods in Kubernetes. Why it is recommended? What are the challenges or problems we have with replication controller or replica set?
+
+01:17:35
+Let me give quick overview. If I am using replication set, if I am using replication controller, now there is a change in my image. Now let's say there is a change in my image. Now I have this application. I have this application. Now I am deploying this application as RC or RS. That doesn't matter. When I am deploying as RC or RS, that doesn't matter. Let's say there is a new image created. If I modify this image tag and apply,
+
+01:18:05
+existing parts will be deleted and new parts gets created with that new image.
+
+01:18:12
+If I am using replication controller or replica set, if there is a change in my code, do I need to create a new version of the image for that code? Do I need to deploy that new image instead of old image in my cluster? Yes, but if I change like this from one to two, do you think whatever parts which is running out of this image will be deleted? And do you think you are you going to get a new images? Sorry, new parts with new image.
+
+01:18:40
+if you modify this image and apply? No. So in that case, do you need to delete and apply? Do you need to delete that replication controller? Then do you need to again create with new one? Yes. But if I do that, do I have a downtime? Do I have an outage? For my application, if I delete, your parts gets deleted, then while you are doing that one, if anyone is accessing your application, do I have
+
+01:19:09
+to solve the traffic? No. So you have a downtime. But I don't want to do that. I want to do the deployments without downtime. Then is it possible with other Kubernetes object called deployment? Using deployment, will I able to achieve that zero downtime deployments? Will I able to update my deployments? Yes. So I will cover that tomorrow. I'll cover that tomorrow.
+
+01:19:39
+Today I have to stop the you know session 20 minutes earlier because I have some other important task to attend. So I will continue this deployment tomorrow guys. What is deployment? Why deployment? What is the advantages of deployment? Why deployment is recommended way? I will continue tomorrow.
+
+01:20:01
+Today try to practice whatever has been discussed. Thank you guys. I'll continue tomorrow. Make sure you are attending the session. I don't want to repeat this one. You can understand why I am saying. Every day why I am saying make sure you are attending the session. Because one topic is related to other topic.
+
+01:20:24
+All these things will be asked in the interviews. All these things will be used in your day-to-day life if you are working on Kubernetes. If you are already familiar, it will be easy. That's it. Thank you guys. We'll see you tomorrow with the deployment.
+
