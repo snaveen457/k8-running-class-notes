@@ -1,0 +1,1110 @@
+00:01
+This conference will now be recorded.
+
+00:06
+In yesterday's session, we were discussing about what is pod and how to create a pod.
+
+00:14
+In FOD also we were discussing what is single container FOD, what is multi-container FOD, all those things.
+
+00:22
+Now I have a Kubernetes cluster already created. And one more thing what I wanted to say is, you guys are stopping these servers after practicing. You guys are stopping these servers. And when you start your servers again,
+
+00:42
+When you start this service again, you guys are stopping and restarting your servers. You know, you know, you know, need to again set up the cluster. You know, need to execute QBDM. You need that QBDM join that is already done. If you stop the servers and start the servers, does that cluster will be again up and running? Yes, it has all those details. Don't again do QBDM. You need QBDM join all these things. But if you terminated these servers.
+
+01:12
+If you terminated these servers and create a new servers, then you need to set up the cluster again. Don't set up the cluster every time when you are stopping and starting. That is one thing. And make sure your servers are running. Let's say you started your master, but you have not started these workers. Then again, will you be able to deploy your applications? Whatever applications you are already deployed,
+
+01:40
+will be able to access those applications if the servers are down.
+
+01:45
+No. So anytime you do anything first make sure your servers are running and check cubectl get nodes check cubectl get nodes when you are executing cubectl get nodes when you are executing cubectl get nodes.
+
+02:06
+What should be the status of your nodes? Whether it's a master or workers, what I have to see the status, it should be in a ready state. It should be in a ready state. If it is not in a ready state, which means do we have some issue with this node, maybe node is down or cubelet is down. Node is, I mean to say server is up and running, but that server may not have enough CPU, enough memory, that cubelet might be down.
+
+02:39
+So, do I need to make sure these are ready first? Yes.
+
+02:45
+Now, yesterday we have deployed some application. They have this application up and running in this namespace.
+
+02:54
+Yesterday we deployed I want to see more details. I'm executing kubectl wide. What is this IP?
+
+03:07
+for IP. Now this is, what is this IP?
+
+03:14
+my node IP in which node that pod is scheduled in which node that pod is scheduled that pod is scheduled in this node which means the container which is part of that pod is it running in this node.
+
+03:30
+the container which is part of in this pod is running in this node. Now if you remember what is the container runtime we are using in this kubernetes nodes if you see kubectl get nodes-o wide kubectl get nodes-o wide. Now this is the kernel version this is the operating system and if you see runtime container runtime what is the container runtime we are using in these nodes.
+
+04:02
+container D. But whatever image I have created is that image created using Docker Docker file.
+
+04:13
+Is it able to run that Docker image in the container D runtime? Are we able to run that Docker image? Are we able to run that as a container on the container D, if you see? Yes. Which means, can we still use Docker? Docker is a still powerful container software we can use to create and manage the images. We can use for creating and managing the images.
+
+04:44
+Now, my pod is running. That pod has container. How many containers we have in that pod as of now? One. Now, how to access that one? Now, how to access that application, which is running as a Kubernetes pod container? How to access? Within the cluster, how I can access? Outside the cluster, how I can access? Let me tell you. There is a concept called service.
+
+05:14
+there is a concept called service in Kubernetes. This is different. This is for communication.
+
+05:25
+Now, before I explain service, I have a pod IP. Can I use this pod IP also? Can I use this pod IP also to access? Will I able to use this pod IP for accessing that application which is running as a container in that pod?
+
+05:52
+I can use this pod IP, but does that pod IP will work only within the cluster? Let's say this is my Kubernetes cluster.
+
+06:08
+I have some nodes here.
+
+06:16
+I have some notes here.
+
+06:19
+My pod is running within the pod. I have a container within the pod. I have a container.
+
+06:29
+This is my maven.
+
+06:33
+app container and which port this container is running what is the container port 80 now this is my pod IP this is my pod IP
+
+06:49
+This is my pod IP.
+
+06:54
+This is my pod IP.
+
+06:58
+pod IP. So in which node that is running? That is running in this node 101 node right in 101 node. So this is the node IP. Can I call this as a node IP?
+
+07:12
+Again this node is nothing but your server. This is private IP. Private IP of that server. Now this is my cluster. Within the cluster will I able to use this IP address and this port whatever port that container port which is running in that pod. Now within the cluster maybe from this node or maybe from this node.
+
+07:40
+from this node will able to access this container using this pod IP and that respective container code within the cluster.
+
+07:49
+Now, if you observe is this node is also part of the cluster whatever current node that is basically your master node this 215 is your master node. So from this node basically I am using curl I am using curl that pod IP because this is a Linux machine this is a Linux machine we don't have any browser. Now pod IP my application context.
+
+08:19
+What is my application context? I think maven's iPhone web iPhone application forward slash is also required. Now, if you see, am I getting response status code 200? This one because this is my pod IP. What is this port inside that pod? We have one container that container is running on the port.
+
+08:57
+that container is running an 8080. So within the cluster, am I able to access?
+
+09:09
+not only from this node if I go to this node or this node also if I access to that node when I do the curl also that will I able to access the other node worker nodes also.
+
+09:24
+Let's say this one. Let's say this one. Let me connect to that server.
+
+09:36
+Let me connect to that server.
+
+09:42
+This is my master node, worker node. Guys here.
+
+09:48
+I can use this also. I can use this pod IP.
+
+09:55
+Do you see is it working here also because this is also part of the cluster. Now same thing if I do from other server which is not part of the cluster. Let's say other server. Let's say this server.
+
+10:16
+but they are in the same VPC same network same VPC that is same server networking. But is it part of pod networking I mean to say is that server is part of your cluster. Let's say this server is not part of the cluster. So let me connect to this server. If I do the same curl. Let me exit from here.
+
+10:41
+Let me exit from here. Let me connect here.
+
+10:47
+Now here, if I do the same, am I able to access?
+
+10:55
+Am I able to reach this IP on this port? No, because is this part of the cluster? No. Within the cluster, I can access. If I access this one from a different machine that can be your laptop or other desktop, or that is not a one more AWS server or one more normal server, will I able to access using that pod IP from outside the cluster?
+
+11:26
+No, but again within the cluster also is it recommended to use pod IPs. I mean to say you deployed one more microservice you deployed one more microservice one more application this application want to make a call with this application is it recommended to use pod IP for one application to reach another application within the cluster also this is going to work.
+
+11:54
+but is it recommended to view that suppose this is one more application another application this application want to make a communication with this application this is one microservice this is another microservice running in a same cluster this guy has to make a call to this guy is it recommended to use like this in the code by the developers again by the
+
+12:25
+within the cluster also if you want to communicate. No, why what is the problem? Why we should not use part IPs within the cluster also?
+
+12:52
+Whatever you know guys, whatever you know, whatever you know, just try to answer.
+
+13:05
+Same for all pods. As I already told, is pod IPs will be same for all the pods? As I already told, each and every pod will have a unique IP address in the cluster. Does each and every pod will have a unique IP address in the cluster? No. It is not because of same pod IP. Because do we have a control on the pod IPs, which means, let's say, if this pod is deleted, if this pod is deleted.
+
+13:34
+and recreated. Do you have a guarantee that you are going to get the same port?
+
+13:41
+IP? No. If pod IPs are changed, again, do I need to modify the code, the other applications code where I have to use that new IP? Is that correct? No. That is one reason. One more reason. In real time, are you going to have only one pod, one replica like this? Are you going to have one pod or one replica like this? No. Are you going to have multiple replicas like this?
+
+14:11
+two pods or three pods like this. So if I have a multiple pods, do I need some kind of a load balancing also within the cluster? If I directly use IP, if I directly use IP here, request always goes to this part. It will not distribute the load to this part. Do I need some kind of a load balancing between these parts, multiple replicas? No.
+
+14:41
+So as I already told in kubernetes there is one concept called service discovery and load balancing. So is it recommended to use this pod IPs if I want to do the load balancing or service discovery? No. So instead of doing this way in kubernetes there is a concept called service.
+
+15:10
+Can I create a service? Service. Someone was saying use the pod names. Pod names also we will not use. We will not use the pod names. We will not use pod names. So we will use service. The way we have a pods, can I create a one more Kubernetes called service?
+
+15:30
+One more kubernetes called service.
+
+15:34
+Now when I create a service, service will have an IP address and name. Service also will get IP address and name. So this service IP, we call it as a service IP or virtual IP.
+
+15:52
+We call it this as a service IP or virtual IP and it will have a name also.
+
+15:59
+service IP or virtual IP. This service also will get one IP address. I need to create a service. Service will have IP address and name. Again, do I need to use this IP address, this service IP address to access these thoughts? Not required. Can I use the name, whatever name I have used to create that service? Let's say,
+
+16:28
+I have created a service name like this maven web app svc
+
+16:36
+Now can I use that service name here? So when I use this service name, is that service name resolved to this IP, that service IP, that virtual IP?
+
+16:51
+Yes, is that service will act as a load balancing? Does this service will send the traffic to the ports?
+
+17:00
+within the cluster we can create a service service will act as a load balancer here. So there is a concept called service. Guys sometimes in the interview they are asking this question also what is the difference between Docker service and Kubernetes service. What is the difference between Docker service and Kubernetes service in Docker also we have a service.
+
+17:29
+In Kubernetes also we have a service, but is both are same? Is both are same?
+
+17:37
+What is Docker service in the Docker? What do you mean by service? You already know. Can you explain what do you mean by Docker service? What is Docker service? First.
+
+18:14
+Come on guys we already discussed Docker service. What do you mean by Docker service?
+
+18:22
+In Docker. Service will manage the container replicas and also can I use that service name also for communication within the Docker swarm cluster? Can I use that service name if one application has to communicate with other application other service? Can I use that service name?
+
+18:41
+Which means in Docker Swarm, is services managing both is services managing containers as well as communication also.
+
+18:54
+So Docker service is doing both managing the containers and load balancing the containers, accessing and load balancing the containers. Is everything is taken care by single object called Docker service in Docker Swarm.
+
+19:11
+in Docker Swarm, we are creating a service. Service is creating and managing the containers. And at the same time, am I able to use that service name within the cluster if I want to reach that replicas, that service replicas, that service containers?
+
+19:28
+Yes, you have practically done that also. You have practically done that also. You created a Spring Boot application. You created a Mongo application. Are you deployed Java web application or Maven web application? When I was demonstrating, was I you know, am I able to access that using service name the Docker service name, which means services managing containers as well as we can access using the service name.
+
+19:57
+But in Kubernetes, service is different. In Kubernetes, does Kubernetes service will create and manage the parts, containers?
+
+20:09
+in Kubernetes, does Kubernetes service will create a pods? Does Kubernetes service will manage the pods and containers? No.
+
+20:19
+So in Kubernetes, is service is responsible only for communication and load balancing in the cluster? Yes. So in Kubernetes, there is a concept called service. In Kubernetes, there is a concept called service. Now let me explain what is service. Kubernetes. In Kubernetes, then we will proceed.
+
+20:50
+Communication is very important. So in Kubernetes, we have a service.
+
+20:58
+What is service? A service is responsible for making our pods discoverable, which means accessible. The service is responsible for making our pods discoverable inside the network or exposing them to the outer, outside. It is responsible for making our pods discoverable, identifying the pods and accessing those pods. Inside the network.
+
+21:27
+are exposing them to the internet, internet in the sense outside the cluster. But how service will identify pod? I have different different pods created. Let's say this is this application pod. This is one more application. Let's say I have deployed different application. Let's say this is a Java web app pod. Now I am creating a service, but how service will identify the pods? How this service will identify?
+
+21:57
+to which ports it has to send the traffic
+
+22:02
+How it will identify? Service will identify the pods based on the labels and selectors. Service will identify the pods based on the labels and selectors. That is very, very important. While creating a pod, is it possible for me to give a labels for that pod? Yesterday also we have given label. Did I give a label like this while creating a pod?
+
+22:31
+Did I create a label for like this? Now, these labels, these labels, can I use it as a selector here while creating a service, Kubernetes service? Because service has to identify the pods. So how service will identify the pods? Service will identify the pods based on the labels and selectors, which means now here, can I use those labels as a selector here while creating a service in Kubernetes?
+
+23:02
+selectors or selector. Can I say something like this?
+
+23:10
+Now, within my complete cluster with this label, how many pods are there? Let's say if it has only one pod, let's say if it has only one pod with that label, does the service will route the traffic to this pod? If anyone access the application via this service, let's say I have multiple replicas, multiple pods. Now how many pods, how many endpoints this service will have? Endpoints are nothing but your pods.
+
+23:39
+So how many end parts this service will have now if I have something like this.
+
+23:47
+If I have something like this, how many endpoints I will have? Two. But does this pod, I mean to say, does this service will send the traffic to this pod? Will it consider this pod or any other pod if this pod is having with the different labels? Suppose this pod I created with a different label. Let's say app, Java web app. Now, do you think this service, this service
+
+24:16
+will route the traffic to this part because service is created with the selector. No, so within Kubernetes, within Kubernetes, if I want to access the application within the cluster within the cluster, if I want to access the application or outside the cluster also, if you want to access the application, do I need to create a service? Kubernetes service that is one object.
+
+24:45
+It is responsible for making our ports discoverable or accessible inside the network inside the network in the sense inside the cluster inside the cluster and will I able to expose that parts also. To outside the cluster using service again. Yes. Service will identify the parts based on the labels. Now there are different types of services again.
+
+25:13
+There are different types of services, Kubernetes services. What are those? Yesterday, I think I already explained. One is cluster IP. Another one is node port. Another one is headless. One more is load balancer.
+
+25:34
+This is external load balancer external load balancer. Our cloud load balancer.
+
+25:47
+The service itself will act as a load balancer within the cluster. The service of type load balancer is an external load balancer. So this we will discuss later. Now we have a different types of services, cluster IP service, node port service like this. Now cluster IP, cluster IP service. When I create a service of type cluster IP, that will expose the service.
+
+26:16
+on a cluster internal IP. This is we call it as a this one this one this we call it as a cluster IP or service IP or virtual IP. So basically this is my service. This is my service. So when I create a service of type cluster IP, it will expose the services on cluster internal IP services only reachable within the cluster. If I create a service
+
+26:46
+Will I able to reach that service only within the cluster? This is my kubernetes cluster. Let's say will I able to reach only within the cluster if I create a service of type cluster IP.
+
+26:59
+Yes.
+
+27:02
+And also if I am not mentioning the type, if I am not mentioning the type, what type of service I am creating, what is the default one? What is the default type of service which gets created? Again
+
+27:18
+cluster IP only that is the default one. Now what is going to happen in the background? What is going to happen in the background when I'm creating a service? Understand guys, this is very very important communication is very very important. So when we create a service what is going to happen in the background? I am going to get one virtual IP or cluster IP. I am talking about this one. I'm talking about this one.
+
+27:47
+When we create a service, we will get one virtual IP or cluster IP that we call it as a service IP. Is that IP will get registered with the DNS? Is that IP will be registered with the DNS? If you remember, within Kubernetes, do we have a DNS, cube DNS or core DNS? Do we have some DNS also running within the cluster? If you observe, within my cluster, do we have it?
+
+28:16
+DNS also running that is within the cluster.
+
+28:22
+cubectl get pods, if and n cube system. So do I have a cube DNS or core DNS? That is Kubernetes DNS. Do I have some DNS pods also, DNS solution also running in my cluster?
+
+28:39
+in a cube system namespace do have some Kubernetes DNS or cube DNS or core DNS parts also running. So which means when we create a service of type anytime not only cluster IP. I am going to get one IP is that IP will be registered in the DNS with that name whatever name I am using. Let's say I am creating a service with this name. Does this name will be mapped with this IP address?
+
+29:09
+in the cube DNS within the cluster we have that core DNS or cube DNS.
+
+29:17
+That is service discovery. So we have a DNS also. This IP will get registered with this name. So again, if this application, another application want to access this application, do they really need to use the pod IPs of this one? Or do they really need to use again this IP? Do I need to use service IP? Not required. Can I use that name instead of this IP or pod IPs?
+
+29:46
+Can I use this name, whatever name I have used to create a service here? If I use this name, does DNS lookup will happen within the cluster? We have a DNS solution running in the cluster. Does the DNS lookup happen within the cluster? Is it going to resolve that name to whatever service IP? Request goes to service. Then does this service will forward the traffic to the pods?
+
+30:14
+Does the service will forward the traffic to the ports?
+
+30:19
+like this but how service will identify the parts to which part it has to route what are the endpoints of this service how it will identify labels and selectors
+
+30:33
+So when we create a service, we are going to get one virtual IP address that will get registered onto the DNS. Pods can find and talk to this using service name. As we already discussed, service is just a logical concept. Service is just a logical concept. Code, some code. But the real work will be do by whom in the background, the actual work will be done by whom in the background.
+
+31:03
+In the architecture, I was explaining one component. So is this networking rules, is this networking rules will be maintained by Q proxy if request comes to service, to which part it has to follow for the traffic. Does all these networking connection forwarding rules will be maintained by Q proxy?
+
+31:28
+So service is a logical concept. Actual work will be done by kube-proxy. So what kube-proxy does? Does kube-proxy route the traffic from cluster IP to pod IPs in the background? We are accessing cluster service name. The kube-proxy will forward the traffic from this cluster IP to your pod IPs. So who is going to actually take care by this? Kube-proxy.
+
+31:56
+Is everyone clear when I am creating a service what is happening in the Kubernetes how service will identify the parts why we need a service. If I am using service. Do I need to worry about the changes in my pod IPs. Let's say this part is deleted this part is deleted and recreated with a different IP. Do I need to worry if I am using service concept here if I am using a service name.
+
+32:24
+If this part is deleted and recreated with different IP, I know need to worry. Now if this service has multiple parts like this, does the service will act as a load balancing also service discovery and load balancing also in the cluster.
+
+32:41
+So is it going to suit our requirements, microservices architecture, you are applying multiple microservices as a containers as a pods, that containers can go down anytime that containers can come up. Will I able to use this name for communicating one application with another application within the cluster and load balance that application also within the cluster?
+
+33:08
+Yes. So service is a logical concept. Actual work will be done by.
+
+33:16
+Now this is example of manifest. This is example of manifest. Now if I create as is do you think it will work for our application now? If I create as is do you think it will work for our application? This is sample. Do I need to make sure I am using right selectors here? Whatever I have given labels for my application.
+
+33:44
+Do I need to use the correct selectors here? Yes. And also do I need to mention these ports also properly? These ports also properly? This target port. You have one port called target port. Do I need to make sure I'm giving a correct target port? So this is service port. This is service port. On which port your service has to accept the traffic? Can I use any port on this service?
+
+34:12
+It can be 80 or it can be 88 or any port and which port the service should accept the traffic. That can be any port. So when I'm using that service name, does request goes to that service and whatever port I have used here as a service port.
+
+34:33
+Yes, then is that service will route the traffic to the pods and the given target port whatever target port I have used does that service will route the traffic to the pods and the given target port
+
+34:48
+Yes, now this is sample. This is sample, but let me create a service. Guys, if required, can I have multiple Kubernetes resources in a same YML instead of creating a separate YML? Can I have say in the same YML? Can I create other also by separating YML in YML? What this represents? This three dashes? Is it going to be a one more?
+
+35:18
+resource.
+
+35:22
+Yes. So here can I write something like this API version kind.
+
+35:32
+Metadata
+
+35:36
+expect guess yesterday I was still observing some guys are using k caps is it correct some guys were using k caps is it correct no kind now what kind of resource I want to create now what kind of object I want to create or what kind of resource I want to create I need to create a service service again is this correct yes a small here kind
+
+36:06
+No. Now what is the API version for this service? What is the API version for this service? I have given some table here also. If you see.
+
+36:22
+If you see here I have given one table here.
+
+36:38
+But only few things I have given but that doesn't matter if you see.
+
+36:44
+Kind is service. If let's say if kind is service, what is the API version for service?
+
+36:53
+leaving leaving
+
+37:00
+Now, even though you don't have this table, what command you can use to see the kinds and the server API versions, all those things, what command I can use so that I can see what are the Kubernetes resources, what is the API version for that, I can use kubectl API resources, it will list all those things. Now, V1, again, is this correct? People are making a lot of mistakes here.
+
+37:32
+So v1 v small 1 metadata this metadata is what basically I can write a service like this APA version kind metadata spec.
+
+37:51
+So kind service APA version V1 metadata name this name is for what this name is for what this metadata is basically for this one. So this name is for what whatever name I am going to give that that is a service name name of the service.
+
+38:16
+name of the service if required can add a labels also to this service this is labels for your service but are we going to use these labels anywhere is it mandatory to use labels for service not required because we are not using these labels anywhere these are the labels for service now namespace do I need to mention in which namespace I have to create this service like this.
+
+38:45
+the namespace name.
+
+38:49
+the namespace name. If I don't mention the namespace, in which namespace this service gets created? Default. But one scenario, you have your pods in the test namespace. If you create a service for that pods in the default namespace, do you think will it work? You have your pods in test namespace, but if you create that service in a default namespace, do you think it will work? No.
+
+39:19
+Do I need to make sure in whatever namespace I have my pods? Do I need to create a service for that pods also in same namespace?
+
+39:30
+In whatever namespace you have your pods, in the same namespace, you need to create a service for that pods.
+
+39:39
+No.
+
+39:42
+namespace here spec. What is this specification? Is your exactly like this? Is this specification of service also like this? Whatever you have a part specification, is it something like this here in the spec? No, this is service specification. Does this specification will be different based on the kind of resource you are creating?
+
+40:08
+the kind of resource you are creating, the specification will change. So here we have something like this type, type. Here what are the possible values? Service type, cluster IP, node port, or load balancer. This is external load balancer, which will not work now. Even though...
+
+40:34
+say service type load balancer, you are not going to get any external load balancer. This I will explain later. Now, what type of service I want to create. For now, if I want to expose that application only in the cluster, I don't want anyone to reach that application from outside only within the cluster that service should be accessible. Then what type of service? Can I create a service of type cluster IP?
+
+41:03
+Cluster IP C caps C caps IP caps Okay cluster IP now the most important thing here is selector Here what need what I need to give Whatever for the label key I used That one and part that part label Value
+
+41:33
+So here under selector, do I need to use quad labels as selectors here?
+
+41:50
+I need to use this part labels as a selectors here. This place very important rule. This play a key role here. Let's say you are a pod. You are a pod have this label app maven web app. But while creating a service, let's say I am using name as a key, name as a key value as maven web app. Do you think the service will discover the pods?
+
+42:18
+Do you think this service will have endpoints? No. So this is very, very important. Let's assume my pod has multiple labels. Is it mandatory to use all those labels here? Let's say I have multiple labels on pod. Is it mandatory to use all those labels? Not required. Anyone or all. You can use all or anyone.
+
+42:45
+Here we are giving pod labels as a selectors, pod labels as a selectors here. Then what next? Codes, mapping, we have a port, we have a target port. So this target port is nothing but what? The target port is nothing but your.
+
+43:10
+container port, your container port. Now this port is nothing but what? This is your service port. On which port the service should accept the traffic? Then once it receives the traffic on this port, on which port it has to forward the traffic to the ports? That is port.
+
+43:41
+Here you have one more option called node port that I will explain what is this node port when I go for a different service. Now this is my service manifest. Now let me create a service now. API version.
+
+43:59
+Can I give any name here guys? Something like this, any name can I give service?
+
+44:06
+something like this any name even abc also fine yes but some meaningful name give the meaningful name now let me create a spec let me define the spec here again
+
+44:23
+type cluster IP selector
+
+44:31
+selector. Now these are my pod labels, app, maven, web app. Now here, value is same, but I'm using a different key. Service will be created. Service will have a cluster, that IP, virtual IP. But does that service will have any endpoints, which means
+
+44:57
+Does that service will have any parts in the background? Will it have any endpoints? Will it have a part details? No, because the service will identify the parts based on what? Labels and selectors. So do I need to use correct labels? The services for which parts? Do I need to clearly use those labels? You are creating a service, but that service is for which parts?
+
+45:25
+that is depends on your labels. Let me show you I am not giving any correct label. Let's say value is matching but key is not same. Let me give incorrect only so that you can understand easily. Now force. When it comes to force section you have two things. One is for.
+
+45:49
+This can be default port also 80 if it is a default port like this does any other application can just use this service name without any port also can they use this service name other application because and which port request goes and which port request goes default port 80. Let's say if I have created a service on 8080 then.
+
+46:16
+Whoever want to reach that service, do they need to use something like this? If the service is also created on 8080, do they need to use something like this? Service name and service port like this? Yes, so it can be on any port that can be 80 or 8080 like this. If it is 80, you can access like this. But again, is it mandatory even though you don't use this one? What is the default port?
+
+46:46
+and which port request goes 8080 but let's consider you have created a service like this you have created a service on port 8080 but if you access like this do you think it will work again if you access like this do you think it will work again no if you access like this also it won't work but if I have you know do I need to access like this that service
+
+47:16
+Do I need to access like this? If service is created on port 8080 like this? Yes. So that can be anything, port 80. Now, target port. So target port is nothing but within that ports on which container port you want to route the traffic. The service has to route the traffic to which target port in that port. So can I say 8080 here?
+
+47:42
+But again, is it always 8080? Let's say I'm creating a service for Node.js application. I'm creating a service for Node.js application that Node.js pods, then is always 8080? No. This is based on your container on which port you are running. I am doing one more mistake here. Did I mention the service and namespace in which namespace I want to create this service?
+
+48:11
+So when I apply this one when I apply this one which namespace it will get created.
+
+48:23
+in which namespace it will be created. If you see cube CETL get all I fun in test type on NS service is created but is that service is showing here I am saying all instead of all you can get only service also by executing this command is that they have that service created in that namespace no but in which namespace that is created they have that service created.
+
+48:51
+in default namespace.
+
+48:57
+There are two problems now. There are two problems. One is service is created in a different namespace. Another one is I'm using wrong labels. I'm using wrong labels. Now, let me describe this service. If I want to see more details about this service, can I describe like this? SVC short form, kubectl describe SVC, SVC short form. I can describe this service.
+
+49:26
+Now if you see this service, do I have any end points here for that service?
+
+49:34
+Do I have any endpoints here for that service? No. Guys, what is this IP? What is this IP? Whatever I see here, 10.97.157.245. Can I call that as a service IP or that cluster IP?
+
+49:51
+Now, is this IP is mapped with this name within the cluster in the cube DNS or core DNS?
+
+50:03
+Yes, now I created a service but now if anyone access this service using this IP or using this name, do you think it will work? I can use this IP also let me show you. I'm using service IP now. I'm using service IP. Service is created on port 80. Do I need to mention any port? Is it mandatory since service is created on port 80? Not required. Now my application context.
+
+50:33
+my application context I'm using.
+
+50:38
+I am getting a response. Am I getting a response back from that service request went to service on port 80 service is saying connection refused. Why it is saying connection refused because is this service has any.
+
+50:55
+Endpoint
+
+50:59
+no no end point end point is nothing but what your pods your pods now let me correct that service what i will do again i will update that file now let me give a correct label correct label app this is my pod labels i am using that as a selector let me give a correct
+
+51:30
+Now, even though I am using correct labels, do I still have endpoints here? Even though I'm using a correct labels as a selector, do I have an endpoint here? No. Why I don't have any endpoint in this namespace where I have a service. In this namespace where I have a service, do I have any parts with that labels, whatever I'm using as a selector?
+
+51:59
+whatever I'm using as a selector see here. This selectors do I have any parts in that namespace? Where I have a service no, but we have these in other namespace.
+
+52:12
+This is one option is I fun I can show labels. So when I'm using this cube Ctl get parts I fun I can show labels. Is it showing the labels of that part?
+
+52:27
+Yes, but I have a parts with this label, but is it in the same namespace where your service is created?
+
+52:36
+No, so this way it won't work. Do I need to make sure that service is created? I will delete this service. I will delete this service that is of no use here. I will delete this service. Delete SVC, that service. Now, can I create a service in the other namespace here? Can I simply say namespace?
+
+53:02
+Can I simply say namespace?
+
+53:07
+text-ns. Now again if you do have a mistakes here again do you think the service will identify the parts even though they are in a same namespace. No.
+
+53:22
+Guys I am explaining at very basic level. This is very, very important. How service will work, how service will identify the ports, why service? You can understand this way only. So that's why I'm making a lot of mistakes and explaining. Now let me create in a correct namespace, but I'm not using correct labels as a selector here. Let me apply this.
+
+53:50
+Let me apply this. Now I have a service also. I have a service also.
+
+54:06
+Do I have a pod? Do I have a service also in that namespace? Yes, but still, still am I able to reach I'm using this IP for now I'm using this IP. I no need to use any port because service is running on that port. Now this is my application context.
+
+54:28
+Am I able to reach still? Still it is saying connection refused.
+
+54:36
+Why it is saying connection refuse? Do I have any endpoints? Let me describe that service.
+
+54:49
+Why this error? Because cubectl is trying to describe this service in a default namespace. But do I have that service in a default namespace? No. That is in test ns. Now do I have endpoints here? Do I have endpoints here? No. Why? In my service, what is the selector I am using? Name maven webapp.
+
+55:18
+But do I have any parts with that label in that namespace?
+
+55:32
+I have a pod I have a pod with this label. I have a selector like this in the service. This is matching, but is key same is key same. It's a key value pair, right? It is not same. So that's why is it able to resolve this service is able to resolve to this pod. Is service is able to use this as a end point? No. Now what is the solution for this? What is the solution for this?
+
+56:00
+Now, how can I fix this problem?
+
+56:13
+labels and selector should be same. There are two things. Either can I update the labels of my pod? Can I update the labels of my pod? Or can I update the selectors of my service? I can update the labels of my pod as a name map and web app. Or can I update my selector, service selector as an app map and web app? There are two options. Either you modify the pod labels
+
+56:41
+or either you update the service selector.
+
+56:46
+guys on the fly also will able to do like this cubectl edit Imperatively also can I modify kubernetes resources like this cubectl edit what you want to edit let's say you want to edit service I want to edit this service ifan n that namespace name ifan o yiml so when I do like this on the fly
+
+57:15
+Is it going to open that service for editing? Imperatively also can I edit?
+
+57:22
+Yes, imperatively also you can edit. But if you are doing imperatively, whatever file you are using for deploying, in that file, these things will get updated. Whatever file you are using, no. But will this update directly in the cluster, directly in the API server, ETCD? Yes. You can do it imperatively also. But if you are making imperatively,
+
+57:51
+If I press enter like this, is it open for editing? Imperatively. Now can I update here? You need to press Control-I. Just I. You press I. You press I. Insert mode. Here I can make changes. Add escape colon WQ. Escape colon WQ. Will it directly update in the cluster? If I press now escape colon WQ.
+
+58:20
+will it directly update in the cluster? Yes. But if I don't want to do this way, if I don't want to do this way, I'm pressing escape to colon. I don't want to edit like this. Now, can I modify declaratively? Can I update this YML in the source?
+
+58:39
+like this then can I apply can I apply keep ctl apply I have enough that file again now if you see now you see I have a parts with this now I have a service also
+
+59:00
+service-o-wide I am using service-o-wide now I have a pod with this label service with this selector now if I use this service for communication is the service will identify this pod and will it route the traffic to that pod
+
+59:22
+Now if you see the service, let me describe the service again. Now can I see some endpoint here? Can I see some endpoint here now? What is this endpoint? What is this IP? What is that IP?
+
+59:40
+whatever I see that IP what is that IP is it that pod IP this one is this the pod IP 10.44.0.1 now when I use this IP service IP is it going to route the traffic to this IP and port internally if I use this service IP is it internally going to route the traffic to this one kind of a reverse proxy guys kind of a reverse proxy now
+
+01:00:09
+If I have multiple parts here with same labels with same labels. I have a one more quad. Same application is that as two replicas two parts same application is deployed as two replicas or three replicas or four replicas same application multiple parts. Will I able to see all those things as a endpoints here instead of one end point? Can I see two endpoints or four endpoints based on the number of replicas number of parts you have for that application?
+
+01:00:45
+Will I able to see that's what I have explained here. In this already I have explained here, right? So if I have multiple pods like this, same application applied multiple, will I able to see both pods as endpoints in my service? Now does that service will act as a load balancer? Will it distribute the traffic? Does that service will distribute the traffic between those endpoints, those pods within the cluster? So.
+
+01:01:14
+Does this service will act as a discovery and load balancing? Does this Kubernetes service will act as a service discovery and load balancing? It will discover and also do the load balance.
+
+01:01:29
+Now when I access the service now when I am accessing using this service IP this service IP curl-v that service IP service is created on which port
+
+01:01:44
+port 80 so I can use like this I can use like this there is no problem but can I use like this can I use like this
+
+01:02:00
+because this is your service IP this is your service IP this IP, can I use like this
+
+01:02:11
+I will not get any response. I will not get any response because he services working on this port or services listening or created on this port. No, I'll not get any response. That is service port 80. Now when I'm using this service IP, basically this IP and this port request goes to service. Is service is going to route the traffic to this endpoint? Is it going to route the traffic to that port on that port? No. Now am I getting a response?
+
+01:02:41
+from that pod? am i getting the response from that pod?
+
+01:02:49
+Now since service is running on port 80 is it mandatory to use 80 again even though I don't use what is the default port request goes 80 now am I getting a response
+
+01:03:03
+but again does this service will work outside the cluster like this this machine is not part of your cluster let's say this machine is not part of your cluster let's say again will it work that service
+
+01:03:25
+from a different machine which is not part of the cluster. No, but from any other machine, which is part of the cluster, let's say not this one, one more machine.
+
+01:03:37
+Let's say.
+
+01:03:40
+Let's say another worker machine. Not this one. Let me take one more machine. Maybe any other machine like worker or master like this. This one or maybe this one. Let's take any machine.
+
+01:04:01
+Within that machine from this machine is service IP also working, which means is that service will work within the cluster only.
+
+01:04:12
+Let me use that service details something like this.
+
+01:04:18
+Now is it working here also because this is also part of the cluster. Yes. Now can I use that service from my laptop like this from a different server which is not part of that cluster. Can I access like this. First of all no. But again this is only within the cluster. But again is it recommended to use this IP that service IP again because service IP.
+
+01:04:48
+When the service IP will be allocated, the service IP will be allocated while creating a service. Do you need to wait till that IP is getting created for other application has to wait not required. Can they go with name? Do you have a control on the name? What name you can use for service? Do you have a control on the name? So instead of IP, can I use name? Can I use name instead of IP of that service?
+
+01:05:17
+Can I use service name? What our name I have used?
+
+01:05:23
+whatever name I have used for that service. Let's say this one.
+
+01:05:29
+But does this names will directly resolve from the node itself from the node. I mean to say from the server does this names will resolve to IPs directly from the node node in the sense directly like this. Do you think it will resolve? No, it will not resolve to the IP when I am accessing directly from the node node in the sense server.
+
+01:05:55
+server am I getting error saying that could not resolve host am I getting error saying that could not resolve host which means this names will work but where this names will work does this names will work within the pods within the pods yes not directly from the host not directly from the host now let's say I deployed one more application I deployed one more application as a pod.
+
+01:06:24
+Then can I use that name in the pod? It will not resolve directly in the node. It will resolve only in the pod. Which means, will I able to use this Kubernetes services directly from the node, any application which is running directly in the node. Will it work? It is not running as a pod. That application is not running as a pod. Will you able to use that service name? Even though you are running some application in this server.
+
+01:06:53
+but that is not running as a pod. Do you think we'll be able to use this service name? No. So that service name will resolve only within the pods, only within the pods. Now, just to demonstrate, I'll create one pod. I'll create one pod, maybe imperatively or declaratively. I'll create one more application. Now let me create one more application. Let's say,
+
+01:07:22
+Let me deploy another application maybe that node.js app.
+
+01:07:31
+Now here I am creating one more pod another application. Can I do something like this API version kind pod metadata name name of the pod. Let's say node.js or something like this namespace namespace. Let's say s type and NS.
+
+01:08:00
+The labels are important.
+
+01:08:04
+Guys do you think is this correct?
+
+01:08:08
+Is this correct? If I add if I create a pod like this that kubernetes service, whatever we created for other application will it start sending the traffic to this part also this node.js pod do you think this is correct?
+
+01:08:26
+If the services start sending the traffic to this part in this part, do you have any container which is running on 8080? Or do you have that application deployed in this part container? No. So do you need to make sure? Do you need to make sure you are using labels and selectors carefully? Otherwise you are expecting your service to route the traffic to one part. Will it send the traffic to different part altogether where you don't have any application?
+
+01:08:55
+for that service. Yes. So make sure you are using proper labels and selectors. So this is not like this. Can I give something like this for this part? Can I give something like this?
+
+01:09:15
+Are you getting what I am trying to say now? Let's say you are running different application in this pod. You are deploying a different image different container in this pod.
+
+01:09:29
+You are deploying this one on this port, but you are using labels like this. You are using labels like this. Now does your service will start sending the traffic to this part also whatever service you created for other application. Yes, but if request goes to this part, do you think it will work? You are trying to reach other application. You will end up reaching different application. Do you think will it work if you do like this? No.
+
+01:09:57
+I need to make sure I'm using proper labels and selectors based on the applications we are applying.
+
+01:10:05
+Yes, that is very very important. These type of issues we will observe the frequently is these type of issues will observe frequently because they may mess up with labels or selectors like that you are expected to route the traffic to one part but traffic is going to different port. Do you get a response will it work as expected? No.
+
+01:10:29
+Now let me give uniquely this is for specification containers
+
+01:10:40
+name name of the container I can give something like this
+
+01:10:46
+Guys one more thing within a namespace, do I need to have a unique names used for this Kubernetes object? I already have a pod with this node.js app. Can I reuse same name within that namespace? No, but can I use names? Can I reuse the names in different namespaces? Suppose in this namespace I have this name used, but in a default namespace, can I again reuse the same name if required?
+
+01:11:15
+but within the namespace object names should be unique.
+
+01:11:22
+Now let me say image.
+
+01:11:25
+I will apply this image proper image that image should be there that image should be there.
+
+01:11:40
+Can we use the same manifest file? Yes, but is that correct again? You need to follow some best practices. This is different application. That is different application. Are you going to write everything in a single YML file? You have hundreds of microservices. You want to deploy each microservice. Are you going to write that pods services for all those microservices in a single file? No.
+
+01:12:13
+Guys these are like a best practices right or like a minimum you need to apply some minimum knowledge I mean to say you need to think whether I am doing whatever I am doing is correct like kind of a minimum common sense I can say or minimum knowledge. So is it correct to define everything in a single YML file will it become very lengthy will it become for maintaining that single file modifying that single file it is.
+
+01:12:42
+getting a lot of confusions, right? So each microservice will have its own Docker file. Similarly, does each microservice will have its own Kubernetes files? Like a pod YML, service YML, deployment YML, whatever you wanted to create, yes.
+
+01:13:06
+Now let me access this my repository.
+
+01:13:20
+Now I have a repository in this.
+
+01:13:25
+I have a nodejs application here image that nodejs application image is there. I can use whatever tag whatever tag which is available. As part of this repository.
+
+01:13:42
+Let's say I have a tag like this.
+
+01:13:49
+Docker and some slash node iPhone app iPhone mss
+
+01:14:01
+like this.
+
+01:14:04
+ports ports container port and which port this is running I think double nine eight to one this is minimum now I am creating a pod I am creating a pod cubes ETL apply I
+
+01:14:40
+There is some type error now. Do I have a pod created kind of another application? They have another application also running as a pod container. Now does this part has that node J's application container running in that still it is creating. That's why it is showing 0 by 1. Once it is successfully created it will show 1 by 1.
+
+01:15:05
+Now let's consider this is one microservice and this is another microservice. Now this application want to communicate with this application within this application code can we use this service name to reach this application now within this application code can we use this service name to reach this application.
+
+01:15:36
+Now I want to prove that there is no code here. I want to prove that from this application from this pod container. I can reach this application using service. I want to prove because there is no code here. Can I go inside this pod container the way we went inside the container using Docker EXEC in Kubernetes also can I go inside the pod container for troubleshooting or any other things also? Yes. So what is the command? What is the command here?
+
+01:16:05
+cubectl ex ec-it-it this part name
+
+01:16:15
+this part name namespace in which namespace I have that part
+
+01:16:24
+that namespace if an iPhone like this bash or sh or bin slash bash like this I can give directly like this iPhone iPhone there should be a space here iPhone iPhone space. So which means is this command will be interactively executed against this pod container.
+
+01:16:48
+But let's say there are multiple containers. As of now, how many containers is part of that pod? How many containers is part of that pod as of now? In that pod, how many containers we have? One. So does this command will interactively executed in that container since we have a single container, which means will I land inside that pod container, whatever we have? Yes. Let's say I have two containers. Let's say I have two containers in that pod. In that case,
+
+01:17:19
+this command get executed against which container out of those two parts whatever we have in the zero-eth index, which means whatever we have in the first position first position.
+
+01:17:36
+If I have multiple containers, I want to do this in a different container. I can use one more option. I fancy that container name whatever container name you used. So what is this iPhone 6 transfer? If I have multiple containers, if I want to execute this command in a different container, I want to go inside a different container in that part. What is this iPhone 6 stands this?
+
+01:18:01
+What is the type of systems? Container.
+
+01:18:07
+container name, but when I have a single container that if NC is not mandatory now will I go inside that container now now where I am in this where I am in am I inside this pod inside that node.js container now.
+
+01:18:27
+Now if you see here, let's see if I have a curl. Curl is there. Now curl-v, can I use this service name? Even though I am using this service name, now does this service name will be resolved to this pod IP? Oh, sorry, this cluster IP that service IP? Now if you see mave Now do you see?
+
+01:18:56
+is it resolving to that IP that service IP is that name resolved to service IP
+
+01:19:06
+So within the pod within the cluster within the pod within the cluster, can I use this service name instead of using your pod IPs, your service IPs or node IPs within the cluster, can I use this service name?
+
+01:19:20
+This is very very important case in the interview also they'll ask. Now this is the case. This application. Want to reach other application. The container in one part want to communicate with container in another part. What do we use though I use a concept called service? Do we use a concept called service service name but within same part?
+
+01:19:49
+within same port one container has to communicate with another container they really need a service for this one one container want to communicate with another container they really need to create a service for this use case let's say
+
+01:20:06
+This container has to reach this container. Do I really need a service? No. So within the pod, how one container can communicate with another container? Can I use localhost and port? Yes. But this pod has one container. That container has to reach another container which is in a different pod. We can use pod IPs. But is that recommended?
+
+01:20:35
+as I already told no instead of using pod IPs can I create a service can I create a service and use that service name like this can I use that service and can I use that service name like this
+
+01:20:52
+Now, if the service has multiple endpoints, if the service has multiple endpoints, is that service will act as a load balancer also now? Within the cluster? Yes. But it will work only within the pods. I don't, you don't need that much in detail.
+
+01:21:18
+But let me explain why this is happening.
+
+01:21:27
+of how come it is only working within the port.
+
+01:21:31
+there is that resolve.conf.
+
+01:21:38
+resolver.com
+
+01:21:43
+Please.
+
+01:21:51
+If you see this resolver.conf, this resolver.conf is like some DNS setting. When we are creating a pod and container in that pod, is Kubernetes is adding some details like name servers details here? This is like a DNS lookup. So when we are using any host names, kind of names from within this pod container, is it kind of doing a lookup on this name server, kind of a DNS server?
+
+01:22:24
+This is like a DNS router DNS record. So who is making these configurations internally? Who is adding these names are our details while creating a parts within that containers. We are not doing anything is Kubernetes is adding that DNS. I mean to say that names are our details.
+
+01:22:43
+to which DNS server it has to go if you see this 10 dot 96 dot 0 dot 1 0. What is the type? Let's see cube CTL get all I fun in.
+
+01:22:58
+cube system guys if you want to come out of that pod container what you need to type again I want to come out of that.
+
+01:23:11
+Now if you see this IP names are our IP whatever I see in that pod containers in this file. What is this IP 10.96.0.10 is it a service of your Kubernetes DNS is it a service IP of your Kubernetes DNS which means any DNS lookups are happening within your pod container is it going to this cube DNS and cube DNS is pointing to this core DNS pods.
+
+01:23:39
+in this core DNS parts or is it maintaining that IP to the name mapping?
+
+01:23:47
+So, but who is adding these details internally? Who is adding these details internally in each and every pod container in this resolved.conf file? Are we adding manually these details? No, is Kubernetes is taking care while scheduling, while creating a pod containers? Is it adding these entries internally? So this way, do we have a service discovery also within the Kubernetes? Do we have a service discovery and DNS within the Kubernetes? Yes. But,
+
+01:24:16
+Whatever DNS entries are maintained within the cluster, will it resolve in the internet from different servers or different networks? Will that name work outside the cluster? Now same name, will I able to use outside the cluster? No. Is everyone clear what is service and what is service of type cluster IP? How it is working?
+
+01:24:47
+You don't need this much internal details, but it will be good if you know how it is working. But at least you should know what is service, how to create service, what type of services we have.
+
+01:25:02
+Now I cannot access from outside but if I want to access from outside then what needs to be done guys if I want to access from outside what needs to be done again within the cluster I am able to access if I want to access from outside the cluster there is a one more type of service there is one more type of service card one more type of service card what node
+
+01:25:32
+Now I want to access that application from outside the cluster. I need to create a service of type node port.
+
+01:25:47
+Yes. So when I create a service of type node port, it will expose the service on each node port.
+
+01:25:58
+and each node IP at node port. Each node IP at node port. What do you mean by node? If I create a service of type node port, I can access that service on each node IP. What do you mean by node here?
+
+01:26:18
+Your server, your Kubernetes node. It is like iPhone P in the doctor. So can I create a service of type node port so that I can access using that node IPs and that node port from outside the cluster if I want to reach that application, that service.
+
+01:26:43
+Yes.
+
+01:26:47
+It is something like this. This is your Kubernetes cluster. These are your nodes, your servers. This is outside. Now if I create a service of type node port, can I use this node IP from outside if I want to reach that application? Can I use node IP and node port here by creating a node port service?
+
+01:27:17
+and node pool. So from outside, first request goes to that node, that node, that server on that node pool. Then is it going to route the traffic to that cluster, that IP, that cluster IP? From outside request goes to node, node to your cluster IP, from cluster IP to your pod IPs. From cluster IP to your pod IPs. From outside, the request goes to node IP and node pool.
+
+01:27:47
+From there it will go to cluster IP from cluster IP. It will route the traffic to your pod IPs. Now I need to create a node port service if I want to access but without creating a node port service will I able to access using node IPs. Now, let's say this is my node master node. Let's say I'm using public IP address of that node.
+
+01:28:13
+I am using that public IP address of that node if I use something like this. Do you think will it work even though you open a port? Do you think it will work? No. So do I need to create a node port service so that I can use that node IP and whatever node port is created or allocated for that service? Yes. No. Do I need to create a separate service?
+
+01:28:40
+One service for cluster IP one service for node port. Do I need to have a two different services for same application to access internally and externally not required not required. You don't need to have a two services to access internally and access externally. You don't need to service single service same service. Can I create as a node port service instead of cluster IP service? Is the cluster IP service?
+
+01:29:08
+Can I create that as a node port service? Yes. Now let me do that. Let me do that. Now I want access from outside also. Instead of cluster IP here, can I create a service of type node port?
+
+01:29:31
+Can I create a service of type node port? When I am using a node port, can I use one more field here called a node port? The way we have a port, target port, can I use one more field called node port here?
+
+01:29:47
+This is your server port on which port you want to reach this service and which port you want to reach this service. It is not mandatory. It is not mandatory. Even though you don't mention. Does Kubernetes will assign some node port? Will it assign some random node port?
+
+01:30:07
+Yes, what is the node port range? When I was explaining architecture, I told what is the node port range in Kubernetes in which range the node port will be allocated or I can use 30,000 to 32,767.
+
+01:30:27
+30,000 to 32,767 can I use if I want to use some fixed port can I say something like this 30,033 within that range anything but if this is already used for some other service in that in that node do you think we will be able to reuse this port again no so I can use like this.
+
+01:30:55
+but make sure you are not using that port again. But even though you don't mention, does Kubernetes will assign one node port in that range, whatever range, and which is not already used? Yes. Now let me do this. Before applying, before applying, let me show you, as of now, what type of service it is, as of now, what type of service it is.
+
+01:31:20
+Before applying let me show you as of now what type of service it is.
+
+01:31:26
+cluster IP. Now in my YML I have changed in YML I have changed from cluster IP to cluster IP to node port. Now let me make the changes. Now you see this time what type of service it is.
+
+01:31:44
+node port now i see one more port here i see one more port here this port 80 is what guys this port 80 is what is it a container port or target port no that is service port service port and what is this one 30,077
+
+01:32:08
+node port now still within the cluster still within the cluster can we use this service name still let's say this pod want to access this pod can they still use this service name
+
+01:32:23
+will it resolve to this IP within the cluster?
+
+01:32:28
+even though this is node port within the cluster, they can still use this service name, which means does this application can still use this name to communicate with applications or APIs running in this part.
+
+01:32:41
+within the cluster.
+
+01:32:45
+Come on guys, there is no rocket science here. Can I still use that? From this application, I want to access that application.
+
+01:32:59
+Can I still use this service name within the cluster? Within the cluster, I can still use this service name.
+
+01:33:10
+Something like this. Maven iPhone, web iPhone application. Something like this I can use within this cluster. But now outside, outside the cluster, outside the cluster. Now this is my cluster. Now I want to use outside. Will I able to use that service IP from outside? We already verified. Am I able to reach that service IP, that cluster IP directly? No. But...
+
+01:33:40
+Now did I created a service of type node port did I created a service of type node port in each and every node on which port that service is listening as of now in each and every node in which port that service is listening if you see what is that node port what is that node port is it opening on 30,000 at 77.
+
+01:34:06
+It is listening. It is listening on 30,077. Now if I want to access from outside, can I use this server IP or this server IP or any other server IP node IP which is part of my cluster. This is my cluster. This is one node. This is another node. Can I use any node IP which means server IP and this node port?
+
+01:34:34
+30,077.
+
+01:34:38
+Now, the request goes to that node. First request goes to that node. Is this port is listening? 30,077 is listening on that node, that node port, kind of a host port. Now request goes to that one on that port. Then internally, will it route the traffic to that cluster IP you are not accessing? Is that node port is routing the traffic to that cluster IP?
+
+01:35:06
+and is that cluster IP routing the traffic to your pod IPs
+
+01:35:11
+Yes, now let me use that node any node. Does it needs to be always master node? Does it needs to be always worker node? Any node is fine. Let me use any node. But as of now, this node has a public IP public subnet. So will I able to use this public IPs from internet also from a different networks also? Will I able to reach because that node has a public IP? And what is that port?
+
+01:35:41
+three 30,077 now my application context but one thing here AWS concept do I need to open a firewall now do I need to open a firewall this on this 30,077 AWS concept.
+
+01:35:59
+in whatever node I am trying to use this node in that node security group I will open
+
+01:36:10
+You may think already you have open all traffic, but why you are not able to reach even though you have opened all traffic, why you are not able to reach from here. I open the traffic, but did I open the traffic for all the IPs are only this range only VPC range is my laptop IP is in same range where I have already opened the traffic. No.
+
+01:36:35
+So now can I open that something like this 30,077 that node port for everywhere I mean to say any IP like this.
+
+01:36:49
+Now, if you see, am I able to reach that application now via that node IP and that node port?
+
+01:36:59
+Am I able to reach that application now? Now I have customized my code. I have customized my code. I have customized my code where it is printing the host name and IP address. So if you see, is it printing my IP address of that pod? Which means is this application is running inside your pod inside this container, this is your pod IP. Just I have customized this one. So it is showing like this.
+
+01:37:29
+it is showing like this now which means from outside the cluster can access like this using node IP that is your server IP and that server port within the cluster if any application want to communicate with this application they need to use any server IPs or pod IPs again within the cluster if one more application want to reach this application do they need to use this node IP node ports or pod IPs not required.
+
+01:37:58
+Can they use this name, the name of that service?
+
+01:38:04
+outside node IP and node port. If you see, when I created a service of type node port in each and every node, is that port is listening?
+
+01:38:18
+Let me open execute this netstat netstat command. That I fun to you will and be these are the options.
+
+01:38:38
+Let me use this next step option.
+
+01:38:42
+Now let me use this command node sudo netstat-ulnp Now can I see that port 30,077 is it listening in that server This is one of the node this is one of the node master node in that node do I have this 30,077 that node port is listening So who is processing if any request goes to this server this server on this port on this port
+
+01:39:12
+who is processing that request q proxy. Service is a logical concept. Sir, this is a logical concept, but the actual work is doing by whom.
+
+01:39:24
+cube proxy.
+
+01:39:31
+Sir what is the use of cluster IP you are talking about this IP when I am executing cube C et al get svc you are talking about this IP what is the use of this IP Abhishek still you are not clear what is the use of this IP.
+
+01:39:53
+You are still not clear why this IP, what is the use of this IP.
+
+01:40:01
+even discussing this much if you are not able to understand very difficult.
+
+01:40:10
+So when we are accessing inside or outside, if it is inside, we can use this name. Is this name is resolved to this IP? Internally using kubeDNS, coreDNS, yes. Then it is resolved to this IP. Then is this forwarding the traffic to the whatever parts, whatever endpoints, which is part of the service?
+
+01:40:33
+Yes, even though you are using this node port, even though you are using this node port, any request comes to that server on this port again will it route the traffic to this IP out from outside you are using node IP and node port again is it routing the traffic to this one request is coming to that port service IP service IP to pod IP clear what is that service? Why we need that service?
+
+01:41:02
+What is cluster IP service? What is node port service? This is very very important.
+
+01:41:12
+Now this is not for service not only in this node in any other node in idea in any other node like cubes etl get nodes in this node also is this port is opened in this node also is this port is opened if I go and see net stack can I see this port 3077 yes what about these ports guys I can see six I know these ports 10250.
+
+01:41:43
+6443 because this is my master node. This is my master node in 6443. What is listening on 6443 in the master node because this is master node. What is listening on 6443? In the master kpi server 10256 q proxy scheduler. It is CD etc. D is listening on which port is it using that ports? Whatever I have given here, right? All these ports are used.
+
+01:42:15
+Now this is a node port. Now I want to access other application also other pod. I have other application also. How I can access that application again within the cluster or outside the cluster. I want to access this application. How I need to access this application other application. Again, do I need to create a service for that application to access internally or externally. Do I need to create a service for that application also.
+
+01:42:45
+Now using this service, I'm able to access this application to access this application internally or externally. Do I need to create a service again for that application?
+
+01:43:00
+maybe in like this.
+
+01:43:04
+Service.
+
+01:43:07
+API version, even kind service, metadata, some name, some name, name of the service.
+
+01:43:22
+name of the service something like this node.js app svc namespace same namespace where I have my pods
+
+01:43:35
+Now can I directly create a node port is it mandatory to go step by step
+
+01:43:42
+not required you can directly create a node port select
+
+01:43:49
+I need to make sure is this correct is this correct even though you created a service with this name again is this service also points to the other application now if you do like this
+
+01:44:06
+If you do like this does this service also points to other application pods other pod yes so make sure you are using correct selector here port ports port I can give any port now target port what is the target port for this application double nine eight one now if I apply like this
+
+01:44:35
+Is it going to create a service for with that name?
+
+01:44:43
+Now do I have a service again for that application also?
+
+01:44:51
+this service now from this application if I want to reach this application within the cluster from this application I want to access this application within the cluster can I use this service name from this application I want to reach this application can I use this service name within the cluster
+
+01:45:13
+If there is a code which is making API calls, it will work.
+
+01:45:25
+It will work.
+
+01:45:29
+Now if I have a curl or wget I can use this service name. Not sure on which context the API is running. Do you guys remember that node.js I think there is something called HTML is the right. Yeah, let me see, show you.
+
+01:45:51
+Now am I able to access 200 response I am getting 200 response. I'm getting and also let's say there is something called Jason data also some API called Jason data. Do you see how am I getting that API? I mean to say getting the response from that API from that other application. So can I use this service name within the cluster for communicating from one part one application to other part other application? Yes.
+
+01:46:21
+exit from outside if I want to access that one can I use this respective node port this node port 30134 30134 any node that can be master node that can be worker node open that
+
+01:46:46
+That's for...
+
+01:46:49
+30134 is the port for that one. I'm opening for all the IPs now Can I use that? port 30134 in whatever node I have opened that node IP
+
+01:47:07
+that node IP and that node port.
+
+01:47:11
+something like this. Now I am getting cannot get because nothing is running on the root context.
+
+01:47:20
+From outside, am I able to access same application using that node IP and node port? Is everyone clear how to access the application spots which is running within the Kubernetes cluster from inside the cluster? How you can reach from outside the cluster? How you can reach is everyone clear? What is service and how it works?
+
+01:47:43
+Yes, so how service is identifying the parts there is a one more command called cubes ETL get EP. What do you mean by EP here? Cube CTL get EP EP stands for endpoints endpoints EP stands for endpoints. Now for this service is this is the end point for this service is this is the end point.
+
+01:48:10
+how service is identifying the ports.
+
+01:48:15
+iPhone worldwide I can use multiple options like this iPhone worldwide iPhone iPhone show iPhone labels if you see is this service is pointing to this part 10 dot 36 dot 0 dot one is this service have a end point like this 10 dot 44 dot one or two like this 44 dot 0 dot one because while creating this service did I use this as a selector
+
+01:48:46
+while creating a disservice can I did I use this as a selector and respective target ports. You can describe or you can see the endpoints also. So how service will identify the identify the part service will identify the parts based on the labels and selectors is everyone clear guys. What is service how it works?
+
+01:49:09
+very important communication. Now can I use this part of this IPs and ports? I mean to say can I use this node port from a different server? Let's say I have a different server, which is not part of the cluster. I have a different server, which is not part of the cluster. Will I able to access that application via this server IP and that port do you think will it work? Why are this server IP or this server IP?
+
+01:49:37
+Can I use this server IP and that port? Do you think will it work? No, because is that server is part of the cluster. First of all, is this server is part of the cluster is the server is part of the cluster. No.
+
+01:49:55
+In this server, I have a kubectl. kubectl is different. Accessing the application is different. In this server, I configured kubectl. Am I able to communicate with my API server using this server? But this server is not part of the cluster. This server is not part of the cluster. So will I able to use those pod IP, service IPs, or node ports from this server?
+
+01:50:25
+will able to access that application via this server IPs. No because this is not part of the cluster. So only these nodes are part of the cluster. Is everyone clear guys? What is that service how it works? Now tomorrow I will continue with again part concept only in Kubernetes. It is not recommended to create the parts directly.
+
+01:50:52
+In Kubernetes, it is not recommended to create the parts directly. Why it is not recommended to create the parts directly. If part is having some issues, if part goes down, the spot will be automatically rescheduled. If you directly create a part, if something goes wrong with part, the spot will be automatically created. No. And also will I able to scale my parts? Let's say as of now, I have only one part. I have only one part.
+
+01:51:21
+Is it possible for me to scale up scale down the pod replicas if I am directly creating a pods? No It is not recommended to create a pod directly. So instead of creating a pods directly Do I need to use some controllers like replication controller replica set? Deployment daemon set which will create the pods and manage the pods for us
+
+01:51:46
+Yes, so that I will continue tomorrow. That's it for today. Try to practice more on service. That is try to practice more on service. I'll continue tomorrow. What is replication controller? What is replica set? Why we need to use that? What is the problem with pods? Why we should not directly create a pods? I'll continue tomorrow.
+
+01:52:13
+Thank you guys. That's it for today. I'll see you tomorrow. Go through the recordings multiple times practice a lot. Kubernetes will be very easy. If you go through this recordings multiple times and practice, it is very interesting subject. It will become very interesting also. But if you do lot of practice and if you go through the recordings, it will be interesting. Otherwise, it will be a difficult.
+
+01:52:49
+for you, don't expect holidays. I'm covering one and a half hour. What do you do in the rest of the 24 hours? Even though you are working employee, you sit and work for 20 hours.
+
+01:53:05
+No, even I am working employee. I need to manage a huge team.
+
+01:53:11
+maximum you will work for 10 hours at you will have another 10 hours. Let's consider two hours is gone for class. Can't you spend two more hours for practice even though you are working employee? Two three hours you can daily spend even though you are working employee. But if you are a student will you spend 20 hours also if you don't have any job you can spend a whole day.
+
+01:53:41
+Guys put some effort and utilize this opportunity otherwise it will be very difficult
+
+01:53:52
+Thank you guys. I'll continue tomorrow on the next topic.
+
