@@ -1,0 +1,1065 @@
+00:00
+This conference will now be recorded. In last session, we were discussing about what is blue-green deployment, what is canary deployment, and we were discussing about auto scaling, part auto scaling, right? So what is part auto scalar with respect to part auto scalar? What is HPA? What is horizontal part auto scalar? What is?
+
+00:28
+horizontal pod auto scalar and what is vertical pod auto scalar we were discussing but most of the cases most of the cases we will be using what type of scaling.
+
+00:40
+HPA horizontal pod auto scalar as I already told as I already told This HPA works based on the metrics based on the metrics observed on your pod container Based on the metrics observed on your pod container while creating a pod while creating a container in the pod Can I define resources for that pod like resource request and limits? How much CPU how much memory minimum?
+
+01:09
+that pod container will get and maximum how can how much it can utilize. Yes, so at the same time using pod autoscaler using HPA is it possible for me to observe what is the current CP utilization on that pod container and what is the memory utilization on that pod container and based on the observed metrics is it possible for me to increase and decrease the number of pods pod replicas.
+
+01:38
+using HPA automatically. Yes, but as I already told HPA is going to depend HPE is going to depend on some metrics. Does HPA requires metrics to take the decision.
+
+01:58
+Does HPA requires metrics to take the decision?
+
+02:03
+Yes, so matrix someone should monitor your pods containers. Someone should gather the matrix. So does HPA does the HPA can communicate with that APS to see the current utilization. Yes, as I already told HPA will communicate with our HPA will depend on whom. For the data.
+
+02:31
+Last class also I have pictorially explained. HPA will use metrics APIs, metrics APIs, metrics server. So HPA will use the APIs exposed by another application, another concept called metrics server. So HPA will communicate with metrics APIs to see the metrics data. That metrics server is one application, one software. Do I need to?
+
+02:59
+Install that add-on. I can say kind of add-on in Kubernetes, kind of an application in Kubernetes. So do I need to install that metric server in my Kubernetes cluster so that metric server will expose the metrics about your parts, your nodes? Yes. That metric server will contact whom to gather the data, metrics about the nodes and the parts and containers which is running in that node. The metric server will communicate with whom?
+
+03:29
+Metric server will communicate with cubelet. So as I already discussed, HPA, this horizontal pod autoscaler automatically scales the number of pods in a replication controller deployment replica set based on the observed CPU utilization or memory utilization.
+
+03:59
+horizontal pod auto scaler will scale the number of replicas number of pods of a replication controller deployment replica set or stateful set also Stateful set also based on the observed CPU utilization or memory utilization Demon set demon set will able to horizontally scale the demon set No, so replication controller or deployment or replica set or stateful set
+
+04:27
+Horizontal pod autoscaler also implemented as a Kubernetes API, Kubernetes object. So this horizontal pod autoscaler determine the behavior of that.
+
+04:43
+pods this horizontal pod autoscaler controller that horizontal pod autoscaler periodically adjust the number of replicas it will periodically adjust the number of replicas to match the observed to match the observed average CPU and memory utilization to the target specified by the user while creating a HP I will specify the threshold value or target value when it has to scale.
+
+05:12
+So HPA will interact with whom? As I already told, HPA will interact with metrics server to identify CPU and memory utilization of a pod container. So I need to have a metric server. As of now, as of now, they have that metrics server available configured by default in the Kubernetes cluster. So let me connect to my Kubernetes cluster.
+
+05:45
+Let me connect to my Kubernetes cluster where I have a kubectl.
+
+05:50
+Now if you see as of now this command cubesetl top command I can use this top command also is this working as of now.
+
+06:06
+No, it is saying metrics API not available because they have anything related to metrics server running in my Kubernetes cluster. Do I have anything related to metrics here? No, so by default by default this metrics server doesn't configured in your Kubernetes cluster. Do I need to configure? Do I need to deploy this metrics server as an add-on based on your requirement?
+
+06:37
+Yes, so earlier sometimes in the interview also they will ask these questions. What is hipster? What is hipster?
+
+06:51
+in Kubernetes or sometimes they'll ask what is.
+
+06:57
+difference.
+
+07:00
+between heaps stir.
+
+07:04
+and the metric server like this these type of questions also sometimes they'll ask in the interview. So heaps stir heaps stir that is also kind of a
+
+07:18
+gather you know matrix gather it is going to gather the matrix. So this hipster also this hipster also kind of a cluster monitoring and performance analysis for Kubernetes right with version 1.0 and higher. So hipster collects the values like a CPU utilization memory utilization of your parts containers all these things but hipster is deprecated hipster is deprecated.
+
+07:48
+Now hipster is deprecated. What do you mean by deprecated? If that is not suggest now, Kubernetes is not suggesting to use hipster because hipster is heavy weight. Hipster is heavy weight. So it is heavy weight. What do you mean by heavy weight? Does hipster requires a lot of CPU and memory?
+
+08:14
+This is the official website of that hipster. Yes, so hipster is now retired. Hipster is now retired. Which means they have deprecated. Now. This hipster also does the same thing. It will for basic CPU and memory HPA metrics. We can use that hipster, but hipster is deprecated. Why it is deprecated? Because it takes lot of CPU and memory.
+
+08:43
+So they are saying this is deprecated. They are completely deprecated from where.
+
+08:51
+in which version from 1.13 they are saying no new bugs will be fixed no new bugs will be fixed they are completely deprecating after 1.3 you can still use but they have deprecated why they have deprecated because hipster is deprecated because users are encouraged to use what users are encouraged to use metric server instead of hipster they are encouraged to use metric server
+
+09:19
+Why hipster is deprecated it requires lot of CPU memory to run that one and matrix server is lightweight that matrix server is lightweight it will take very less CPU and memory to gather the matrix and all those things. So the matrix server is.
+
+09:38
+suggested now this is the official matrix server. This is the official matrix server website. So as I already told what is matrix server? Matrix server collects resource matrix resource matrix from cubelets resource matrix from cubelets. What do you mean by resource matrix? CPU memory can I call resource matrix or nothing but your CPU utilization and memory utilization of your nodes your pods?
+
+10:09
+Yes, so. Matrix server collects resource matrix from the cubelets and exposes them in the Kubernetes API server through matrix API. So then does this types horizontal pod autoscaler and vertical pod autoscaler can they use this matrix? Whatever is gathered by matrix server and exposed to the APIs.
+
+10:34
+Yes. So.
+
+10:39
+No.
+
+10:42
+You can use Matrix Server for CPU or memory based horizontal scaling. You can use Matrix Server to horizontally scale your pods using CPU and memory utilization. This Matrix Server supports CPU and memory utilization Matrix. Now I need to install Matrix Server. As of now, is that Matrix Server installed in my Kubernetes cluster? No. Installation.
+
+11:12
+Metrics server can be installed directly using YML that manifest file are using Helm chart. I can install Metrics server directly using that manifest file are using Helm chart. What is Helm? What is this Helm chart? I will explain later. So what is this Helm? What is this Helm chart? What do you mean by Helm? I will explain that later, but just to give an eye high level overview, Helm is a package manager.
+
+11:41
+Helm is a package manager for managing or deploying.
+
+11:49
+Kubernetes applications are simple. Helm is a package manager for deploying applications in Kubernetes. Helm is a package manager to deploy the applications in Kubernetes. It is similar to MAPT. Can I call M or APT or APK, these things, as a package manager? But these are system package managers.
+
+12:17
+system package managers. System package managers. Similarly, there is a package manager for Helm for deploying, upgrading, removing the applications in Kubernetes. I can use Helm. So this I will explain later. What is Helm? What is the use of Helm? I will explain this later. So this metric server can be directly deployed using that YML file, Kubernetes manifest files, or via Helm chart also.
+
+12:48
+using Helm chart also. Now this is the YML. This is the YML location they are using. They are giving. Let me take that URL.
+
+13:01
+Let me take that URL
+
+13:08
+Guys, as I already told, people are asking, sorry, in real time, to install any software, can I follow your running notes? Can I follow your blog? Something like that. You can follow, but the requirement is same. The requirement is same, use case is same, you can follow. But if they're asking to install different versions of software, different versions of configurations, then you need to follow.
+
+13:36
+Official websites as I already told does each and every software will have some kind of official github or Official websites where they will give instructions. What is the tool how to install? What is the prerequisite everything in any stop? You know any soft?
+
+13:55
+You can use that my instructions as a reference, but don't copy paste. Don't copy paste as is. So I am giving the instructions for metric server also. If you see in this document, it is give installation instructions how to install that metric server in your Kubernetes. For our students, for better understanding our usability,
+
+14:25
+I'm giving the instructions but don't follow the same instructions. Follow the official website. If you follow the official website like this, will they give how that can be installed? What is that metric server? If your requirement is install using Helm chat, can you you can install using Helm chat or you can use this via mail.
+
+14:47
+you can use this way. But concepts are important. If you know what is metrics are over, what is the use of that metrics are over, what is Kubernetes, and how to deploy the applications in Kubernetes, then does this will be complex if you want to install from official instructions or my instructions that doesn't matter. If you're already aware about that software, what is that, how it works, installation is nothing.
+
+15:17
+As I already told multiple times if you know only installing the software.
+
+15:24
+Do they hire you? If you know only installing the software, no one will hire you, right? You need to understand what is that how it works. Why we are using that all these things. So don't focus too much on installations. Installation is also important, but don't buy hot any installation.
+
+15:49
+now let me open this file let me open this file and i will show you i will show you
+
+16:02
+So this file is provided by official community, Kubernetes community only. Now if I open this file, do I have some kind of a Kubernetes manifest? They have some kind of a Kubernetes manifest, I'll come from the bottom. So do I have a deployment? Do I have a deployment? The deployment is getting created in which namespace?
+
+16:34
+cube system namespace are they creating a deployment using this part template using this part template.
+
+16:45
+Yes. Are they using this image? Are they using this image?
+
+16:52
+to create that one what is that image? what is that image?
+
+17:00
+Matrix server. So is it our own image? Is it our own application software? Is it our own Docker image? Did we create this image? No. So this is in which registry? This is in which registry? Kubernetes GCR. Kubernetes GCR, not in the Docker Hub. It is in the Kubernetes GCR. This is registry. In that registry, they have this tag and this one.
+
+17:29
+It is going to use that image. So yes, sir, what is this? You have a lot of options here. You have not at all explained what is this liveness probe? What is this readiness probe? You have not at all explained. I see a lot of things here. What do you mean by this volumes, volume mounts? I'll come to that slowly. I will explain all these concepts. What is this liveness probe, readiness probe? What is this volumes, volume mounts? I'll come to that slowly. For now, leave that aside.
+
+17:59
+Now what is this args? They have some args also like this. Now is this passed as arguments to this container while starting the container? Is it going to use these options like arguments, runtime arguments, these options? So that matrix server will be started with these options. Like in the Docker, when you are passing at runtime, is it equivalent to like this?
+
+18:32
+something like this. That image name, that image name, is it equivalent to like this? I'm executing passing some commands like this at runtime. This one, is this will be used as an argument to start the container process inside this? Yes. So it is going to take all these arguments. So that is how the requirement is. Now there is a deployment, there is a service created, there is a service.
+
+19:02
+service of type what they are creating here. They have not mentioned any type. So what is the default type of service for that metric server which gets created.
+
+19:15
+What is the default type?
+
+19:21
+Clustering now sir. What is this? I see something new kubernetes resources I see some new kubernetes resource called service account. I see some new kubernetes resource called cluster role role bindings What is this? This I will explain in detail later, but the concept here is RBAC. What do you mean by RBAC? role based
+
+19:51
+is controlled.
+
+19:55
+role-based access control basically permissions permissions authorization
+
+20:04
+No.
+
+20:07
+This metric server is one application. Does that metric server needs to communicate with the cubelet APIs, API server? Does this metric server needs to communicate with your API server? Your Kubernetes APIs to gather all the data, the nodes data, parts data. Does this metric server application, does this needs to communicate with your Kubernetes APIs to gather the data? Yes. But does this metric server requires permissions
+
+20:36
+to communicate with your Kubernetes APIs like access permissions. So how we are granting the permissions for this metric servers to communicate with Kubernetes APIs.
+
+20:52
+It is similar to AWS IAM guys. Suppose in AWS we have IAM. If one of the EC2 instance needs to manage AWS resources, it requires permissions to read, write, update, delete AWS related services. Are we using some concept called IAM in AWS where we have a policies, where we have a policies that policies will be attached to the role that role is attached to the server. So
+
+21:20
+Does that server will be able to manage AWS services based on the policies attached to that role?
+
+21:33
+Similarly here, similarly here we have some concepts in detail I will explain later. We are creating one service account. One service account, this is like a role. This is like a role in a Kubernetes. We are creating one service account here with this name. This role, this role is like a policies in AWS. Just I'm comparing since you are already familiar with AWS I'm just comparing the terminologies.
+
+22:01
+is this role is similar to the policies where I am giving some permissions like get list watch permissions to these Kubernetes resources.
+
+22:11
+for parts and nodes, for parts and nodes, we are granting these permissions. This is like a policy. Now, this is role, service account. Service account is like IAM role. Now, this is like a policy. Now, this policy, I mean to say this role, whatever role I am creating, this role I am going to bind, I am going to link. I am going to link that role.
+
+22:41
+whatever role I am creating with that service account, I am linking here using this role binding. I am linking that service account with that role, whatever I am creating in the role I have granted permissions that permissions I am linking with that service account under with this pod with this part. If you see, am I using that service account here? One field is there called service account name.
+
+23:11
+Am I using that service account here in this pod deployment? Am I attaching that service account to this pod? So this metric server is running in this pod. So that metric server container will be able to manage it. Sorry, Kubernetes, APS Kubernetes resources based on the roles attached to the service account. Will it able to get the node details, pods details? Yes. So that is how it is working.
+
+23:41
+Now I will explain this RBAC later, but just to give an idea, I am explaining here. This is also simple. This RBAC is nothing but authorization. Who can do what within Kubernetes? Who can do?
+
+23:59
+what with in Kubernetes permissions permissions so that is why I am creating all these things but you may have a question sir why you are not creating these service accounts roles role bindings for whatever applications we deployed you may have a question sir why you are not creating these service accounts roles role bindings for whatever applications you already deployed you deployed lot of applications
+
+24:28
+Does my applications will talk to the Kubernetes APIs? Does my application will communicate with Kubernetes APIs? Does my application is going to access the pod details, node details or service details like that? No. That is our own applications. That applications will run in Kubernetes, but that application, does that application requires access to your Kubernetes APIs? Our own applications, our own microservices?
+
+24:58
+our own microservices will just run in Kubernetes, but does those microservices will make API calls to the Kubernetes APIs? Does that whole microservice needs to know about the Kubernetes APIs? No. So that's why we are not giving that. But this is kind of some internal application. Do I need the required permissions for this one to communicate with kubelet APIs to get the node details, spot details?
+
+25:28
+So that's why we are using this service at home. Now if I apply all these things, does that metric server will get deployed now? If I apply all these things, does that metric server will get deployed now? Yes. But.
+
+25:46
+for our students understanding what I have done.
+
+25:52
+Within our GitHub also I am maintaining similar stuff here.
+
+26:04
+matrix server. So here I am explaining what is what again same thing matrix server how to deploy for our students understanding and make the things simple what I have done I created one repository here I am maintaining those yml's I am maintaining those yml's in a separate separate files if you see this role role bindings
+
+26:34
+service accounts in one file. That service account in one file, that role role binding in another file, that deployment in one file, that deployment is in one file.
+
+26:50
+I am using all these.
+
+26:54
+in one file. Now, I am going to show you how to create a new file in one file.
+
+26:59
+If I install this official also, this is official matrix server github. This is official matrix server github. They are saying follow this one. It may not work. Because I need to tweak some configurations. I need to tweak some configurations.
+
+27:18
+Otherwise it may not work. It will fail.
+
+27:23
+So let me apply this official only. Let me apply this official only. I'm executing something like this. kubectl apply. They have given installation instruction like this. Now it is going to create a metric server, all the required roles, role binding, service accounts, all these things. Now in the kube system namespace, they have some metrics server running. They have some metrics server getting scheduled because
+
+27:52
+It has created a deployment. The deployment is creating a replica set.
+
+28:00
+Now the matrix server is getting created it is running but you need to tweak some configurations it may not work let me show you.
+
+28:25
+It is not coming up still it is showing 0 only. Let's wait for some time. It is not coming up still it is showing 0 only.
+
+28:37
+As a prerequisite, if I want to create a HPA, horizontal pod autoscaler, I want to use. Do I need to have this matrix server configured in that cluster without having this matrix server? Even though you create a HPA, will it work?
+
+28:54
+no because it requires data it requires data it will not work now this metric server is not coming up even though it is showing in running state why it is showing 0 by 1 I like explain later there is a concept called readiness probe there is a concept called liveness probe that I will explain later even though it is showing in running state it is not showing here ready
+
+29:26
+slowly we will understand all the concepts. For now let me describe this part.
+
+29:42
+So there is an issue here. There is an issue here. So this readiness probe is failed. This readiness probe is failed. So that's why it is not showing ready. What is that readiness probe, liveness probe, I will explain later. I need to tweak some configurations here to make this work.
+
+30:10
+Now there are some issues starting that.
+
+30:19
+I need to tweak some configurations here. It is saying fail to get the details from this one because it does not contain any IP somewhere else are there because I need to tweak some configurations here. If you see this YML, we are passing some arguments here. We are passing some arguments here. I need to tweak some arguments here.
+
+30:42
+Now I have done the required changes in our own
+
+30:51
+So, let's see is there any difference here between the official and here.
+
+31:11
+one, two, three, four, five, six, this option is not there. This option is not there in the official website. So because of that, it is not working. And also you can see the troubleshooting steps also in the official website itself, they will give like a known issues, frequently asked questions, like sometimes your metric server may not work. In that case, you have to follow some instructions here.
+
+31:44
+So depending on your cluster setup, you may need to change the flags fast to the metric server. So here they're asking me to pass some additional details like this.
+
+31:58
+So they're asking, use this option like this. So I need to tweak that one. If you are following, you need to follow all these instructions also. Now, instead of directly applying this file like this, instead of directly applying the file like this, kubectl apply, can I take that file? Can I modify the file as per the required configurations and apply? Can I take this file, download this file instead of directly applying like this?
+
+32:28
+can I take this file can I do something like this curl or wgate get that file then modify the required parameters and apply
+
+32:42
+otherwise can I directly edit also I can do something like this curl I fun I fun more something like this I can save this file
+
+33:00
+Now I can modify this file as per the sorry I need to use a different option curl-
+
+33:12
+I think that's the right thing to do.
+
+33:26
+Let me see I need to get the content. I need to explore that options curl options. So let's leave that. Now otherwise I can directly edit. Can I edit something like this? Cube Cetal edit also. Cube Cetal edit that deployment. So I already deployed directly. Can I do something like this?
+
+33:52
+kubectl edit deployment imperatively. Can I edit this deployment imperatively? This metric server deployment.
+
+34:05
+this matrix server deployment edit deployment deployment name I fun in in cube system namespace iPhone over a ml imperatively I already deployed now it is opening like this can I modify those configurations
+
+34:26
+Can I modify those configurations like this? As per the given configurations, whatever they're giving. Like this.
+
+34:38
+which I have already done in my own GitHub. So for our students to make things simple, I have already done like this, the required configurations like this. Now, if you directly deploy from this instructions, if you are deploying from this instructions, will it work? Whatever instructions I have given because I already modified all those VMLs and kept like this. If you clone this repo, this is our own repo, you clone that repo.
+
+35:08
+go inside that metric server folder. If you execute like this, it will work. If you are following the official instructions, it may work or it may not work. But you need to understand and troubleshoot. So I am doing like this. Let me escape and save this. Now let's see.
+
+35:33
+Now if this works.
+
+35:37
+your parts are getting recreated because I modified the deployment. Is it following that rolling deployment strategy because I modified my deployment. Is it creating a new part with that changes whatever changes have done once this is ready the world part will get eliminated. So the world part gets terminated once that is ready. Now if you see after making that fixer after making that fix is this matrix or was started working. Can I see that now one by one.
+
+36:08
+Now it is terminating old port. So you can follow official website, but you should have understanding about understanding the issues and changing, tweaking that configurations based on the issues. But here I am giving official website. Here I am fixing, and I am giving the details. But if you see, if you always follow these instructions, whatever I am giving, is it installing the latest version of Metric server image?
+
+36:37
+Is it always latest version of the matrix server image? If you see no. So while learning, I'm making the things simple for you while learning. I'm making the things simple for you. But once you are already know about what is matrix server, what is Kubernetes, how to deploy, how to troubleshoot, how to fix the problems. Is it again recommended to follow whatever you have learned like three, four years back?
+
+37:05
+Are you going to follow same instructions to deploy after five years also six years also like that? No. In that case, do you need to be familiar with official documentation? How to use what is the prerequisite? How to troubleshoot all these things? Because people are asking me, sir, can I follow your instructions? Yes, you can follow as a reference, but not always. But does that matters here? Metric server is important, but that matters here. How you are installing?
+
+37:37
+No. So you need to understand what is metric server, what is kubernetes, how to install. Then you can install whatever version as per your requirement.
+
+37:49
+That's why for this batch I was not showing this one. Earlier what I used to show I was never showing this one like official website. I was saying go to this website, clone that website like this, git clone, go inside that folder, this metric server folder, execute this command, it will apply everything. But now I have explained this way. So what I have done?
+
+38:18
+I have followed this official website. I applied this one first. Later I have edited to I have edited my deployment to add this flag. I have modified my deployment to add this flag. But how I have added?
+
+38:37
+something like.
+
+38:41
+something like this, iPhone and that additional flag, sorry, this additional flag.
+
+38:49
+Something like that.
+
+38:55
+imperatively otherwise you can download this file modify this file and apply this file
+
+39:04
+Or if you don't want to take all that risk, sir, it is very complex for me. I am not able to understand. Then can you follow like this? Whatever instructions I have given in my document, you clone that repo, which is our own repository into the server where you have a cube CTL go inside that matrix server folder, because I have already modified all these things. If you execute this command, is it going to apply all those deployments, services, config maps or whatever it is? Now I have done official way.
+
+39:34
+I have done official way. Now is my matrix server running in cube system namespace without any issues. Now it will take some time already it is 4-5 minutes. Now am I able to see the utilization of my nodes, the CPU utilization, memory utilization of my nodes and also can I see the utilization of my containers which is running in that
+
+40:04
+am I able to see pod matrix also how much CPU how much memory now there is a one more option if an iPhone container equals to true if I have a multiple containers if I have a multiple containers in that pods may multi container pods
+
+40:50
+containers, it is containers.
+
+40:57
+So if I have multiple containers in each pod
+
+41:02
+Now is it going to show like this pod name and container name suppose this part has a multi containers am I able to see at a container level also suppose this part has a multiple containers multi container pods if I use this option is it going to show container name in that pod as of now I don't have any multi container pods I don't have any multi container
+
+41:31
+but if I have a multi container pods, will I able to see at a container level instead of pod level what is the resources if I use this option yes so now metric server is gathering all this data but is this metric server is directly communicating with that pod or container to gather this data is metric server is directly gathering the data from that pod or that container no it is it is gathering all this data using cubelet
+
+42:01
+So, is cubelet is going to observe your node, your pod, your containers? Yes. So, this matrix server is going to gather the data from that cubelet. Now based on this matrix now, based on this matrix now, will I able to create a HPA horizontal pod autoscaler?
+
+42:24
+guys if you feel it is difficult to deploy like this you are installing this yml then you are editing this yml or that object directly if you feel this is difficult to add this flag then I suggest you to follow our website I will suggest you to follow our website so this is I have already given in the installation so execute this in your server where you have
+
+42:53
+CD to the directory and from the top directory from metric server directory execute this command with this metric server will be installed.
+
+43:03
+but today class I was explaining officially because that is not working I have tweaked my configurations. Now my matrix server is there. Now can I use HPA for any application whatever application I want to scale automatically now can I create a HPA.
+
+43:27
+based on the load I want to scale up scale down my ports yes now as of now do I have any HPS in any namespace did I created any horizontal part auto scalars in any namespace for any application now if you see I have a deployment I have a deployment I deployed this maven web application or I have deployed some other application
+
+43:54
+as a deployment or replication controller. As of now, what type of scaling we have done, increasing and decreasing the number of replicas as of now manual. Now, if I create a HPA, if I create a HPA, does HPA will adjust the number of pod replicas based on the load, based on the CPU and memory utilization on that pod container?
+
+44:18
+Yes, as a prerequisite, do I need to have a metric server installed or configured in that cluster if I want to use HPA? Yes, that is also done. Now, let me create a HPA. Let me create a HPA. So we completed the first part. Now let's create a simple deployment and start understanding the HPA. But here I'm taking some sample application. Here.
+
+44:46
+I'm taking some sample application and taking some sample application that can be your application also that can be your application your actual deployment your actual application also first let me explain with sample application so that it will be easy for you this you already know what I am doing am I doing something different here nothing I am deploying one application I am taking this sample application instead of this application it will be your own application.
+
+45:15
+your own microservice image. Are you guys familiar with this already manifest whatever I am showing here. You know what is deployment. What is deployment. What is this replicas. What is this template. But here I am using one example that is provided by whom to understand HPA that is provided by kubernetes itself. That is provided by kubernetes itself very simple application.
+
+45:44
+Don't get confused with these names. People are considering these names. Does this names matter here? I'm saying HPA deployment label also like this. Does this matter here? No, this can be anything. This can be ABC also. But these labels are not required. As I already told, we can add a labels to the deployment. These labels are not mandatory because nowhere we are using. These are your
+
+46:13
+Selectors here. Can I say different something like this sample app? Instead of HPA can I have something like this? Yes That doesn't matter here guys that doesn't matter here. So people are confused with these names that doesn't matter I have just given a name as HPA deployment labels as HPA pod that can be anything Using this sample image now, what is this?
+
+46:42
+I already explained from last three four days. You are already familiar with this while creating a parts while creating a containers. Can I define the resource request and limits?
+
+46:55
+Yes, so resource request resource request. What do you mean by resource request in Kubernetes?
+
+47:16
+Minimum resources to be available Minimum resources to be available for that pod container. So if your Kubernetes Nodes in your Kubernetes cluster. No system have this much resources available Does cubelet I mean to say does scheduler the scheduler will schedule this pod? If none of the node has this much available It is kind of a marking guys. Don't consider it is going to use this much
+
+47:46
+even it can use 1 m or just 12 megabytes also but still that is marked as reserved for that system reserved for that system that pod that container this is minimum resources available for your pod container and what is this limits
+
+48:07
+maximum it can utilize. Now this is again based on your requirement guys let's say if I say just a 12 mi or 10 mi do you think
+
+48:20
+Always it is 10mm like this.
+
+48:24
+based on your requirement. Now let's say I am giving something like this 64 mi something like this. Now if this process if this container requires more than this much memory does your container will start within this memory does the part container will be able to start within this memory if it is requires more to start itself.
+
+48:51
+No, so you will have a OEM killed OEM killed out of memory killed. So is this resource request and limits is based on what type of software you are running in that image. How much minimum you need for that software to run how much maximum it can take when there is a load is this resource request and limits is based on what type of application or software you are having in that image. Or is it always same like this?
+
+49:19
+or is it always same like this no it is not always same based on the software which you are running based on the software which you have in that image based on the application which you have in that image now let's say I am going to use this resource request for my Tomcat application let's say if I say limit as 64 mi do you think your Tomcat can start within this 64 mi 64 megabytes do you think your Tomcat will come up
+
+49:47
+No, it will try to start but it requires more memory. If it is running out of memory as I already told what will happen Is it going to be like oym killed? out of memory killed
+
+50:02
+Yes, so for this sample application, I am they have given like this for the sample application They have given like this. I am just using that one now one more important concept here. Is this correct guys?
+
+50:18
+is this correct I am requesting 100 milli core CPUs I am limiting 50 milli core do you think is this correct
+
+50:29
+No. Is this fine at least? Is this fine at least? I am requesting 100mCore and limit also 100mCore. Is this fine? Yes. But do I have a problem with this? If I say 200mCore, 400mCore. Is this also fine? Yes. No issues.
+
+50:51
+Now again when it comes to memory is this fine let's say here I am requesting 1 GB but I am limiting 256 mi is this correct no I think I have already explained I think I have already explained resource resource requests should be
+
+51:17
+always or let's say other way resource limits let's say other way resource limits should be always what greater than or equal equal to what resource requests
+
+51:40
+Sometimes in the interview they are going to ask these type of questions. Even sir they are asking some real time questions or scenario based questions. These are not like real time questions. These are like understanding how good you have understanding of that kubernetes concepts. So they want to check whether you have by hearted whatever biology has explained in
+
+52:10
+or you know something about that they want to test in simple. If you follow stepwise blindly copy pasted if they ask these type of questions will be able to understand first what is what here if you copy paste and practicing.
+
+52:29
+No, so that's why I'm saying understand the concept then you can manage anything is everyone clear what is this resource request and limits. Yes, now let me deploy the sample application in whatever namespace that doesn't matter in whatever namespace that doesn't matter. So I'm just a deploying that sample application.
+
+52:57
+But don't always think that HPA will work only for this application. Does HPA will work for any type of deployment, replica set, replication controller or stateful set whatever you are applying here?
+
+53:12
+Now let me apply this deployment. kubectl apply ifnf that hpa application I deployed. So there is a it is already saying because I have kept this one so it is giving that warning. So
+
+53:39
+It was like how much? 64.
+
+53:44
+It is no need to be always 64. You can give more also. You can reserve more also. You can reserve more also. So let's say I am saying 64 not GI MI. I think I have already explained this M stands for Milli Core. When you are using CPU, can I give something like this 100M capital M or capital MI like this? No. CPUs in Milli Cores.
+
+54:15
+memory like this MIGA now let me do this deployment
+
+54:23
+Now I created a deployment. Parts are getting created. This you already know. Now I want to access this application. This application. This is also one sample application. One application. I want to access this application internally or externally. What Kubernetes resource needs to be created. The way we created a deployment. What is another resource which I want to create to access that application internally or externally.
+
+54:54
+So, I will create a service something like this. I will create a service. You already know what is service, what types of services you have. So I am creating a service also like this.
+
+55:15
+I am creating a service like this. What type of service?
+
+55:20
+cluster IP service for now if you want to access from outside can I change this to node port I want to access this application from outside also I can change this node port and apply since I have not mentioned any namespace in which namespace these are getting created in my manifest also I have not mentioned any namespace in manifest also I have not mentioned any namespace in the default namespace it is created.
+
+55:49
+Now I have a service. I have a service also to access that application. Now just to use, since I am already part of the cluster, this current node is also part of the cluster. Is that current node, this node, this current server, is it part of my cluster? I mean to say, is it kind of a master node? There itself, I have a kubectl. Now if I want to see, can I do something like this? The service port is 80.
+
+56:19
+Am I getting a response from that sample application? Very simple application. I'm getting OK. I'm getting 200 response with the message saying OK. This is very simple application. You don't need complex application to understand the concepts. Application can be complex or sample, but concepts will not change. Concepts will not change based on the application.
+
+56:48
+Now I am getting 200 and very simple response. Okay, now if I want to access from outside, I can use this port.
+
+56:57
+30798 because I have created a node port service. So let me go to this.
+
+57:41
+let me access that using node IP and node port. Now let's see. So that node port is this one from outside and from whatever server where I have opened that port I think I have
+
+58:07
+Now am I getting a response from outside also am I able to access that sample application yes now we do not have any HPA as of now we do not have any HPA did I created a HPA for the deployment as of now did I created HPA for the deployment this is a normal deployment this is a normal deployment how many replicas I have mentioned in the manifest how many replicas I have mentioned in the manifest 2.
+
+58:35
+Now even though there is a lot of load, even though there is a lot of load, do you think will you get a third part, fourth part like that automatically now?
+
+58:47
+No, because we don't have any HPA created. Now let me show you. Let me show you how to put the lot of load. Now how I can increase lot of load? I mean to say basically, if lot of people access this application, does that load will be increased automatically? Does the CPU utilization, memory utilization of that application, that part container, will it go high? Does that process will take lot of CPU and memory? Yes.
+
+59:17
+I don't have any end users. I don't have lakhs of user to access this application. Can I use some kind of tools? Maybe if you're already in IT, if you are from testing background, there is one type of testing called.
+
+59:34
+There are different different testing functional testing.
+
+59:41
+functional testing.
+
+59:45
+So functional testing what they will do as part of the functional testing. They are going to test the functionalities. The functionalities whether that application is working fine as for the given functionality as for the given requirement is that application is working fine. That is functional testing.
+
+01:00:05
+Similarly, there is another type of testing called performance or load or stress.
+
+01:00:16
+performance testing or load testing or we call it as a stress testing as part of this testing what the testers will try to test already functionalities are working fine, but are they going to measure the performance of that application when there is a lot of load whether that application is going to support with that much users that much load.
+
+01:00:41
+they're going to keep a stress. They're going to keep a stress on that application. Is that is capable of handling that much stress, or will it burst if it is not able to handle that much stress, which means your application will not work. So in the actual applications, there will be different types of testing, functional testing, performance testing.
+
+01:01:06
+unit testing integration testing like that. Now as part of the performance testing does applications has to go through this performance testing also?
+
+01:01:17
+and also there will be a security testing also secops security so they are going to do some kind of a
+
+01:01:27
+Two things here, static.
+
+01:01:31
+testing and dynamic testing.
+
+01:01:36
+This static testing is basically kind of a code quality, code quality checks, whether developers are following, whether they're as per the code quality or not, right? Code quality, kind of a sonar cube. Can I do that static code testing? Well, before building the application package, before deploying that application package itself, I can do the static code analysis, that is static testing. Dynamic testing in the sense, once the application is deployed,
+
+01:02:06
+They are going to play around with your application. They are going to inject some hackings. There are different, different techniques, guys. SQL injection, SQL injection, cross site request for the.
+
+01:02:23
+There will be a testing team. There are a lot of tools also available for this dynamic testing.
+
+01:02:35
+There are lot of tools.
+
+01:02:38
+available.
+
+01:02:42
+security vulnerabilities we call it as a security vulnerabilities to test
+
+01:02:51
+So as part of this application testing, what they'll try to do, the testers, they will try to use some kind of things. You have input fields. You have input boxes, like give your username, give your password. So they will try to give, instead of using some user names like Balaji or username like Mitun, the testing what they will do, they'll try to give some kind of SQL queries itself in that input box.
+
+01:03:18
+they'll try to do some kind of SQL queries itself. But if your code is not able to detect and if your code is not able to handle these type of injections, does this query will be executed inside your database and your database gets corrupted? You are using SQL query as input, kind of a hacking. If your code is not able to do these type of handlings, then do you have a...
+
+01:03:48
+SQL injection in your project, in your application. So you should be to prevent all these things. The development team will take care. The development team will take care all these SQL injections, cross-site request forgery. But the testing also will happen. There are a lot of testings. Security testing, performance testing, functional testing, all these things. Now, as part of the performance testing, what they do? As a testers, what they do basically?
+
+01:04:17
+Do they need to, I mean to say as a, do they have, you know, put the load, lot of load, how much, you know, your application, your infrastructure is, whether it's a capable of handling hundreds of requests, millions of requests per second, per hour. If hundreds of users are accessing your application per second, is your application is able to sustain that or not? That is kind of a load testing. Now, I don't have a lot of users.
+
+01:04:46
+now I will use some kind of tools there are different different tools testing team will use different different tools like jmeter jmeter, qrunner or loadrunner
+
+01:05:01
+Anyone from testing background?
+
+01:05:06
+here. I hope you are already familiar with these things if you are from a testing background. So we have some type of tools. But for now, I am not going to use any tool also. Now, can I do something like this? Curl on that URL infinitely because I don't have users. I don't have a lot of users to access that application. Can I do some kind of a curl in the infinite loop on that URL? In a infinite loop, can I invoke that URL or API?
+
+01:05:38
+infinite loop which means you are accessing that like a lot of users.
+
+01:05:44
+Now to do that what I will do I will create one temporary pod I will create one temporary pod I want to do that using some temporary pod. So can I create a temporary pod what do you mean by temporary pod I am creating one pod interactively cubectl run this is my pod name I can use anything this is my pod name I can use anything load generator something like this.
+
+01:06:14
+I fun I I fun TTY I interactively I fun I fun RM Image I am using one image called Busy box. This is one image guys This is just one Linux library with the wget and curl software. This is one Linux library There is no no no software like Tomcat J boss. Nothing is there only some Linux library with the wget wget binary
+
+01:06:44
+Now I'm creating interactively.
+
+01:06:49
+What is this hyphen hyphen RM does basically? This hyphen hyphen RM is going to remove the pod. Once I come out of that pod, once I exit from that pod, is that pod will be automatically removed because of this hyphen hyphen RM option? Yes. And what is this hyphen hyphen tty hyphen hyphen hyphen tty something like this? Interactively, I'm creating something like this.
+
+01:07:18
+I fun I fun I fun I fun I fun TTY this remove option. My image is this I fun I fun image. I need to use that option I fun I fun image.
+
+01:07:31
+that image option last my command bin slash bash. So I am creating my container interactively. Now will I land inside that container? And again, I am creating this container in a which namespace. I mean to say this part in which namespace, because I have not mentioned any namespace name, which namespace default. Now interactively I am creating. Now can I access the other application?
+
+01:08:01
+that a demo application sample application from this pod from this container using service name using service name itself. Will I able to access that from this part, this container?
+
+01:08:15
+Now in the background it is pulling the required image to create a container interactively and I am going to go inside that pod container.
+
+01:08:29
+Just to demonstrate, I'm creating this temporary pod. From this pod, can I put the load on the other application using that URL? Infinitely, can I invoke that URL so that a lot of requests goes to that application, that pods?
+
+01:08:48
+Now let's see what is happening.
+
+01:08:53
+What is happening? It is taking huge time. There is a problem. Might be something wrong with my
+
+01:09:06
+command kubectl run load generator hyphen hyphen hyphen tty hyphen hyphen rm
+
+01:09:15
+Iphone, Iphone image, CubeCTL.
+
+01:09:23
+bin slash bash if that bash doesn't have okay the problem is with the bash because bash is not part of that image so instead of bash what i supposed to use sh okay so bash by library is not part of that one that's why it is not able to go inside so let me use sh let me use sh let me use sh instead of bash now am i inside that pod inside that shell inside that container shell
+
+01:09:53
+Now curl is not there. I have a w gate. I have a w gate as part of that container. Now I am doing something like this.
+
+01:10:08
+That service name. Can I use that service name? Whatever service I have created for that one, this application, can I use this service name to see whether I can access that or not? Now, am I getting a response from that application? This is the service name. But if I have it created with a different name, people are blindly typing. They're not understanding. Instead of this one, if I have something like this, can I use this name? Instead of this name? Yes. Now, one more problem.
+
+01:10:38
+Let's say this is in a different namespace. This is in a different namespace, your application. You are creating this load generator in a default namespace. Again, will it work if you use the service name like this? No. In that case, what concept you have to use? Do you need to use FQDN? FQDN of this service, something like this, dot namespace. Currently, this is in which namespace?
+
+01:11:06
+Currently this service is created in which namespace default dot svc dot cluster dot local.
+
+01:11:16
+Now am I getting a response like this?
+
+01:11:20
+So concepts are important guys. If you buy hurting the commands and copy pasting, it may not work. I lot of students come to me, sir, this is not working. Because you might have created this service in some other namespace. Your load generator quad is in different namespace. Even though service name is correct. Will it work?
+
+01:11:42
+No, suppose this service is in a different namespace. Do I need to use here like FQDN instead of default? Do I need to use that service name? Sorry, namespace name? Yes. Now, I will put the load like this. I'll put the load like this. I created the temporary pod. What is this, guys? Now, what is this here? I'm going to execute something like this. I am accessing that URL. But what is this?
+
+01:12:12
+while true do done is it like a infinite loop is it like a infinite loop infinitely is this wget command gets executed
+
+01:12:25
+Now, does the load will be built up on that pod, that sample application if I execute this one? Yes. Let me open multiple shells so that you can understand what is happening. Let me open multiple shell.
+
+01:12:46
+Let me open multiple shells here so that you can understand what is happening in the background.
+
+01:12:57
+Now I'm connecting to same machine where I have a cube CTL installed. I'm connecting to same machine where I have a cube CTL installed.
+
+01:13:08
+Yes, this is very simple topic, but I want to explain in detail. What is HPA? How it works? So I'm making things complex. Basically, this HPA is very simple. HPA is basically it is going to increase and decrease the number of quarts based on the load, just five minutes. But why I am taking one hour to explain or two hours to explain this? You need to be familiar with concept. What is what? How it is working in the background?
+
+01:13:39
+and taking much time so that it will be easy for you to understand what is what now let me connect to this server let me connect to this server
+
+01:13:52
+So if you need me to finish Docker in two months, I can finish. How? I can explain HPA. I'll just explain HPA. I will demonstrate also HPA, but if you don't know what is happening in the background, you know HPA, but what is happening in the background, you don't know. So if you want to finish DevOps in two months, we can do that. We can cover all the topics. Even I can cover HPA also, but I'll just explain HPA.
+
+01:14:21
+HPA horizontal part auto scalar will increase and decrease the pod replicas based on the observed CPU and memory utilization 5 minutes another 10 minutes to install HPA another 5 minutes to demonstrate that application. But if you want to know more you need to understand in and out that is where time is taking.
+
+01:14:45
+now let me do this cubectl top pods
+
+01:14:54
+cube ctl top ports. Cube ctl there is a typo. As of now, this is my load generator that is fine. You can ignore as of now how much CPU how much memory currently on this application because there is no load only one milli core is used now as of now how many parts are there?
+
+01:15:20
+How many parts are there for that application? Because I have given replicas as to do I have two replicas as of now. Now let me put the load now. Let me put the load using this command. From my temporary pod, I am putting the load. Let me present it. Now it is slowly it is in a infinite loop. It is like multiple users are accessing that application.
+
+01:15:48
+Now if you slowly observe here is my CPU utilization is going high here.
+
+01:15:56
+It is CPU centric application. So a lot of CPU utilization is happening here. 34 millicoat, 39 millicoat. One more concept you can easily understand now. I'm using a service name. Is that service is acting as a load balancer? If you see, is the load is getting distributed between those two pods? Is it always requests are going to same pod?
+
+01:16:20
+No load is getting distributed. Now if you see lot of memory utilization or CPU utilization is going high. Now is that automatically it is increasing the parts based on the load.
+
+01:16:34
+As of now, do you see parts are getting increased automatically? No. Now let's say you don't take any action. You have limited your CPUs as 100 millicore. If that is already utilizing 100 millicores, do you have a better performance? Is your application will respond very quickly the way it used to respond earlier? No. If it is running out of memory, let's say. If it is running out of memory, what will happen?
+
+01:17:05
+OOM killed so even though container is killed again it will start but again it will it be killed after some time Again there is a load after some time again it will be killed if it is a memory issue is that the solution Because your containers your parts are managed by deployments parts will be recreated, but that is not the solution. Do I need to scale now?
+
+01:17:33
+Yes, but I don't want to manually scale. Now can I create one more Kubernetes resource for this deployment to horizontally scale my parts based on this observed CPU and memory utilization?
+
+01:17:52
+Yes, they have that created as of now HPA. They have created that HPA as of now. No. So that's why it is not scaling. Now let me stop the load. Let me press Control C. Let me press Control C. Let me type exit. Since I have used this option.
+
+01:18:14
+that if an iPhone remove option is that part gets deleted the temporary port the moment I type exit yes. Now I will create a one more Kubernetes resource now what is that we call that as a HPA horizontal part auto scalar horizontal part auto scalar something like this something like this horizontal
+
+01:18:43
+This is one more Kubernetes resource. The way we have a deployment, the way we have a service, the way we have a pod, the way we have other Kubernetes resource, they have one type of object called horizontal pod autoscaler.
+
+01:19:03
+Yes, kind is horizontal pod autoscaler. What is the API version for that?
+
+01:19:19
+autoscaling slash V2. If you don't know cube CTL API resources will it give the kind and API version of that? Yes.
+
+01:19:31
+If you don't know anything also can I go to the official kubernetes website kubernetes.io if I go here
+
+01:19:43
+if I search here in the documentation.
+
+01:19:48
+HPA or you can search with full form horizontal pod auto scalar. So horizontal pod auto scalar, whatever I have explained, it will automatically update the workload resources, such as deployment stateful set, automatically scaling the workloads to match the demand. So it is going to increase and decrease the number of pods based on the observed CPU and memory utilization.
+
+01:20:16
+Before you begin, you need to have a Kubernetes cluster. You should be familiar with kubectl. And also, you need to have that matrix server, all these things. So same application, whatever they have given in this official website, I'd apply the same application. Now, I need to create a horizontal pod autoscaler. So they're creating how? In this, they're creating how? Are they using?
+
+01:20:44
+declarative approach or imperative approach in the documentation if you see.
+
+01:20:51
+imperative now I am going to do it in a declarative like this horizontal pod auto scalar here what is this specification is it your deployment specification or service specification or is it your horizontal pod auto scalar specification whatever you see here
+
+01:21:13
+your horizontal pod autoscaler specification. Here what is this min replicas, max replicas as I already told minimum replicas I am giving it as 2 which means always irrespective whether you have a load you do not have a load on that application minimum how many it will always maintain 2.
+
+01:21:42
+up to how many parts it will scale.
+
+01:21:48
+But how it will scale when it will scale how to scale when to scale that depends on what is it depends on the matrix. I mean to say the threshold values I have defined here.
+
+01:22:03
+Is it going to scale based on the threshold values which I have defined here? Yes, it supports two types of threshold values. One is what one is CPU another one is memory. Is it mandatory to define both? Is it mandatory to have CPU based scaling as well as memory based scaling? Is it mandatory to define both? No. If your application is CPU centric.
+
+01:22:33
+If your application is CPU centric, which means your software, whatever you are running, your application is CPU centric, which means whenever there is a load, it will take a lot of CPU. Then can I scale based on the CPUs, number of CPUs, number of percentage of CPUs your application is using? Yes. Suppose your application is memory centric. Suppose your application is memory centric, which means whenever there is a lot of load, your application is going to take more memory. Then can I define memory-based scaling?
+
+01:23:04
+or if required both like this if required both like this
+
+01:23:12
+yes now utilization utilization in the number percentages so here i have given 40 40 what do you mean by 40 here 40 percentage 40 percentage
+
+01:23:26
+I say again, sometimes in the interview, they're going to ask, is this scaling will happen based on the limit values, or is it scaling will happen based on the requested values? So this scaling, this HPA, this part autoscaler, basically, part autoscaler.
+
+01:23:49
+scale against resource requests resource request not limits not limits, which means now I have defined 40% of CPU utilization. Whenever there is a 40% utilization, it has to scale but 40% is it 40% of limit or is it going to consider 40% of request? That is what I mean here.
+
+01:24:17
+This 40% is on limit or request that is based on the request only not based on the limit. So 40% of 100 millicore is what suppose if I give a CP utilization 40% 40% of 100 millicore is what the moment it reaches 40 millicore the moment it reaches 40 millicore can I consider that as a 40% 100 millicore 40%.
+
+01:24:47
+Now let's say memory 64 mi 64 mi let's say 40 percent of 64 mi is how much in the memory perspective. So 64 into.
+
+01:25:05
+40 divided by 100 some logic unit apply approximately 27 28 you know megabytes approximately 27 28 megabytes the moment it reaches approximately 27 28 megabytes is it going to scale based on the threshold value memory yes, but here I have given very less numbers, but in real time are you going to scale like this you will scale whenever it reaches almost like 80 or 85.
+
+01:25:35
+But why I have taken 40 because I may not put, I know I may not put a lot of load. I may not put a lot of load. That's why I have taken 40. But ideal scaling should happen when the moment it reaches 75 or 80 percent, you should start scaling your things. You should not wait till it goes 90, 95 like that.
+
+01:25:57
+So, the moment it reaches 75 or 80 it should start scaling. So, in real time you can keep like this, but the concept is important is the values are always same is it like always 100 milli core 60 milli core is it like always 40 like that 80 no.
+
+01:26:16
+Now, let me keep this 40. So these are metrics, threshold values. But this HPA is for which application? This HPA is going to target which application? It will target which application, which deployment, or which replica set, or which stateful set, because I will have hundreds of deployments or tens of deployments. This HPA is for all the deployments, whatever I have deployed in my cluster? No.
+
+01:26:47
+So this deployment is for which target, where we are linking that, where this is for which deployment or which replica set where we are linking that. They have something called scale target reference here.
+
+01:27:06
+So this HPA is for which deployment? Here we have given something like this. scal APA version is app slash v1. Kindle is deployment. This is my deployment name. So do I have my deployment already created with same name here? I already have one deployment created with this name, HPA deployment. I am using like this. Let's say I want to use this for different deployment. Can I do something like this? Java Web App deployment, whatever you would have created.
+
+01:27:36
+something like this.
+
+01:27:38
+If you want to use this for Node.js application, for that Node.js also you have deployed as a deployment. Can I say something like this? But suppose I have created a replica set instead of deployment for this one. If I said deployment and this name, but this is not a deployment. Let's say it's a replica set directly. Again, will it work? If it is a replica set, can I say something like this?
+
+01:28:08
+that replica set name that replica set name if it is a replication controller do I need to say something like this replication controller and that replication controller name here but for replication controller is this correct.
+
+01:28:29
+No, it should be something like this. Is everyone clear how this horizontal part autoscaler will be targeting which deployment, which replicas that are which replication controller? While creating a HPA, am I defining the scale target reference here so that it is going to look after the deployment? It is going to look after the deployment. It is going to look after the parts of the deployment whenever it.
+
+01:28:58
+goes beyond this threshold, is it going to start increasing and decreasing automatically? This HPA will internally execute this command. You are not manually executing. Is it going to internally execute this command, like this scale deployment, this deployment name?
+
+01:29:21
+it is internally going to do this deployment name, I fun I fun replicas whenever there is a load it will do 3, 4, 5, but will I go will it go beyond 5 because of this min replica max replicas no whenever there is a no load not only just increasing whenever there is no load again will it start decreasing like this 3, 4, 2, but will it come down below 2 will it scale down below 2 no.
+
+01:29:51
+So within this minimum and maximum, does the scaling will be taken care by this HPA based on the observed metrics and that deployment parts containers? Yes.
+
+01:30:05
+So let me deploy this as of now to have a HPA guys as of now to have a HPA. No, now let me deploy HPA. Let me create a HPA. But again, you are not using these things properly. It will not work. One more important when I am using HPA does this replica make any sense? Let's say I have given replicas as three in my deployment. Now I have given.
+
+01:30:33
+min replicas as 2 how it works these type of questions also they will ask in the interview.
+
+01:30:41
+Now I am deploying deployment as well as HPA together. Now what will happen? Here I am giving replicas as three, but here I am giving minimum replicas as two. How it works? What happens? How many replicas will be created when you are deploying these two together? You are deploying the deployment and also HPA, how many it will create?
+
+01:31:04
+Basically what happens deployment will create.
+
+01:31:12
+Deployment will create three replicas only. But it will create three pods. But if there is no load, if there is no load on those deployment pods, does this HPA will scale down to two? It will create three replicas. But does the HPA will remove one additional pod? Does that HPA will remove additional pod if there is no load? There is no load. It will remove that additional pod.
+
+01:31:42
+So it will create three, but it will scale down two if there is no load. So if you are creating a deployment with HPA, even though you don't mention this one, now how many parts will be created? So suppose you are removing that replica section, then how many it will create now based on your HPA? How many it will create now? Even though you don't mention two. So
+
+01:32:11
+While creating a deployments or replica sets with HPA, does defining a replicas makes any sense?
+
+01:32:21
+no. Sometimes in the interview they are going to ask these type of questions also. Is everyone clear?
+
+01:32:34
+what is what now now let me deploy, but even though I deploy even though I define that does not matter now let me deploy.
+
+01:32:48
+you've CTA apply FNF that HPA demo. Now, do I have one more Kubernetes resource HPA created? CubeCTL get all. Now, do I have a HPA? Horizontal Pod Autoscaler, this is the name. This can be anything. This is targeted to which deployment? Is this HPA is targeting to this reference? I mean to say this deployment.
+
+01:33:18
+This HPA is targeting to this reference, this deployment. Now it is still calculating. As of now, as of now, there are two things here. One is memory, another one is CPU. So as of now, how much CPU utilization average, it is going to calculate average of those two pods, average of the current replicas. Now, if you see CPU, how much in each pod?
+
+01:33:47
+in the deployment how much as of now 1 milli core. So average of this one. So 1 plus 1 1 plus 1 2 milli core and currently how many replicas are there it is going to take average currently how many replicas their current 2. So it is taking average of those two like 1 plus 1 by 2 1 plus 1 by 2 like 2 by 2 does the average is coming 1 milli core I mean to say 1 percent.
+
+01:34:18
+of CPU. Yes, when it comes to memory, when it comes to memory, he's taking average night with that percentage.
+
+01:34:33
+92 plus out of 64 it is taking it is coming to somewhere around 32. 32 percent of that 64. Now as of now is this under our threshold values is the memory utilization and CPU utilization as of now is it under our threshold values target values yes. So there is no load there is no load. So currently there are two replicas minimum two parts maximum five parts. Now if I put the same thing again.
+
+01:35:03
+If I increase the load now since we have a HPA is that scaling will happen automatically the number of parts will be increased automatically.
+
+01:35:16
+Let me open another tab also here. I will watch HPA.
+
+01:35:33
+I will watch HPA here. I'm connecting to same machine only. Same machine where I have a cube CTN. Yes, don't consider all these things. This is nothing. I'm just connecting to same machine to watch different, different resources what is happening. It is nothing to do with your Kubernetes. This is SSH terminal opening in multiple places. Here I will watch.
+
+01:36:03
+CURBS CTL GET HPA
+
+01:36:08
+cubesetl there is a typo
+
+01:36:14
+Now currently if you observe this much memory utilization, this much CPE utilization, current replicas is how many you can see min pods, max pods and replicas too. Now let me create the temporary pod. Let me create the temporary pod that busy box temporary pod. Again I am creating the temporary pod. Now let me put that load. Let me put that load again. Where is that command?
+
+01:36:44
+infinitely.
+
+01:36:47
+Now let me put that load. Now you observe all the locations. Since I am increasing the load, a lot of people started accessing application. His CPU utilization is going high here. I am watching the parts here. CPU utilization is going high. Now is it calculating now? Is it calculating? Now if you see, it is already above the threshold. Now current average is how much? 53.
+
+01:37:16
+Is it created one part now just a nine seconds ago 11 seconds ago. Is it created one part now? Do I have a total three parts for that? No here also. Can I see the current replicas HPA? Can I see the current replicas as three now?
+
+01:37:37
+Now again it is taking average. It is not like a single it is taking average. Now is it taking average like 27 plus 32 plus 53 by 3 with that number of CPUs comparing. Now is it our control now is it under the threshold value? Even though it is 60 it is not going to take individually.
+
+01:38:02
+It is not going to take individually. So it is going to take average now 60 plus 42 plus 27 by current replicas with that threshold. Now it is under control. Now am I going to get another part because it is under control. Am I going to get another part?
+
+01:38:22
+No, but if still lot of people access this application, if the load is getting increased and again if it is going above 40 again, am I going to get fourth part automatically?
+
+01:38:36
+If your application is memory centric, if your application is memory centric, then if it is going beyond this 40% memory, does scaling will happen because I have both CPU and memory thresholds both?
+
+01:38:52
+Yes. Now with this, I'm not able to put more than that much. So it is always under control. I may not get. Again, it is scaling your pods. But one more problem here, let's say you don't have any nodes, any nodes available with that whatever resources you are requesting for each pod. You are requesting this much CPU, this much memory for your pods, right? Let's say you have already a lot of pods scheduled, a lot of pods are running.
+
+01:39:22
+You don't have that much CPU and memory available. Even though you see number of replicas as three, does that part will be in a pending state if you don't have enough nodes, enough CPU and memory available? Yes. Within the given servers, within the given cluster, will I able to scale up, scale down my parts automatically using this pod autoscaler? Provided you have enough CPU, enough memory, enough nodes in the cluster? Yes.
+
+01:39:52
+Does this Kubernetes will scale the nodes? Is it going to scale the nodes? Nodes in the sense servers? No. Pod autoscaler is different. Node autoscaler is different. Pod autoscaler is different. Node autoscaler is different. So the self-managed Kubernetes clusters might not support node autoscaler. But if I go for a managed Kubernetes clusters like EKS, AKS, GKS, or GKE,
+
+01:40:20
+Will I able to scale my nodes also? The way I am scaling the parts, does nodes also get scaled automatically? If your parts are in a pending state, does that cluster autoscaler will scale the node? Does again that part get scheduled in that new node, whatever we got by the node autoscaler? Yes. That I will explain later. Now, if I stop the load, if I stop the load, if I come back, if there is no load,
+
+01:40:50
+After some time there will be some grace period guys. It will not going to terminate immediately. Let's say after 5-10 minutes if I come and watch here. After 5-10 minutes if I come and watch here do I really have a three parts for that deployment.
+
+01:41:07
+No, only two if there is no load. Now, if you see there is a HPA. If required, can I describe HPA also and see what is happening? QCETL describe HPA.
+
+01:41:26
+Now when I am describing HPA, is it saying, is it is it saying four minutes ago new size is three. What is the reason why the new size is three? The reason is, is the CP utilization is above that threshold because of that is it increase that size to three.
+
+01:41:49
+Yes. Now if you see, is it under control now? If you see, currently 1% 1 milli core, 29% of memory, the current and the target. So you can see like this. Now this is one application. If I want to do same thing for my application, like Java application, Python application, or your own application also, can I create a HPA?
+
+01:42:16
+by defining resources you need to define the resources otherwise this resources.
+
+01:42:25
+this application let me take maven web app. Maybe you can take deployment or whatever it is or replica set also. Now, first thing, do I need to define that resources because this scaling happens based on the resource request. Do I need to define that resources here? Resources, request.
+
+01:42:54
+requests.
+
+01:42:57
+CPU guys if you allocate less CPU, do you think your containers will work? Let's say Memory, I am just assigning just a 56 mi. Do you think I am minimum this much I am requesting let's say I am limiting this to I am limiting this to just 128 or 100 mi Do you think your Tomcat will start within this limit if you are requesting very less? Because biology sir has used this much. Let me use in
+
+01:43:28
+My application also do you think will it work?
+
+01:43:32
+something like this if you do I am requesting this much I am limiting also this much forget about HPA forget about HPA I am not creating HPA if I apply this application
+
+01:43:48
+First, let me delete whatever applications I have in that.
+
+01:43:53
+in the test namespace. I would apply that application in the test namespace.
+
+01:44:03
+Let me delete and show that.
+
+01:44:06
+Let me delete this whatever I have deployed already. Cube CTL delete deployment. Existing I'm just removing.
+
+01:44:20
+Now let me deploy with this much resources. I'm using this much resources.
+
+01:44:30
+I am requesting and limiting 56. Do you think that the does that arm cat and that application will be able to start within that 56 millicore, sorry, 56 mi?
+
+01:44:50
+There is some issue revision history limit.
+
+01:44:57
+There is issue some in that manifest. What is that issue? Revision.
+
+01:45:05
+I'm creating a deployment only.
+
+01:45:12
+the vision typo.
+
+01:45:18
+there is a typo here revision history limit.
+
+01:45:24
+Now if you see I created an Appliament. I created an Appliament.
+
+01:45:33
+Now containers are running containers are running. Let's see with the I see this OEM killed status as OEM killed. Again, it will try to start again. It will try to start again. Will it be killed because within that 56 millicore is it able to start? You can see number of restarts also number of restarts also it is showing one again. Your Kubernetes is trying to start that container is that container will be again started within that limit.
+
+01:46:03
+No, so kind of a loop kind of a loop kind of a loop after some time. Can I see crash loop backup after some time instead of OEM killed after three four times? If this happened, I can see some kind of a crash loop backup.
+
+01:46:21
+Now can I describe and see that pod? What is the reason? QCETL describe pod. I can describe this pod.
+
+01:46:34
+And then you can see the status of that container also here. Exited. What is the reason? Exited. What is the reason? OEM killed. Now is it like a crash loop backup? Crash loop backup will happen for a lot of reasons, guys. This is not only one reason. This is one of the reasons. Suppose your application is failed to start because of some wrong configurations. You don't have dependent software or libraries in that container.
+
+01:47:03
+You are trying to execute some comment while starting the container that is not coming up. Again, will I see this type of crash loop backup again? Yes. This is one of the reasons, not always same reason. Now, that is because I have given very less limits, very less resources. As I already told, is it based on your requirement?
+
+01:47:31
+Now let's say let's say I am giving something like this minimum.
+
+01:47:38
+minimum I am giving something like this maximum it can go maximum it can go 512 or 1 GB this one also I can say may be 500 milli core or 500 milli core like this now this is just a normal deployment now for this deployment can I create a HPA also for this application can I create a HPA also.
+
+01:48:07
+based on the load you want to increase and decrease something like this
+
+01:48:15
+something like this whether it is only CPU you can use CPU. Whether it's only memory. Let's say I'm giving 80% let's say 80%
+
+01:48:28
+80% or 85% like this, but here do I need to give the correct deployment target? This is my deployment. So here the scale target reference do I need to do like this? Some name some name like maven web app HPA maven web app HPA or auto scalar like this and namespace also guess as of now the deployment is in which namespace?
+
+01:48:58
+the deployment is in which namespace.
+
+01:49:02
+This one this deployment is in which namespace.
+
+01:49:08
+So do I need to have HPA also created in the same namespace?
+
+01:49:17
+for that application.
+
+01:49:21
+So this way can I create a HPA for any application guys.
+
+01:49:27
+This way, can I create a HPF for any deployment, any replicas at any thing based on your requirement? Now, whenever there is a load on this application, if it is crossing this threshold, if it is crossing these thresholds against these, you know, these requests, then does the scaling will happen automatically? Will it increase or decrease the parts of this one?
+
+01:49:50
+provided you have enough resources available in the cluster. Provided you have enough resources available in the cluster.
+
+01:50:00
+Is everyone clear what is pod autoscaler with respect to pod autoscaler? What is HPA? How it works?
+
+01:50:10
+Is everyone clear now?
+
+01:50:14
+And what is resource request and what is resource limits also is everyone clear.
+
+01:50:28
+Now if you see, it is calculating CPU and memory. I have defined the threshold as 85% for memory, 80% for CPU. Now it is under control for that application. Am I going to get third part, fourth part now for this deployment? No. But whenever there is a lot of load, maybe internal applications are accessing that application,
+
+01:50:57
+are requests are coming from outside end users are accessing that application or other micro service other application which is running in the cluster is accessing that application if there is a load is it going to scale up scale down that deployment parts automatically by this HP.
+
+01:51:14
+Yes. So that is all about HPA. Is everyone clear what is HPA? What is Pod Autoscaler? With the labs, with the in detail, what is happening in the background also?
+
+01:51:31
+going to happen. So for descaling nowhere we will mention guys for descaling nowhere it will mention it will have some internal algorithms. So if it is again less than that kind of a 30 percent 40 percent now target I have mentioned 85 or 80 if it is comes beyond 50 40 percent then it will start scaled down. So that is how it works.
+
+01:52:02
+Thank you guys. That's it for today for horizontal pod autoscaler. Are we going to use these things also along with your deployments, your services? Are we going to use this HPA also for our applications in the actual Kubernetes cluster CS?
+
+01:52:19
+So this is how it works. I'll continue tomorrow with a different topic. Try to practice whatever has been discussed today. Understand the concept and practice. I'll see you tomorrow. And one more thing, lot of people are still having problems to set up the Kubernetes cluster. One guy has posted today, he is not able to join the worker with the master. Is it clearly saying operation timed out on so and so IP, so and so port?
+
+01:52:49
+I in the class also many times I have explained how to troubleshoot if there is a timeouts all these things is it clearly showing that message he just posted that screenshot is it clearly saying that message saying that operation timed outs and so on so forth sounds so IP so do you need to double check whether there is a network connectivity from that server to the type and port is there firewall is opened or not. All these things we have already discussed guys without practice.
+
+01:53:19
+without practice without practicing and without understanding without attending all the concepts you will have issues even though we discussed did I explained already that error what do you mean by network what do you mean by firewall so what is happening if there is no network how it works all these things are already discussed make sure you are attending all the classes.
+
+01:53:45
+Till we have a lot of classes, we are just going step by step. I may need another maybe till 13 to 15 classes is required to cover all the Kubernetes concepts. There are a lot of advanced things comes. Values, liveness probe, readiness probe, config map, secrets, ingress, stateful sets. There are a lot of advanced concepts also comes. We are going to discuss. Next, another.
+
+01:54:14
+13 to 15 days is required.
+
+01:54:20
+Thank you guys that's it for today I will continue tomorrow try to grow this.
+
