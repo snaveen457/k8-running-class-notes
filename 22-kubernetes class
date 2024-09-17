@@ -1,0 +1,1035 @@
+00:01
+This conference will now be recorded.
+
+00:05
+Before I start today's session, I am requesting once again, try to share your feedback. I see only few people have shared your feedback, but most of the people not yet shared that feedback. Get some time, try to spend some time and provide your valuable feedback. That is important to us.
+
+00:26
+I see few people has already done but whoever has not yet done try to do that at least today or tomorrow. Now let's get started.
+
+00:37
+Today we will try to understand what is Helm? What is Helm? What do you mean by Helm? So so far we discussed lot of Kubernetes concepts. We discussed about Kubernetes architecture.
+
+00:57
+Kubernetes resources so resource or objects like pod RC RS DS deployment deployment stateful set and also we have PV PVC service.
+
+01:27
+HPA horizontal pod autoscaler config map secret
+
+01:36
+What else we discussed? Network policies, all these things are Kubernetes resources, network policies, Ingress.
+
+01:46
+We discussed all these things. Now this role, role binding, cluster role, cluster role binding, this is also Kubernetes resources, cluster role, cluster role binding.
+
+02:04
+service account.
+
+02:08
+All these things are Kubernetes resources. Whenever you are deploying any application, whenever you are deploying any application in your Kubernetes cluster, they need to create these Kubernetes resources based on the requirement. Let's say you have a requirement to deploy one stateless application. Are you going to create a deployment for that stateless application? And if that deployment, if that body is using some kind of a config maps and secrets, they need to create a config map and secret.
+
+02:38
+Do I need to create a HPA for the deployment? Do I need to create a ingress rules network policies based on the requirement? Do I need to create all these resources in my Kubernetes cluster? Not all these things, but based on the requirement, do I need to create these resources? If your application is using some config maps and secrets, you need to create that. If your application has to be automatically scale up, scale down the number of pods, do I need to create a HPA?
+
+03:09
+If I want to expose that service using ingress controller, then it will create a ingress resource, ingress object for that application where I can define the routing rules.
+
+03:23
+and also if there is network policies. Whenever you are deploying, you need to create these Kubernetes resources to deploy your applications in the cluster. Now,
+
+03:38
+We can do in a imperative way and we can do in a declarative way. But we are not going to use imperative way. We are going to use declarative way that is manifests. Manifest as we already discussed does Kubernetes supports YML as a manifest to deploy all these Kubernetes resources based on the requirement. Yes, and does Kubernetes supports JSON also if required.
+
+04:07
+JSON manifest also instead of YML manifest. Yes, but which one is widely used which one is widely used 99.99 percent we are going to use YMLs only. But what is the problem with this? What is the problem with this? What helm is trying to solve here? What is this helm? Why do we need helm?
+
+04:33
+what problems what challenges we have without helm how those challenges are addressed by helm. We'll try to discuss now. Now helm is a package manager helm is a package manager. First of all what do you mean by package manager? There are a lot of package managers. What package managers are trying to solve? What package managers are trying to address the problems? What type of
+
+05:03
+package managers are trying to address. There are a lot of package managers. Can I call M as a package manager? Can I call APT as a package manager? Can I call even Maven? Can I call even Maven also as a package manager? NPM also as a package manager? NPM.
+
+05:31
+under pip if it is a python can I call pip as a package manager python package manager maven package manager node package manager m package manager apt package manager there are a lot of package managers apk package manager what is the problems the package managers are trying to solve is package managers is simplifying the process of creating
+
+06:00
+installing, updating, deleting the packages.
+
+06:06
+is package managers are simplifying the process of creating the package, installing the package, updating the package and deleting the package. The definition of package manager.
+
+06:22
+you have a lot of package managers. Just to give an example.
+
+06:29
+m, m, apt, apk. So these are kind of a package managers. These are what type of package managers can I call this as a system package managers system package managers.
+
+06:51
+In fact you can use them in macbook you have a brew software in macbook you have a brew software that is also package manager for mac. If you are using windows can i use chaclity.
+
+07:07
+Chaclety that is one package manager for windows. So using these package managers, these are system package managers using this package managers. Can I install the software in my system update the software and delete the software system package managers or software package managers? Yes, but is this package managers are mandatory? Is this package managers are mandatory to manage your packages system packages?
+
+07:36
+No, without these package managers also, can't I able to install, update, remove the softwares in the system.
+
+07:47
+can't be able to install, update, delete the software in the system without these package managers
+
+08:01
+We can do that. But what this package managers are trying to solve is this package managers are simplifying the process of installing updating the package. Let's say instead of executing a lot of commands and a lot of scripts are you guys executing something like this.
+
+08:25
+that name example example yum install get are you guys able to do yum remove get to remove the package from that system yum update to update the package in that system you are executing some comments but is this package manager is simplifying the process of installing
+
+08:55
+In the background is it executing lot of things, you know, lot of stuff is the same package manager is downloading that package from the repositories package repositories kind of artifacts. It is downloading the package from the artifacts kind of repositories. Then it is installing that package updating the package. We can remove the package something like this. But without this package managers also will able to install the packages by executing lot of commands.
+
+09:26
+But is this package managers are simplifying the process?
+
+09:32
+Yes, it is simplifying the process just similarly like a Java package managers like a Java package managers. So maven gradle can I consider this as a package managers for Java using maven maven am I able to create a Java package.
+
+09:57
+using gradle am I able to create a Java package? It is simplifying the process. I can create a Java packages using maven gradle. If it is a node.js, I can use NPM. If it is a Python, I can use pip like a package managers, which is going to simplify the process of building and applying the application of packages. Now Helm is also a package manager. Helm is also a package manager for what? Helm is a package manager for what?
+
+10:29
+Helm is a package manager for Kubernetes applications. What do you mean by that?
+
+10:42
+Helm is a package manager for Kubernetes applications. Helm is the package manager for Kubernetes application. What it will do? Does this Helm will allow you to install, update, remove applications in Kubernetes cluster? Does Helm will allow you to install, remove, update applications in your Kubernetes cluster?
+
+11:10
+Yes. Helm will allow you to install, update, remove applications in your Kubernetes cluster. It is similar manner to the M and APT for Linux distributions. The way you are installing software packages, that system packages, like using M install, APT install, the way you are installing system software, can I install Kubernetes applications in the Kubernetes cluster using Helm?
+
+11:38
+Yes, so Helm will allow you to fetch. Helm will allow you to fetch, deploy and manage the lifecycle of applications. Using Helm you can fetch the package. You can fetch the Kubernetes package that Kubernetes application and you can deploy that package and you can manage that package. You can manage that application using Helm.
+
+12:08
+and manage the life cycle of application both third party applications as well as your own applications using helm I can apply third party applications as well as my own applications what do you mean by third party application here
+
+12:33
+for domain by third party application here.
+
+13:00
+third party application. It is not outside of Kubernetes. It is not like that outside of Kubernetes application third party application in the sense the application which is maintained, which is built, developed and maintained by some other company other than you. The application or software which is developed and maintained by someone else. Is called as third party application. Now can I consider this metric server Prometheus, Grafana.
+
+13:29
+Jenkins or maybe this Ingress controller that engine X ingress controller or Istio or Traffic can I consider all these things as a third party applications the applications being built and developed and maintained by third party people Can I consider all these things as a third party applications? Yes, so can I apply those third party applications also in my queue?
+
+13:56
+Kubernetes cluster using Helm, like Metrix server I want to deploy, Cluster Autoscaler I want to deploy, Prometheus I want to deploy, Grafana I want to deploy, Jenkins also I want to deploy in Kubernetes cluster. Is it possible for me to deploy those third-party applications using Helm? Package Manager, yes. Not only third-party, can I deploy our own applications, the applications which we are developing, can I deploy those applications also in Kubernetes using Helm?
+
+14:30
+yes we can apply those things so in helm we have some concepts we have some concepts helm as some concepts like this helm
+
+14:48
+chart, Helm chart, Helm, client or CLI.
+
+14:57
+Helm repository
+
+15:02
+Helm has some concepts Helm chart, Helm client, Helm repository. Not only Helm guys, if you take any if you take any
+
+15:13
+package manager like a MAPT or maven whatever it is we have these things. So if it is a young package manager they have a helm CLI sorry MCLI or young client where you are executing some commands like this young install young remove young update like this are you using some commands to manage the packages using that package manager like this.
+
+15:44
+This is the client client. The command now. Is this young also has a concept of repositories do have a repositories also in M M repositories are apt repositories. What is the purpose of that repository like M repository apt repository? So what is the purpose of that repository in that repositories? Are you going to maintain those packages M packages are apt packages?
+
+16:19
+Without that package without having that package if that package is not part of the repository will be able to install that package sometimes you are executing something like this. M install something are you getting say message saying that no such package no such package available something like that.
+
+16:45
+Sometimes you are executing m install Jenkins. You are getting some message saying that no such package available. So first of all, is that pack case should be part of the repository? Is that repository information should be available to this CLI, MCLI. Is that repository information should be available to this MCLI so that this m command, route will download that package and install the package. Yes, if you remember,
+
+17:14
+you guys install Jenkins when you are installing Jenkins you are doing something like this you might have already done in the Linux maybe in Red Hat or CentOS whatever it is not this approach using package manager let's say you have done using package manager you have done in the Red Hat now what you are trying to do this case what is this command.
+
+17:40
+You are doing something like this. What is this command? What you are doing this one? If you understand this one, are you adding that repository? Are you adding that repository? That you know that M repository to your M package manager in your system? Are you adding that repository information, that Jenkins repository information, that M repository Jenkins information, to your package manager in the system?
+
+18:10
+like this after doing this after doing this then only you are executing like this without doing this if you try to execute and install Jenkins do you get a message saying that the package not available no such package available message. Yes, so you are adding a repository now is this repository contains the Jenkins package
+
+18:37
+information about what and all things to be installed while installing that package. It is kind of a some package is that package has everything whatever is required to install Jenkins in that system is that a Jenkins repository that Jenkins package has everything whatever is required to install Jenkins in the system. Yes, it's a package manager and this is a repository. Similarly, in Helm also do you have a repository concept
+
+19:06
+In Helm also do have a repository concept where we can maintain the packages, Helm packages. Helm packages, this Helm chart is nothing but a package. This Helm chart is nothing but a package. Package of what? Is it a package of your source code? Is it a package of your Docker image? It's a package of Kubernetes resources.
+
+19:36
+It's a package of Kubernetes resources or objects basically YML. So Helm chart basically this Helm chart is basically one package. But what that package contains is that package contains your source code is that Helm chart contains your source code like Java code dotnet code Python code. No is that Helm package contains image layers of your image is that Helm chart contains layers of your image your Docker image. No.
+
+20:07
+But is that Helm chart contains the YML files of your Kubernetes resources, whatever you want to create? YML files of your Kubernetes resources, whatever you want to deploy? We call it as a templates. So
+
+20:29
+We call it as a templates. The templates are nothing but your deployment YMLs, whatever you want to deploy. Service YML.
+
+20:42
+Service by ML.
+
+20:47
+If required config map, YML, secret, whatever you want to create guys. Based on the requirement, based on the requirement you can create a Helm chart with all the Kubernetes resources, HPA.YML, Ingress.YML, whatever you wanted to deploy in the Kubernetes, whatever Kubernetes objects you want to deploy for that application. Suppose I want to deploy that application as a deployment.
+
+21:16
+deployment YML, service YML, config map YML, secret YML, HPA YML, ingress YML, all these things is part of that Helm chart. Now, I have a Helm chart. Now, can I install my application using that Helm chart? That chart contains your Kubernetes resources. That chart contains your Kubernetes YMLs. If I install my Helm chart, is that...
+
+21:44
+going to install all these Kubernetes resources, all these Kubernetes resources, whatever is part of that Helm chart, like your deployment, service, config map, secret, ingress, all these things. Is it going to deploy in the Kubernetes if I install that Helm chart in Kubernetes?
+
+22:05
+Yes, so I can install using Helm CLI. Can I do something like this? Helm install your application name and your chart name, your application name and chart name, something like this. Helm install, let's say Java web app, Java web app, chart, something like this. Now if I created a Helm chart for this application,
+
+22:35
+where I am maintaining the deployment YML, service YML, config maps, secrets, all those things for that application. If I install that Helm chart like this, I created a Helm chart. And if I install that Helm chart, does Helm will connect to the Kubernetes cluster and deploy all these templates, all these Kubernetes resources in the cluster if I install like this?
+
+23:01
+Yes, now this Helm chart can be maintained locally or remotely. This Helm chart any package you take guys not only Helm chart if you take Java package, if you take my I know Docker package, if you take RPM packages also or APT packages also, you can maintain locally or you can maintain in a remote repositories. Now if I have this Helm chart locally.
+
+23:31
+If I have this Helm Chart locally, does any other people want to deploy this application in the cluster? Will they able to deploy that application using Helm Chart? The chart is available locally in my system, but other guy want to deploy? Will able to deploy?
+
+23:49
+No, they cannot deploy because the chart is available locally. So Helm CLI can install the local charts, Helm CLI can install the local charts or Helm CLI can install the charts which are there in a remote repositories, which are there in a remote repositories. Now we have a repository concept. You already know what is repository.
+
+24:17
+You already know what is repository we discussed but here you know helm repository what helm repository contains this what do we store in the helm repository the way we are storing Docker images in the Docker repository maven packages in the maven repositories can I maintain these helm charts these helm charts helm packages in the helm repositories so that whoever want to deploy that application will they able to add that repository and apply directly from the repository.
+
+24:49
+Same concept here. If you see, they are maintaining this M repository. They are maintaining that Jenkins M package in one central repository. If required, does anyone can add this repository to their client and installing that software from the client by adding this repository to the client? Yes. Similarly, if I have a Helm chart, if I have a Helm chart available in the repository, can I add repository like this?
+
+25:19
+Helm repo add that repo URL where I have that Helm package Once that is added can I install that application
+
+25:34
+Suppose I have given repo name as mithun tech helm repo mithun tech helm repo
+
+25:44
+Now this is the URL of my Helm repo. Just to give an example, I am giving. This is the URL of my Helm repo.
+
+26:01
+Just to give an example, this is my helm repository. If I maintain my charts in this helm repository, does anyone can add repository like this to their client helm client. Then once they have added once they have added one second, first I will add a repository like this helm repo add. This is my repo name. Then once they added. Now can I install?
+
+26:28
+whatever chart is available as part of that helm report. Suppose this is my helm chart name. This is my repository. This is the chart name in that repository. Now, can I install something like this? Can I install the helm charts which are available in the remote repositories also like this? Not only just local repository, can I install the charts which are available in remote repositories, helm repositories like this? Yes.
+
+26:58
+So Helm repository, Helm repository is a kind of a central server, central storage. Can I maintain the Helm charts centrally in the Helm repositories so that we can add the repository and install the applications using the charts which are there in that repository? Yes. So same as maven, same as APT. So we have a Helm chart, we have a Helm client, we have a Helm repository.
+
+27:28
+So chart is nothing but a package of your Kubernetes resources. Client is nothing but a CLI. Using that Helm CLI, I can install my Helm charts, local Helm charts. I can delete applications, I can update applications. If required, I can do something like this, Helm upgrade. Helm upgrade or Helm.
+
+27:54
+uninstall to remove like this
+
+28:02
+We can use this help, which will simplify the process of installing, updating, deleting the applications in Kubernetes. First of all, why we need to use Helm? What is the problem? What are the challenges we have without Helm? What is the problem? Since we already know Kubernetes, if you understand is Helm is mandatory to deploy or update and remove the applications in the Kubernetes cluster? Is it Helm is mandatory to deploy?
+
+28:31
+update or remove the applications in Kubernetes cluster. No, it is not mandatory, but it is good to use. It is good to use. Why? What are the challenges? Why we have to use help? Kubernetes will be difficult. Kubernetes will be difficult to manage with all the objects. Kubernetes will be difficult to manage with all the objects which you need to maintain.
+
+29:02
+Whenever you are applying any application, do you need to create Kubernetes objects like deployment services, config maps, secrets, Ingress rules, HPA by HPA. Based on the requirement, do you need to create all these Kubernetes objects while applying any application like a deployment service, config maps, secrets, values, Ingress rules, network policies based on the requirement. You need to create all these things.
+
+29:32
+But instead of you are manually managing all these things, does Helm will manage all this for you?
+
+29:43
+Yes, what is the problem here I have without helm let me tell you what is the problem I have without helm let me tell you this is one project.
+
+29:56
+This is one project, let's say. This is one application. To deploy this application, to deploy this application in Kubernetes cluster, I need to create some Kubernetes resources. Do I need to create some Kubernetes resources in the cluster? As per the requirement, do I need to deploy some Kubernetes objects like this? Deployment, service, like this.
+
+30:23
+Now let's say you have a requirement for HPA also. Do I need to create a HPA also based on the load? My replica should be increased and decreased automatically. Do I need to create a HPA also based on the requirement? Yes. Now
+
+30:43
+If this application is using some environment variables can I create a config maps and secrets and refer those environment variables from config maps and secrets if that requirement is there? yes I need to create all these things now what is the problem if I directly use this one now I have a different environment I have a dev environment dev kubernetes cluster
+
+31:13
+Kubernetes cluster.
+
+31:17
+I have a production environment.
+
+31:20
+I have a production environment, production cluster.
+
+31:26
+I have a stage environment or QA environment. I have a QA cluster. Now let's say I am using this manifest. Now I have a requirement whenever I am deploying this application in Doe cluster. I want to have only two replicas. Let's consider in Dev environment. I want to have only two replicas and in Dev environment this much CPU this much memory is fine because this is only for developers. I want only two replicas.
+
+31:57
+I want only this much CPU this much memory is sufficient. Now same application I want to deploy in QA or production. I want to deploy same application in QA or production. But in production let's say I want to have a 10 replicas or 8 replicas or 4 replicas. I want to have a 4 replicas in production. Since it's a production I want to have more resources.
+
+32:26
+one CPU, one GB memory
+
+32:30
+request limits and it can go up to 2 GB and 4 core CPU because it's a production now I want to have a different resources for production now if I am using manifest like this now dev environment different values production environment different values I have QA environment different configurations and values if I use manifest like this is it possible for me to parameterize
+
+33:01
+Is it possible to parameterize this manifest if I am using directly QBurnett is manifest at runtime when I am installing that application when I am executing this kubectl apply when I am executing this kubectl apply that files do I have an option to pass values to that YML and use those YMLs at runtime. No in that case do I need to duplicate.
+
+33:28
+I need to duplicate all these YMLs for multiple environments and again each time whenever there is a change I need to modify these values if I am using these manifests I need to duplicate this YMLs and each time I need to modify and add apply we cannot parameterized we cannot parameterize these things.
+
+33:52
+we can add parameterize these things.
+
+33:57
+No.
+
+34:00
+whenever you are changing whenever you are changing you are modifying the manifest files whenever there is a change you are modifying this manifest files but you want to use old version of manifest you want to use old version of manifest but do you have somewhere kind of any package of this manifest instead of this manifest I want to use old version of manifest do I have anywhere some kind of a package where I have this manifest so that I can apply old version of manifest.
+
+34:31
+You are modifying this all these configurations and applied, but you want to go back to the previous version of Kubernetes state. You want to go back to the previous version of Kubernetes manifest. We don't have any kind of a history. Kind of a single package where I can apply again.
+
+34:53
+and we cannot parameterize these things. We cannot parameterize these values at runtime. Now, instead of going with this approach, if I go for a helm approach, is it possible for me to parameterize my Kubernetes deployments using helm? Yes. So I can parameterize my helm charts. I can parameterize my helm charts. Helm is...
+
+35:22
+having a kind of a templating language. Guys, to make things simple, in the Ansible, do you have a concept of templates? In the Ansible, do you have a concept of templates? Will you be able to pass the values to the templates while installing playbooks or roles? While installing playbooks or while executing roles, do you have an option to pass the values to your templates so that Ansible will render those templates and apply? Yes.
+
+35:52
+Similarly, if I use helm, is it possible for me to pass values to the helm templates and is the templates get rendered with values and applied?
+
+36:04
+Yes, will I able to parameterize my Kubernetes deployments using Helm? Will I able to parameterize by passing different, different values at runtime? Will I able to parameterize my Kubernetes deployments using Helm? Yes. And also if I have a multiple versions of Helm charts, if I have a multiple versions of Helm charts, I created one Helm chart and after that I modified again, I created another version of Helm chart.
+
+36:32
+If I want to deploy the old version of HelmChart with old templates and old values, will I able to deploy if I maintain all those versions of the HelmCharts in the Helm repository?
+
+36:46
+Yes, so we have a lot of advantages. I can parameterize my Kubernetes deployments using Helm templates, and I can maintain all the versions of my Helm charts, Helm packages.
+
+37:00
+just to make things simple you are using m install you are saying java iphone 1.80.jdk so do you have this package this rep you know m package in the repository now
+
+37:19
+again java has introduced one more package do you have one more package like this in the package that m repository 11 now you are having this version of the package also this version of the package also in the repository if you don't want this package anymore can you remove this package something like this m remove and again can i go back to the old package all the old values old package if required yes similarly
+
+37:47
+If I have multiple versions of Helm charts, Helm templates and values, I have multiple versions of Helm charts, Helm templates and values. If you don't want to deploy the latest Helm chart with the latest values, can I remove and deploy old Helm chart with old templates and values? If I have all those in the Helm repository, yes. It is exactly like a package manager. If you understand the definition of package manager,
+
+38:17
+you can understand film very easily.
+
+38:21
+Now will I have all these options like parameterizing my values while doing the deployments using helm history of all the changes of my helm charts helm packages.
+
+38:34
+Yes, so Helm simplifies the process. Helm simplifies the process of creating managing and applying applications using Helm charts.
+
+38:46
+In addition to that, Helm also maintains the version history of every installation. Helm will maintain version history of every installation, whatever we are doing in a Kubernetes cluster. The way the way Kubernetes deployment is maintaining the revision history. Helm also maintain the history of every application, whatever we are deploying in the cluster. If something goes wrong with the new version.
+
+39:16
+new installation of helm can I simply execute helm rollback so that it will go back to the previous state.
+
+39:27
+Yes, and also whenever you need to update your application, you updated your chart. Whenever there is a change in your templates or your values, you want to update that application. Can I execute simply see helm upgrade the way you are executing M upgrade or APT upgrade. Similarly, can I execute helm upgrade to install upgraded helm chart in the cluster?
+
+39:56
+So deploying application to the Kubernetes cluster, the powerful and popular container orchestration system is complex. Deploying applications to the Kubernetes cluster, the powerful and popular container orchestration system can be complex. Setting up a single application, deploying a single application can involve creating multiple Kubernetes resources, such as deployments, services, ingress rules, config maps, secrets.
+
+40:25
+Do we need to write a detailed manifest files to deploy all these things based on the requirement for that application?
+
+40:34
+Yes, so same yml same yml can I create as a Helm chart Helm package so that I can apply using Helm chart I can you know pass the values to that Helm templates at runtime also and I can maintain the history of all my Helm templates and values that manifest. Yes, so Helm becomes handy Helm becomes handy to address all these challenges.
+
+41:03
+As I already discussed what is Helm chart. We already explained what is Helm chart. Helm chart is basically a package package of what package of your Kubernetes YMLs package of your Kubernetes manifests. So Helm chart is basically a group of manifest files. It's a group of manifest files YML files organized in a specific directory structure.
+
+41:31
+Helm chart is basically a collection of Kubernetes manifest files organized in a specific directory structure that will describe some Kubernetes resource like a deployment config map secret ingress like that, but there are two important components in the Helm chart. There are two important components in the Helm chart one is templates. One is templates.
+
+42:01
+values one is templates another one is values values these values are like what these values are nothing but kind of a variables kind of a variables now can i refer these values or variables in these templates
+
+42:25
+This is my template manifest, but in this template can I refer the values whatever I have defined in the values file.
+
+42:39
+Yes, but if I apply these YML as is, does Kubernetes can understand? Does Kubernetes can understand these YMLs? If I apply these YMLs as is, does Kubernetes can understand? No. Do I need to deploy these templates using Helm? If I use Helm, does Helm will render? Does Helm will render the templates? Is it going to process these templates with the values?
+
+43:08
+and is it going to generate a kubernetes, you know the manifest files which can be understandable by kubernetes. Yes, there is a templating process. There is a templating process. You can define the values in the values file and in the templates you can refer those values Helm will render these templates Helm will process these templates. It will render the templates and generate a kubernetes manifest files that can be understandable by kubernetes.
+
+43:38
+Now if any change I want to do instead of touching these templates can I update my values and apply without touching my kubernetes templates will I able to update the values and apply yes and again at runtime also can I do this while installing itself can I pass the values like this if an iPhone set something like this I want to use this image tag I want to have these many replicas.
+
+44:08
+like this at runtime also can I pass these values if I am referring these in the templates let's say I am referring like this in my deployment I am referring something like this kind of a templating language values dot image dot sorry values dot replica count
+
+44:34
+Now I am passing something like this replica counter here. I can also have a value replica count I can say one if required at runtime also I can pass like this if I am passing replica count as to here. So in your deployment manifest instead of hard coding the number of replicas you are referring something like this some values. So how many replicas will be
+
+45:03
+created what is the actual value will become here instead of this one what is the value 2. Now let's say I am deploying in a production environment I am deploying in a production environment same helm chart same helm chart when I execute in the production environment like this how many replicas gets created if I do something like this.
+
+45:30
+Now what will be the actual value here when I am applying the same Helm chart with this value. If you see here.
+
+45:39
+Now do I have an option to parameterize my deployments in kubernetes using help if you see at runtime also can I pass the values let's say you need to change lot of values you need to change lot of values can I have a different different values file like prod values dot yml you need to modify lot of values lot of configurations can I have a separate values file for each environment like this
+
+46:09
+templates are same but values are different dev values qa values like this now can I use this values file if I want to change lot of values while doing the deployment instead of changing like this can I use this value if it is a dev environment where I will have a different different values like replica count one I have resources lot of resources like since it's a dev
+
+46:39
+I will have something like this request CPU just 500 milli core
+
+46:49
+memory just 512 mi limits if it is a dev environment I want to use less resources one memory one g i but when it comes to production environment I want to have a different values lot of values I need to modify can I say something like this for a product
+
+47:20
+something like this if required. Now when I am applying in a production, can I use something like this? Broad values.
+
+47:32
+Does Helm will render the templates based on these values and apply in the cluster? Can I use this values file broadvalues.yml if I want to change lot of stuff. Can I do like this?
+
+47:46
+Templates are same templates are same, but are you passing a different values to your Kubernetes templates, Kubernetes objects?
+
+47:56
+So I can do this way. If you understand, is it trying to solve some complexity here? Is Helm is trying to address some challenges whatever we have while applying the applications in the cluster, we have some challenges. Is Helm is addressing all those challenges here?
+
+48:19
+Yes, so Helm chart there are two important components. One is templates. Templates are nothing but what? Templates are your Kubernetes manifests. Templates are nothing but your Kubernetes manifest, whatever you want to create. But in these templates, can I refer the values like this? Can I refer the values like this? These values, these values can I pass?
+
+48:47
+These values can I pass at runtime also if required or can I define that in a values file one more important concept in the Helm chart is values file. Can I define those values whatever I am referring in the templates in the values file and I can pass at runtime also like this.
+
+49:06
+So charts are nothing but your Kubernetes manifest files. It will go through a rendering process. Guys, Helm is developed. Helm is developed using Go programmatic language. So whatever templates I'm using in the Helm, is it kind of a Go templating language? Is it kind of a Go templating language which we are going to use in the templates? Yes.
+
+49:35
+In the ansible also you have a templating ansible is written in which programmatic language ansible is developed in which programmatic language python. So what is the templating language ansible is using in ansible? What is the templating language it is using? Do you have a concept of ginger templates? Python has a concept of ginger templates. Is it using kind of a ginger templating language?
+
+50:03
+Yes, so here it is a go templating language. So helm uses go templating language kind of a go templates.
+
+50:13
+Go templating language.
+
+50:17
+So kind of a go templating language. We can use like a variables. We can use like a variables, conditions, functions. All those things can be used. Kind of a variable. Now, in my template, I can use something like this variable. I can use functions. I can use all these things also, something like this. If you see, can I refer something like this in my template that has to be in double quotes again, something like this.
+
+50:47
+is this kind of one variable values dot so which means wherever you see values dot do I need to define that in the values file in that values file or can I pass at runtime also like this using iPhone iPhone set option can I set the value at runtime also using iPhone iPhone set and I can define in a values file.
+
+51:10
+like this if I am not passing any values file custom name what is the default values file it will use what is the default values file it will use by hell the default values file is this one values dot ml values dot ml it is going to use this default values dot ml if I want to pass a different values file can I use iPhone f option.
+
+51:36
+different values, custom values.
+
+51:40
+Yes, so it is going to use templating language. So before Helm is applying those things in a Kubernetes is Helm is going to process or render that templates. These templates and values these templates and values will go through a rendering engine rendering process and it will produce a manifest file that can be understandable by Kubernetes. Guys, if I directly apply cubes, ETL apply these templates.
+
+52:09
+Do you think will it work? If I directly apply kubectl apply, do you think will it work? No.
+
+52:16
+It won't work. You need to deploy using Helm. So Helm will process these templates and values then it will deploy.
+
+52:27
+Now this is the director structure. This is the director structure of Helm chart. So whenever I create a Helm chart, we have a directory structure like this templates values file values dot ml file templates folder chart dot ml file. What is this chart dot ml what this chart dot ml contains. It's a information about that chart. It's a information about that Helm chart metadata about that Helm chart.
+
+52:56
+So what is the version of that Helm chart? That Helm chart description for which application that Helm chart is created kind of a description information about that chart. Now, what is this templates folder? What do we maintain in this templates folder?
+
+53:15
+So we will maintain the Kubernetes manifest files. Kubernetes manifest files, whatever is required for our application. Whatever is required for our application. Let's say your application doesn't have a requirement to create a HPA. Then can I maintain this? Do I need to maintain this HPA YML? If your requirement doesn't have to create a HPA, do I need to maintain this HPA or create HPA YML here? No. So,
+
+53:44
+If you have a requirement to create a config maps and secrets or values, then you need to have all those YMLs also again. If this deployment is referring something from config map, then you need to create those config maps, secrets, values if it is creating use. So based on the requirement, can I maintain all the Kubernetes manifest files, Kubernetes resource files, whatever is required for our application in this templates folder?
+
+54:14
+Instead of maintaining in a single YML, you can maintain all these things in a single YML deployment, HPA, ingress, service, service account, everything also you can maintain in a single YML. But instead of maintaining in a single YML, why we are maintaining in a separate YML? Do we have a better readability, better maintainability, readability and better maintainability if I have in a multiple files? Yes.
+
+54:42
+So we can maintain like this. Now in these templates, in these templates, can I refer the values? Whatever values we can define the default values in the values.ml file, we will define the default values which will be referred in the templates. I can refer those values in these templates, the values. And we have one more folder called the charts folder. We have one more folder called the charts folder. What is the chart folder contains? What we can add?
+
+55:12
+If this application is depending on another application while deploying this application, I want to deploy the dependent application other application. Can I have that Helm chart under the charts folder, the dependent chart, the dependent application Helm chart can I maintain in this charts folder, if this application is depending on another application, another Helm chart.
+
+55:39
+Can I add that dependent Helm chart here under the charts folder? Yes.
+
+55:45
+But if you don't have any requirement this application can be deployed independently from other applications then do I need to maintain any dependent Helm charts here if this application can be deployed independently from other applications. I don't need to maintain anything under this charts folder. I don't need to maintain anything in the charts folder. I can maintain the apply independently again guys whether it's a stateful or stateless that doesn't matter here.
+
+56:15
+Can I instead of deploying together? Can I deploy independently? This application Helm chart separately other application Helm chart separately I can deploy. But if I want to deploy together, can I add that dependent Helm chart in this charts folder so that even though I'm just applying this one if I have the dependent Helm chart in this charts folder does the other application also gets deployed the dependent Helm chart also getting start.
+
+56:43
+If I maintain under this one, yes.
+
+56:47
+So if you have any dependent Helm charts.
+
+56:51
+that you can maintain here otherwise you no need to make it here is everyone clear about this folder structure that Helm chart folder structure what do you mean by templates folder what we will have in the templates folder what do you mean by this values dot ml what we will define in values what do you mean by this charts folder what we will maintain what do you mean by this chart ml is everyone clear.
+
+57:20
+No.
+
+57:22
+We have a charts folder as I already told this chart folder. We can have a dependencies that can this can be placed in the directory. We have a templates folder. This templates folder basically contains template files. Template files your QBurnit is template files that are combined with values. So whenever I am using helm it is going to render the templates and values get rendered and it will generate a.
+
+57:52
+kubernetes kind of a manifest file so these templates will use go programmatic language templating format it is going to use go programmatic language templating format this templating language this templating language you can use variables you can use pipelines pipelines are like a conditions pipelines are like a conditions or functions you can use functions
+
+58:22
+functions pipelines pipelines are like this in your Linux or cell scripting do you have a pipeline like you are going to execute one command then the output of that command will be passed to the next command like this pipelines we can use here also the pipelines we can use variables you can use variables in this go templating language
+
+58:50
+Pipelines functions functions are like a methods. This is one function print is one function Right index is one function like this. We can use functions also like this functions Conditions also you can use This is going to use a go templating language Go templating language. We can use go templating language in the templates
+
+59:18
+This chart.ml contains metadata about that chart. This values.ml contains values information. The helm command, the helm command can install a chart from a local directory. The helm command can install a chart from a local directory. Let's say I have created a helm chart like this. This is a local directory, local directory. I can execute helm install this chart, this directory.
+
+59:46
+But if someone else want to deploy this Helm chart, if it is part of a local directory or a local tar file, does others can install this Helm chart from their systems? If I have this as a local directory as a local tar file?
+
+01:00:03
+No. So, Helm command can install a chart from a local directory or a local tar file also, local tar file or directory. And also, I can maintain these charts in the repositories. If I want to share these Helm charts with other people, can I maintain this Helm chart in the repositories that we call it as a Helm repositories? If required. Yes.
+
+01:00:31
+So, Helm repositories are the locations, repositories are where Helm charts are held and maintained. So, if I am maintaining that Helm chart in one Helm repository, whoever wants to deploy that Helm chart in their clusters, can they add a repository like this in their Helm CLI, in the Helm client, can they add repository like this,
+
+01:01:01
+Then can I install directly something like this? This is the repository name and this is the chart name. So if I have a helm repository and I have a chart in the repository, does anyone can add that repository? Then can they install that helm chart from that remote repository instead of local directory or tar file also?
+
+01:01:27
+Yes, so there is a concept of repository and we have one more concept called Helm release. Helm release. What do you mean by this Helm release?
+
+01:01:44
+What do you mean by this Helm release? Whenever we install any application in the Kubernetes using Helm, is it going to create some kind of a release? Kind of a release?
+
+01:01:57
+Yes, so whenever we are installing any Helm chart in Kubernetes using Helm, it is going to create a release. Think of a release as a mechanism to track installed application in a Kubernetes cluster. When an application is installed by Helm, a release is being created.
+
+01:02:26
+a release is being created kind of a tracking purpose. Now I can see those releases whatever I have deployed using helm I can see those releases using helm ls. I can see those releases using helm ls and each will have a version or the revision information also whenever I update that application in Kubernetes it is going to create another revision.
+
+01:02:56
+Can I simply execute Helm rollback so that it will go back to the previous release or previous revision? We call it as a release or revision. Yes. So Helm will maintain the release information also in the Kubernetes. But before I install Helm, let's try to understand the architecture of Helm. Before I install Helm, let's try to understand the architecture of Helm.
+
+01:03:26
+very important interview question also the difference between Helm 2 and Helm 3. Helm 2 and Helm 3. So what is this Helm 3 or what is this Helm 2 version version of the Helm software. So what is the latest version which one is latest Helm 3.x I can say 3.x or 2.x. So what is the latest version.
+
+01:03:55
+3.x in the sense it can be 3.0, 3.1, 3.2, 3.3, 3.5 like that. Helm 3 and Helm 2. This is the official website of Helm. This is the official website of Helm. Helm.sh. This is the official website of Helm.
+
+01:04:21
+Now the helm, it's a package manager for Kubernetes. Helm is the best way to find, share, and use softwares built for Kubernetes. Whatever applications or softwares you built for deploying in Kubernetes, helm is the best way to share and install. Now what is the latest version of the helm? If you see.
+
+01:04:44
+If you want to install, you can install Helm.
+
+01:04:51
+If you are using macbook you can use brew install helm. If you are using linux machine you can install using linux that package managers are you know package.
+
+01:05:11
+Now if I want to install Helm, now if you see what is the latest version of Helm you can see the official GitHub of Helm. So this is the official GitHub of Helm. So what is the latest release latest version if you see what is the latest version of Helm. This is the official GitHub of Helm. They are maintaining all the Helm releases here. What is the latest version 3.9.0 3.9.0 3.x
+
+01:05:40
+3.x
+
+01:05:43
+Guys whenever you see any version like 3.9.012 you have kind of a major release major release and minor release minor release. So this represents what basically the major release within that this if it is 0 1 2 like this this represents a minor release.
+
+01:06:12
+minor patches for any software like a minor small small fixes. So this is 3.9. So can I consider as a 3.x helm 3 helm 2 whether it's a 3.9 3.1 3.3 can I consider as a 3.x x represents that 1 2 3 4 5 whatever it is.
+
+01:06:35
+Now what is the difference between Helm 3 and Helm 2 that is very very important. The major difference between Helm 2 and Helm 3 is very important. If you understand the architecture in Helm 3 you see this is one Helm client, Helm workstation. I can call it as Helm client or Helm workstation. What do you mean by this Helm client or Helm workstation?
+
+01:07:05
+Wherever I have installed CLI that helm CLI that can be a developer desktop that can be a developer laptop Or that can be a Jenkins server your CI server Or your CD server wherever I have installed helm client. Can I consider that as a helm client or helm workstation? That can be developer system that can be Jenkins server This is helm client now using this helm client
+
+01:07:34
+using this helm workstation or helm client. Can I connect to the Kubernetes cluster? Does helm can connect to the Kubernetes cluster, Kubernetes API to deploy the helm chart? This is my client machine. Does this client machine can talk to the, this helm client, you know, helm can talk to the Kubernetes cluster to deploy the helm charts.
+
+01:07:59
+Yes, this Helm client or Helm workstation can connect to the Kubernetes cluster. It can connect to the Kubernetes cluster to deploy that Helm chart. Now, do I need to have Helm charts available in this client or workstation, either as a local file, either as a local file, local folder or tar file? Do I need to have that Helm chart as a local file or local folder if required here? Yes. Otherwise,
+
+01:08:28
+If I have a helm repository, if I have a helm repository where I'm maintaining the helm charts, can I add that? Can I add that repository information in this client? Something like this, something like this, whatever I have executed helm repo add, can I add the repository information, something like this helm repo add to this workstation? Can I add this repository information?
+
+01:08:57
+If I add this repository information to this client machine, does the helm client can retrieve the charts? Does helm client can retrieve the charts from this repository? And does that helm client can retrieve the charts and apply that chart to the Kubernetes cluster? This helm client can retrieve the charts from this repository, then apply it to the cluster. This helm client can apply the local charts or does helm client can get the charts from the repository and apply?
+
+01:09:27
+the charts are maintained here that will get the chart then deploy or you are maintaining the charts locally here that also can deploy
+
+01:09:39
+and if you see in Helm 2 there is a slight difference there is a slight difference between Helm 2 and Helm 3 let me reduce the zoom let me reduce the zoom size
+
+01:09:52
+Now can you guys identify what is the difference between Helm 2 and Helm 3 slight difference is there. Let me zoom again little bit.
+
+01:10:07
+Now you tell me what is the difference you have between Helm 2 and Helm 3. This is Helm 2 architecture. There is a slight difference. What is the difference?
+
+01:10:26
+If you observe there is a slight difference. What is the difference?
+
+01:10:31
+between helm 2 and helm 3.
+
+01:10:46
+Have a nice day.
+
+01:10:50
+What is the slight difference which you have in Helm 2 and Helm 3? If you understand here in Helm 2, in Helm 2 do have some server side component cluster side component called a Thriller in the Helm 2. Do I have some server side component that cluster side component? This is client. This is kind of a server. This is Helm client. This is kind of a server. Kubernetes cluster is kind of a server. Now in Helm 2.
+
+01:11:17
+Do I have some server side component called a tiller here?
+
+01:11:24
+In Helm 3, do I have that tiller component here? Do I have that tiller component here in Helm 3? No. So if it is a Helm 2, there is a Helm component called a tiller. There is a Helm component called a tiller, which will be deployed in the Kubernetes cube system namespace. In Helm 2, there is a Helm component called a tiller, which will be deployed in the Kubernetes cluster in a cube system.
+
+01:11:53
+system namespace that a killer component and are removed in Helm 3. So if it is a Helm 2 does CLI can directly communicate with your Kubernetes API servers is is directly communicate with Kubernetes APIs. If it is Helm 2 does Helm 2 can directly communicate with if it is a Helm 2 does Helm 2 can directly communicate with your Kubernetes APIs. No. Here.
+
+01:12:22
+Is this Helm client is connecting to the tiller first? Is Helm client is connecting to the tiller? Tiller is one application. Tiller is one application, one software that is one Helm software in Helm application. Is the tiller application needs to be deployed in the cluster to deploy the applications using Helm 2? Yes. So your Helm client, your Helm client will connect to the tiller. Tiller will contact the Kubernetes API.
+
+01:12:51
+Tiller will connect to the Kubernetes API. Tiller will communicate with Kubernetes API. If Tiller has to communicate with Kubernetes API, Tiller is running as one deployment, one part in the Kubernetes cluster. How Tiller can communicate with Kubernetes APIs? How Tiller will get permissions to communicate with Kubernetes API? While creating a Tiller, while deploying this application in the cluster, they need to create a service account with required cluster role, role bindings.
+
+01:13:20
+Do I need to use that service account with tiller so that tiller can communicate with qbarnett is a PS.
+
+01:13:28
+I will create a service account. I will use that service account with the required cluster role. That service account will be used with your tiller deployment. Then tiller can talk to the Kubernetes API. Helm is not directly communicating with Kubernetes APIs. Helm is communicating to tiller. Tiller is communicating with API server. Tiller also running within the cluster. But when it is a Helm 3, they have a tiller here.
+
+01:13:57
+Do we need a tiller in the server side, in the cluster side? No. Does Helm 3, does Helm 3 can directly communicate with Kubernetes APIs?
+
+01:14:10
+Yes, but how Helm will connect to the Kubernetes API. This Helm 3 will connect to the Kubernetes API. Here, wherever I have a Helm installed, do I need to have a kubectl and kubectl configured internally? Is that Helm is going to use that kubectl kubectl file to connect to the cluster? Yes. Now, if this developer, if this developer has a permissions, then only he can deploy.
+
+01:14:39
+If this developer or DevOps guy doesn't have a permissions to create objects, delete objects in Kubernetes, even though he is executing helm commands, are you going to get a permission denied error? Is your objects get created in the cluster? No, that objects will not get created in the cluster. If that developer or that cube config, whatever user you are configured here, if that user doesn't have a permissions, it is not going to work. If it is a Helm 3 as a prerequisite.
+
+01:15:10
+If it is a Helm 3 as a prerequisite do I need to have a cubectl and cubeconfigured pointing to my cluster? Do I need to have a cubectl and cubeconfig pointing to my cluster to deploy via Helm as a prerequisite? Yes. Is everyone clear guys? What is the difference between Helm 2 and Helm 3? Sometimes in the interview they are asking this question. And again versions are important.
+
+01:15:38
+Versions are important sometimes in the interview they will ask what version of the helm you are using What version of the helm you are using are you guys using helm 4.5 5.3 6.0
+
+01:15:53
+Sometimes important to remember the versions also if you say 4.0 5.0 like that Do I have a first of all helm with 4 point release 5 point release as of no No So say 3.x Say 3.x you no need to say 3.9.0 3.9.2 3.9.0 like that and again
+
+01:16:16
+Are you going to use again latest version of any software immediately whether it's a helm whether it's a docker whether it's a Kubernetes whether it's a database Jenkins anything.
+
+01:16:30
+you will use the at least two three versions behind guys. Currently, what is the Kubernetes version we have recently? I think two weeks back. What is the latest Kubernetes versions they have released? 1.24
+
+01:16:48
+oh man 1.29 someone is saying 1.29 I don't think 1.29 is released
+
+01:17:04
+1.25 I think or 24 so 1.24 got released on 3rd May so again 1.24.0 this is 0 represents minor version so 1.24 but if you ask me still we are using kubernetes 1.21 only in the current project 1.21 only
+
+01:17:33
+still we are using 1.21 in the current
+
+01:17:38
+environment where I am working. So don't say 1.24 1.25 or immediately like minimum two three versions behind you will be there. You are not going to keep upgrading your clusters because unless until you want to use whatever latest features released in this kubernetes software are you going to upload or upgrade. Suppose you want to use some latest features later latest features latest options got released in 1.24.
+
+01:18:09
+If you want to use those features, then only you will upgrade to that one. Kubernetes features. Kubernetes is also one software. If you want to use the latest features offered by Kubernetes, do you need to upgrade your Kubernetes also to that respective version to use that respective features in Kubernetes?
+
+01:18:29
+is so unless until you have that requirement you will not upgrade so one or two versions like helm also now what is the helm helm version currently 3.9 but you can say 3.9 you can say 3.x something like this 3.x guys Jenkins also sometimes they'll ask what version of Jenkins you are using
+
+01:18:56
+What version of the Jenkins currently I think it is Jenkins 2.3.9
+
+01:19:06
+Something is there.
+
+01:19:12
+or 5 data what is that Jenkins 2.289 something is there.
+
+01:19:23
+So two dot, 332 dot something is there.
+
+01:19:29
+LTS LTS stands for what in Jenkins LTS stands for what in Jenkins latest stable release Latest stable release in the Jenkins LTS stands for latest stable release So these versions also important sometimes what version of Jenkins what version of Kubernetes what version of maven? What version of Java? What version of Docker? So remember some versions and don't always say latest version
+
+01:19:59
+Is everyone clear? What is the difference between Helm 2 and Helm 3? How different it is with each other?
+
+01:20:13
+Now let me install Helm 3. Let me install Helm 3. Let me install Helm 3. So as I already told can I install Helm CLI the way I have installed AWS CLI, Kubernetes CLI. Can I install Helm CLI also in whatever machine whether it's a developer laptop that can be a Windows laptop, Windows desktop, Mac laptop or Linux system. Can I install Helm in any OS again?
+
+01:20:41
+The way we install AWS CLI, Cube CTL, can I install Helm also in any system? Yes. So I can install Helm in any system, even in my local laptop also. If required, if you are using Windows laptop, can I install Helm in Windows also?
+
+01:21:01
+Yes, so you can install in Windows also. You can install in Windows. So they are offering as a tar file. They're offering as a tar file. You can download the tar file, extract the tar file. Can you set in the path path environment variable? If you know Windows environment variables you can set. If you are using Mac, you can install using package manager called brew in Macbook.
+
+01:21:30
+if you are using windows you can download using windows package manager also or you can download
+
+01:21:41
+for windows also like this.
+
+01:21:46
+for windows if you want to download
+
+01:21:50
+You can download that EXE file, zip file. You can extract and set also. Whatever way you want to install, you can install.
+
+01:22:00
+Nope.
+
+01:22:02
+wherever you want to install install but the workstation which you should have the workstation you are running should have what kubectl context set to the cluster and you should have that kube config file and kubectl is called you know kubectl context is set to the cluster if i have a kube config file and kubectl is pointing to that cluster whenever i am executing helm commands like this helm install helm upgrade helm remove
+
+01:22:30
+is that Helm is pointing to the cluster, whatever cluster your kubectl context is set.
+
+01:22:40
+Yes, so you need to have a kubectl configured already. Now do I already have one machine? In fact in my local laptop also I have installed kubectl and kubectl config file is there. In this server also do I have a kubectl and kubectl config.
+
+01:23:02
+Yes, so let me connect to this. Let me connect to this cluster.
+
+01:23:09
+Let me connect to this cluster.
+
+01:23:16
+No.
+
+01:23:19
+Do I have a kubectl configured here? And when I'm executing kubectl cluster info, it is saying the kubectl is pointing to this cluster. As I already told, do you have some context commands also? kubectl config. So context or list context are there.
+
+01:23:40
+kubectl config help command. Let me use.
+
+01:23:48
+Get contacted.
+
+01:23:51
+you see it'll conflict get context if I execute I can see my kubernetes context so as of now how many kubernetes that kube config file is having how many kubernetes clusters information as of now I didn't add multiple clusters information to that kube config file that kube config file has how many clusters information as of now
+
+01:24:18
+only one now what this star represents if I have a multiple clusters if I have a multiple kubernetes clusters information I can see multiple entries but for only one entry I can see star what that star represents is that star represents it is pointing to that cluster as of now.
+
+01:24:38
+that is kubectl is pointing to that context, that cluster as of now, yes. As of now, I have only one entry because in my kubeconfig file, as of now, if you see how many clusters informations are there.
+
+01:24:55
+How many clusters information only one. And is that kubectl is pointing to that cluster? Only one context information is there. Is that kubectl is pointing to that context, the current context? It is pointing to that cluster. So is my kubectl is configured? Is my kubectl is pointing to this cluster?
+
+01:25:26
+Disk Kubernetes Cluster.
+
+01:25:30
+This Kubernetes cluster is going to talk to this one, this AP server. Now I have a kubectl also available, kubectl context is set. Now am I able to communicate with that cluster? Since I have all the permissions, kubectl get nodes, kubectl get namespaces, because this is admin kind of a user, am I able to access all these things?
+
+01:26:00
+Yes, now here can I install Helm if required? No, since it's a Linux machine, since it's a Linux machine, there is a script. There is a script created by Helm itself. There is a script written by Helm itself. Whatever way you want to install, you can install. This is one cell script. So this is created by Helm company itself. Now is that script has some commands?
+
+01:26:28
+based on the operating system based on the Linux operating system.
+
+01:26:34
+Is it going to execute some commands to download that?
+
+01:26:39
+help tar file and extracting the tar file and installing this script yes otherwise you can install this way also you can install this way also what you can do you can download the required version extract that tar file then add that to user local bin add that to user local bin whatever way you want to do you can do now I am executing this one
+
+01:27:08
+it is going to get the tar file, sorry, it is getting one, it is getting the content of that URL and I am creating one file get underscore helm dot sh that script is created here. Now, I will change the permissions. I will give kind of a executable permissions to that script. Then I will execute that script, that cell script. Now is it downloading the latest 3.9.10?
+
+01:27:37
+of that helm and is it extracting it is installed to the user local bin. Now is helm is installed in this system is helm is installed in this system that helm CLI yes. Now if you execute helm version if you execute helm version you can see they have a helm installed in this system what version of the helm is installed you can see that version of the helm.
+
+01:28:08
+3.9.0 now I just installed helm did I deployed any applications using helm I can see whatever applications got deployed here
+
+01:28:22
+in that cluster currently is Helm is talking to this cluster is Helm is talking to this cluster whatever cluster my cube Seattle is pointing is Helm is communicating with this cluster now whenever I am executing that command.
+
+01:28:44
+is Helm is communicating with this cluster.
+
+01:28:48
+your control plane. This is your API server load balancer. So Helm is communicating with that cluster. When I'm saying Helm ls-a, a stands for all the namespaces. In any namespace did I deployed any application using Helm as of now?
+
+01:29:16
+No, now as of now did I added any repository helm repository to this client As of now did I added any repository helm repository to this client? No, do I have any helm chart created locally? Do I have that helm chart tar file helm chart folder locally also as of now? No, I didn't created any helm chart folder locally. I don't have any helm repositories added now if required
+
+01:29:45
+Can I deploy any third party application using Helm? If required, can I deploy any third party application using Helm? If that third party application is available as a Helm chart in the Helm repository, can I add that repository and apply?
+
+01:30:03
+just to give an example. Matrix server, matrix server. I want to deploy matrix server. When we install matrix server while installing matrix server while I was explaining matrix server did I tell option in matrix I know the matrix server can be installed using manifest files or using Helm chart also if you guys remember
+
+01:30:28
+When I installed Helm chart of the sorry when I deployed that matrix server, how we can install that matrix server as I told you can install using the manifest files that YML files completely. Otherwise, can I use using Helm chart also? Can I deploy that using Helm chart also?
+
+01:30:52
+So that Helm chart is nothing but a package of all your QBurnettys, YMLs for that metric server. Now, there is a public or central Helm repositories. There is a public or central Helm repositories. Now this is one website. This is one website kind of a central repository. The way you have a Docker Hub.
+
+01:31:20
+where you can find the darker images. Can I find Helm charts of third party applications or public software? The Helm charts of public software, third party applications here in this artifact hub.
+
+01:31:36
+Yes, now if you see I am saying matrix, I am typing matrix.
+
+01:31:44
+Now, am I getting some results? Am I getting some results? Some repository information, matrix server, this is one result, this is one result. Now if you see here, organization is Kubernetes 6, repository is matrix server. So is this repository within this organization in this repository, do we have a Helm chart of the matrix server? Can I consider this as a Helm repo of matrix server?
+
+01:32:16
+Organization is kubernetes itself kubernetes itself. This is a repository. I am getting one more result like this one more result like this metric server Organization is bitnami Repository is bitnami in this bitnami repository also to have a Helm chart of metric server In the bitnami repository also to have a Helm chart of metric server. Yes So what is this bitnami? What is this bitnami? This is one company again
+
+01:32:46
+This is one company, Bitnami. So this is one company. So what they're trying to do? This Bitnami is maintaining all the packages applications. So Bitnami is maintaining package applications for any platform. This is one company. They're maintaining the packaged applications of all the softwares like this. You can use Bitnami also.
+
+01:33:16
+or you can use this official this official Kubernetes one also whatever you can use this one or you can use this one this repository or this repository and most importantly see the stars stars is important if you see the stars these are like a official and widely used can I use either this repository or this repository to install that metric server via that Helm chart which is maintained in that Helm repository.
+
+01:33:47
+Yes, you can install anyone something like this. Let me use this one if I want to install. Let me click on this now
+
+01:33:58
+Before you install the chart, before you install the chart, do you need to add that repository, that the repository to the helm, where you have that metric server chart, do I need to execute this command? So this is the repository where that metric server helm chart is there. Do I need to add like this, helm repo add to the client, to the client here. As of now, do I have any helm repositories here?
+
+01:34:26
+without adding this repository information without adding this repository information if I try to install that Helm chart do you think will it work if I execute Helm install like that no first let me add let me add that repository like this now when I execute Helm
+
+01:34:52
+Is this information is stored in the server? I mean to say Kubernetes is this repository information is getting stored or maintained in a Kubernetes? No, this is only client. You added the repository to the client. Now within this repository, I have some Helm charts. I can search those Helm charts also like this Helm search repo, this repo name, this repo name. Now Helm search repo that repo name.
+
+01:35:23
+You gave one name here while adding a repository, helm repo add, you gave one name. This can be anything, ABC also. You gave this name, this is the repo URL. When I'm executing helm search repo.
+
+01:35:41
+on that repository name in that repository do I have one chart repo name is also metric server chart name is also metric server do I have one helm chart in that repository this is the repository I have added with this name repository is added in that repository do I have one chart called metric server
+
+01:36:02
+we added the repository then can I install something like this helm install helm install
+
+01:36:12
+then install
+
+01:36:17
+This is release name or you can call it as an application name release name or application name. If it is a repository repo name.
+
+01:36:30
+from repository you want to install, or a full name and chart name. Under namespace, and namespace, in which namespace you want to install. If I don't mention namespace, in which namespace this Helm chart from that repository gets installed in your Kubernetes cluster default. But I don't want to apply in default. I don't want to apply in default. Can I use something like this?
+
+01:36:59
+Help install, this is my repo name and within that repo the chart name is also same. Can I do something like this? But I need to give a name that application name or release name. Can I give something like this? Maybe metric server, anything any name, metric server, your repo name and chart name then namespace, namespace, Iphone and cube system.
+
+01:37:30
+Guys there is one more option here.
+
+01:37:33
+There is one more option Helm upgrade iPhone iPhone install Helm upgrade iPhone iPhone install Helm install is there Helm upgrade is there Helm install is there Helm upgrade is there So what is the difference between install and upgrade When I am deploying that application for the first time Do I need to use install Do I need to use install When I am deploying the application for the first time I need to use install
+
+01:38:03
+But if there is any change, I want to make some changes. I want to make the changes which is already deployed. Can I use upgrade? Yes. Now, if already that this application, this release is created, this release is installed, that application is installed in this namespace. Again, if I am executing kubectl install, am I going to get error? Already that is installed, this application with this name.
+
+01:38:33
+in this namespace is already installed. Am I going to get error again? I am executing helm install. Yes, but without installing if I try to upgrade also will I get a error without installing if I try to execute upgrade will I get a error saying that no release found?
+
+01:38:50
+Now this option what it does what this option does helm upgrade iPhone iPhone install what it does I am using helm upgrade with iPhone iPhone install option so if that application is not installed if that application is not installed because of this helm upgrade iPhone iPhone install what it does if that application that release is not already installed what it does because of this option.
+
+01:39:18
+If that is not already installed, what it does? It will install. If it is already there, if it is already there, what it does? If it is already there, what it does? It will upgrade. Kind of a cube CTL apply kind of a cube CTL apply. Can I use helm upgrade? I fun, I fun install. If the application is not already installed, that helm chart is not already installed. I can use it will be installing that one.
+
+01:39:48
+if it is already installed it is going to update if there are any changes in the chart or values can I use something like this upgrade-ifen-ifen install instead of using this separately instead of using this separately because I am not sure when to install when to upgrade can I use like this upgrade-ifen-ifen install
+
+01:40:11
+if required yes so you can do like this instead of install I can use upgrade-ifen-ifen install also something like this something like this that is what they have given here that is what they have given here in this documentation if you see help upgrade-ifen-ifen install this is your application name or release name this is your chart name because you added
+
+01:40:40
+the repo name because this is the repo name you have used. This is the chart name inside that repo. So these are the default values. These are the default values we have in that chart. Default values we have in this chart. Now I can execute something like this. But if I want to customize the values, can I customize at runtime? If I want to change instead of, you know,
+
+01:41:11
+this value I want to say different value can I pass at runtime let's say by default what is the number of replicas it is running number of replicas what is the replicas one if I want to change can I say something like this at runtime I want to have a two replicas of that
+
+01:41:31
+matrix server pod can I say something like this if required yes that I will discuss later that I will discuss later now I will say cube system now is that Helm chart available locally is this matrix server Helm chart available locally in my this in the system guys no it is not there but is Helm is going to fetch is Helm is going to fetch that Helm chart from this repository
+
+01:41:59
+then connects to the kubernetes and apply that Helm chart. Yes. Now let me execute this command. Let me execute this command.
+
+01:42:12
+Now if you see I got a message saying that release this metric server does not exist. So it is installing now. So it is deployed in namespace cube system it is deployed. Now when I execute helm ls I don't see that one because why I don't see that one whatever application I deployed using helm why I am not able to see because it is pointing to which namespace default.
+
+01:42:41
+but in which namespace I have applied that one in which namespace I have applied that application matrix server cube system. Now can I see can I see one release this is the name in this namespace because I had applied this is the release name or application name this is the repository in that repository this is the chart.
+
+01:43:07
+Now is one application got deployed in my Kubernetes cluster using help is one Helm chart is deployed. Now if you see. They have all these things.
+
+01:43:21
+they have all these things whatever needs to be created in the system.
+
+01:43:28
+They have all these things whatever is required to deploy Matrix Server. If you see they have a deployment for Matrix Server created 75 seconds ago. They have a deployment for Matrix Server created 75 seconds ago. They have a service created for Matrix Server 75 seconds ago. And because of this deployment because of this deployment they have one Matrix Server quad which is created 75 seconds ago. And also they have a required service account.
+
+01:43:58
+Required service accounts got created for that.
+
+01:44:04
+matrix server if you see do have a service account for matrix server if you see is this service account got created when I am executing kubectl get service account and also do have a required roles required roles cluster roles created for that matrix server
+
+01:44:29
+cluster role, role binding that matrix are related.
+
+01:44:36
+make things a little...
+
+01:44:43
+I can grab also, I can grab also, let's see.
+
+01:44:55
+Bye.
+
+01:45:08
+So do you have some metric server related service accounts sorry roles got created and also normal roles or role bindings also
+
+01:45:24
+But where are all these YMLs are there guys? Nowhere you are able to see the deployment YML, service YML, this service account YML, role YML, all. Where is those YMLs? Is all those YMLs is part of your Helmshot templates? Is all those YMLs is part of that metric server Helmshot?
+
+01:45:46
+Yes, now if you see my matrix server got deployed. Now if you see when I'm executing this cube CTL top nodes, top parts. Is that matrix server is able to fetch the memory consumption of my parts, my nodes. Now do you see is the matrix server got installed like this. If you observe is this helm simplifies the process of installing my helm chart.
+
+01:46:15
+I mean to say is the helm simplifies the process of deploying any application like a third party application or our own application. Now let's say I want to have a two replicas. I want to have a two replicas. Now can I execute upgrade help upgrade if and if and set that value whatever value we were discussing about this replicas. If you see as of now only one part can I upgrade that application.
+
+01:46:48
+can I upgrade that application like this? Helm upgrade that hyphen hyphen set that replicas that variable the default value replicas equals to 2 since it is already installed now is it going to upgrade that application with this value which means
+
+01:47:17
+Now will I able to see two parts for that application that metric server.
+
+01:47:23
+Now if you see release has been upgraded now, release has been upgraded now because do we already have that installed. Now you can see the revision number also. Now when I execute Helm LS, when I execute Helm LS, now can I see the revision as 2 for that application, can I see the revision as 2 for that application. Now if you see the pods.
+
+01:47:51
+If you see the pods, kubectl get pods in that namespace, in that kube system namespace. Now, do you see there are two pods? There are two pods for that metric server.
+
+01:48:06
+Now if something is not working, if something is not working with this change, can I execute helm rollback simply helm rollback. You no need to mention the chart name. You no need to mention the chart name if you want to rollback only for installing and upgrading only for installing and upgrading. You need to mention the chart name. If you want to rollback, can I simply say helm rollback that application name that release name?
+
+01:48:36
+Helm rollback that application name or release name again to which revision it will go back to which revision it will go back is it going back to the previous revision of that Helm values and Helm templates it is is it going to the previous revision of Helm values and Helm templates yes but where exactly Helm is maintaining this revision history where exactly that Helm is maintaining the previous revision values details templates details is it maintaining in the server side
+
+01:49:06
+I mean to say within Kubernetes is it maintaining somehow? Yes. So it is maintaining as a secret. It is maintaining as a secret in the Kubernetes. Helm is maintaining that whatever Helm templates and values you are installing for each change, it is maintaining as a secret in Kubernetes. Now I have rollback. I have rollback. Now again, if I see, can I see only one?
+
+01:49:36
+one metric server pod because in the initial release only one pod was there. Helm is maintaining all this information that the templates and values information of all the divisions in the server side as a secret as a secret. CubeC they'll get secrets. You see the secrets in a cube system namespace.
+
+01:50:05
+Is it maintaining as a secret here if you see?
+
+01:50:10
+revision one related templates values, whatever that we use. And we upgraded, we upgraded to revision two. We upgraded to revision two. Is the secret has all those templates values, whatever was used for that revision. And also we roll back, we roll back. But even though we are rolling back, is it kind of a considering as a version three, which means whatever we used in this version is used in this version also.
+
+01:50:39
+If you understand is Helm is maintaining that tracking, is Helm is tracking the history of all your changes to that application via Helm in the Kubernetes? Yes. If you observe, is it simplifying the process? Now, if I want to completely remove this application, can I execute Helm uninstall, which remove all these things, whatever got created, Helm uninstall, that release name,
+
+01:51:09
+chart name that release name only guys when I need to use chart name when I am installing or upgrading then I am going to use while installing and while upgrading I am going to use release name and also chart details charts and values but if I want to roll back and if I want to remove do I need to use that chart details not required now when I am completely
+
+01:51:39
+is everything are deleted which means whatever deployments got created for that application deployment service roles role binding service account sees everything is deleted now can I see that matrix server deployment that matrix server service now will I able to see that roles role bindings whatever is created now they have those cluster role bindings or cluster roles
+
+01:52:07
+This is different. This is EKS metrics. This is different. But when I executed last time, you see some other results also. Now, do I have those service accounts or roles role bindings? No. So if you observe, is Helm simplifies the process of installing, upgrading, deleting the applications, whether it's a third party application, your own application in the Kubernetes clusters?
+
+01:52:37
+Yes, this is like a third party. Can I install Prometheus, Grafana, like Jenkins, Mongo database also using Helm charts if they are already available as a Helm charts like a Grafana, Prometheus, Elasticsearch, Logstash, Cubana, Mongo database, MySQL, Jenkins, whatever software which is already available as a Helm chart to deploy in Kubernetes. Can I deploy those third party applications using Helm chart also instead of writing a detailed VMLs? Yes.
+
+01:53:07
+If required, can we create a Helm chart for our own application also?
+
+01:53:16
+like last time we installed nginx ingress also last time we deployed nginx ingress but did I use manifest files did I manually applied all those vmls to deploy that nginx ingress controller but if that nginx ingress controller is available as a helm chart if that nginx ingress controller is available as a helm chart now will I able to deploy that let's say nginx ingress controller.
+
+01:53:45
+official Helm chart organization is nginx repository is nginx who created the Helm chart for this nginx ingress application who created this nginx ingress Helm chart for us nginx itself now if required can I do something like this can I add the repository of that nginx Helm chart like this then can I install something like this Helm install whatever name you want to give
+
+01:54:14
+the repository name and chart name. So if I execute like this also, does the deployment service, all those things gets created, whatever is required to deploy that ingress controller again.
+
+01:54:29
+Yes. So this is how you can use third party applications, third party applications, not only like nginx. Suppose you want to run database mango. So do I have a Helm chart for mango database also if you see mango DB in the bitnami repository in the bitnami repository you have a mango DB Helm chart. Now if I install this mango DB Helm chart, does mango database gets deployed in the Kubernetes cluster.
+
+01:54:59
+Now again you have some options you have some options standalone or replica set if I change the values in the values file if I say architecture as replica set does me which means is the mango database will be deployed in a mango repels at architecture like a primary DB secondary DB kind of a set of will come. So where all these logics has been written.
+
+01:55:25
+Where these values have been used, where all the logic has been defined, where are the YMLs, do we have all those YMLs in this Helm chart? The templates.
+
+01:55:38
+Yes, so you take Prometheus you take Grafana Now if you see do I have a helm chart available for Prometheus to deploy Prometheus in Kubernetes? Do I have a Grafana chart to deploy Grafana in Kubernetes?
+
+01:55:56
+If you see they have a MySQL Helm Chart also from bitnami repository. Which means if I install this Helm Chart does MySQL database will be running in the Kubernetes cluster that all the YMLs whatever is required to run MySQL is part of this Helm Chart. So we can apply any third part the application. Also like this.
+
+01:56:23
+If required, can I create our own Helm chart for our own application? Let's say I want to apply this application. This Maven web application. I don't want to deploy like this. I want to use a Helm templates, Helm charts. Can I create a Helm chart for this application also if required? Yes. So how to do that? I'll continue tomorrow. How to create Helm chart? What do you mean by template? What do you mean by values?
+
+01:56:51
+all those things I will continue tomorrow is everyone clear whatever is discussed today why helm what is the advantage of helm what is helm CLI what is helm repository what is helm release how helm will work
+
+01:57:13
+Okay that's it for today guys I will try to continue tomorrow. Tomorrow also we will discuss about HELM. Okay thank you. Try to go through these recordings try to practice as much as you practice you will get familiar. I heard from Abhishek or not from Abhishek I think Krishna Prasad. I think Krishna Prasad has interview today. So is it from same company whatever we shared in the sky you know sky group Krishna Prasad is it from CGI or from a different company.
+
+01:57:46
+Okay, you already uploaded your resume, it seems right? In the now curry, you started getting the calls.
+
+01:57:56
+Okay, so is this the first interview has a DevOps you are trying to do or already you have given some interviews
+
+01:58:04
+first interview. Okay, all the best. All the best for your interview. Don't get panic. Key you know, first get the question understand the question properly and explain definitely you can crack the interview. And once your interview is done, share your interview feedback also I mean to say share with your batch mates. What type of questions has been asked right and how the interview process went well so that
+
+01:58:34
+it will be helpful for others also.
+
+01:58:39
+Okay, Sumit also giving interview all the best guys who ever started giving the interviews definitely you can manage And again, don't have a mindset. I am going to crack or I am going to get a job in the first interview itself. Don't Have very high expectations Keep your mind In a cool state or calm state just go and do the interview but in the interview
+
+01:59:06
+try to focus what interviewer is asking try to answer whatever you know one or two interviews you take it as an experience how interviewer is asking how you are answering the questions sometimes even though you know all the answers but when the moment interviewer start asking the questions you will become panic even though you have the answer you will not able to explain properly because of some fears right people will have lot of fears like
+
+01:59:36
+stage fear interview fears right even though they are good technically sometimes they will find difficult to answer in the interviews one or two interviews take it as an experience and try to note down all the questions what has been asked whether you have answered them correctly even though you know the answers.
+
+01:59:57
+even though you know the answer sometimes you might be giving wrong answers also. So try to note down all those points and keep improve yourself. Definitely will be able to get a job within.
+
+02:00:12
+Sir, can we put four years of experience? Yes, but if you want to put four years or up to five years also our students are keeping but you need to do lot of practice lot of hard work also at the same time. You can manage up to five years also because we are discussing all these topics in and out.
+
+02:00:33
+you will be able to manage that is not an issue but you have to practice you should have attended all the classes you should have practiced all the tools concepts whatever we discussed definitely you can meet their expectations thank you guys all the best we are almost three classes are two classes left to finish our batch all the best for your interviews and your future endeavors and also don't miss to share your feedback
+
+02:01:04
+try to share your feedback today or tomorrow. Thank you guys, we'll see you tomorrow.
+
