@@ -1,0 +1,999 @@
+00:01
+This conference will now be recorded.
+
+00:05
+In yesterday's session we were discussing about the pod auto auto scalar with respect to pod auto scalar. What is this HPA horizontal pod auto scalar and we were discussing.
+
+00:22
+how to scale your parts based on the observed matrix. We have done that, you know, practically also have explained. Is everyone able to practice whatever we already discussed?
+
+00:45
+Okay, good. Now let's try to continue with the next set of topics. Now I want to deploy different different applications. Let's say I want to deploy this application. I want to deploy this application.
+
+01:03
+this application.
+
+01:10
+this spring boot application. Now, if I want to run this application also in Kubernetes, do I need to containerize this application, which means do I need to have a container images created for that applications to deploy and manage in Kubernetes as a pod as a container.
+
+01:34
+Yes, so we already created a image. We already created a image as part of the while discussing Docker itself. I have created a image that image is already available in the registry. Now, can I deploy that Docker image of this application in Kubernetes cluster?
+
+01:57
+Yes, no, I already have this image. I already have that image. That image can be in any registry. That registry doesn't matter here, whether it's in a Docker Hub, whether it is in ECR, GCR, that doesn't matter here. Now I have that image in the Docker Hub.
+
+02:17
+Now I want to deploy that image.
+
+02:27
+Now let's take this application. Let's say this image. Now I have the lot of tags. Maybe I want to apply this one. Now my image. This is my registry, my repository. And the tag is one. I want to deploy this in Kubernetes. Now can I directly create a container as we already discussed in Kubernetes? Can I directly create and manage the containers? No.
+
+03:00
+we need to create containers under pods. And again, is it directly recommended to create a pod in Kubernetes again? No. So then can I go with some Kubernetes resources like a deployment, the replica set, replication controller?
+
+03:18
+Whatever it is. So recommended way is what it's not mandatory recommended ways. Deployment now can I create a deployment for this application?
+
+03:34
+like this. No.
+
+03:39
+I'll try to create a deployment for that application.
+
+03:46
+Now API version, app slash V1 deployment, metadata, name of the deployment. I will say something like this, spring app deployment. I've just a spring app also fine. The labels, something like this spring app. Now the match labels, here my pod labels. Container, I can give some name spring app container.
+
+04:15
+image. Can I use this image here?
+
+04:23
+Now when it comes to resources, there are two things which is important which is a recommended also request and limits so If I require if I if I request more CPU Do you think will I get this part get scheduled because in the current scenario? Is this feasible in the current cluster?
+
+04:48
+because what is my capacity of what type of instances I have? What is the capacity of my worker nodes?
+
+04:56
+What is the capacity of my worker node T2.micro? So how much CPU I am saying I am not asking number of worker nodes. I am asking the capacity of worker node. So 1gb 1 CPU 1gb 1 CPU. Now if I request like this minimum 1 CPU. Do you think my parts get scheduled? Do you think this part gets scheduled? No.
+
+05:23
+Do we already have some parts running that parts also reserved some CPU and memory your system related parts also your system related cube system related. Do we already have a cube proxy pod running we've net pod running. So those parts also reserved some CPU and memory. So do we have this much available in the current capacity? No, your parts will not get scheduled. But in real time, are you going to have some kind of high configuration servers like each server?
+
+05:52
+may be 64 core processor 128 GB RAM like that. Yes, no. Let me say CPU. I am requesting maybe just 200 milli core memory. I am requesting 256 MI.
+
+06:11
+Limits limits I can say memory maybe 512 MI or even 1 GB also. This is a limit guys. Even though I give 2 GB is it going to throw kind of any error even though my system capacity is 1 GB. It is not going to throw any kind of error limits. It is not going to verify but is it going to verify the request like whether the system has this much CPU memory available after calculating.
+
+06:40
+sum of all the resource requests of existing quads minus the capacity of the node, that formula will be there, but limits doesn't matter. But now let me give limits also something like.
+
+06:56
+something like this. Now what is my container port?
+
+07:01
+80 80 now if you remember this application is trying to communicate with another application. This is a stateless application is the stateless application is trying to communicate with another software like database kind of a stateful software database if you remember. So how we were passing those database details to this application code.
+
+07:28
+how we were passing this database details like username, password, the host of the database, where exactly database is running. The developers are they referring as the environment variables inside that code?
+
+07:45
+they are referring as an environment variables inside the code. Now when we are using Docker, when you are using Docker.
+
+07:57
+How we are passing those environment variables at runtime because you no need to have that defined in the Docker file at runtime you need to pass. So how we are passing at runtime was I using one option called iPhone E in the Docker run command or Docker service command. Yes, if it is a compose file, if it is a compose file, did I use one field called environment environment.
+
+08:26
+environment in a compose file. Now this is kubernetes manifest file for this container also for this container also is it possible for us to pass environment variables.
+
+08:40
+Yes, what option there is an option called ENV. There is an option called ENV name name and value. Guys I am using this ID. It has some plug-in but I don't recommend this one. So you can start using typing manually ENV name and value. What was the environment variable name they were expecting in the code.
+
+09:15
+or somewhere they're referring.
+
+09:23
+kind of a this one. This is one environment variable MongoDB host. Now, can I pass IP address of my database server? Suppose my database is running in a virtual machine. I am not running my database as a container. I am not running database as a pod. I am running my application as a pod in Kubernetes cluster. Is it possible for me to have databases outside of Kubernetes cluster that can be?
+
+09:52
+in a managed database like RDS or can it be a database running in some virtual machine is that possible is it mandatory to have databases also as a parts as a containers. It's not mandatory as per your architecture as per your architecture suppose your database is sitting outside of your Kubernetes cluster your database is sitting outside of your Kubernetes
+
+10:28
+Let's say this let me take this one. This is your kubernetes cluster. You have your application parts running here.
+
+10:49
+You have your application parts running here. Let's consider you'd applied this application. This application is trying to communicate with the database, any application. You are running that as a pod. Is it mandatory to have your databases also running as a pods in that cluster? Your stateless, sorry, stateful applications, is it mandatory to have your database also running as a pod here?
+
+11:19
+It's not mandate. It can run anywhere. Now let's consider. Now your database is running in another virtual machine, in a virtualized environment. This is one VM. In this VM, you have installed Mongo that is running on 27017. And this is the IP address of the database server. This is the IP address of the database server. Now.
+
+11:47
+If I use this IP address and this port in this application. Is it possible does this application can talk to this database, but make sure you need to have a network. Make sure you need to have a network between what your network between your kubernetes servers and your database servers. Now, let's say my kubernetes nodes and my database servers also part of same VPC by default.
+
+12:17
+Will they have a route? Will they have a route so that this can communicate with this one? Yes. Let's consider these databases are in a different VPC. Your Kubernetes cluster is in different VPC. Your Kubernetes nodes are in a different VPC. And your database is in a different VPC. Let's say this is different VPC.
+
+12:43
+This is in a different VPC altogether. In that case, what concept I can use. It is nothing to do with Kubernetes. So do I need to have a peering between the VPC of my Kubernetes cluster nodes and the VPC of my database server nodes peering between those two networks? Then it will work.
+
+13:08
+Otherwise is it possible for me to go for RDS? I don't want to manage databases on my own I want to go for a manager dead databases database platforms RDS Then can I use that RDS end point also? Can I pop you know can I pass that RDS end point here? Whatever URL I'll get for that RDS Yes, but again network network if your RDS and your QB or net is in same VPC
+
+13:39
+Fine. Otherwise, pairing is required. It is nothing to do with docker containers. Now let's say your application demands you want your database also running as a container. You want that application team, that architect says you want to have that database also running as a container, not as a virtual machine. Then.
+
+14:07
+If I have images available for databases, can I create a container?
+
+14:15
+Can I create a container using that image? If it is a Kubernetes, if it is a Kubernetes, do I need to create a pod? Do I need to create a pod for the database also? Yes.
+
+14:29
+Now if it is within Kubernetes cluster, it is not recommended to create a pod directly. Can I go with some controllers like deployment replicas and replication controller?
+
+14:41
+Yes, but in kubernetes there is one more kubernetes resource called stateful set. So this is designed. This is designed.
+
+14:59
+for deploying and managing what type of applications in kubernetes managing stateful applications stateful applications. Stateful applications. So this deployment is recommended to use for what it is recommended to use for what.
+
+15:22
+It is recommended to use stateless applications stateless applications. It is recommended to use stateless application if you want to run stateful applications stateful applications like database Jenkins nexus or maybe like Kafka clusters rabbit MQ clusters. It is recommended to go for a stateful set. This is recommended for.
+
+15:51
+stateful applications, but still I will explain this stateful set later. But even though it's a stateful application, can I still use deployment and using volumes? Can I make it stateful? Can I still use deployment and using my you know, values with the deployments? Can I make it stateful? Yes. So I will explain this stateful set later. But for now, let's go with the deployment because you need to be familiar with volumes also.
+
+16:21
+Now I'll create this as a maybe replica set or deployment whatever it is.
+
+16:29
+Now if I create a replica set or deployment for this stateful up application if this application has to communicate with this database pod how it can communicate within the cluster do I need to use IP of this pod do I need to use IP of this node if my database is also running inside the cluster. How can I communicate? If this application has to reach this application, then how can I communicate?
+
+17:01
+Can I use service concept here? Service concept within the cluster. Can I create a service of type cluster IP? Because this is a database. I don't want to expose this database outside the cluster. Only database should be reachable within the cluster. Then can I create a service of type cluster IP?
+
+17:23
+then can I use that service name whatever service name I have used for this database can I use that service name as a host here suppose I have given suppose I have given something like this Mongo SVC something like this are just a Mongo or Mongo SVC something like this I have given so can I use this as a host name so this application part will
+
+17:51
+using that service name, but I need to make sure I have a service created with this name for database.
+
+17:58
+Is everyone clear? If you understand the concept things will be very simple guys. Whether it is a real time whether it's a sample application if you understand the concepts the things will be very simple. You will enjoy working or learning once you get into a project. But if you buy hard it will be very difficult. What is what?
+
+18:25
+Now based on your requirement, can I have my database running also within cluster or can I have my database running in my own data center also if required your application parts are running in managed Kubernetes clusters like EKS is it possible for me to connect those applications with the databases the database might be running in your own data center servers also but make sure you need to have a connectivity cloud to add a cloud to on-prem cloud to on-prem.
+
+18:55
+using some connectivity services like AWS direct connect AWS site to site VPN transit gateways. There are services available to establish the connectivity from AWS to your own data center. Also, if you know those concepts will it be simple understanding the architecture understanding the application will become simple.
+
+19:20
+Now I want to run my database also in my kubernetes. I'm giving this like this. What is the another environment variable that application is expecting?
+
+19:33
+that application is expecting username
+
+19:37
+whatever username value.
+
+19:42
+devdeb something like this another environment variable that password that password
+
+19:55
+devdb at the rate 1 2 3 guys is this always same does all the applications whatever you would apply always same like this no that is depends on your application your requirement
+
+20:10
+Now, I am passing like this all the details. Now if I want to access this spring application from outside the cluster, do I need a service for this? Do I need a service for this?
+
+20:26
+So do I need to create a service for this application also?
+
+20:32
+Now I am saying service name, sorry service name as Spring Gap, SVC whatever labels I have given for this application labels Spring Gap, port any port it can be 80 or 80 80 your target port is your container port. Now this is one thing. But does this works alone?
+
+20:59
+If there is no database configured and if there is no database running does this application works as expected. So, that's all for today.
+
+21:08
+No, then then can I have a database also? Deployed in my Kubernetes as a pod, maybe in a same YML also you can write or another YML also you can use. But the databases are you going to frequently update the way you are going to update your applications? You are you going to frequently update your databases? No. So whatever you want to go, whether you want to go with replica set also you can go.
+
+21:38
+whether you want to go with the deployment also you can go but real time which is recommended has I already told to deploy the stateful application. So what is the recommended Kubernetes object or resource is stateful set stateful set, but for now for now, let me use replica set for now. Let me use replica set or replication controller or deployment. Whatever it is for now. Let me use replica set. That doesn't matter for now.
+
+22:08
+App slash V1 replica set MongoDB
+
+22:16
+Guys database I will run as of now only one replica. I will run only as of now one replica even though you give two replicas that is not going to work the way you are going to expect it is like two different databases. It is going to have like a two different databases even though you give replicas as to it is like a two different databases. If you need to have a high availability. In the databases.
+
+22:42
+Do I need to have some kind of a cluster set up in the databases like primary DB secondary DB the primary DB will flush all the data to the secondary DB. We need to have a database also as a cluster. You need to have a database also as a cluster. So if you just give replicas as to it is not going to work the way you are going to expect. If you are going to give replicas as to it is not going to work the way you are expecting.
+
+23:10
+If you want to have a high availability in the database also to do that kind of a setup, to do that kind of a setup like multiple database replicas, there should be a primary DB, secondary DB. Then if I want to achieve that requirement, is it possible with replica set or deployment?
+
+23:30
+No, but is that possible that is not possible this with replicas and deployment that is not possible So if you want to have that kind of a state full applications as a clusters like database cluster in Kubernetes or kafka cluster in Kubernetes or Rabbitmq cluster like a primary secondary of a cluster
+
+23:56
+Then is that possible if I go with a stateful set? Can I set up that kind of environment within Kubernetes? Can I have that kind of clusters setups? Yes, that I will explain later. That I will explain later when I explain stateful set, I will explain later what is stateful set, how it works. For now, I'm using a replica set. So even though you give replica as to that won't work. So I am removing that number of replicas.
+
+24:23
+So by default how many replicas I will have for this database.
+
+24:32
+only one now let me give something like this mango mango selector is mango label is mango container is mango D MongoDB container like this can I use image that image is already available I am giving something like this the image name mango so do I have a image available in the Docker Hub for database also that mango.
+
+25:03
+Now I am not mentioning any tag. I am not mentioning any tag. So which tag will be used? What image will be used? Suppose you have a requirement. You have a requirement you want to use a different version of Mongo database. You want to use different version of Mongo database. Then can you use specific tag like this? Whatever tag you want to use like 4.4, 5.3 like that. Yes.
+
+25:33
+Now I am giving empty so colon latest. What is the database port that container port of Mongo?
+
+25:43
+27017 now while creating this database also if you remember do I need to initialize my database with root username and password do I need to protect my database with some username and password
+
+26:05
+that how we have you know how this application this database container is expected to pass how it is expected to pass that root username and password also as a environment variable as a environment variable. Can I pass something like this ENV again name name but is this environment variable same as whatever you are using for your application like this.
+
+26:34
+the names of the variables is it same like this no that is different that is different right if you understand this description are they saying if you want to initialize database with some root username and password use environment variables like this if you see are they giving something like this here environment variables when you start your Mongo.
+
+27:00
+you can adjust the initialization of MongoDB by passing one or more environment variables, something like that.
+
+27:08
+So can I use those things? Name is this. Value, whatever I'm using. Whatever username I want to use. Password, whatever password I want to use.
+
+27:23
+You are initializing database with this username and this password. But if you expect you are passing different username and password, these usernames and passwords will be used by your application to connect to database. Let's say I'm giving wrong password. My database is initialized with this password, but I'm using different password. Will it throw some kind of authentication error?
+
+27:52
+Yes, so make sure I am using same details. My database is initialized with this username. This password now do I need to have a service if your application has to connect to this database? Do I need to have a service for this database?
+
+28:10
+service, Kubernetes service. What type of service? I'll create, does this request to be a node port service?
+
+28:22
+Does this request to be a node port service? No, because I want to access this database within the cluster. Only my application parts can talk to the cluster. From outside the cluster, I don't want to access this database. Then can I do cluster IP service? That is the default one also. If you don't pass.
+
+28:41
+Now my label whatever labels I have for this database label port guess here it is not recommended to do like this because this is not a web application. It's a TCP. So basically 80 in the sense it's kind of some API some kind of a web application. It is not a web application or API. It's a database. So I will use same as is 27017 and target port is also.
+
+29:11
+27017 if you see in your application code in your application code they have hardcoded port 8 27017 service name we are passing as a variable 27017 they have hardcoded let's say suppose you have created a service like this suppose you have created a service like this do you think it will work because that is hardcoded as a 27017 it won't work.
+
+29:41
+So I'm using same 27017 that is service port. Now let me deploy. You want to deploy individually, deploy individually. If I want to deploy together also, can I deploy together by having this one also in same YML? Can I deploy together also if required? Or I can deploy individually also. Now here it is giving some kind of a warning. This warning is because of
+
+30:10
+because of that plugin. What it is saying one or more containers does not have a resource limits. It is recommended. They are saying this container does not have any resource limits. It is recommended.
+
+30:25
+So if you want to give resource equation limits, give it, otherwise leave it, fine. Now nowhere I'm mentioning namespace, in which namespace all these deployment services or this deployment, this part services will be created default. Now if I do like this namespace, this deployment and its parts will be created in which namespace.
+
+30:55
+Now do I need to make sure service also gets created in same namespace for that one. Yes now if required can I have this database in a separate namespace by creating a separate namespace like mango NS or DB NS like this if required by creating a separate namespace.
+
+31:16
+Otherwise, suppose if I don't give any namespace for this database service and this database part in which namespace it gets created default. Now your application is in this namespace. Your database is different namespace. If you do service name like this, do you think will it work?
+
+31:39
+Do you think will it work? Then do I need to give what here if this application is in different namespace if we were database services in different namespace FQDN. So do I need to give FQDN like this default that namespace name if it is in a default namespace Mongo SVC dot default dot SVC dot cluster dot local something like this.
+
+32:10
+database ns or mango ns like this that namespace for now let me create everything in a same namespace for now let me create this one also in same namespace
+
+32:29
+then FQDN is not mandatory that service also in same names. Guys the service name here let's say service name I have given as Mongo. I am giving service name as Mongo but your application is using this as a hostname. Do you think it will resolve?
+
+32:56
+No, so make sure you are giving that name now. Hope you are familiar. What is what whatever we discussed so far? Now let's say You want this application parts to be scaled automatically whenever there is a load you want this application parts to be scaled? Automatically whenever you have a load then what other object you can create for this deployment?
+
+33:22
+What is the another Kubernetes object which you can create so that whenever there is a load on that application that parts get scaled automatically.
+
+33:35
+hpa hpa which we just discussed yesterday. Okay, so based on the requirement now, let me give the PICAS here for this application part. I am giving replicas as to now let me apply everything. Yes before deploying before deploying. Let me delete the existing applications because do I have my
+
+33:59
+Kubernetes cluster with enough nodes enough CPU enough memory to deploy too many applications.
+
+34:08
+I don't have too many nodes in the cluster to deploy too many applications in this. So let me connect to my kubernetes machine. I have a nodes are loads are ready. Let me see if I have anything in the default namespace in the default namespace some application is running. If I do like this delete all I fun I fun all is it going to delete everything in whatever in the current namespace.
+
+34:38
+default namespace I have deleted. Now I have some applications in this namespace.
+
+34:47
+Now I will delete all these things. Yes, one more thing. If I delete namespace, what will happen to the objects which are running in that namespace? Suppose I'm executing like this. I'm deleting a namespace itself. What will happen to the resources which is running in that namespace is that objects also gets deleted is that applications gets deleted.
+
+35:10
+Yes. So I don't want to delete namespace. Can I delete something like this? All the objects or you can delete individually. Delete service of this one service of this one delete deployment also like that you can delete. Now I'm deleting all these resources but don't execute on this cube system namespace base. Don't do anything on the cube system namespace.
+
+35:39
+Now let me apply this application. Let me apply this application.
+
+35:48
+Now if required, can I have all these things maintained in my version control system like SEM tools like GitHub? Can I use this to automate the process of building and applying the images also using Jenkins to Kubernetes?
+
+36:06
+by maintaining all these manifest in the version control system you can do that
+
+36:13
+now let me deploy I have some kind of indentation let me fix this here it will work but for better readability let me have something
+
+36:39
+Now let me. How many Kubernetes resources will be created now if I apply this manifest?
+
+36:49
+If I apply this manifest, is it going to create a deployment? One deployment. That deployment, is it going to internally create a replica set and pods? The deployment will internally create a replica set and pods and one service for this application and one replica set for database and another service for database. Now let me apply.
+
+37:18
+Deployment is created successfully. Service is created successfully. There is a problem. Unknown field app. So where exactly it is failed? It is partially done. Where exactly it is failed in the replica set? In the replica set, I have this replica set, right? Database.
+
+37:45
+In this I have lot of resources in this replica set. I'm using labels like this, but will it support like this? Does replica set supports like this? That has to be under match labels, match labels.
+
+38:08
+something like this. Now let me apply. Only your spring application deployment and service is created, a rest of the other two are not created. Still I have some error. Unknown field.
+
+38:25
+still I have something called error.
+
+38:31
+now wait it is sorry I have modified at a wrong location I've modified at a wrong location let me remove this
+
+38:42
+This is my part template. I have to view that here in the selectors.
+
+38:49
+match labels.
+
+38:59
+now let me apply this now is my stateless application and is my stateful application also running in the kubernetes as a pods
+
+39:13
+Now this one you should guess what what is the problem database pod container is getting created database pod container is getting created but for this application your spring application it is giving error image pull this could be because of some wrong image tag or registry. Let me see.
+
+39:43
+hands on spring iPhone boot iPhone app it is not app the repository name is what something like this the repository name was Mongo since it's a deployment do I need to delete and apply since it's a deployment so I need to delete and apply no is that parts gets updated now
+
+40:11
+Since I have updated my part template is that parts get updated now. Now I am getting new parts. But it is in a pending state. Why it is in a pending state because of no resources available. But this part also it has reserved some CPU but this part also it has reserved some CPU and memory. Now this is in a pending state. If you see why it is in pending state. How can I know?
+
+40:40
+If I see the logs, do you think anything will be available like this? pod itself is not created. If I execute logs, will you be able to see anything here? No.
+
+40:53
+let me describe my pod let me describe my pod
+
+41:00
+and if you describe your port now what it is trying to say 0 by 3 nodes are available one node has a insufficient memory one node has a insufficient memory one node doesn't have enough memory and what about another node another node has a taint another node has a taint what do you mean by taint we already discussed do have a master node which has a taint
+
+41:29
+Since our quads are not tolerating, so it is not considering. What about other node? What do you mean by this error?
+
+41:39
+So another node has a disk pressure. Another node has a disk pressure like lot of IO. Lot of IO operations are going on. So that has a disk pressure. Which node has a disk pressure? Let me see. Describe node. Let me see if this node has a disk pressure or other node has a disk pressure. Let me see.
+
+42:12
+cubelet has no disk pressure sufficient memory is there for cubelet, cubelet is ready. So we don't have any issue with this node maybe issue with this 206 node there might be a lot of disk pressure. What do you mean by disk pressure? Now it is saying node has a disk pressure. It is ready. It is fine, but it has a disk pressure. What do you mean by disk pressure?
+
+42:41
+lot of in and input output operations are going on. So if you see this node has a disk pressure.
+
+42:50
+What do you mean by that? Disk pressure is a condition indicate that that node is using too much disk space or using disk space to first but it will be automatically resolved. You no need to do something, you know, nothing after some time. It will be automatically resolved if it is already fully utilize that this you need to increase the disk. You need to increase the disk size. So disk pressure is a condition indicating that node.
+
+43:19
+is using too much disk space or using disk space too fast according to the threshold sets for your Kubernetes configuration. If your application needs more space then do you need to increase the size of the disk if it is running? Yes, but now it not might be because of running out of disk. I may have still some storage but lot of IOs are happening.
+
+43:48
+lot of IOs are happening after some time that might be resolved.
+
+43:54
+after sometime that might be result now let me show you let me go inside that let me go inside that 206 node let me access to that 206 node
+
+44:11
+Let me access to the 206 which has a disco pressure. Memory pressure is different disco pressure is different disco pressure in the sense storage.
+
+44:25
+Let me go inside this.
+
+44:37
+Now, if you see that route disc, right, that route disc, we still have some storage available. Now it is trying to read and write a lot of data because of that error image pull. It is trying to pull the image and it is not able to find a lot of IOs are happening. That's why it is showing as disc pressure. Now, if you see after some time that might auto resolve after some time.
+
+45:05
+that might auto resolve if you describe the node after some time now is it came back normal node has no disk pressure now this node has no disk pressure now now whatever quad which was in pending because other node is having insufficient CPU this has doesn't have enough memory but it is not able to schedule this one because that time it was having a disk pressure now there is no disk pressure now can I see that quad
+
+45:35
+might be scheduled in that node whatever it was in pending state now if you see is that part scheduled and old parts got terminated old parts got terminated
+
+45:50
+These type of issues are common guys, you should be good at understanding the errors and troubleshooting the errors
+
+45:58
+These types of errors are common. Disco pressure, memory pressure.
+
+46:09
+Now is my parts are scheduled in 206 now.
+
+46:17
+Yes, now let me access that application. Let me access that application from outside. I want to access that application. Can I use that respective node port of that service? Now this is this application is okay. What type of service I have created for this spring app SVC. Since I have not mentioned any type, what type of service by default guys?
+
+46:52
+cluster IP Now I want to access this outside for now can I say type as node port
+
+47:02
+I can also edit or I can also modify. Now if I see can I use this port?
+
+47:28
+whatever node any node that can be your master node you can use
+
+47:35
+or that can be worker node you can use. You can use any node.
+
+47:42
+But make sure you open the port in that server security group. If you are using this node, go to that server security group. Edit inbound rules. Open that port.
+
+48:03
+now using this server IP address public IP
+
+48:09
+using that server public IP I can access
+
+48:17
+Now am I able to access that application? The application which is running as a pod container and internally is this application is communicating with one stateful application called database Mongo database.
+
+48:35
+My application also running as a pod, my database also running as a pod. Is that application pod is able to communicate with database pod using that service name in Kubernetes?
+
+48:49
+Now this is a stateless application. If something goes wrong with this stateless application pods, do I need to worry? Now this pods if something goes wrong with this stateless pod do I need to worry because nothing is getting maintained or stored in this pod containers. Now let's say I am intentionally deleting this pod can go down for any reason this part can go down for any reason.
+
+49:18
+I am intentionally deleting this pod. I have another pod for high availability. I have another pod. I can access that. But do I have a data loss? Do I have a data loss if this pod is went down? Do I have a data loss?
+
+49:37
+I have still I can see the data because nothing we are maintaining. But if something goes wrong with this application, I meant to say this part that stateful set I'm sorry, the stateful application, the stateful application for like database part is getting deleted. That can happen for many reasons. One reason.
+
+50:07
+can be let's consider your database pod is running in this node as of now this database pod is running in this node. Let's consider there is a issue with this node this node went down. Now does kubernetes will try to shift the pod to other node.
+
+50:25
+Does pod will be recreated? If something went wrong with this node, your node went down. Does Kubernetes will try to shift the pod to other node because this is managed as a controller replication controller. Is it going to make sure you have one replica for that? If something goes wrong with this node, does Kubernetes will try to recreate that pod in a different node?
+
+50:52
+That is one use case the pod will be recreated. So in that case, do you have a data loss because pod is completely deleted and created to have a data loss. Yes. And also even though there is no issue with this node, even though there is no issue with this node, let's assume there is a OOM out of memory. Your container is killed and your container is restarted. Do you have a data loss again? Even though there is no issue with that node. Yes.
+
+51:23
+Now I am intentionally deleting that pod but since there is a controller is it going to recreate that pod.
+
+51:38
+I am going to get pod again, I am going to get pod again. That pod is running but what about the data? What about the data? Now will I able to see the data? What our data have?
+
+51:53
+inserted no we have a data loss is this acceptable in any application
+
+52:03
+Now, how can I maintain the state? How can I maintain the state now in Kubernetes? How can I maintain the state? State is nothing but data, data about that process. Here also, can I use a concept of volumes? Yes, volumes and value modes. As of now, am I using any volumes for this stateful applications?
+
+52:33
+like databases, no. Now Kubernetes supports different, different values. Kubernetes also supports different, different values.
+
+52:45
+We can use any of the value, n number of values also simultaneously.
+
+52:52
+Now we have a concept of values here. We have a concept of values here.
+
+53:03
+As I already told
+
+53:23
+So as I already discussed guys as I already discussed you already know container file system lose as long as the container does so when a container terminates are restarted the file system changes are lost whatever file systems whatever files we have as part of the container file system is which you already know volumes in Kubernetes are very easy to manage. Basically, it's a storage. It's a storage. It's a directory.
+
+53:52
+that gets mounted to the pod. We can mount some storage to the pod. Once I mount the storage to the pod, then can I tell the container to use that value to store the information in that? The container can use that value to store that information. So if I am using volumes.
+
+54:17
+You can safely modify the parts without losing your data without losing your data. You can modify your parts your parts even though parts are getting recreated restored. You don't have a data.
+
+54:31
+Kubernetes supports many types of values. And also, does a pod can use n number of values simultaneously? Can I attach multiple values to the pod? Or is it possible to attach only one value? No, you can attach n number of values to the pod. Kubernetes supports many types of values. And also,
+
+54:58
+pod can use any number of volume simultaneously for more consistent storage that is independent of the container. We can use a value. So this values are especially important for what type of applications as I already told.
+
+55:17
+stateful apps such as databases Jenkins Kafka rabbit MQ. Redis cash memcache this type of applications. If you are running as a.
+
+55:32
+parts in Kubernetes. So to use a value, a part specify what values to be provided for part. So using this in the part template, using this field, can I say what values I want to use for that part? Using this field in the part template, using this field in the part template, like this. This is your part template. In this part template.
+
+56:01
+The way I have a containers. They have one more section here called volumes.
+
+56:10
+in your pod spec in your pod spec in your pod spec you can define the values. So can I have n number of values attached like this to that pod.
+
+56:24
+We are just attaching the value but if this value has to be used by the containers if this value has to be used by the containers. Do I need to use this value mounts field in the container section?
+
+56:41
+like this this is one of the container in that pod so do I need to use this value mounts so that these values we are attaching to the pod and we are telling the container to use that value and mount so using these two options can I attach values and can I use those values can I mount those values to the containers
+
+57:08
+Now, as I already told, suppose if I have two containers or more than one container in that pod, can I attach same value to the multiple containers also within that pod? Suppose I have another container also, can I use same value if required so that one container can read the data, another container can write the data to the same storage if required. One container can write the data.
+
+57:37
+another container can read the data like that is that possible. Yes, we already discussed.
+
+57:46
+that use case. Now, Kubernetes supports different different types of values. One is host path value. Another one is empty day or value like NFS value, persistent value claim config map, secret EBS, Azure disk Azure file, Google persistent disk, like n number of values it will support.
+
+58:13
+Is it depends on the infrastructure which you are using is it depends on the Kubernetes cluster that environment which you are running your Kubernetes cluster. Yes, let's say I am running my Kubernetes cluster on Azure. Will I able to use this EBS block storage? Suppose I am running my Kubernetes cluster in Azure. Will I able to use this? No. Suppose I am running my Kubernetes cluster as a managed Kubernetes cluster like EKS. If I am using EKS to.
+
+58:44
+provision the Kubernetes cluster, can I use EBS volumes to my Kubernetes pods?
+
+58:52
+EBS volumes to my kubernetes ports suppose if I am using Azure a case can I use this to Azure file or Azure disk if I am running a case cluster. Yes suppose if I am running GKE Google Kubernetes engine can I use this GC Google persistent disk.
+
+59:15
+So you have different different types of values you can leverage based on the environment. Now let's say can I use host path. Can I use host path if required. What do you mean by host path.
+
+59:29
+the name itself it is saying host path host path what is host what do you mean by host that server that server on that server you have a pod so can I mount some directory can I mount some directory from the underlying server where my pod is scheduled can I attach some directory to the pod from the underlying server host path
+
+01:00:00
+It is not home directory path host path in the sense host host is nothing but your server Where your containers where your pods are hosted? Kind of a local values in the docker guys kind of a bind mounts kind of a bind mounts in the docker Did we discuss the concept called bind mount?
+
+01:00:21
+So will I able to mount some directory to the container in the Docker using bind mounts concept. Similarly, it is exactly same here host path. So it's host path, which means, will I able to mount any directory from the underlying host to my pod, my pod here.
+
+01:00:43
+Yes, that is host path that is host path Now sometimes in the interviews they are going to ask Different different questions on these volumes volumes are very very important ubernet is volumes
+
+01:01:02
+As I already told, Kubernetes supports many types of values. I already explained all these things already. The containers are ephemeral. If something goes wrong with your container when container is crashes, cubelet will restart your container with a clean state. So you will not have all the data or whatever you have. So Docker has a concept of values. Similarly, Kubernetes also supports many types of values.
+
+01:01:31
+Pod can use n number of values simultaneously. All these things I have already explained. As I told, Kubernetes supports several types of values, like Elastic Block Store, EBS. Now, Azure disk.
+
+01:01:51
+Azure File.
+
+01:01:54
+ShepFS, suppose you are using some kind of an on-prem storage solution. You have your infrastructure in your own data center. You have provisioned your Kubernetes cluster in your own data center. So there are some storage solutions like a SAN storage area networks, NAS network attached to the storage. There are different storage concept. Suppose if you have your own storage area network using ShepFS,
+
+01:02:24
+Will I able to provision the storage in that your own storage area which is managed in your own data center using these type of things also. Yes. So you have a chef face config map as a volume empty dear as a volume secret as a value Google persistent disk. There are several types of volumes supported by Kubernetes. Can I use NFS also if required NFS.
+
+01:02:54
+network file system in your own data center you have your own NFS server is it possible for me to mount NFS with my pods yes it supports lot of values case now sometimes in the interview they are going to ask these type of questions what is host path value in Kubernetes or what is host path
+
+01:03:22
+what is empty DIR empty DIR in kubernetes. So sometimes they are asking these type of questions. So there is one type called empty DIR there is one value type called empty DIR. So what is this empty DIR value?
+
+01:03:44
+So empty DIR value first created when pod is assigned to the node. So whenever your pod is assigned to node, if you are using this empty DIR value, it will be created when the pod is assigned to that node. And it exists that empty DIR value exists as long as the pod is running on that node. As long as the pod is running on that node, that empty DIR value will be existed in that node. So,
+
+01:04:13
+As the name says itself, this value will be initially empty. The value will be initially empty empty directory. If I mount this empty day or value with my containers, my containers will write the data to that empty day or value. But that empty day or value exists as long as the pod is running on that node. Let's say pod is removed from that node does that empty day or value that the storage also gets deleted from that node.
+
+01:04:42
+If the part is deleted from that node, does that empty there value also gets deleted? Yes. But if the container is crashed, container is restarted.
+
+01:04:55
+Does empty day air volume is safe even though your container crashed and restarted in the same node? Does the empty day air volume is safe? Yes
+
+01:05:15
+So the empty day or value will be available as long as the party is running even though the container is restarted in the same node same part container is crashed. It won't have any problem. But if the party is a rescheduled to a different node does that empty day or value gets deleted in that node. Yes, it is like a temporary. It is like a temporary is it recommended to use this empty day or value for persistent storage.
+
+01:05:45
+persistent data, evergreen data. No, it is like a temporary storage. So empty AR value.
+
+01:05:58
+is not recommended to use.
+
+01:06:02
+for persistent storage. So it is like a temporary file system. Now the way we have an entry there value, we have another type of value called host path. We have another value called host path. What is this host path? As I already told, host path value, basically we can mount a file or directory from the host file system into your pod.
+
+01:06:30
+A host path value is basically we can mount a file or directory from host file system to your pod. Is it like a bind mount in Docker? Is this host path is like a bind mount in Docker?
+
+01:06:45
+So it gets mounted from the underlying host. Now let me use this now. Let me demonstrate. I'm not using any value. If my parts are getting deleted and recreated, I am lost. I'm losing my data. Now can I use a volumes now with my database pod? I don't want that to happen. I can use values for my database.
+
+01:07:15
+I don't need because it's a stateless application. I don't need for my database. Can I use Valium's concept here?
+
+01:07:25
+Something like this.
+
+01:07:28
+But is this correct is the indentation correct when I am defining the values is this correct and again is this is also correct is this is also correct values no values are siblings of your containers like this like this values siblings of your containers guys can I define
+
+01:07:58
+in the part spec can I define this values first container next is that is also fine name name of the value can I give something like this mango DB some name something like this any name any name now what type of value can I say something like this host path host path
+
+01:08:25
+within that host path I can give the path. I can give the path. So this path is expected where do I need to have this directory in the underlying system. Maybe something like this or maybe something like this.
+
+01:08:46
+something like this this path should be part of your server. Let's consider your database part is getting said you'll hear your database part is getting scheduled here. Now I am using a host path value. Now I am giving something like this a slash Mongo slash Mongo. So is this directory expected from underlying host? I'm giving something like this Mongo data.
+
+01:09:14
+In the root directory, I'm giving Mongo data. It is expected here the director even though this directory doesn't exist does the Kubernetes will create a directory to attach the directory to this part. Does Kubernetes will create this directory in the system wherever that body schedule use.
+
+01:09:33
+Now this is my path if I just define like this does this value will be used by your container in that part if I just define like this no then how can I tell my container to use this value my container to use this value.
+
+01:10:00
+Something like this.
+
+01:10:05
+value mounts now here again name name name and mount path mount path name and mount path mount path to which path of your container you want to mount that is as per your use case as per your application your container so to which path I want to mount the value in this container
+
+01:10:34
+which directory I want to move in this container.
+
+01:10:39
+What is the mount path guys?
+
+01:10:47
+What is the mount path? Mongo data, no. It is not Mongo data, guys. It is data slash DB. So data slash DB. So this is the directory of my container, which I want to mount with this value. But how can I link? How can I link this value mount with value? What should be the common here? Whatever name I have used here, the value name, can I use that as a mount name here?
+
+01:11:17
+Which means is this directory gets mounted with this volume now. Now is this directory gets mounted with this value now because whatever name I am using here the same name I am using as a volume mount name. So this way is this host path directory gets mounted with my container directory now.
+
+01:11:38
+but without defining this without defining this volumes can I use volume mounts or vice versa without defining volumes can I use volume mounts or without defining volume mounts is this volume will be used.
+
+01:11:56
+No.
+
+01:11:59
+This is how I am creating. If required, can I attach multiple volumes also, guys? The way I am attaching one volume, can I attach one more volume? Can I use with a different path if required? Can I use for different path another folder of my container also I want to mount? Can I use another volume, another mount, n number of volumes simultaneously? Yes.
+
+01:12:23
+Now this is what we are doing here. But since it's a replica set, since it's a replica set, if I apply this, do you think your Mongo database pods will be recreated with those values? If I apply also, do you think that that Mongo database pods will be recreated with values? Is your pods are getting deleted and recreated? No. Because that is managed as what?
+
+01:12:52
+That is managed as what the database pod is managed as what replica set does replica set will delete and update the ports.
+
+01:13:04
+No.
+
+01:13:09
+Now I don't want to do this is not reflecting then can I delete that replica set and again apply to reflect I delete the RS I delete that replica set the replica set of database the replica set of database I am deleting then again I will apply again I will apply now there are changes in my part template
+
+01:13:37
+Is my database parties using volumes now?
+
+01:13:42
+is this database part is using values now if I describe will I able to see if I describe will I able to see that values cube ctl describe pod describe this pod in this namespace now can I see something called like this values mango db host val type is host path type is
+
+01:14:11
+a bare host directory value. This is the path. Is that value is used with this container? Is that value is used with this container mounts that data slash DB from this value? What this stands for RW? Read, write, read and write, read and write. Is it possible to use read only values? Only containers, parts can read.
+
+01:14:41
+but parts cannot read the data. Can I use read-only values also? Yes.
+
+01:14:48
+that is also possible.
+
+01:14:52
+in whatever node it has scheduled in which node that part is scheduled. Let's see in which node the database part is scheduled now.
+
+01:15:04
+Now if I go to 206, let's see this is 206 in this 206. Can I see some folder in the root that I have given post path as a slash Mongo data. Now can I already see some files got created here because the database pod the database container is started writing this one, but this is empty data empty storage raw new storage new value.
+
+01:15:33
+will I have any data as of now because that is empty. Now let me start writing the data. Now is your database is maintaining this data in the whatever value you may have attached.
+
+01:15:50
+If you see LS-LJR slash Mongo slash Mongo data. Now can I see some files are getting updated created within this directory, but who is doing all these things is your database quad is your database container is using the storage to write the data.
+
+01:16:15
+Now, even though you delete, even though you delete or something went wrong with your database pod, something went wrong with your database pod. I am deleting that pod intentionally. Do we still have data safely available in the underlying host?
+
+01:16:39
+I'm deleting that part intentionally.
+
+01:16:43
+I am deleting that pod intentionally now pod is recreated pod is recreated in the same node that is important pod is recreated in the same node where originally it was running in the same node pod is created now is it again pod started using same storage same value whatever I have defined as per my pod manifest now if I refresh do I have a data loss now do I have a data loss now
+
+01:17:15
+because it was using same value but one catch here one catch here. Let's assume for some reason the database body scheduled a different node. For some reason your database body scheduled a different node. What happens if I am using host path value?
+
+01:17:40
+Data is not lost data is still there data is still there here But is it going to start using New storage here in this from this host. Is it going to use some new new folder here again? that mongo Data The data is still there but what happens if the node is scheduled to a new node different node your party schedule is it going to
+
+01:18:08
+Use this directory. You have some data in this host, but the part is rescheduled here. Do you have a data consistency here? If this is going to happen, do you have a consistency in your data?
+
+01:18:25
+No. So if I am using host path values, if parts are getting
+
+01:18:34
+rotated if parts are getting moving around your cluster to a different different nodes. Do you have a data consistency? You have a state but that state is not consistent. In this case, do I need to use some process outside of Kubernetes Kubernetes will not handle this. Do I need to have some process outside of Kubernetes kind of a rsync process or any process which will sync all your maybe different different nodes.
+
+01:19:02
+Storages you can use some kind of arcing process that is outside of your Kubernetes Kubernetes will not handle this If I have some kind of arcing process is it going to sing this server storage with the server storage if you create a process That arcing process then you have a consistency But if you don't have arcing if you are using host path value you are using host path value your parts are roaming around in the cluster
+
+01:19:33
+schedule to different different nodes. There is no consistency in the data is everyone clear. What is host path value? How it works?
+
+01:19:47
+Now instead of using host path kind of a local values. Is it possible for me to use external values? External storages instead of using host path values. Is it possible for me to use external values like NFS? Like NFS.
+
+01:20:06
+or EBS or Azure file, Azure disk
+
+01:20:16
+Azure disk NFS or EFS like this
+
+01:20:25
+based on the infrastructure based on the infrastructure. Now if I am using external storages, suppose let's consider I am using NFS. Let's consider I am using NFS even though your parts are moving around whether part is running in this node or this node or some other node do have a consistency if I'm using external values like EFS NFS EBS Azure file Azure disk.
+
+01:20:53
+Google persistent disk even though your parts are shifting around like this this guy is very naughty he is not you know sitting simple like our kids he is roaming around
+
+01:21:10
+then do we still have a consistency here in the data and one more thing even though your node your cluster itself is gone your cluster itself is gone something went wrong with your Kubernetes nodes itself do we still have your data persistent data evergreen data available
+
+01:21:39
+Guys this volumes as I already told is it a backup or is it a mount? Don't consider this as a backup. It's a mount. It's a mount point.
+
+01:21:52
+So can I mount my parts with external values, external values in the sense storages, which is outside of your Kubernetes nodes.
+
+01:22:15
+So we can use external values like this NFS, EBS, Azure file, Azure disk or Google persistent disk. Google persistent disk.
+
+01:22:31
+based on the infrastructure based on the infrastructure. Now as I already told is it possible the way we attached additional EBS value to my server when I was disclaiming or when I was discussing about AWS the way I have attached additional value that value. I have mounted with some directory in my server. Can I do same thing for my parts? Also, can I create additional EBS value?
+
+01:22:59
+Does that EBS volume can be used with your parts your container directories?
+
+01:23:05
+The way we have done in the server level, we can do that in the container level, your pod level. You can create additional EBS volumes. That EBS volumes will be attached to that server. That server, basically, it will attach to that pod, that container. So does container can start writing the data to the CBS or NFS based on your infrastructure?
+
+01:23:30
+Yes, now let's say I'll demonstrate with NFS now. I'll demonstrate with NFS now. So that you can understand what is NFS also as I already discussed in AWS. EFS is nothing but a native NFS. What is the full form of NFS? What is the full form of NFS?
+
+01:23:54
+network file system
+
+01:23:59
+So in the AWS, we have a service called EFS. It's a native NFS, which means AWS will manage this file system for you. Now let me create an NFS. Let's assume you have your own data center, your Kubernetes cluster, your Kubernetes nodes are running in your own data center. Can I provision one virtual machine in my data center itself? Can I configure NFS? Can I start using this NFS storage with my pods, containers if required?
+
+01:24:28
+in your own data center if you have a Kubernetes cluster.
+
+01:24:34
+external storage like a network file system. Now We don't have any data center. Can I create one EC2 instance and use that EC2 instance to configure that NFS? to demonstrate
+
+01:24:54
+So let me create one server let me create one server to configure the NFS But is that server is part of your easy cluster whatever server I am creating Does that will be part of your cluster is it your worker is it your master? No Now I am trying to create one server. I am tagging that as a NFS server
+
+01:25:21
+I am tagging that as NFS server. You can use red hat. You can use Ubuntu that doesn't matter here because I am not going to install any Docker or Kubernetes related software here. So let me take Ubuntu or red hat also fine. I am taking Ubuntu. I am tagging that as NFS server and NFS server. We need to open some port. Again I am creating in a same VPC.
+
+01:25:49
+same VPC same network where I have my kubernetes cluster. If my NFS server is in different network, my kubernetes servers are in different network. Again, do I need to do some kind of a pairing to use these NFS volumes again?
+
+01:26:06
+Yes, so I am making sure I am creating in the same VPC here. I need to open some port I need to open some port. I am clicking on that network settings. What is the port which I need to open guys that nfs port Anyone remember nfs port? 2049 if you don't know also here. Can I select one option called nfs? It will automatically show There is one option called nfs
+
+01:26:35
+So what is the default port which will listen NFS will listen and which port 2049. Now here instead of opening for everywhere can I open only for that range my network range where I have my Kubernetes servers where I have my Kubernetes servers. Now let me create a server.
+
+01:26:59
+Let me create a server. Then can I install NFS network file system? Can I configure my NFS shares manually here? Because this is not a managed service. You are just using infrastructure. On top of that infrastructure, can I configure whatever software I need like NFS, create NFS shares here?
+
+01:27:30
+yes so once this server is ready once this server is ready let me connect to this NFS server.
+
+01:27:41
+Let me connect to this NFS server. Once this server is ready, it is going to take some time, maybe just one or two minutes. It will be ready.
+
+01:27:56
+It will be ready in one or two minutes. Let's wait for that.
+
+01:28:03
+Guys if you do any mistakes like not opening the ports are not installing the client software like NFS client software.
+
+01:28:14
+in your kubernetes nodes are not opening ports if you try to mount NFS values is it going to work.
+
+01:28:24
+No. So make sure you are doing everything properly.
+
+01:28:32
+Now let me connect to this NFS server. Let me connect to this NFS server.
+
+01:28:41
+So maybe here let me connect to this machine. This is my NFS server. Let's consider as of now nothing is running. They have any process running that NFS process as of now in this machine. I don't have any NFS. Do I have anything listening on port 2049? Do I have anything which is listening on 2049 as of now in this server?
+
+01:29:13
+So I don't have a net stat. Let me start, install net stat.
+
+01:29:19
+If you see as of now they have anything running on that 2049 NFS port here. No, so first let me install NFS. Let me configure NFS in this machine. Let me install NFS and let me configure NFS shares in this machine. So you can follow some websites like how to install NFS in Ubuntu all those things.
+
+01:29:47
+Otherwise I will share the installation instructions. So let me I'll share the installation instructions. I am installing this NFS NFS server package. Utils is a client. I am not this is my NFS server not NFS client. So utils has to be installed in client machines.
+
+01:30:13
+So this is not a client machine. This is a server where I am running my NFS, where I am running my NFS. So, but when I go for EFS, who has done all these things? Who created a VMs for your NFS and who has done all these NFS configurations if I go for EFS? That is done by AWS itself in the background. Now I'm just using NFS on my own.
+
+01:30:43
+Now let me install this package NFS kernel server. This is a server unable to locate this package. So I may need to update my package manager. Let's see after updating the package manager. Let's see.
+
+01:31:03
+I am updated I have updated the package manager then I am installing or there might be a typo there might be a typo kernel KER NEL there is one more additional
+
+01:31:20
+KER NEL there is additional R was there because of that.
+
+01:31:28
+So now that NFS kernel software that is a server side software we have installed. Now I will create a NFS directories NFS share. I want to share some directory from this host to my client machines. So I can create some NFS folders share directories something like this. I am doing MKD or whatever you are creating a directory something like this.
+
+01:31:56
+This is the shared directory which I will be mounting with client machines from the client machines. So I am sharing I am creating one directory and this directory will be accessed from remote clients over network. So do I need to change permissions because this is accessed by remote clients. So I will give like a all the permissions like this. I will change the ownership also.
+
+01:32:25
+pseudo ch own no owner no group no owner no group ch own ch own recursively recursively nobody nobody no owner nobody and there is no group no group recursively for that share directory
+
+01:32:53
+I have done this then I will make some configurations in the exports file I will change something in the exports file this is NFS related settings in this exports file in the etc folder I am going to make this available for the NFS clients my directory is this NFS underscore share here I can give star also like this I can give star also like this
+
+01:33:22
+what that star indicates any client any client all these are NFS options days whatever I am doing here it is nothing to do with the Docker it is nothing to do with Kubernetes this star indicates any client can read and write the data from this NFS share it can sync the data right there is no subtree check root permissions are not required to do this these are NFS related settings.
+
+01:33:51
+I can use star also which means any client any IP is it possible for me to restrict this sharing this NFS with some specific IP addresses some clients also if required can I give like this 132.31.8.9 so even though I have open port that except this machine does anyone can share sorry anyone can mount this directory of NFS if I do like this no.
+
+01:34:19
+If required, can I give the range also because my Kubernetes is running in one VPC. Can I give that range like this also instead of star? Can I give that range also like this? Now does this Kubernetes nodes will become clients to that NFS this node or this node because this is where my parts are running. So does this node this node or this node does these guys becomes a client to this NFS.
+
+01:34:49
+So can I give that range that range instead of giving single IP like this instead of giving single IP like this can I give the range also so that any IP in this range can access this NFS directory from this server otherwise I can give star also it's up to you is this anything related to Docker containers Kubernetes pods no this is NFS concept let me give like
+
+01:35:19
+Let me give like this star I have given once that is done. I need to restart my NFS service. I need to restart my NFS service to do that. What I will do first I will execute one command to reflect those changes export FS. I finally then I'll restart my NFS service pseudo system CTL.
+
+01:35:46
+restart nfs-kernel
+
+01:35:53
+iPhone server I am restarting so I have done the changes NFS settings are done Now instead of using something like this instead of using something like this in host path Instead of using something like this. Can I use NFS volumes? Can I use NFS volume for this database pod? now Instead of using something like this instead of using host path
+
+01:36:23
+Now can I say NFS instead of host path can I say NFS name type. Now when it comes to NFS there are two things here one is server another one is path. One is server NFS server another one is path. Here I need to give some details what details I need to give here.
+
+01:36:46
+What details I need to give here? Do I need to give the hostname or IP address of that NFS server?
+
+01:36:56
+Post name or IP address of that NFS server. No, in real time, can I use private IP itself that NFS server private IP? Because even though you stop the server, start the server, this IP will not change as long as they're in the same VPC, same network, or if there is a VPC pairing that can communicate using private IPs itself. I'm using that private IP. Then what is this path? What is this path? What is my NFS?
+
+01:37:25
+share which I have configured from that server which directory can be mounted from clients can I give that name mnt nfs underscore share this is the directory of my nfs server now this one can be anything this one can be anything you can just give like this mango db val mango db val this can be anything now because of this
+
+01:37:54
+is your container is your Kubernetes pod gets mounted with this the NFS values instead of host path values.
+
+01:38:05
+Yes, but before I do this do I need to have a client software available? Client software installed in your notes from where you are getting where you are using this NFS mounts if you remember while discussing EFS also did I installed did I install client software in the server? Where I have mounted that EFS
+
+01:38:30
+Now do I need to have this NFS client software installed in my Kubernetes servers before I use this NFS value.
+
+01:38:41
+Now let me do that. Let me do that. I will install my NFS client software. If you don't install client software, if you directly start mounting, if you directly start mounting, do you think will it work?
+
+01:38:59
+No, so I am connecting to all my nodes Why I am installing in all the nodes because any node your part can come in any node Your part can come if that part has to use NFS value. I need to have that NFS client in that node
+
+01:39:24
+So I am trying to install that in all the nodes. So this is AWS Ubuntu server. Can I use APT install instead of M install? Because this is Ubuntu server, APT install. The package is not NFS utils. This NFS utils is for Red Hat or CentOS. Here we have something called common, NFS common. Is it a client software of NFS?
+
+01:39:55
+this I have installed in one of the node this I have installed in one of the node similarly I will install in another node similarly I will install this in another node also guys it's a one time activity it's a one time activity once you are done can I use an NFS volumes
+
+01:40:16
+with any number of pods and multiple times yes. Now let me do this as a one time activity.
+
+01:40:28
+I am installing this client
+
+01:40:34
+you can do this using Ansible that is configuration management
+
+01:40:41
+If you want to do that, if required, can I configure Kubernetes also? Can I install? Can I set up Kubernetes also using Ansible writing these tasks as a, these installation instructions as a task in my playbook. Can I do that also? Yes.
+
+01:40:59
+Now I have installed here also. Now let me do it in the master because sometimes if I tolerate sometimes if I tolerate the trains on the master, if parts get scheduled in the master also, if that part is trying to use NFS value, do I need to have that client software in the master also?
+
+01:41:21
+So I'm installing that in the master also. In all the nodes I have installed that client software. That client software I have installed in all the nodes and in the security group, in the security group of NFS server, I have opened 2049 port. In the 2049 port I have opened for that range. In my NFS server I have given star in that exports file. I have done everything proper. Now if I use this,
+
+01:41:51
+If I use like this, if I use like this, am I good to use NFS value with the database part that stateful application?
+
+01:42:07
+NFS so let me modify that so here Here I will say instead of host path instead of host path Can I say NFS it has two details one is server? Another one is path server is basically IP address of your server which server your NFS server
+
+01:42:32
+I am taking private IP. This path, whatever path I have configured as NFS shape.
+
+01:42:43
+this one now this can be anything whatever value name you have here that should be your value mount name that can be anything something like this also file but is this correct you have a value with this name but you don't have a with this name it will throw error so let me give correct name something like
+
+01:43:07
+Now is my pod is going to use NFS volume is that pod container is going to write the data to the NFS storage instead of post path storage. But as I already told it's a replica set. If I apply that if I apply that is your pods is going to be recreated with that NFS volumes know.
+
+01:43:29
+What I do? I will delete. I will delete.
+
+01:43:35
+I will delete that RS, then I will apply.
+
+01:43:42
+Before applying let me show you in my NFS server. Do I have anything in that folder as of now in the NFS share directory in my NFS server? Do I have any files as of now? No. Now I'm going to use NFS values. I'm going to use NFS values with my pod now, with my pod. Now.
+
+01:44:07
+Is my proxy scheduled in my Kubernetes node? Some node. In which node it is scheduled, let's see. Is it scheduled in 206?
+
+01:44:20
+but this time this time is it using host path value. Let me describe that part as per my part specification. Is it using host path value or what type of value it is? NFS NFS NFS mount that has lost the lifetime of a pod. So this is the server IP. This is NFS share that value is used here as a mount.
+
+01:44:48
+Now can I see some initial files already written here? Can I see some initial files already written here in this NFS? Kind of a empty data now again. It is kind of empty only. I don't see any data, but whatever records are getting inserted into your database database is running in one node. But is the database is writing the data outside of that node in a different storage?
+
+01:45:17
+Process is running in your Kubernetes, but is that process is writing the data, maintaining the data in an external storage like NFS. Now, even though that system itself is gone, even though that system host itself is gone, still I have a data available in NFS.
+
+01:45:36
+If another pod, if the pod is rescheduled to a different node also, if pod is rescheduled to a different node, if I am using same NFS value, will I able to see all this data again, even though pod is shifted to other node, completely new node in the cluster? Yes. So this is how NFS value works. So we can use different, different types of values.
+
+01:46:04
+But there is a different way of using volumes called persistent value and persistent value claims. There is a different way of using same thing whether you are using whether you are using NFS value whether you are using EBS value whether you are using host path value. There is a different way of using values in Kubernetes called persistent value claims and persistent values.
+
+01:46:33
+This I will explain tomorrow. What is persistent value claim? What is persistent value?
+
+01:46:42
+All these things I will cover tomorrow. Is everyone clear whatever has been discussed today how important values are when you are running a stateful applications in Kubernetes. I want you to do this as an assignment the host path value as well as NFS value. I want you to do it as an assignment. I'll continue this persistent value claims persistent values and other value related topics in the next class tomorrow.
+
+01:47:13
+Thank you guys. That's it for today. Try to practice as much as possible. Go through the recordings as much as possible so that it will be easy for you. I keep say you need to put effort from your side. Otherwise, it will be very difficult for you only. Even though I am trying to cover more than whatever I wanted to cover, we are trying to deliver more than 100%. If you don't put effort from your side,
+
+01:47:44
+I can't help.
+
+01:47:47
+So my efforts will be wasted. My efforts will be wasted. And at the same time, your money also wasted. If you are not utilizing this course, so the extent what we are trying to deliver.
+
+01:48:00
+your money also wasted you paid some fee but you are not utilizing this course to full extent like most of the guys are not at all joining most of the guys are not at all joining they are not at all practicing they are not at all doing it is like my efforts also wasted and their money also wasted
+
+01:48:20
+So as a well-wisher from day one I am saying, try to make sure you are attending all the classes. Do a lot of assignments, do a lot of practice, and I am here to help you when the training is going on. You cannot get hold of me once the training is done. Because I might be busy with other batches, other trainings, my work. I may not be dedicatedly available the way I am dedicatedly available now.
+
+01:48:47
+So make sure you are utilizing this opportunity, training more efficiently. Otherwise, my efforts also will be wasted.
+
+01:48:58
+Thank you guys, I'll continue.
+
+01:49:03
+tomorrow with this concept see you again tomorrow and I wish you happy Ramzan if anyone is there in the class thank you we will see you tomorrow.
+
