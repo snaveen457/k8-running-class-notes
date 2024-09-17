@@ -1,0 +1,1197 @@
+00:01
+This conference will now be recorded.
+
+00:07
+we will get started in last class I mean day before yesterday class we were discussing about node selector.
+
+00:18
+node affinity and we were discussing about part affinity part anti Affinity
+
+00:31
+and we have few more concepts we have a few more concepts paints and tolerations cardan
+
+00:43
+Rain.
+
+00:46
+drain and un-cordered
+
+00:52
+So we already discussed about this node selector node affinity and pod affinity pod anti affinity. What is soft limit? What is hard limit? Now let's continue with what do you mean by taints and what do you mean by tolerations here? So taint.
+
+01:14
+Taint is a property on the node. Which. Mark, you know we using paints we can mark that node as not scheduleable. So taint is a property on the node. We can taint any node unless until unless until your parts are tolerating that it taints does that parts will be allowed. To get scheduled on that node.
+
+01:42
+No, so taint is a property on the node. Taint is a property on the node which will repel which will repel the parts to get scheduled on that node. So node affinity is a property of a part that will attract the parts to the nodes. Does node affinity will attract the parts?
+
+02:12
+to the nodes node affinity or node selector. Yes. So node affinity is a property of a pod that will attract them to set up nodes. Taints are opposite. Node affinity is a property of a pod that will attract them to the set of nodes, but the taints are opposite to that. So they will repel set of pods. They will allow node to repel.
+
+02:42
+a node to repel set of pods. What do you mean by repel? The node will repel the node will reject the node will reject the pods. Unless until the pods are tolerating that taint does node will repel that pods or reject that pods to get scheduled. If I'm using a taint concept, yes. So taint is a property taint is a property of a node.
+
+03:12
+that will allow you to repel.
+
+03:17
+that will allow you to repel set of pods unless that pods explicitly tolerates that taint. Taint has three pods. Key, value and effect. Taint has the three pods. Key, value and effect. Key and value can be anything guys. Key and value can be anything. Anything you can use as a key and anything you can use as a value.
+
+03:47
+but what are the possible effects we can use when I am tainting any node
+
+03:54
+we have three possible effects one is no schedule another one is prefer no schedule another one is no executor
+
+04:09
+the possible effects here when I am tainting any node, no schedule, prefer no schedule, no execute. When I say no schedule, it will not schedule a pod. Kubernetes or that node will not allow to schedule a pod without the matching toleration, unless until the pod tolerates this taint with that effect. Does that pod get scheduled on the node wherever I have tainted using this property? No.
+
+04:40
+So no schedule will not allow pod unless until that pod is tolerating that taint. Prefer no schedule. It's kind of a soft rule, softer version of no schedule. Prefer no schedule. It is kind of a softer version of that no schedule. It will not prefer to schedule, but it may allow it may allow that is a soft version of no schedule. What do you mean by no execute?
+
+05:08
+I can paint any node with no execute. So it will evict the parts. It will evict. It will evict the parts that doesn't have a matching tolerations.
+
+05:21
+So what does it mean? What do you mean by evicting? When I taint any node with this no execute effect What do you mean by evicting? Madhu is saying rebooting Evicting is different. It is Evicting in the sense vacating. It is going to remove
+
+05:45
+evicting it is going to remove that parts.
+
+05:50
+remove that parts which are not tolerating that taints what do you mean by this let let me explain pictorially so that it will be easy for you to understand now let's consider these are my nodes these are my kubernetes nodes already they have a master with some taint they already have some master with some taints master node already has a taint now
+
+06:20
+When I am scheduling any parts, I am not tolerating that taint. This master has a taint like this. Let me connect to my Kubernetes master and show you.
+
+06:40
+Let me connect to my Kubernetes master.
+
+06:44
+where I have a cube set here.
+
+07:01
+So if you see...
+
+07:16
+If you see this master one of the node master has a taint. It is basically key three values three values key value key value and effect but they have not given any key. This is value and this is effect. So my master node has already one taint that master node has already has a taint this master node.
+
+07:45
+as a tint.
+
+07:49
+So this is the taint and the master. Now when I'm scheduling any parts, is master is allowing that parts to get scheduled in this? Is this node is allowing that parts to get scheduled unless until my pod is tolerating this taint? Is this master is allowing? No, it is rejecting. It is repelled. It is going to repel, repel in the sense reject. So if my pod tolerates this taint, then it will allow.
+
+08:18
+Otherwise it will reject. So that's why it is work going on these nodes. Now
+
+08:26
+Here we have a three effects, no schedule, prefer no schedule, no execute. Let's say I already scheduled some parts. I already scheduled some parts already some parts are running in this node. Let's say later I added a taint. I added a taint maybe like this anything. Any key. Any value.
+
+08:53
+any key any value like this and effect I am using this effect. Now I added a taint like this after some time already some parts are running and I added a taint like this. What will happen to the existing parts if I add a taint with this effect? What will happen to the already running parts in that node? Will it continue to run? If I add a taint with this effect?
+
+09:23
+will it continue to run existing parts will it continue to run? Yes, existing parts will continue to run, but does any new parts get scheduled unless until that part tolerates this taint? Is existing parts will continue to run existing parts will continue to run. But will it allow any new parts unless until the part is tolerating this effect taint?
+
+09:54
+So existing parts will continue to run, but any new parts, I'm trying to deploy a new part and that part, does this node will allow that part if that part is not tolerating this thing.
+
+10:08
+No. Existing parts will continue to run, but with this effect, if I try to add a taint, what will happen with this effect? If I add a taint, what will happen to the existing parts? Any parts which are already existed in that one? What it does? What do you mean by this here?
+
+10:32
+If I use that one.
+
+10:41
+pod eviction pod eviction what do you mean by pod eviction is it going to remove that part from that node but if it is tolerating that effect also is it going to remove suppose this part is tolerating that effect suppose it is tolerations in tolerations it is tolerating this effect is it going to remove that part no if that parts are not tolerating that effect is that existing parts gets removed from that node evicted from that node
+
+11:12
+Yes, so that is no execute.
+
+11:19
+that is no execute. Now, can I add a taint on any node? Not by default master has a taint. Can I add a taint on any node also? Yes. So you can add a taint on any node. So by adding a taint, can I allow only specific parts to get scheduled on that node by tolerating the taint? By adding a taint, is it possible to schedule only specific parts by tolerating the taint? Yes.
+
+11:50
+Node can have multiple tanks node can have multiple tanks if any pod is to be scheduled on that node you need to You know tolerate all the tanks
+
+12:04
+Now, Taint is a property on the node. We can add a Taint. What do you mean by tolerations? Nodes are tainted for some reason to avoid a Ports. Toleration is a simply a way to overcome a Taint, which means if I tolerate the Taint does again that node will allow that Ports whatever Ports which are tolerating the Taint. Yes. So Taint is a property on the node.
+
+12:33
+But these tolerations where I need to use do I need to use these tolerations in my pod while scheduling a pod in my pod manifest do I need to use these tolerations. Yes. Now I can add anything and I can tolerate that taint in my pod manifest right. So if you have this type of use cases you can use this tension tolerations. Now how to add a taint as I already told how to add a taint like this. This is the syntax.
+
+13:04
+this is the syntax like this paint node name whatever load you want to add a taint let's say I want to add a taint on this 93 node let's say I want to add a taint on this 93 node that node name key and value any key any value here can I give abc xyz this instead of node instead of hate parts can I use abc equals to xyz also yes
+
+13:32
+but some meaningful name you can use. But what is this possible effects? Only three. Now I can add a taint like this.
+
+13:44
+I can add a tint like this.
+
+13:48
+Now before painting that node, let's see if any parts are running on that node. If any parts are running on that node.
+
+13:58
+in any namespace. Now I think in default namespace in default namespace 93 do I have this for running.
+
+14:09
+already one pod is running as of now is that 93 node has any taint
+
+14:17
+is that 93 node has any taint as of now?
+
+14:25
+do have any taints on that node 93 node
+
+14:33
+No.
+
+14:35
+Now let's say I'm adding a taint with this effect. I already have one part. I already have one part running on that node. I already have one part. You can see here also when I'm describing that node also, I can see this part is running in that node. Now if I describe that part or if I describe that deployment, whatever it is used, do you see? Is it tolerating anything?
+
+15:06
+Describe deployment I want to describe deployment describe deployment the deployment name
+
+15:15
+Now is it tolerating anything if you want to see in a YML format instead of describe you can see kubectl get deployment deployment name ifno yml format if you see is it tolerating anything
+
+15:33
+As of now, do I have that part spec with any tolerations?
+
+15:40
+No, now it is not tolerating anything. Now if I add this taint with this effect what will happen to the existing quads which are running.
+
+15:56
+what will happen to this pod which is running let me add the taint
+
+16:06
+Now when I describe that node, when I describe that node 93 node, now can I see that a taint? Can I see that taint now? Whatever I have added.
+
+16:22
+Now let me get the pods. Now is there any impact on the existing pod, whatever it is already running with this effect, with this effect, no schedule. Now for some reason that pod is deleted, for some reason that pod is deleted, again the new pod will get scheduled on that node, 93 node unless and until you are not tolerating that one, no.
+
+16:52
+you are trying to create another deployment or same deployment you are trying to update you are trying to update or let me intentionally delete now I am intentionally deleting that pod now does that pod get schedule on that 93 node
+
+17:07
+Now it is not getting scheduled in 93 and why it is not scheduled in any other nodes also why it is not scheduling in any other nodes also maybe you might be using different things here because of maybe resources because of maybe node selectors or pod affinity pod anti affinity but why it is not considering 93 because 93 has a taint now 93 has a taint. Now if you see in my pod manifest.
+
+17:34
+in my pod manifest whatever I have used maybe not sure which one I have used I use maybe pod anti affinity this one in my pod manifest am I using any tolerations here in my pod
+
+17:52
+So that's why it is not scheduled. It is not scheduled. Now, to demonstrate easily, let me delete all these applications.
+
+18:05
+Now you deploy any pod any application let's deploy any pod any application whether it's a deployment whether it's a daemon set that doesn't matter whether it's a deployment whether it's a daemon set that doesn't matter.
+
+18:23
+any application that can be Java application that can be Python application whatever it is now let's say any application you would apply is that quad gets deployed in that node whatever node I have a tainted because this here I am not tolerating no now if I tolerate that taint then it will deploy then it will deploy.
+
+18:50
+Now let me show you without tolerating without tolerating I am trying to apply some application like this maybe two replicas one replica that does not matter. Now let me create a two replicas.
+
+19:06
+Let me create two replicas.
+
+19:14
+Any application that doesn't matter here.
+
+19:19
+Now I think in test namespace I used cubectl get get all ifrn test ns now
+
+19:36
+One is in running state another one is in pending state even though it is running why it is showing 0 by 1 we already discussed because here I am using all those concepts that liveness probe readiness probe all these concepts are there right so that's why it is performing health check but why it is only one part is running why other part is in pending state
+
+20:06
+This part is running in 206 because of health checks. It is not showing completely ready. After performing that health check.
+
+20:15
+it will show one by one it will show one by one but why other one is in pending state let's describe
+
+20:25
+Let's describe that part this other part which is in printing state.
+
+20:32
+0 by 3 nodes are available 0 by 3 nodes are available one node as a insufficient CPU one node has insufficient CPU maybe this node 206 have a insufficient CPU because I am requesting 500 milli core already some parts are running some parts requested some CPU I don't have enough CPU in 206 what about other two nodes what about another two nodes one node has a taint
+
+21:01
+that is master node has a taint and also the worker node other worker node also do have a taint now master node has taint and other worker node has a taint is our parts are tolerating the taints
+
+21:17
+no because of that it is not allowed now if I tolerate this one if I tolerate this one
+
+21:30
+If I tolerate this one here in my pod manifest. I'm using deployment strategy as the create so that it will delete and apply now here in my pod spec the way I have a node affinity node selector pod affinity pod anti affinity. Can I do something like this tolerations?
+
+21:50
+tolerations like this tolerations your key your operator your value your effector let's say here there are two possible there are two possible operators one is equal another one is exist one is equal another one is exist so if I want to compare
+
+22:19
+key value then I can use operator as equal operator as equal suppose I don't want I am least bothered about keys and values can I just use only operator and effect also like just using exists just exist if this effect is exist yes so when I want to use key value also I need to use for comparison then I can use equal.
+
+22:48
+I am least bothered about this key, I am least bothered about that value, I am only bothered about the effect. Any key, any value, I want to tolerate that effect. Then I can I use operator as exist instead of equal? Yes. You can use exist instead of equal. Now if I want to tolerate based on the key value and effect also I can use operator as equal something like this.
+
+23:16
+Whatever key But what key I have used I think node only operator Operator operator can be equal Value whatever value I have given value something like this I guess hate pods are hates sports This is value effect
+
+23:42
+effect no schedule something like this like this if i have multiple taints also can i tolerate again suppose i want to tolerate the taint which is there on the master also can i do something like this
+
+24:00
+E.
+
+24:03
+operator
+
+24:07
+effect.
+
+24:10
+So in the master, I don't have.
+
+24:16
+the value there is only key there is only key something like this.
+
+24:26
+something like this operator exist is it possible to tolerate like this multiple things also
+
+24:37
+Yes, for now, let me tolerate only this one. I'm tolerating only this one. I'm not tolerating the master. So does still master will allow parts to get scheduled? Even though I'm tolerating this one, is master will allow because I'm not tolerating whatever pains I have on the master. So does master will allow? No. But does that worker will allow? Does that worker will allow to get this part to be scheduled there? Yes. Something like this I'm tolerating.
+
+25:07
+Now let me apply. Let me apply.
+
+25:12
+Since it's a deployment since it's a deployment with a deployment strategy as recreate does existing parts which you know gets deleted and redeployed in you force even though there is no change in the image tags even though there is no change in the image tags. I am just modifying that part template any changes to the part template will result in new parts. Now, do you see is now it is there in 93 as well as 206 parts got scheduled.
+
+25:41
+because I am tolerating whatever taint I have on the master. Yes. So I can taint any node. I can taint any node. Now even though I want to taint multiple, even though I want to tolerate multiple, can I use multiple tolerations? As I already told, since this is an array or you are least bothered about key and value, can I use something like this in my tolerations? I want to tolerate whatever it is.
+
+26:11
+Can I tolerate something like this?
+
+26:15
+instead of I'll not use key I'll not I'm least bothered about value I'm only bothered about that effect can I tolerate like this also operator instead of equal exists like this any key any value I'm least bothered I want to tolerate this effect this effect also for some parts can I tolerate like this also if required yes
+
+26:45
+Is everyone clear? What do you mean by taints? What do you mean by tolerations?
+
+26:51
+Now if required, if required I want to remove the taint. Is it possible to remove the taint? For some reason I don't want to taint that node anymore. I don't want to taint that node anymore. Is it possible to remove the taint?
+
+27:07
+Yes. Is it possible to remove the labels also if required on the node?
+
+27:14
+yes now how to remove at the end at the end at the end i will use this minus at the end i will use this minus now when i use this minus at the end now did i got a message saying that untainted now do i have the taints on that node if i describe that node will i able to see the taint on that node 93 let me describe that node
+
+27:44
+Now, do have a taint on that node.
+
+27:50
+No, so this way you can add a taint and you can tolerate the taints or you can remove the taints Hope everyone is clear. What is taints and what is tolerations now next one? What is the another concept? We have here is these three drain cardan uncardan kind of a maintenance node maintenance or cluster maintenance Node maintenance or cluster maintenance
+
+28:20
+Now I want to this drain or this cardan can be used for multiple purposes. Let's consider you are having some issue in that node, one of the node. Maybe there is a network failure. There is a, you know, storage failure or hardware failure. You have some issue on in one of the node. In one of the node, you have some issues now. Are you want to upgrade some software?
+
+28:48
+in that node or you want to upgrade your Kubernetes versions also. You want to upgrade Kubernetes versions also without impacting your cluster. Without impacting your cluster and your application you want to upgrade. Or there is a issue. Not only just upgrading there is some issue in one of the node. You don't want your parts to get scheduled on that node you don't want your parts to run on that node you want to vacate that.
+
+29:18
+parts which is running in that node. I can go for these options. One is card done. One option is card done. What do you mean by card done? If I card done the node what will happen? It will make the node
+
+29:38
+as unschedulable unschedulable. So it will make that node as unschedulable if I card on that node, it will make that node as unschedulable. It will mark that node as unschedulable which is which means it is not scheduleable that node is not available for scheduling the ports. So whatever node is marked as unschedulable using cardin. I have marked that node as unschedulable does your scheduler will consider that node?
+
+30:08
+to schedule the parts? Does your scheduler will consider that node to schedule your any new parts?
+
+30:18
+If I mark some of the node as unschedulable, if I card on some node, does your scheduler will consider that node to schedule any new parts? No. But what will happen to the existing parts if I just card on? If I just card on, what will happen to the existing parts? Will it continue to run?
+
+30:46
+Yes, it will continue to run. So it will continue to run. But then once I mark that node as unschedulable, once I carden then can I execute a drain? Then can I execute a drain so that it will execute you know, it will start vacating. It will start evicting the pods, whatever pods which is running on that node. If I drain that node. It will first.
+
+31:15
+Instead of directly vacating instead of directly vacating the parts you need to follow some standards if I am draining that node it will just vacate the existing parts, but still scheduler will consider that node is available the scheduler will still schedule the parts if I just drain yes. So that is not the way of doing you card in the node first you mark that node as unschedulable then can I execute this drain so that whatever parts which is running in that node will get
+
+31:45
+removed from that node then can I go for a maintenance activity version upgrades or whatever you want to do once I do this cardan and drain yes not only for upgrade not only for upgrade let's say there is some issue in that server some issue is there some network failure some hardware failure is there I don't want that
+
+32:15
+So can I card on that node? Can I drain that node so that any new parts will get not scheduled and existing parts will be removed from that node for that use case also you can use this one.
+
+32:29
+Now let me show that now I have some parts running in 93 and 206 I have some parts running in 93 and 206 also. So now let me describe. Let me describe my node.
+
+32:51
+Let me describe this 206 or 93. Now if you see as of now what is this value unschedulable value what is that unschedulable value on that node false unschedulable false in the sense is it schedulable unschedulable false in the sense is it schedulable yes.
+
+33:15
+Now for some reason this node is not working as expected or I want to do some kind of OS patch or you know software upgrade like a Kubernetes upgrade I want to do without impacting my existing applications. Now can I drain that node for sorry can I card on that node first can I card on that node first.
+
+33:43
+as a Kubernetes administrator you need to understand what do you mean by cardan, what do you mean by drain.
+
+33:51
+Cardan Incubornities as I already told so if you go to the official website
+
+34:01
+official website, kubernetes.io node management or cluster management node management or cluster management. A node may be a virtual machine or physical machine depending on your cluster. Each node is managed by control plane contains the server services necessary to run the ports. We already know all these things. Now here there is a concept called cardan.
+
+34:30
+administration so when you want to create or when you want to have a maintenance right you can card on that node marking a node as unscheduled will marking a node as unscheduled will prevent the scheduler from placing the new parts into that node if I mark any node as unscheduled will prevent the scheduler to place the new parts on that node but as I already told.
+
+35:00
+Is it going to affect the existing parts on that node?
+
+35:05
+node but this cardan is useful as a pre preparatory step as a pre preparatory step before a node reboot or other maintenance as a prerequisites. I will mark this node as unschedulable something like this cubectl cardan node as a preparatory step. Now let me do that cubectl
+
+35:34
+cubesctl cardan that node name maybe let's cardan this node now
+
+35:46
+Sorry, Co not Ca Co Carter Now I have card on that node
+
+35:55
+Now I just card on that node, do have any impact on the existing parts which is running on that node.
+
+36:05
+no when i when i describe this node when i describe this node now you can see node not schedulable now this status is now node not schedulable here if you see unschedulable flag what is the value on that node now true which means is it available for scheduling the pods is this node is available for scheduling the pods no
+
+36:32
+but do we have any impact on the existing parts? I just carded on the node.
+
+36:38
+no once i card on this node can i drain this node
+
+36:50
+if I execute a drain, cubectl drain, cubectl drain something like this the way I have executed cardan after executing a cardan then I can do the draining process like you can understand all these things whatever it is like then I can drain this node.
+
+37:14
+kubectl drain something like this drain there is a command kubectl drain and that node name so I can execute that command kubectl drain command kubectl drain to remove the node from a service something like this drain that node name now I am going to get some kind of a warning or error now
+
+37:41
+I am going to get some kind of a warning or error. Let me show that. Cubectl drain.
+
+37:51
+cubes it will drain that node what it is saying unable to drain the node unable to drain the node due to error cannot delete a demon set managed ports cannot delete demon set managed ports do have some demon set related ports running cube proxy pod view net pod and some other demon set ports running in that node
+
+38:16
+not only just your application pod, not only just your application pod, you have some other demon set pods like a kube proxy, vnet and other demon set pods. So it is saying unable to delete those demon set pods and is it asking me to use this option
+
+38:40
+along with this one it is saying. So forget about this one because those are demon set parts that parts will not get scheduled to any new node, but except demon set parts any other workloads like a normal deployment related stateful related parts does it those parts will remove from this node and if you have any other nodes available in the cluster with enough CPU enough memory available if all the conditions are satisfied does those parts get scheduled to that other nodes after removing from this node.
+
+39:12
+Yes, now let me execute this one. So I am draining the node and draining the node. My node is unschedulable. I have drained the node. Now it is evicted. It is evicted that part which is running in that node. But why it is in pending state it has removed when I execute this drain command it removed that existing part from that node. But why again it is in pending state? Because
+
+39:39
+I don't have enough nodes I don't have enough CPU enough memory but if you want to go for a maintenance do I need to have enough nodes enough servers with enough CPU and memory available so that I can upgrade the patches or do the patches by draining some nodes yes once your upgrade or maintenance window is done once your upgrade and once your maintenance
+
+40:08
+you can go to that server you can access to that server and you can do whatever patch you want to do once that is done can I make that node again available for scheduling
+
+40:20
+can I make that node again available for scheduling the ports once the patch once the maintenance is done if required yes so what command I can use again to make that available I will use this uncarden uncarden uncarden now this is in pending state because I don't have enough nodes I don't have enough nodes enough CPU available in that nodes
+
+40:51
+Now I am again uncardening that node. Uncarden. Now is that node becomes again available for scheduler to schedule? Use small. Uncarden.
+
+41:07
+again I uncard on that node now do you see whatever part which was in pending state here is it again scheduled to that node
+
+41:21
+Is everyone clear what is this cardan drain, uncardan, what do you mean by maintenance, node maintenance or cluster maintenance? They may ask differently. They may not ask directly what is cardan, what is uncardan, what is drain. They may ask in a scenario based. I want my Kubernetes cluster. I have some nodes I want to do some kind of a maintenance activity without impacting the applications. How do you do all those things? Is everyone clear?
+
+41:49
+about whatever concepts we discussed what do you mean by node selector node affinity for definitely things.
+
+41:58
+So these type of scenario based questions also you will get in the CK certified Kubernetes administrator exam also they may ask you to card on the node or drain the node on card on the node.
+
+42:13
+So this is all about scheduling. Compare with the Docker Swarm, if you observe, does Kubernetes has a lot of features, lot of features compared to the Docker Swarm in Kubernetes, do we have a lot of features? And also, do we have a lot of learning curve also? Learning curve in the sense, you need to understand lot of concepts. There are huge concepts to understand in Kubernetes.
+
+42:39
+Kubernetes has a lot of learning curve. You need to know a lot of concepts in Kubernetes to get familiar with Kubernetes.
+
+42:49
+Now, let's go to altogether a different concept.
+
+42:55
+you know resource quota resource quota and another concept called a limit range. So as I already told multiple times. If multiple teams are using the Kubernetes cluster your Kubernetes cluster is shared with multiple teams within your project within your application. So how do you isolate? One application.
+
+43:22
+or one application teams applications or Kubernetes resources from other application team or other project Kubernetes resources. Here in Kubernetes what concept we will use.
+
+43:39
+using a namespace. We can use a namespace. We can use a namespace to isolate one application related Kubernetes or one team related Kubernetes objects or resources with other application teams or other project Kubernetes resources by creating a namespaces. By creating a namespaces.
+
+44:06
+But if multiple teams are using same Kubernetes cluster, do I need to properly manage the resources available in my cluster? Do I need to properly manage the resources available in the cluster like CPU, memory, volumes? Now, let's say application A or team A is creating hundreds of pods, hundreds of deployments. Does other team, other application will
+
+44:36
+have enough resources to manage or deploy their applications. If other team is over utilizing the resources, no. Is there any way I can control the resources at a namespace level? Is there any way I can control resources at a namespace level resource in the sense, it can be number of parts which you want to create, it can be number of values which you want to create, it can be number of CPU limits and requests.
+
+45:05
+or memory limits and request. Is it possible to set at the namespace level? Yes. That is what a concept of resource quota. Resource quota.
+
+45:18
+using resource quota what do you mean by resource quota resource quota in kubernetes
+
+45:28
+Resource quota.
+
+45:31
+is a APA again resource quota is an APA again Kubernetes object does that resource quota provides constraints and constraints that can limit resource consents per namespace level using that resource quota can I limit the aggregate resource consumption for a namespace level at a namespace level can I restrict how many parts can be created how much CPU memory can be used
+
+46:02
+in that namespace? Yes. So when several users are team sharing the Kubernetes cluster with the fixed number of nodes, when several users are teams sharing a Kubernetes cluster with fixed number of nodes or servers with some capacity, there is a concern that one team could use more than its fair share of resources.
+
+46:33
+Just to make things simple, you went to a restaurant with your friends. You ordered a family pack of biryani and only one guy is taking complete family pack.
+
+46:53
+or maybe one guy is taking 70% of that family pack. Other guys will strave. They will strave for resources like they will strave for biryani. Similarly here, one team is over utilizing. One team is over utilizing the resources. Other team will not have enough CPU, enough memory to manage or deploy their applications. So as an administrator, I need to control these things.
+
+47:22
+that I can control using resource quota concept here. A resource quota defined by this object, the resource quota object that can limit aggregate resource consumption. What do you mean by aggregate resource consumption? Aggregate in the sense.
+
+47:42
+Sum of all the pods, sum of all the Kubernetes objects are pods which you are creating in that namespace. I can set the quota at a namespace level. So.
+
+47:59
+on what basis I can set, is it possible for me to set resource, you know, request CPUs, limit CPU.
+
+48:12
+I mean to say is it possible for me to set how much the CPU that namespace that parts in that namespace can request total how much the CPU that the parts in that namespace can limit. I can set a you know based on this limit CPU limit memory request CPU request memory. So across all the parts in that namespace the sum of CPU limits should not exceed this value.
+
+48:39
+I can set a CPU memory and also is it possible for me to set number of persistent values. How many values can be created how many claims can be created in that one also. Yes, not only that one can I set a limit. I mean to say count of services can be created count of like a deployment. How many deployments can be created? How many parts can be created? Can I use this one also?
+
+49:08
+like your ration quota, number of like, you know, how many cages of ration you will eligible. I know how many liters of oil you are eligible kind of a quota. So I can set that limit. Then does that application teams will be able to create more than whatever we have allocated in the resource quota in that namespace will be able to deploy more than that.
+
+49:35
+Now to make things simple let me create a resource quota like this as of now do I have any resource quota
+
+49:45
+As of now don't have any resource quota on any namespace
+
+49:50
+No, now I can create a resource quota. You can see the samples examples here also. I can create a resource quota like this
+
+50:03
+Now if you see as of now cubectl api resources
+
+50:14
+cube ctl api resources. Do I have an api resource called resource quota here? Do I have a kubernetes object called resource quota here?
+
+50:27
+it is names you know namespaced scope now this is the full form this is the short form now when I say cubectl cubectl get quota or resource quota in the short form it is quota in the full form it is resource quota as of now to have any resource quota in the default namespace did I created any resource quota for this default namespace no now for test namespace also for test namespace also to have any resource quota created
+
+50:58
+or for the sake in any namespace to have any resource quota.
+
+51:05
+Now since I don't have any resource quotas, can I apply n number of deployments, n number of pods in these namespaces?
+
+51:19
+yes now let me create a resource quota now something like this api version v1 kind resource quota
+
+51:29
+Resource quota.
+
+51:33
+something like this now without mentioning the namespace if I create a resource quota like this this resource quota gets created for which namespace whatever namespace it is pointing by your cubectl your cubectl context to which context to which namespace currently my cubectl is pointing the default because I changed again it is pointing to default only.
+
+51:59
+It is pointing to default only it is not pointing to the test namespace. If you see it is pointing to default only now is this quota gets created for default namespace now.
+
+52:15
+Now if I want this to be set up, can I mention namespace like this?
+
+52:29
+Yes now here in this spec I am setting a hard limit it can request this much CPU this much memory this much limits this much memory limits which means now I am creating one deployment just to give an example I am creating one deployment let's say
+
+52:51
+Let's say I'm creating one deployment. That can be any deployment, any application. I'm creating one deployment in that namespace. Let's consider. In that namespace, let's consider. Now I'm creating something like this, two replicas. Now CPU request one, memory request one GB. Now here I'm req.
+
+53:19
+requesting 500 milli core and 256 mi of memory. So 500 milli core I am requesting. Now the limit I mean to say request CPU I have given 1 GB now 500 plus 500 1 CPU. But now if I try to create three three ports in that namespace and this is the quota of that namespace. Do you think you will get a third port?
+
+53:48
+Do you think you will get a third part because I am requesting 500 milli core with two replicas three replicas. So how much we are requesting in total 500 plus 500 plus 500 I am request in this much resource requests CPU 1500 but what is the limit I have set for that request CPU.
+
+54:18
+At a namespace level, what is the request I set at a
+
+54:24
+one so do you think you will get a third part in that namespace even though your cluster have lot of servers even though your cluster have lot of cpu lot of memory available do you think no now what do you mean by this request memory what do you mean by this request memory you are requesting like this now some of all that parts all the deployments it should not go beyond this
+
+54:54
+you are requesting like this 256 MI and I am creating like two replicas three replicas for this application. Then it should not exceed this one. This limits is basically whatever limits you are using. It is not only for single quarter any deployment any replica set any stateful set gets deployed in that namespace some of all these resource requests and limits of all the deployments all the parts in the namespace.
+
+55:23
+Can it go beyond this much? Request some limits.
+
+55:29
+No. So it cannot go beyond that much. Now. This is at a resources level. Is it possible to set the count count of like number of parts can be created number of deployments can be created in that namespace number of services or secrets can be created in that namespace. Yes. So you can use something like this counter. There is a field called count something like this here you.
+
+55:58
+You already saw it. Maybe if you see, count something like this, count of parts, count of deployments, count of services like this. You have these fields here. You know, they have given here. Right?
+
+56:18
+the counter something like this count of persistent volume claims count of services count of secrets count of parts count of deployments like this how many deployment something like this count of deployment dot apps how much you can create count of parts how many you can create you need to use this one something like this. Let's say I have given something like this.
+
+56:47
+now even though i have enough i have given like 10 cpu i have given like 10 gi limits 20 cpu 20 gi now if i give deployment as one will i able to create more than one deployment
+
+57:08
+No, so this is how it works guys. This is just a quota when I am creating a quota Does this kubernetes will check whether I have this much CPUs this much memory available in the cluster? Is it going to check? No, it is not going to check it will just set that limit That's it. But do you need to make sure when you are creating a quotas? Do you need to make sure whether I have enough nodes enough CPU enough memory available? Otherwise again your parts
+
+57:37
+Does your pass goes to pending state even though you have a quota does your part goes to pending states if you don't have enough servers available with enough CPU and memory available. Yes, this is just a limit. This is not going to check whether your cluster have this much CPU this much memory available. It is not going to check this is just a quota. You need to make sure you have that server that much CPU that much memory.
+
+58:06
+Now let me do something like this. Let me do something like this. I am creating a quota now.
+
+58:16
+resource quota. While creating a namespace itself, along with namespace YML, can I create this quota also in the same while creating a namespace itself? Can I do this? Yes. So while creating a namespace itself, you can do this. But how do you know how much CPU, how much memory you can set the limits? How do you know how much request how much limits
+
+58:46
+the development team that application team who is going to deploy their applications in this namespace. Do you need to understand how many parts, how many deployments they want to deploy? Each part is requesting how much CPU, how much memory for that all the microservices, all the applications which the team is deploying in this namespace. Do you need to work with the developers or architect of the team to understand what is their requirement, how much CPUs they're expecting?
+
+59:13
+how much memory they are expecting, how many deployments and parts they are planning to deploy based on that. Will you set the quota? Yes.
+
+59:24
+Now I am just demonstrating like this with this. Now I am going to set the pod limit also like this. I am going to set the pod count also like this. So number of pods like pods 3. Let's say is it possible for me to limit like this? Like count count slash deployment dash.
+
+59:54
+apps are like this so if I say like this 2 is it going to allow to create a more than two deployment
+
+01:00:04
+no I can set the number of parts also parts like this two one like
+
+01:00:12
+Based on the requirement you can set all these things. Now let me set pod count as maybe 1. Let me set pod count as 1. For now demonstrating I am just setting the pod count as 1. Now let me apply this. Let me apply this. Pod count also I am giving like this 1.
+
+01:00:41
+This is for which namespace I am applying in my manifest file I already have the namespace name. Now the quota does the quota resource quota is it set for this namespace test ns. Now can I see.
+
+01:01:07
+now request CPU request memory limit CPU because I already have some parts I already have some parts is it showing like you are setting the count of parts as one but already there are two parts because though I already have some parts running
+
+01:01:28
+Do I already have some parts running? You set it as a one, but it is already two. But this is already deployed. Is this quota is enforcing that parts to be deleted existing parts because already some parts are there and you created a quota just now. But in that typical situation, are you going to create a quota while creating a namespace itself before you deploy any applications, any deployments into that namespace?
+
+01:01:59
+Yes, now let me delete this for now. Let me delete this for now. Whatever applications, parts, whatever I have in that namespace, I am deleting everything now. I am deleting everything now. Now let me see the quota. Now this much limit memory I have set because none of the parts are running. Is it showing zero because none of the parts are running? None of the parts got scheduled in that namespace.
+
+01:02:28
+you have this much limit for memory so as of now no one is using no one is using everything is zero zero zero like this now I want to deploy this application that can be any application that can be any application
+
+01:02:44
+one if you observe here now I am requesting this much CPU resource request 500 milli core memory 256 as per my quota request do I have one CPU which means one CPU is the limit you can request request CPU that much memory now but the number of pods number of pods what is the limit number of pods I have given here for that resource quota one
+
+01:03:13
+Now how many replicas I'm trying to create for this deployment.
+
+01:03:18
+Now does this resource quota comes into picture does this resource quota will allow you to get schedule that second part now in that namespace.
+
+01:03:29
+Let me apply.
+
+01:03:34
+Let me apply.
+
+01:03:37
+this application.
+
+01:03:41
+Now that is in that namespace only test namespace. That is in that namespace only test namespace. Now if you see one quad is running. Why it is not ready because of that liveness probe readiness probe. But if you see the deployment 0 by 2 0 by 2 how many replicas I am expecting for that. How many replicas I am expecting for that. As of now how many are ready.
+
+01:04:11
+How many are ready?
+
+01:04:15
+Why even though the pod is running, why it is not showing as ready at least one pod I can see why that is not ready because of the health check. This pod is performing the liveness probe readiness probe. Once this becomes ready, can I see at least one by two here? Once this becomes ready, at least can I see one by two here?
+
+01:04:37
+So you are expecting to currently only one. You can see desired to currently one. Why what happened to the other one? Why it is not coming? Why what happened to the other one? Why it is not coming? Why it is not scheduled? Even though I am expecting two parts, the part itself I don't see here. Now how to know what could be the reason? What could be the reason? Now you describe your deploy.
+
+01:05:07
+or maybe replica set. Let me describe my deployment and see. Now it is showing 1 by 2 up to date one available one, but other one is not there. Let me describe my deployment. This deployment name
+
+01:05:24
+and let's see.
+
+01:05:28
+Now, I don't see much information in the deployment because deployment will internally create what? Deployment is internally create what to manage your POTS replica set. Now, can I describe this replica set and see what is the reason describe RS that replica set name the namespace name. Now, what do you see here?
+
+01:05:56
+it said created one pod error creating this pod error creating this pod what is this forbidden forbidden what do you mean by forbidden quota here forbidden quota which means you are trying to over utilize than your fair set of resources now if you see
+
+01:06:25
+you see the quota now, cubectl get quota now what is the number of parts which I can schedule you can see the quota number of parts which I can schedule in this namespace one currently we already currently one part is running now even though you have some this much one CPU you set as a request CPU only one part is running that part is using this much still you have a memory request
+
+01:06:54
+You have a memory limit, CPU limits. Is this pod limit is allow you to schedule that other pod? No. That is not possible. That's why it is not working. Now, at any point of time, later point of time, if you need more resources to be available in this namespace, from application team side as a development team side or from application team side, can you create a ticket?
+
+01:07:23
+Or can you work with the, you can create a Jira ticket if they're using Jira or you can send a mail to the administrator of that Kubernetes who is managing that Kubernetes cluster like the DevOps engineer who is running and managing that Kubernetes cluster. You can create a ticket or you can send a mail to increase the quota. Is it possible to increase the quota? If you have really, you really need to deploy that application and you don't have enough quota.
+
+01:07:50
+Will you able to request the administrator of the Kubernetes to increase the quota? Yes. Now let me change the quota. Now if I really need I can change the quota. Now instead of one part let's say they are requesting really two parts of I'm setting a part limits as to let me read up like I've been to say that will apply the ticket.
+
+01:08:17
+let me apply that again now you see the quota now i have 2 by 1 even though i increase the quota now if you see is that part is getting scheduled
+
+01:08:34
+is that what is getting scheduled? No, because this requires a redeployment. This requires a redeployment. You modify the quota, it requires a need redeployment, which means you need to delete.
+
+01:08:54
+that existing one. You delete this existing deployment.
+
+01:09:04
+Delete deployment, the deployment name. You need to redeploy the deployment again. You deleted the deployment. Now you redeploy the deployment.
+
+01:09:17
+This is applied.
+
+01:09:20
+Now let me apply that YML again.
+
+01:09:25
+Now you see the number of parts. Now can I see number of parts 2?
+
+01:09:34
+Now you see the quota, you see the quota, you see the quota now 2 by 2. Now even though I have pod limit as 3, even though I have a pod limit as 3, will I able to deploy any other pod, any other application because you already overutilized, you are already use this request CPU this much. Even though you have this limit CPU, limit memory, request memory is still there, but already this is reached.
+
+01:10:05
+Now even though I have a number of pods as 3, number of pods as 3 in my resource quota, let's say I have number of pods as 3 or 4 that doesn't matter here. Let me apply kubectl apply ifnf. Now let me try to deploy any pod that doesn't matter that doesn't matter any application any pod. Let's say if I have any other pod.
+
+01:10:33
+Let's say this pod, nginx pod, this pod, whether I am directly creating a pod deployment that doesn't matter when I apply in that namespace only guys in that namespace only kubectl apply ifnf that pod ifn test ifnns when I'm going to apply this do you think this part gets
+
+01:11:03
+Now one more important point to remember here, one more important point to remember here. If I have a resource quotas defined in a namespace, do I need to define that resources in my parts, my containers without defining the resources in my parts, my containers, does again Kubernetes will allow these parts to be deployed. I have a resource quota defined in that namespace.
+
+01:11:29
+But I am trying to deploy a pod without using those resources without using the resource limits and request here. Do you think does this pod will be allowed? Does Kubernetes will allow this request because here I am not requesting any CPU any memory. Let me show that.
+
+01:11:48
+Now, do you see while scheduling itself it has thrown error while applying that pod itself it has thrown error saying that you need to request you need to define these things. You must specify what it is saying you must specify resource request limit CPUs here. Did I specify that one in this pod in this container?
+
+01:12:17
+No, but if I deploy same thing in the default namespace, is it going to allow because I don't have a resource quota set for the default namespace. Is it going to allow? Yes. So, when you have a resource quotas defined, is it mandatory to define resource request and limits in your pod, your containers?
+
+01:12:42
+Yes, but is there any other way I can apply some kind of a default resource and limit I know default resource request and limits even though application teams are not specifying that one in the manifest. Is it possible to apply some default limits and request? Yes, that is where this comes limit range. Limit range.
+
+01:13:06
+limit range. So what do you mean by limit range? By default containers will run with unbound computing resources. So with resource quotas a cluster administrator can restrict the resource consumption within a namespace. Now when there is a resource quota you need to mandatorily define that resources how much you need.
+
+01:13:34
+a limit range using a limit range. What we can do limit range is a policy to constrain resource allocation to the parts or containers in a name space using limit range. I can enforce minimum maximum resources user per pod or container in a name space and enforce the minimum maximum storage also like this and I can set a default request limit also using this limit range. What I can do?
+
+01:14:02
+default resource request and limits also which means if someone is missing to define that resource request and limits by creating a limit range. Can I apply some default resource request and limits? What by default it will use that one. Yes, and also can I limit?
+
+01:14:24
+What is the maximum minimum CPU memory can be requested by your pod also yes using this limit range I can do that now I can create a limit range like this I can create a limit range like this so here you have the details now can I create a limit range like this
+
+01:14:46
+The way I have it.
+
+01:14:51
+resource quota I can define limit range like this limits max min something like this suppose I am saying max 400m min 200m like this memory also memory
+
+01:15:16
+memory let's say minimum I'm saying something like this 256 mi maximum
+
+01:15:26
+Maximum.
+
+01:15:29
+Something like this, maybe you can use 500 m by max.
+
+01:15:34
+this one also you can use whatever it is let's say 512mi like this now this is the default this is the default values at the same time does any part can request more than this one this is the default at the same time suppose some part is using like this some part is using like this do you think it will allow
+
+01:16:03
+some part is using like this do you think it will allow this is the default values as well as maximum each that container level how much it can request if someone is defining like this do you think it will allow because of this limit range I am limiting only at a container level maximum any container can request only this much so is it going to allow if I define like this that is the default value
+
+01:16:33
+and also maximum also what it can request hope you are clear what is this limit range it's a default values if someone is not defining at the same time even though someone is defining the resource request and limits at a container level does then anyone can request more than this much CPU those more than this much memory request and limits no
+
+01:16:59
+Now, this is the default one, which I can allow. Now let me define that limit range. Now I am creating a limit range.
+
+01:17:16
+I am creating a limit range.
+
+01:17:19
+but in real time you will not have a limit range like this maybe 1 CPU memory 2 GB or 4 GB like that you will use now this is my limit range now do I need to mention namespace in which namespace I want to set this limit range
+
+01:17:40
+So, let me apply that, let me apply that limit range one second.
+
+01:17:50
+limit range max must be a standard restore type or fully qualified let's see
+
+01:17:59
+Sorry, this is not Max. This is memory.
+
+01:18:09
+Now if you see, do I have a limit range also now? kubectl get limit range, this is also one kubernetes API. Now do I have a limit range created? If you want to see kubectl get limit range, that limit range name, hyaml hyaml hyaml that namespace. Now this is the limit ranges I have defined.
+
+01:18:40
+to define that limits like this. Now.
+
+01:18:49
+it is going to use that limit range values but now why I am getting this error now?
+
+01:19:09
+why i am getting this error now if you see
+
+01:19:15
+quota. You see the quota.
+
+01:19:21
+Why I am getting basically?
+
+01:19:25
+this error because is this CPUs are already overutilized
+
+01:19:37
+because of that I am not able to schedule if required let me increase that one also let me increase that one maybe I am saying maybe like 1.5 one and a four or two core like this 1.5 now let me apply that resource quota again let me apply that resource quota sorry resource quota first let me apply that resource quota
+
+01:20:06
+Then, one second.
+
+01:20:10
+this lot of things came here.
+
+01:20:16
+or maybe two core like that. Let me apply the resource quota. Now you see the quota. You see the quota. Now it is 1500 milli core. Now let me apply this nginx pod. Let me apply this nginx pod in that namespace because in the manifest I have not mentioned the namespace at runtime I am using but in that manifest did I define resources, request and limits for that pod that container? No.
+
+01:20:43
+But is it going to use this limit ranges whatever I have defined defined that limit range values.
+
+01:20:50
+by default yes now you see they have that part scheduled now they have that part scheduled now that nginx part but it is in pending for some reason it is in pending for some reason now limit range it has succeeded I sorry that resource quota it is succeeded but why it is in pending state
+
+01:21:18
+Resource quota is fine. There is no problem with resource quota. Now, what is the actual problem? Do I really have a servers? Do I really have a servers with that much CPU memory available? Do I have any servers any systems available? No. So resource quota is just a condition. Resource quota is just a condition before your parts are getting scheduled.
+
+01:21:44
+Is it going to validate is Kubernetes is going to validate against the resource quota created in that namespace before that scheduler will try to assign a node is your Kubernetes will check the resource quota first. Yes.
+
+01:22:03
+Is everyone clear guys? What is resource quota? What is limit range? How it works?
+
+01:22:15
+So these are kind of administration. These are kind of administration tasks. These are kind of administration tasks, kind of administration, Kubernetes administration. Now, let's, if you don't want all these things, can I delete the quota? Can I delete that resource quota and limit range? But in actual Kubernetes clusters, when multiple teams are using, are you going to use this resource quotas and limit ranges concept?
+
+01:22:49
+So if I explain this in the beginning itself, you don't know what is happening in your cluster, how to troubleshoot, all those things. That's why I have explained at the last. But while creating a namespace itself, are you going to define resource quotas and limit ranges as per the requirement of that application? Later, at any point of time, based on the requirement from that application team, will you be able to increase or decrease the quota, resource quota?
+
+01:23:21
+Yes, so that is how it works Now Let's understand one more important concept called a network policies network policies in Kubernetes Network policies in Kubernetes Guys by default by default does one pod in a Kubernetes cluster can communicate with another pod by default
+
+01:23:50
+does one kubernetes within the cluster, within the cluster does one kubernetes pod can communicate with other kubernetes pod by default? Yes, by default one kubernetes pod can communicate with other kubernetes pod without any restriction, without any restriction. Now let's say I have a use case. I am running some pods, some applications, some pods in my kubernetes cluster, but I want allow
+
+01:24:20
+the request to that pod only from set of pods only from set of pods is that possible in Kubernetes yes that is possible using a concept called network policies how can I say in simple words let's consider a servers let's consider a server your virtual machines will I able to block the traffic to that server using firewalls.
+
+01:24:50
+using firewalls will I able to block the traffic to the servers. Let's say you are using servers will I able to block the traffic using firewalls in the servers. Yes similarly in my Kubernetes I am running my pods in my Kubernetes cluster. I am running my pods. I am running my applications as a containers in the pods within the cluster also will I able to block the traffic to specific part from so and so part is it possible to allow
+
+01:25:19
+the traffic to that pod only from so and so pods in that cluster.
+
+01:25:26
+Yes, that is possible using network policies. Just give me a minute guys. I'll be back in a minute. We'll continue one minute.
+
+01:27:30
+Okay guys we will continue. So what I was discussing here, let's say this is my Kubernetes cluster. Let's say this is my Kubernetes cluster. I have some parts. Let's say this is one part part a and this is part B or let's consider this way. This is
+
+01:27:54
+application one part app one part this is let's consider app two part now that part might be running here here here that doesn't matter for now now by default is this parts can communicate with each other
+
+01:28:18
+using services concept using services concept you can use right so you can use the service name there is a concept called service here in kubernetes you have a concept of service you use that service you use that service that service name that service will route the traffic to this board but by default is it all of is it going to block by default
+
+01:28:48
+By default, any pod in that cluster can communicate with another pod in the cluster. There is nothing is getting blocked here. It will allow. But I have a requirement. I have a requirement within that cluster. I want this pod to be reached from only this pod. Let's say I have another pod, another application pod. Let's say I have appc. Appc. This pod should not.
+
+01:29:15
+communicate with this one even though it is using that service name even though this also using this service name. I don't want this part to be reached whether it's a database part whether it's an application part this application should not able to communicate with this one if it is a database it should not able to talk to the database if it is another application it should not able to make a API call to this application for you if you have a these type of requirements within
+
+01:29:44
+Is it possible to restrict or allow the communication between pods? Yes, that is possible using a concept called a network policies. That is possible using a concept called network policies in Kubernetes.
+
+01:30:05
+Network policies are implemented by the Kubernetes plugin. So if you want to control the traffic flow at IP address or a port level, if you want to control the traffic flow at IP address or port level like your pod IP and container port level, then you can consider a Kubernetes network policies for a particular applications in your cluster. You can use this network policies.
+
+01:30:34
+how pod is allowed to communicate with other various network entities using network policies we can define you can allow you to specify how pod can communicate with other various network entities network entities in the sense your endpoints are services your endpoints are services are called as network entities now network policies. We can apply.
+
+01:31:02
+with a pod on one side or both sides. What do you mean by one side or both sides? Basically, there are two things here. Ingress, egress. You can define these network policies that a ingress traffic or egress traffic.
+
+01:31:22
+What do you mean by ingress traffic? What do you mean by egress traffic? Same consider as a security group in the AWS. Consider as a security group in the AWS. In security group, do we have a two things?
+
+01:31:38
+Do you have two things? One is inbound and outbound. What do you mean by inbound? What do you mean by outbound? In AWS security group, that is a firewall at a system level. That AWS security group is a firewall at a system level. So what do you mean by inbound? What do you mean by outbound?
+
+01:32:07
+Inbound means incoming traffic. Inbound means incoming traffic, the traffic coming to that server. Now here, using network policies, can I define ingress traffic, ingress in the sense the traffic coming to that pod, any pod? Incoming, incoming request. And is it possible to control outgoing traffic also? Can I block outgoing traffic also? Can I close the exit gate also? Using egress traffic?
+
+01:32:36
+egress parapsychosis.
+
+01:32:40
+Yes, so using this network policies, I can define using this network policies, I can define how a pod can communicate with other things, other parts that are not allowed the namespace level we can allow we can control at IP level or namespace level at a pod level also I can allow or block the traffic using this network policies. But if I want to use network policies.
+
+01:33:10
+Do I need to use some plugin, some network plugin, which is implemented by that network policy? Does this network policies has to be already implemented or supported by that network plugin, which I am already using as a prerequisite, yes. So network policies are implemented by network plugin. To use network policies, you must use networking solution, which is supporting network policy. What do you mean by networking plugin?
+
+01:33:39
+Did we use some kind of a networking plugin already in our Kubernetes cluster? What networking plugin? What CNI I used as of now in my Kubernetes cluster?
+
+01:33:51
+WeaveNet like WeaveNet do you have other networking solutions like Calico, Flannel, Ramona like that. Now if you have to use this network policies do you need to use that networking plugin which is going to support this network policies.
+
+01:34:11
+Yes, so these are the networking plugins like there are a lot of networking plugins CNI container networking interface. There are a lot of implementations for that and you need to use a CNI supported network policies like a calico supports network policies. Plan L also supports network policies. We've net also supports. Now I'm using we've net. We've net is already supporting that network policies. So can I create a network policies
+
+01:34:44
+Yes, now I can create something like this network policy is this again one kubernetes API is this again one kubernetes API one kubernetes object like this I can create a network policy the way you are creating a pod the way you are creating a persistent value deployment services if required can I create a network policy also like this.
+
+01:35:14
+Yes, there is a Kubernetes API called network policy. Let me show that.
+
+01:35:25
+cube CTL API resources. Now can I see something called network policy here if you want to grip also you can grip here network policy kind network policy namespace to true. That you know API version is this full form network policies short form netfall they have any net policies. I mean to say network policies in any namespace as of now.
+
+01:36:00
+I don't have any network policies. It a namespace scope, with a namespace scope. I can create a network policy. Now, APA version is this one kind of network policy. This is the name of the network policy in which namespace you want to create. Now here, there are two things. There are two important things here. One is pod selector. So this network policy,
+
+01:36:29
+policy is for which part this network policy is for which part this works at a part level namespace level and all those things now this network policy you are creating a network policy like a kind of a firewall you are creating but this is for which part how it will identify for which part this is going to apply this network policies will be created for which part are we going to use something called part selector here.
+
+01:37:00
+Here in my network policy I am using a pod selector. Let's consider this use case. Let's say this is my Mongo database pod. Just to give an example this is my Mongo database pod. Now I have a labels. I have a labels on this pod. It is a pod whether it's a stateful set. I have added labels on this pod.
+
+01:37:30
+Let's say this is my pod labels. Now I want to create a network policies for this pod or set of pods. Let's say I have a stateful set. Let's say I have a stateful set for my database pod. I have a set of pods. Now does each pod has this label as per the manifest. You created a stateful set for your database or you have any deployment like
+
+01:37:59
+we have these ports now I want only this application to reach this part this part this part do I need to create a network policies for this ports or this application.
+
+01:38:19
+Now can I use this pod labels here as a pod selector match labels like this which means whatever network policies I am creating whatever network policies I am creating here is this policies will be applied on this pod.
+
+01:38:43
+yes so that is what pod selector this is applied and which pod that is pod selector here you have two things policy types ingress and egress what do you mean by ingress what do you mean by egress
+
+01:39:01
+What do you mean by ingress? What do you mean by egress ingress in the sense? Incoming traffic incoming traffic the traffic the request or traffic which is coming to these parts are called as ingress traffic The traffic which is coming to these parts are called as ingress traffic the traffic which is going outside from this part Can the traffic which is going outside from this part can I consider as egress traffic?
+
+01:39:31
+or outbound traffic.
+
+01:39:35
+Yes. Now you can define either only ingress or only egress or both. But most of the cases, most of the cases we are only bothered about what incoming. I want to block incoming traffic only. Outgoing, outgoing can be taken care at other level also. Outgoing can be taken care by other level. Now this one, just to give an example, can I block the request at outgoing of
+
+01:40:04
+this one itself can I block the request of outgoing traffic from this part here itself yes even though I am not doing here can I block in the incoming traffic of this part can I block the incoming traffic of this part also to specific to this part yes so most of the cases we are worried about ingress if required you can block at outgoing also now this is ingress egress both now ingress
+
+01:40:33
+from where you are allowing from where you are allowing request request coming to this parts request coming to this parts from where you are allowing like a source now if you see there are three ways I can define the source one is what one is the range of IP one is the range of IP the source IP is in this range then only it will allow incoming traffic to this part one is range of the IP what is the other thing
+
+01:41:05
+instead of range of IPs what I what is the other thing from can I allow specific from spam you know from specific namespace based on the labels on the namespace based on the labels on the namespace can I allow also what do you mean by this what do you mean by this let's say this part this part I created in a test and this this part I created in a test
+
+01:41:35
+Now here can I say something like this whatever label I have added on the test namespace let's consider you cdl describe ns that test ns I have created one namespace the test namespace I have added a label like this team testing team now if I say something like this if I say something like this. Now any parts.
+
+01:42:03
+which are there in this namespace is it allowed to communicate with these parts any parts which are there in this namespace the namespace which has a label the namespace which has a label if the parts are in that namespace does that parts will be allowed to communicate with these parts
+
+01:42:24
+Yes, this is at a namespace level. But again, on which port it will allow, whether it is from this range of IP, whether this is from this namespace to which port it is allowed. Am I defining that on which port it can communicate?
+
+01:42:44
+here can I say on which port this is just a sample guys this is just a sample now this is like consider this is your mango database can I say 27017 that container port that quad has that container that container port and I say something like this
+
+01:43:03
+years. This is on which port you want to communicate on this part from where you are allowed to communicate. Will I able to define range of IPs like this or will I able to use the labels of the namespace so that any part in that namespace can communicate with that this part on this port in the ingress traffic. Let's say I don't want to use this namespace level. I want to allow only some part instead of namespace selector.
+
+01:43:33
+Can I use part selector also? I don't want any part in that namespace to communicate. I want to only communicate with some specific parts. Instead of namespace selector, can I use part selector here?
+
+01:43:50
+years something like this. Let's say I have this application see also in the same namespace. I have application see also in the same namespace. Now if I create a rule like this, I don't want to use this IP. Let's say I have create a rule like this namespace selector. Now that is also in the same namespace. Now is this one and this one also allowed to communicate with these ports as per the network policies defined on that database port.
+
+01:44:21
+if I do like this namespace selector. Yes, but let's consider this is in a different namespace. This is in a different namespace. Let's consider default namespace. Now is it going to allow does this part will be allowed to communicate with this one if this is my network policy on the database part and this is how I have given is it going to allow if the default namespace doesn't have a label like this if default namespace doesn't have a label like this is it going to allow.
+
+01:44:54
+No, this is at a namespace level, but I don't want like this. I want only this part to communicate with this part instead of namespace selector. Can I use something like this part selector like this app, whatever label you have on that one. Let's say, let's say you have this part. This part has a label like this. This part has a label like this app.
+
+01:45:23
+app, Spring app, like.
+
+01:45:26
+which means if request is coming from this pod to this pod on port 27017 then only it will allow. Now let's consider this pod has a different label then is it going to allow like this if you define pod selector in the ingress incoming traffic like this.
+
+01:45:50
+No. So this is incoming but outgoing. What do you mean by outgoing? Suppose outgoing in the sense this part, this part should not communicate with any other part. Now it's you know, I can restrict now let's say I don't want this to communicate with internet. I don't want this to communicate with internet. Let's say this database part should not communicate with internet or any other IP.
+
+01:46:19
+I don't want this to download software from internet. Is it possible to block that request also, even though I'm executing M install or APT install in this pod container. If I block outgoing traffic here, will it able to go outside of this container?
+
+01:46:36
+the request will be allowed to go outside of that container. No, so I can block that using egress traffic. I can block that using egress traffic. But most of the cases you will not do that egress traffic. Is everyone clear? What do you mean by this pod selector here? Which means this network policy is applicable for the pod where that pod has this label. And what do you mean by this ingress and egress here?
+
+01:47:05
+If it is ingress incoming and again from which source you are allowing for that on this port. This is outgoing. Is everyone clear the manifest of network policy. What is this?
+
+01:47:21
+Now there is a default deny there is a default allow there is a default deny there is a default allow also guys this is what I have explained what is mandatory fields what do you mean by spec what do you mean by part selector what is ingress what is egress I have discussed all these things here. Now default deny let's say if I create a policy like this.
+
+01:47:50
+I am using part selector as empty policy type as ingress, but I am not defining anything like this. So here I am creating a policy like this. I am creating a policy like this. Part selector is empty policy type is ingress. Here I have not used any selector. It is empty. I just defined ingress, but I have not defined from where it is allowed. So which means is it going to block all the traffic for all the parts?
+
+01:48:20
+whatever is there in that namespace because this is at a namespace level. Now if I create this one in this namespace now the parts in that namespace will be able to communicate with each other because this is a default deny. I am just applying empty empty in the sense it is going to apply for all the parts which are in that namespace and I have defined policy type ingress but I have not given from where to route on which port to allow. So since
+
+01:48:49
+I have not defined this one here since I have not defined this one here is it kind of a default deny like you are blocking all the traffic to any pod from any pod in that namespace on any port yes this is default deny now let me demonstrate one application let me demonstrate one application but I will remove all those quotas and all these things once your practice is done because I may need
+
+01:49:18
+to deploy a lot of applications. I want to remove that resource quotas, limit ranges, all those things. Now let me deploy same application. I'm deploying this application, maybe stateful set or replica set that doesn't matter. Let me take this application maybe.
+
+01:49:39
+Let me take this application Spring App PVC application. So I am creating it.
+
+01:49:47
+I am creating a pod I am creating a pod spring application one replica database also one replica for now I am using as a replica set that doesn't matter for now now there is no network policies now when I am applying this is it going to communicate with each other
+
+01:50:10
+Does that spring application parts will be communicate with the database parts now because there is no network policies created as of now in that namespace is those parts can communicate with each other by default.
+
+01:50:30
+Now let me delete if I have any other applications so that you can easily understand cubectl delete.
+
+01:50:38
+I'm going to delete this so deployment so that you can easily understand.
+
+01:50:48
+deleting this deployment.
+
+01:50:52
+lie.
+
+01:51:06
+Let me delete the deprimer so that you can easily understand. Now maybe that nginx pod leave it. Let me delete that nginx pod also whatever I dep, directly that pod.
+
+01:51:21
+Now I have a database part and I have an application part. There are services created.
+
+01:51:33
+Now by default there is no network policies is this spring application part will be able to communicate with this database part using service name like this service name mango SVC now you can access the application and verify also you can access the application and verify because that application internally using internally using that service name you can access this application 3 1 double 5 7.
+
+01:52:03
+you can use that port in one of the server in one of the server you can use that port
+
+01:52:11
+and access.
+
+01:52:14
+Just two minutes, I'll finish this. Just two minutes, I'll wrap up this quickly. Now.
+
+01:52:23
+let me go to one of the server maybe where I will open that port this is UI UI application
+
+01:52:34
+in this security group I will open that port if that is not already opened this is AWS concept this is AWS concept nothing to do with your Kubernetes or network policies here this is AWS concept now I am opening which server is this where I came
+
+01:52:59
+Kubernetes master security group. Okay, let me open this edit in boundaries. Let me open whatever that port.
+
+01:53:13
+Now let me use that machine IP address to access that application. That application machine IP address that node IP and node port. This is front-end application is this front-end application is allowed to communicate with other database part by default because there are no network policies. There is no network policies.
+
+01:53:44
+this IP I have used in the security group the security group. What is that for 31557?
+
+01:53:56
+31557
+
+01:54:12
+3, 1, 2, 5, 7.
+
+01:54:19
+Now it is not allowed. 3 or 7.
+
+01:54:30
+Thank you.
+
+01:54:38
+One second, let me double check. Cubectl get.
+
+01:54:45
+ep-n test-ns Which one I am using I think I am using correct one 31557 is pointing to this pod
+
+01:55:00
+let me directly use this word
+
+01:55:25
+of CPL.
+
+01:55:30
+this part is running. Let me go inside this part.
+
+01:55:36
+Let me go inside this one.
+
+01:55:58
+on second race.
+
+01:56:11
+Maybe I have some issue with my system, that server. Let me show you something wrong with that node. Something wrong with that node. Maybe something went wrong with that node. Cubectl get nodes. Nodes are ready. There are no issues with nodes.
+
+01:56:30
+10250 timeout
+
+01:56:43
+there is no issue with my cube system parts also, but let's see why.
+
+01:56:52
+maybe I have removed some ports maybe in the security groups let's check in the security group all traffic all ports is open here 172.31.0.0 in the workers
+
+01:57:09
+hmm if you see in the workers in the worker somehow I removed in the worker the security group the ports got removed so here you see in this right that required ports are not opened somehow just now I think it got deleted because of that I am not able to reach so let me open I'll open for now that all traffic
+
+01:57:41
+not for everywhere I'll open only for that 172.31.0.0.16 all traffic all protocol I'll open
+
+01:57:55
+Now the control plane the master is not able to communicate with worker because of that ports. Because of that ports it is not able to communicate that's why it is not allowed. Now I can access this application. Now is this application internally communicating with the database by default do have any restriction
+
+01:58:23
+if you see yes now you can verify you can verify by going inside that part also if you have a curl you don't have a curl let me add a curl package using apk now using curl also if you do inside the part that mango is we see 27017
+
+01:58:48
+Is it able to communicate? Do you see is it able to communicate with the database for using service by default? Yes. Now if I create a network policies now if I create a network policy like this default deny in that namespace. Now do you think does that application can communicate with this application? This is like a default.
+
+01:59:15
+Do you think the moment I create this network policy in that namespace since I have not used any pod selector I have not given where to allow from where to reject so is it like a default deny now let me apply this in that namespace default deny there is a network policy in the test namespace there is a network policy in the test namespace now
+
+01:59:41
+there is a network policy netfall you can execute.
+
+01:59:47
+network policy now there is a network policy in the test namespace that is kind of a default deny now you see now you see this application now you access this application
+
+02:00:04
+I am getting...
+
+02:00:07
+Kind of with that.
+
+02:00:10
+page but there is no data it will not allow because you are blocking that default now if I go inside that database I mean to say if I go inside this application part when I do the same curl now do you see is it connecting is it able to connect
+
+02:00:33
+This is kind of a default delay right from outside also. I'm not able to reach that application server also that application service also because request is going to Q proxy Q proxy is forwarding the traffic. We have a Q proxy for the so does Q proxy also is able to communicate with that spring application. It is forwarding the traffic to the spring application. Am I getting that one also from Q proxy Q proxy is trying to communicate with that one because
+
+02:01:02
+That is where the network traffic is going. I'm not able to access that front end application and the same back end also this spring application is not reachable with this database. Now kind of a default deny. Now I don't want this default deny. Can I allow something like this only for this one? Only for this part, I want to apply this rule like a match labels, app mango, policy type ingress. In the ingress policy type,
+
+02:01:31
+can I define something like this on this port it will allow it should allow something like this can I define my policy like this if the request is coming from this part then only it will allow if the request is coming from any other part will it allow on this port now
+
+02:01:53
+Now I will create a policy like this, I will change that policy like this instead of default deny I will delete that I will delete that default deny. Now instead of default deny I will do something like this. I will do something like this.
+
+02:02:17
+I'll create a network policy something like that.
+
+02:02:22
+something like this I will create. Now this is in same namespace this is applicable for a pod which has this label and it will allow for the pod which has this label. Now let me apply that network policy.
+
+02:02:39
+Now you go inside your pod just for testing purpose you go same pod you go inside that same pod now you do that curl now do you see this time is it allowed from that pod is this allowed from this application pod is it able to communicate with the database pod using that service yes now for time being let me create one temporary pod let me create one temporary pod
+
+02:03:09
+the Tangenix pod I will create in the same test namespace now I will go inside the Tangenix pod
+
+02:03:28
+I will go inside this nginx pod. Now if I do simple curl telnet test, do you think that does that nginx pod will be able to communicate with the database pod.
+
+02:03:52
+I have a bash or a ss that doesn't matter.
+
+02:03:56
+There is a typo.
+
+02:04:00
+Now I'll go inside that nginx board I have a curl. If I say curl telnet that same whatever I have done
+
+02:04:11
+SVC colon 27017 now do you see is it allowing from this nginx pod is it allowed to communicate with the database you know the database pod because of this network policy now it is only allowed from the pods which has this label instead of pod level I can give at a namespace level also otherwise can I give something like this can I allow for that pod also
+
+02:04:40
+something like this pod selector app engine X suppose that pod has this label now can I do something like this which will allow
+
+02:04:52
+Yes, let me show that let me show that let me change my network policies Let me change my network policy now here. I'll allow for other pod also like
+
+02:05:08
+for the lecture.
+
+02:05:12
+match the labels.
+
+02:05:19
+app but make sure you are using a correct label again if you are using not improper incorrect labels again it will not work app nginx I am using this is my pod label
+
+02:05:39
+So this part has this label App Engine X this I am using in my network policies like this now let me apply that network policy let me apply that network policy and try now.
+
+02:05:58
+Now let me go inside that same nginx pod. Now let me do that. Now do you see is it working now after changing the network policies. So this way we can apply at a pod level. This way we can apply at a pod level. Now if I want to apply at a namespace level, let me create some other pod. Let me create some other pod in a default namespace or any other namespace.
+
+02:06:27
+Can I use this way namespace selector? Instead of name part selector, can I use the namespace selector and match labels? Can I give a labels whatever I have added on the namespace? So that is it going to allow from all the ports which are in that namespace? Yes, so that is how it works. Is everyone clear? What is this network policies? How it works? Sometimes you are going to use all these things based on the requirement.
+
+02:06:57
+I'm trying to cover all the use cases, all the topics which are there in Kubernetes based on the requirement you can use all these things. But do you have you know, do you think these are like a useful concepts? I mean to say kind of a best practices which we will follow so that we can restrict the access to the databases from other ports other applications even though they're running in a same Kubernetes cluster.
+
+02:07:22
+Can I consider this network policies like a firewalls at a pod level? Kind of a firewalls at a pod level this network policies. Yes.
+
+02:07:33
+Thank you guys that's it for today. Tomorrow I am going to start with EKS managed Kubernetes cluster. What is EKS? What is the problem with self-managed? What is EKS? How to set up EKS cluster? I will continue tomorrow. Guys by coming Saturday the Kubernetes classes also will be done.
+
+02:08:03
+your batch also will be done by coming Saturday by max 20th we will be completing your batch or maybe if not 20th it will be 21st so by 21st all other Kubernetes and pending topics like Prometheus, Grafana, Helm, RBAT all these things will be done by 20th or 21st so by next weekend your batch as well as Kubernetes also will be completed
+
+02:08:35
+Thank you guys, that is it for today, we will see you tomorrow.
+
