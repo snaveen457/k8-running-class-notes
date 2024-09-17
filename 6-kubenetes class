@@ -1,0 +1,1128 @@
+00:01
+This conference will now be recorded. In yesterday's session, we were discussing about what is for the what is service.
+
+00:13
+We are discussing about service, service of types. So for what type of services we discussed.
+
+00:28
+discussed about cluster IP service and also we discussed about node port service. Now pod is different service is different pod pod basically pod represents
+
+00:47
+running process in Kubernetes quad will have one or more
+
+01:00
+containers right pod is a wrapper of one or more containers pod is a wrapper of one or more containers right. So, pod always.
+
+01:15
+runs on node. What do you mean by node? That node can be master also. That node can be a master or worker. Now if I have a multiple containers in that pod, does all those containers will be co-located on the same node in which node that pod is scheduled? Does all the containers of that pod will be running in that same node? Yes. So as I already discussed, as I already discussed how one container.
+
+01:44
+can communicate with another container if they are in a same pod. Let's say there are two containers just to give an example. How they can communicate with each other using localhost and port using localhost and port. Just to make it simple. Let me create one
+
+02:08
+Let me create one multi-container pod just to demonstrate the connection. Now API version V1 kind pod metadata.
+
+02:24
+Name this name can be anything. I'm just giving name as a test order.
+
+02:35
+labels is required labels is required
+
+02:43
+labels are required like this can be anything something like this app test whatever you want to give let's say you want to give something like this
+
+02:56
+Now here containers.
+
+03:03
+name of the container I can say some container I am using some image
+
+03:13
+Can I give any name for container? Yes. Image, let me use this image.
+
+03:23
+whatever image I have otherwise will I get that image pullback of error if I don't give proper image details
+
+03:34
+Yes.
+
+03:45
+Let's say this one within this I have what tag whether I have a tag with one two three or latest I have like tag as well let's say Java web app one ports
+
+04:03
+container port
+
+04:06
+Now if required can I have one more container like this Just I'm testing purpose I'm using this one I'm just for testing purpose I'm using this one
+
+04:23
+something like this. I'm not mentioning the tag and registry from which registry what tag it will pull.
+
+04:35
+This one. This is my image. It will pull from the public Docker Hub with the tag as colon latest. As I already told, can I have a multiple containers? Let's say this image is also running on 8080. Does it allow? Can we have a multiple containers in the same part if the container port is same? No, but this is different software.
+
+05:05
+the in this image we have a Tomcat software and which part that container will run this one Tomcat software 8080. Now if I create a pod this will have how many containers in that pod guys now.
+
+05:24
+in which namespace it is going to apply
+
+05:30
+Since I have not mentioned any namespace in which namespace it got deployed.
+
+05:36
+Now, I can see 2, what do you mean by 2 here? This is for what do you mean by 2 here? Here 0 by 2 it is showing.
+
+05:50
+So number of containers, number of containers expected in that pod. Now it is showing two by two, which means does both containers are ready in that pod. Now let's say that pod is scheduled, that pod is scheduled in this node, 206 node. Let's say that pod is scheduled in this 206 node, which means does both the, does both the containers got created and running in that node only, whatever.
+
+06:21
+whatever node that part is you do yes. Now let's say I have this one now I have this one.
+
+06:33
+something like this. I have one application running on 8080, another container, another container running on 80. Both are running in the same pod, let's say. Both are running in the same pod. Now, this guy want to reach this guy. Do we need to use any pod IP, cluster IP? I mean to say that service IP or node IP like that. If this guy has to communicate with this guy, not required. How can I test?
+
+07:03
+whether those can communicate with each other. Can I go inside any one of the pod container? I mean to say, can I go inside this? kubectl excc-it that pod name, ifan-ifan bash. Since I have two containers, since I have two containers in which container this bash will be interactively executed.
+
+07:28
+whatever is there in the zero-eth position in the containers, zero-eth position in the containers. When I am creating that pod manifest, which one is in the zero-eth position? Is nginx container is there or that Java web app container is there in the zero-eth position? The Java web app. Now, if you see, is it defaulted to this container out of these two?
+
+07:55
+Is it defaulted to this container out of these two?
+
+08:00
+Now I may get some issue. Let's see.
+
+08:05
+It may throw timeout. Let's see.
+
+08:15
+It is hung. Let's see. So it is defaulted to this one. Now I am getting a timeout because I may not. I might not have open the ports properly. I need to check because yesterday my account got suspended. I created a cluster again. If that ports are not opened properly, I may not able to access. The required ports. Is it saying it is timeout on this port 10250 on this IP when I'm executing kubectl exec.
+
+08:47
+Why it is reaching 206 because that part is running on which node? Why it is reaching 206 because when I am executing kubectl exec on this part, why it is reaching 206 because is that part is running on that node.
+
+09:02
+And what is this 10250? 10250, what port is it a cubelet port? So to execute this command on that part container, is it reaching that cubelet which is running on the node?
+
+09:18
+Maybe there is a problem here because of the ports. Let me see that. Now here let me see all traffic all protocol 172.31.0.0.16 is open here.
+
+09:42
+here is it open properly guys if you see in this node is that ports are opened properly if you see this is in the 206 in the security group i have not opened properly there is a typo so that's why it is not able to reach let me edit this security group
+
+10:03
+Let me edit this security group because one is missing that 172.31.0.16 because one was missing last time so that's why it was throwing a timeout
+
+10:18
+Now let me do this. Now is it defaulted to this one out of these two and am I inside that quad inside that container now.
+
+10:32
+now here if i do like this just curl local host
+
+10:42
+port port is 80. So I no need to mention even though I don't mention on which port request goes on localhost and inside this container and inside this container even though I don't mention this localhost 80 request goes on 80. Now am I getting a response from the other container that nginx container which is running on port 80. So here do I need to use that
+
+11:11
+within the container if I want to reach one con within the pod if I want to reach one application with other application you no need to use pod IP also you no need to use pod IP even though I am using IP it is working but do I need to use pod IP can I refer directly localhost.
+
+11:32
+localhost is enough. So this is how one container can communicate with other container in a same pod. But now how this will happen? Now let's say I have another application, another pod. This pod has to reach the container which is running in this pod. How we can access if this pod or maybe the pod is in the same node also.
+
+11:59
+we can reach from this application to that application.
+
+12:07
+This one has to reach this one. If here, if I use localhost, do you think it will work? If I use here localhost, do you think it will work to reach this one? Or from here, if I want to reach this one? No, we can use pod IPs. But is it recommended to use pod IPs as we already discussed yesterday? No, in that case, can I create a service of type cluster IP? Can I use that service name?
+
+12:36
+Yes, I can use the service name.
+
+12:42
+If you see, let me take same example only. I have this pod. I have this pod, this application. This application pod want to reach the applications.
+
+12:58
+here. So can I use the service name? Can I use the service name? Now this pod, this pod want to reach this application, this or this application. Can I use the respective services? Can I use this service in this code in this pod? If I want to reach this pod, can I use this service name? In this pod?
+
+13:28
+Yes, let me show that I want to test. So can I go again like this? kubectl exec-it. But if I want to go to the specific container, can I use ifc and that other container name? If I want to go inside that nginx container instead of that Java web app, can I use this ifc?
+
+13:49
+nginx container like this if I want to go anything fine.
+
+13:57
+Now it is saying the name is not correct. The container name is not correct. If required, can I describe the pod and see that? If required, can I describe that pod and see that?
+
+14:12
+So here, now how many containers are part of this pod now? You can see here.
+
+14:20
+So, this is my container name. Let's say I will do something like this. Anything is fine.
+
+14:31
+Now I am inside this one. Now if I want to do curl-v, that service name, this service name and service port, and my application context, mave Now why I am not able to reach? Why I am not able to reach from this part, from this part, from this part? Why I am not able to reach?
+
+15:00
+this word using this service.
+
+15:07
+now because the namespace now whatever pod whatever pod I am trying to access this is in which namespace guys this is in which namespace this is in which namespace default this pod and service is in which namespace this pod and this service in which namespace other namespace. So how I can reach applications or services.
+
+15:37
+from one namespace to other namespace, I can still use service name only, but I need to use FQDN. I need to use FQDN. What do you mean by FQDN? I have to use FQDN. FQDN. What do you mean by FQDN? Fully qualified domain name, fully qualified domain name. But,
+
+16:04
+If the parts and services are in same namespace, yesterday, yesterday was able to reach from here and here, from this part, am I able to communicate with this part using service name without FQDN also, without FQDN also, just only with service name? Yes. But because is this one and this one is in same namespace?
+
+16:30
+this one and this one is in same namespace this pod this pod and this service everything is in same namespace. So that's why I no need to use FQDN but now this is my source this is my destination is both are in same namespace. No here do I need to use a FQDN fully qualified domain name.
+
+16:53
+the fully qualified domain name will be something like this service name dot service name dot the namespace name.
+
+17:03
+dot svc dot cluster dot local. So this is the fully qualified domain name. Now from this part I want to reach this service. Now what is the FQDN service name is this. What is the namespace in which namespace I have this service.
+
+17:25
+test-fnns then can I use like this service name namespace name then instead of using just a service name can I use the fqdn of that service fully qualified domain name of that service like this now if you see now I am using this one instead of just a service name I am using fully qualified domain name and service port is 80.
+
+17:54
+my application context.
+
+18:02
+Am I able to access now? I have to use forward slash because 302 is a redirection. So it is redirecting to some other path. You can use curl with option L. L will again invoke that redirected URL. You can use curl with option L, or you can use that forward slash yourself. Now it is redirected to different path.
+
+18:31
+This is redirected to different path again that is also invoked because I use ifanel if you are not using ifanel you can use something like this now am I able to reach that application from the part which is there in a different namespace. This is very very important guys in the interviews in the work also you are going to use these type of things is everyone clear how. One container can communicate with another container if they are in a same pod.
+
+18:58
+how one pod can communicate with other pod using service if they are in the same namespace. If they are in the same namespace, is it mandatory to use FQDN like this? If they are in the same namespace, is it mandatory to use FQDN like this? But even though you use FQDN, will it cause any problem even though they are in the same namespace? Even though you use FQDN, will it cause any problem? No. But if it is in a different namespace,
+
+19:28
+Do I need to mandatorily use FQDN within the cluster also? One pod has to communicate with other pod there in two different namespaces.
+
+19:38
+Can I use FQDN like this? Do I need to worry about what IP is serving? What is the pod IP? What is the cluster IP like that within the cluster if I want to access? No. Is everyone clear, guys? How it works? Now let me come out of this container. This is about service. But if I want to access, if I want access from outside of this cluster, then can I use that node port?
+
+20:08
+that node port.
+
+20:11
+Suppose I want to access these ports. I created a service. Can I use respective service port like this? Now, if I want to access this application, which is in a default namespace, do I need to create a service also for this part?
+
+20:28
+But if that part has two containers, can I create two service mappings? If I want to access both containers from outside or inside, can I create a service like this? Sorry.
+
+20:46
+Now I can do here something like this.
+
+20:53
+API version.
+
+20:57
+V1, kind, what, service, metadata, something like this. You give name
+
+21:10
+someday.
+
+21:13
+any name spec if i want to access outside or inside only inside cluster ip you want to access inside and outside both then
+
+21:29
+node 4.
+
+21:32
+Ear selector
+
+21:39
+app whatever I have used here.
+
+21:43
+Now here ports ports now I can do something like this port 80 target port 80 80 like this but is it possible for me to map this one also like this again can I use same port again service port can I do something like this single service is this is this possible for single service is
+
+22:14
+Is this correct? Is it going to allow this port and this port? No, if required, can I have this one as a separate service? And this one has a separate service if required two different services. Piers to same pod, points to same part. This one has a separate service like this.
+
+22:37
+like this and another like this.
+
+22:44
+something like this, some unique name.
+
+22:49
+Can I have something like this?
+
+22:53
+Is this possible? Again, this is separate service with this mapping. This is separate service with this mapping. Is this possible? Is this possible? Yes. But instead of doing like this, single service, is this possible?
+
+23:13
+Single service is this possible.
+
+23:17
+on same service port no, but if required can I do something like this service port 8080 target port 8080 service port 80 target port 80 is this possible.
+
+23:33
+Is this possible? Yes, this is possible. So if I have done like this, when I'm accessing this service name without mentioning any port, request goes to port 80. Is it going to forward the traffic to that Nginx container port? If I don't use any port, if this is my service, is it going to route the traffic to the container which is running in that port on port 80? If I don't use any port, yes. But if I use like this?
+
+24:02
+Is it going to route the traffic to service on this port? Is it going to route the traffic to respective target port?
+
+24:12
+Are you guys clear what I am trying to say here? Can I create a service like this? Service port is 8080, target port is 8080 Service port is 80, target port is 8080 Like this
+
+24:26
+if required like this is it allowed let me show you cube CTL apply I for now I am creating a service a line number 11 there is a shoe guys when you are using multiple resources don't get confused with this line number 11 so line number 11 do you think this is the line number 11 are you thinking here you have a problem.
+
+24:56
+So if you see, if you see it is saying this is fine, but another object line number seven, it is throwing a problem. So do you mean line number seven is here?
+
+25:12
+here this is the line number 7 in that respective thing.
+
+25:21
+we have a problem there. Now let me apply.
+
+25:26
+And one more important thing, when I am using multiple ports like this, when I am defining multiple ports like this, name is also mandatory. Name is also mandatory. I need to use one more property called the name. But when I am defining a single port mapping, is this name is mandatory? No. But here, can I say something like this Tomcat port? And can I say this one? Some name, some name. Can I say?
+
+25:56
+nginx port something like this some name
+
+26:01
+anything you can give a b c or xyz also anything so let me apply now if you see
+
+26:12
+Why I can see two like this? Because I created a service of type node port. Now if I want to access from outside, if I use this port, is it going to route the traffic to the Java web application container?
+
+26:29
+If I use this node port and if I use this node port, is it going to route the traffic to the nginx container which is running in a same port from outside but inside inside let's say now this application or this application want to reach this application this application can they still use that service name.
+
+26:53
+No-
+
+26:56
+No.
+
+26:59
+CubeCDL.
+
+27:03
+Now let's say this pod or this pod want to reach the application which is running in this pod.
+
+27:14
+There are two containers. There is a service also created. Now, can I use this service name and respective service port? If I use this service name and this service port, is it going to reach this part within that part? Is it going to route the traffic to that Java web app container, the Tomcat container? If I use this service name and this port, yes. If I use same service name and this
+
+27:44
+port is it going to route the traffic to that nginx container which is running in a same port this port. Yes let me show that.
+
+27:56
+cubectl exec-it now I am going any one of the pod
+
+28:03
+But this one is in which namespace this this part is in which namespace in test namespace. So do I need to use iPhone n option here. Otherwise it will throw error no part found with that name.
+
+28:17
+Now here can I do something like this?
+
+28:23
+If I am just using service name, it is not working. Do I need to use FQDN because this engine X part is in different namespace this service and this part is in different namespace. Do I need to use FQDN? Now what is the FQDN now? What is the FQDN now?
+
+28:43
+test svc.watt.
+
+28:50
+test svc.whatnow
+
+28:54
+Default because this is in default namespace dot svc dot cluster dot local Since I am not using any service port. Do we already have some port? Default port which is created on that one is this service is created in some default port 80 Now if I don't use this port also is request is going to nginx container and am I getting the response?
+
+29:22
+from that engine X container because that service port is targeted to container port 80 now other application I want to access can I use something like this port 8080 am I getting that Tomcat home page response now within that I have this application.
+
+29:49
+maven iPhone this is not maven application which application I deployed I think the I have deployed a different app so am I getting a response from that application container the tomcat container now when I'm using this service port
+
+30:07
+Is everyone clear guys? What is service? How to reach service from same namespace? How to reach service from other namespaces? And if I have a multiple containers, how can I create a service? If there are multiple containers in the same pod? Is everyone clear all these combinations? This is very, very important.
+
+30:32
+Now let's come back to the actual pod concept. Let's come back to the actual pod concept. As we already discussed yesterday, let's understand the lifecycle of the pod. Let's understand the lifecycle of the pod.
+
+30:56
+guys one more important thing is it recommended to deploy keep on applying lot of parts like this if you don't have enough resources if you don't have enough resources is it recommended to deploy lot of applications again now how many parts we can create how many how many parts or how many containers we can create that depends on what again how many parts we can apply in that cluster.
+
+31:24
+is depends on what again.
+
+31:29
+based on the system resources based on the available resources you have now let me tell you
+
+31:41
+one thing what is the cluster capacity currently? What is my cluster capacity? What is my cluster capacity or how many how much resources I have in the cluster or how much?
+
+31:56
+resources.
+
+31:59
+Resources is like CPU memory like this.
+
+32:07
+how much resources you have available.
+
+32:13
+in the cluster what is your cluster capacity as what is your total cluster capacity so people are saying three nodes I am not asking three nodes I am asking about the cluster capacity how much resources you have in the cluster nodes are different resources are different so how much resources I have total.
+
+32:36
+Now nodes I have total three nodes that is fine, but capacity of my cluster. I have one master node. What is the capacity of that master node? What type of system I have created? Master node is T2.
+
+32:55
+T2.medium so how much CPU how much memory T2.medium how much CPU how much memory 4GB RAM and 2 CPU two workers two workers so T2.micro I am using so each
+
+33:15
+1 GB 1 CPU total two systems. So it's total two systems. So is it like this total 6 GB RAM my cluster capacity 6 GB and CPU is 4 CPU because two workers 2 GB plus 4 GB of master 6 GB and 4 CPU. Can I call this as my cluster capacity cluster resources.
+
+33:43
+Now is this complete 6 GB is available for you is this complete 6 GB is available for you know is some CPU some memory is used by your operating system container runtime is the you know container D is taking some CPU memory your operating system is taking some CPU memory system available system reserved does that system is reserved some CPU and memory for operating system.
+
+34:14
+and the container runtime. We have something available. If I keep deploying a lot of pods, does each pod, each container will take some CPU and memory? When I'm creating a pod, pod will have a container. Does container will take some CPU and memory? If you keep on deploying a lot of pods and containers, does your cluster will impact? Which means, does your nodes also get impacted?
+
+34:42
+Your cubelet will run out of memory or CPU. Your operating system may run out of CPU or memory. If your cubelet is running out of CPU and memory, does cubelet will function as expected? No. If cubelet is not functioning as expected, does master will be able to communicate with that cubelet?
+
+35:03
+Does that system will be shown as ready?
+
+35:07
+No. So, is it recommended to deploy lot of applications lot of pods?
+
+35:17
+if you don't have enough CPU and memory no but if I want to do this if I want to prevent this can I do the resource request and limits I mean to say whenever I am creating a pod sir can I say as of now I am not requesting anything I am not requesting anything I am not limiting anything while creating a pod sir.
+
+35:41
+Resource quota is different. Now even though my cluster capacity is this much, can I create a resource quota for namespace with 20 GB, 20 CPU? Does the resource quota will check whether you have this much available or not? No. Resource quota will not check.
+
+36:06
+But as a best practice do you need to manually verify whether you have this much CPU this much memory available.
+
+36:15
+before you create a resource quota, do you need to cross check whether do have this much resources are available when you are setting the resource quota? Do I need to check whether that much system resources are available? If not, you can add additional nodes, then create a resource quota. Resource quota will not check. But when I'm using resources in my pod, when I'm using resources in my pod manifest like this, resources.
+
+36:45
+request Is it going to check is cubelet is going to check whether you have this much CPU memory available or not in any node? Already some parts are resolved. Let's say already some parts result this much. Is it going to calculate? Some of all the containers resource request
+
+37:11
+some of all the existing.
+
+37:14
+containers.
+
+37:18
+resource existing containers resource request should be less than available resources if this is the case available resources in that node if this is the case then only it will schedule suppose already i have lot of parts this much resource requests are already used if that is not available after lessing
+
+37:46
+after summing all the container resource request and comparing with system request system capacity. If it is very less the scheduler will schedule. First of all, will it allow? Will it schedule that part? If you don't have that much, no. In that case, does that part goes to pending state? Does that part goes to pending state saying that there is no resources available. So even though I'm deploying lot of parts, is it recommended to use this resource request?
+
+38:15
+so that it will prevent scheduling lot of parts if you don't have enough CPU memory available in the node. Will it prevent that at least?
+
+38:25
+Now I am not using this resource request and limits. Is it the checking how much you are requesting and how much it is available in the notes. Is it checking actually now since I am not using this? No. So if I keep the apply like this will it cause issues in your cluster does your cluster will break does your cluster will crash?
+
+38:47
+Yes. So resource quota is just a limit, how much you can create in that namespace. But does resource quota will actually check whether that much is available or not in the cluster? No. But when I'm using resources at a pod level, when I'm using resource requests, especially this resource request, does cubelet will check? In the background, is it going to do something like this? This pod is, this container is requesting this much.
+
+39:15
+It will check in each node already. How many containers are there and each container? How much they resolved will it sum all the container requests and it will subtract with the system resources. And if there is a enough space after that, then only it will schedule otherwise will it place in a pending state will it be in a pending state that pod will be in a pending state. Yes.
+
+39:41
+Guys don't apply too many applications and mess up your cluster. If you are keep on applying without using all these concepts does your worker machines will break does your master machines may break because it will run out of CPU and memory. Is everyone clear? What is this resource quota and what is especially this resource request? Why this is very important?
+
+40:09
+If you are not using this one, don't apply too many applications while practicing. If you are not using all these things, don't apply too many parts like this. So can you delete and apply? Maybe you can apply multiple applications, but you can delete other applications and apply.
+
+40:30
+Okay, again here also they will ask how many nodes you have in the cluster you are using kubernetes cluster. How many nodes you have in the cluster? What is the capacity of each node again that depends on what this here I have taken just very less number of nodes and with very less capacity in the actual applications. I am going to have like this just two machines with the 1gb RAM one core CPU again. No, so that is what.
+
+40:59
+Number of nodes the capacity of each node is depends on what that is depends on how many parts how many parts you want to deploy each part how many containers each container how many how much CPU how much memory you are looking based on that. Do you need to have a nodes in the cluster suppose I want to deploy let's say I want to deploy let's say approximately 600 parts.
+
+41:27
+I think I have already told this one each part let's say each part has maybe one container each part may have one container and that container that container is requesting maybe 1 GB RAM and one CPU that is minimum it is requesting maximum it can go to 2 GB and 2
+
+41:56
+Now do I need to calculate 600 parts they are expecting this much they are expecting this much CPU so do I need to have minimum something like approximately 1500 GB of RAM memory in the cluster. Do I need to have at least maybe like 1200 or 1300 CPUs in the cluster. If this is the case I want to deploy these many parts each part has one container on and average they are looking this much.
+
+42:24
+So do I need to have this much CPU, this much memory available in the cluster? In that case, can I go something like this? Maybe 10 nodes or 20 nodes, 20 nodes, each node, each node 128 GB RAM.
+
+42:44
+and each node having maybe 64 core processor like that 64 core or 128 core whatever.
+
+42:54
+like this. Now tomorrow you want to deploy a lot of other applications. Then do I need to add enough nodes to my cluster? Let's say later I want to deploy a lot of other applications in the same cluster. Now do I need to make sure again I need to add some additional nodes to deploy these many parts. If I don't add additional nodes, if I don't add resources, if I apply other nodes, if you are using resources concept, resource request and limits concept,
+
+43:24
+is that parts will get scheduled if you don't have enough CPU, enough memory first of all.
+
+43:31
+No, it is not going to schedule if you are using resource request concept. But if you are not using this resource request concept, does Kubelet will allow to schedule that part? If you are not using that resource request concept, the Kubelet will allow to schedule the parts. If it is allowed, is that existing parts will get impacted? Is that existing application gets impacted? Because existing parts will run out of the CPU and memory.
+
+43:58
+because these new parts also will start taking CPU and memory does that existing parts will impact it. Yes, your notes also gets impacted. This is general common sense race. This is general minimum common sense you need to apply. You no need to be expert here. If you think this is normal.
+
+44:22
+plain mathematics are normal requirement but people are saying sir in the interviews they are asking like this what to say how many nodes you have how much storage you are using how much CPU have everything is depends on what you guys are calling as a real time that is not a real time that is a use case or requirement everything is based on the requirement
+
+44:48
+Whether it is a infrastructure, whether it's a service, whether it's a storage, whether it's a Jenkins pipeline or Docker file is everything as per the requirements I need to write and implement. Whether it's a infrastructure like a server storage, whether it's application like Jenkins, Docker, as per the requirement we need to do this. Is everyone clear? In the interviews, if they ask how many nodes, how many parts, how many namespaces, how many clusters,
+
+45:19
+Is everyone clear how to answer all these things?
+
+45:27
+No, let's come back to the pod concept. No, let's come back to the pod concept. No
+
+45:35
+As we already discussed, the pod lifecycle. The pod lifecycle.
+
+45:45
+pod lifecycle. We will make a pod request to the API server. We are making a pod request to the API server using pod manifest file is that API server is a request or no saving that information in etcd. But before saving that information in etcd, is it doing some kind of a validation authentication authorization and also validation? Yes. After all these things.
+
+46:12
+the API server passes the information in ETCD. Then scheduler, the scheduler comes into picture here. Scheduler will try to find unscheduled parts, whatever parts which are not scheduled and will it assign a node to that unscheduled parts? Does that scheduler will decide in which node that part can be scheduled?
+
+46:37
+As I already told is that scheduler is going to work with cubelet to identify how many parts you have already and each part each container how much request they have already used resource request and limits will it do some kind of a mathematics in the background to identify whether I can fit this part into that node or not.
+
+46:58
+If you are using that resource request concepts, it will do some mathematics. The scheduler will work with cubelet and identify. Cubelet running on the node will see the part is scheduled.
+
+47:14
+Then the cubelet comes into picture. The cubelet fires a commands. If I'm using Docker as a runtime, cubelet fire a Docker commands to pull the images and create a container. But if I'm using different container runtime, does cubelet will work with that container runtime, container D, will it fire a container D related commands to pull the images and create a containers?
+
+47:39
+Yes, the entire lifecycle, the entire lifecycle state of the party stored where the entire lifecycle of the lifecycle state of the party stored in the ETCD. So we have a different different status for status one is pending, one is pending another one is crash loop back of.
+
+48:03
+loop back of another one is image pull back of image pull back of or error image pull one more is running another one is the part status
+
+48:26
+create container config error something like this create container config error some configuration errors we have these type of errors status in which state it should be so that my application will be up and running successfully in that part of that container is successfully started in that part in which state my part should be there so that which means my container my part is
+
+48:54
+successfully deployed and my application is successfully running as and running successfully. If I see this in running state, then only you can consider that pod is deployed successfully and container in that pod is also running successfully. Now if it is in a pending state, what does it mean? It is pending for some reason.
+
+49:18
+it is pending for some reason it is not scheduled.
+
+49:24
+It's not scheduled. Why it is not scheduled? That can be any reason. It can be due to due to insufficient resources. Or there could be some other reasons also. But if it is in a pending state, how can I troubleshoot and how can I see whether it is why it is in pending state? How can I troubleshoot? Why it is in pending state?
+
+49:54
+Can I do something like this? Cubectl describe, cubectl describe for that part name.
+
+50:06
+I can describe that pod so that I can identify why it is in pending state. Does that control plane will give some reason why it is in pending state, whether it is in pending state because of no resources available to schedule or is it because of some other reason?
+
+50:24
+But the pod itself is not scheduled. Can I see the logs of my pod logs of my container? If it is in a pending state, will I able to see any logs of that pod or container? If it is in a pending state, will I able to see any logs? No, because first of all, that is not scheduled at all. So I don't see the logs of my pod container. I can describe and see what do you mean by crash loop backup? What do you mean by crash loop backup?
+
+50:54
+For some reason, your container is not coming up successfully. There is some code issue or configuration issue in the image. Your container, your container process is not able to come up successfully. Does Kubernetes will try to start that container multiple times? It is trying to start the container, but the container is not coming up. There is some issue with your code or application in the image. So it is trying to start that process, container process. It is not coming up.
+
+51:24
+Does Kubernetes will again try to start that process, that container process in the pod? Yes, it is going to keep on trying, but your container process is not successfully come up because of some code issue or application issue. In that case, can I see that part in a crash loop backup? I can see that part in a crash loop backup instead of running, I can see here as a crash loop backup. Here, will I able to see number of restarts are getting increased?
+
+51:53
+Sometimes it will show one again, it will try two, three, four like that. It is keep on trying to start the container, but container is not coming up because of code issue or configuration issue. In that case, do we need to see the logs and work with the developers? If it is an issue with their code, their code, their process is not coming up successfully. Do we need to troubleshoot and ask the developers if it is a code issue, that image issue?
+
+52:24
+So I need to work this time. I can describe the pod as well. And also can I execute logs because pod is scheduled, pod is scheduled and container is not coming up. Within that pod container is not coming up. Can I see the logs of that pod container? If I execute kubectl logs pod name, is it going to show the logs which is part of that pod container?
+
+52:54
+If again there are two containers, if again there are two containers, can I see iPhone see that container name if I want to see the logs of specific container like this. This is very very important troubleshooting troubleshooting.
+
+53:13
+Now, crash loop backup, is everyone clear? Sometimes in the interviews also they're asking, what is crash loop backup? What do you mean? How do you troubleshoot crash loop backup? What could be the reason? The reason for crash loop backup is your container process is not successfully started. That could be because of some issue in the code or image. In that case, do you need to fix that code or that image? Do I need to recreate the image with the correct code?
+
+53:42
+like the software's then do I need to read up by that application to fix the crash loop backup.
+
+53:50
+Yes, then what is this error image pull? We already discussed what is this error image pull?
+
+53:59
+not able to pull the image for two reasons for two reasons. What is that reason? Wrong registry details. If it is a private registry, if you are not authenticating also, will you get a same error message? Even though your registry is correct, but it is private image and you are not authenticating. Same problem. If it is a running, no issues. If it is a running, no issues. What do you mean by this create container
+
+54:28
+There are some more Kubernetes concepts like config maps and secrets. You are referring config maps and secrets in your pod and you don't have those config maps and secrets created in the cluster. You are referring config maps and secrets in your pod manifest and you are not creating or you don't have that config maps or secrets created in the cluster. In that case, can I see this type of error? Create container config error.
+
+54:57
+as a status of my pod.
+
+55:02
+So what is config map? What is secret? I will explain later, but is everyone clear? What is what? What do you mean by running? What do you mean by crash loop backup? What do you mean by pending? How to troubleshoot if the parts are in that respective status, if the part status is.
+
+55:25
+This is important. That is what we do in our day-to-day life. Developers will try to deploy their applications as a pods, as a containers in Kubernetes. If there is something wrong with cluster, you don't have enough CPU, enough resources available in the cluster, then do you need to troubleshoot and add enough resources to the cluster so that that application gets deployed? Otherwise there is a issue with your code. It will be in a crash loop backup. Do you need to troubleshoot and identify the problem?
+
+55:54
+and work with the developers to fix that problem if it is application code issue.
+
+56:04
+Yes, so troubleshooting is very very important. If some nodes are not ready, if some nodes are not ready. Will I able to describe and see why that node is not ready describe node whether that node has a memory pressure disk pressure.
+
+56:24
+if nodes also I can describe the node and see why that is a problem. Now if you are not using this resources concepts if you are not using this resource request concept you are keep on applying lot of parts does your cubelet will impact if cubelet is impacted does your node gets impacted if your node gets impacted whatever parts which is already running in that node will it get impacted.
+
+56:54
+Yes, so in that case you do one thing you delete all the applications whatever you deployed but not in cube system namespace guys you delete something like this in the default namespace and you delete something like this in other namespace. If you are not following that resource request concept you delete something like this in default namespace and other namespace then you reboot your servers.
+
+57:22
+you reboot your servers first delete from the mask by executing this command delete all the objects from default namespace and other namespace but don't do in a cube system namespace then if you reboot your servers since you have deleted the pods after rebooting does that pods get scheduled again because you have deleted completely
+
+57:49
+No, so does cubelet will be started properly? Does cubelet will have enough CPU enough memory? Does cubelet will start automatically because we have a cubelet on bootstrap? Like a brand new But in real time are you going to do like this in real time? You are going to follow best practices. Are you going to use resource request concept? Are you going to use resource quota concept? Before you are creating a quota
+
+58:16
+Are you going to make sure you have enough nodes, enough servers available in the cluster in real time? Are you going to use like a playground in real time in actual clusters in the actual environment? Are you going to use this like a playground? The whatever way you want to play? Will you play like that?
+
+58:38
+It is not like a playground like a gully cricket. You will be using you will be playing like a professional cricket which means you need to use best practices that is we call it as a experience that is called as a experience.
+
+58:56
+That is called as an experience that is called as a real time. So if you practice more, if you encounter these type of issues, what is the solution for these issues? How can I avoid these type of issues? If you are already doing while learning itself, do you have that real time, whatever you call it or that experience to work in the actual environments also?
+
+59:21
+You already have a knowledge on Kubernetes, how it works, how to troubleshoot, how to use best practices, what is resource quota, what is resources. If you already know, will it be difficult working or coping with actual environments in the real projects once you get into your job?
+
+59:40
+No, it will be very simple. You can enjoy your job. You can enjoy your first job and salary but
+
+59:53
+But if you buy hot, if you went through different ways nowadays, everyone is going through proxies. If you went through the job, if you went to the job through proxies, or if you went to buy hot, you buy hot and interview questions and you somehow you are able to crack the job. But do you have that happiness? Or do you have that happiness? Are they able to cope up with that requirements and actual task that is temporary?
+
+01:00:20
+Again, you will look after people, sir. I need a job support. Does anyone is available to support my day-to-day activities? I need a job support.
+
+01:00:34
+So if you do all these things while learning itself, you don't need this. So understand the concept, the whole intention, what I am trying to explain here is how system will work. If you know how system works, will be able to understand troubleshoot, follow the best practices to prevent the failures. The system should not get failed if you follow the best practices.
+
+01:00:58
+So all these things are important that we call it as an experience.
+
+01:01:06
+Let's come back to the actual topic here. Fod concept.
+
+01:01:13
+pod is ephemeral. What do you mean by pod is ephemeral? Pod will last for less amount of time, which means pod can go down for any reason. Let's say if your node has issues, your node has issues. Does this pod and container can go down? Suppose this server itself has issues. Does this pod will work?
+
+01:01:38
+No or even though this node is fine, even though this node is fine, you have a pod for some reason this pod is failed. Do you think you will get another pod automatically or if this case happen, do you think this pod will get shifted to other node? If I directly create a pod, no. So pod is ephemeral, pod can go down for any reason and it won't be scheduled to a new node once it dies.
+
+01:02:08
+It won't schedule to new node once it dies. Which means, is it recommended to create a parts directly? Is it recommended to create a parts directly? No. You should not create a parts directly. You should use, you have to use different objects. You have to use some controllers.
+
+01:02:35
+you should not directly create a force
+
+01:02:40
+pods should be created and managed by some controllers some controllers so we should not directly create the parts we have to create the parts so that parts will be managed by that controller so what are those controllers which I can use one is replication controller another one is replica set.
+
+01:03:10
+Another one is demo on set. Another one is deployment. Another one is stateful set like this. So these are the controllers. We are going to use pods. We are going to schedule pods. But are you going to directly create a pods like this? Are we going to directly create a pods like this?
+
+01:03:33
+Are you going to create a parts directly like this?
+
+01:03:39
+No, we are going to create a parts but are we going to use some controllers that controllers will create and manage the parts also it will manage the parts also it will create the parts and it will look after the parts if something goes wrong with that part is it going to reschedule or recreate that part if I created that part using some controller
+
+01:04:01
+Now, will I able to scale up scale down those parts? Will I able to define how many replicas I need? How many parts I need for that? Let's say two parts, three, three parts, four parts. So does that control that will create respect those many replicas? And will it make sure those many replicas are always available in the cluster? If I create a parts with the help of those controllers? Yes. If you see, as of now,
+
+01:04:30
+We have any controllers did we use any controllers to create and manage these parts whatever we deployed as of now? Do have any controllers like a replication controller replica set demon set or like a deployment like that? No
+
+01:04:48
+So for that reason, let's say something went wrong. I'm intentionally deleting this pod. Are you going to get another pod automatically? That does it will be replicated? If I delete that pod, will it be replicated automatically?
+
+01:05:15
+There is no pod. If someone is trying to access this service now, if someone is trying to access this service internally or externally, do you get any response? Do you get any response? Now the pod is deleted. Do you get any response? No. And this pod is directly created. Is anyone is looking after that pod? Is anyone is replicating or recreating that pod now?
+
+01:05:45
+If you see is that part is getting replicated recreated. No, now does this service has any endpoints? No, does that service has any endpoints? If someone is accessing from outside or inside using the service does that service has any endpoint now?
+
+01:06:03
+Will it work now? No. The whole purpose we are going for a Kubernetes is orchestration. The whole purpose we are going for Kubernetes is orchestration. Is orchestration is happening if I directly create the pods?
+
+01:06:21
+no so that's why it is not recommended to create a pods but without understanding without explaining what is pod if i directly go for a controllers do you guys able to understand
+
+01:06:37
+You need to understand container you need to understand part then only you can understand the controllers in real time. Are you going to apply like this parts directly? No in real time you are going to use these controllers any one of these controller like a replication controller replica set demon set like that. But before I explain.
+
+01:07:05
+before I explain what is what.
+
+01:07:10
+Let's understand one more concept here.
+
+01:07:14
+static pods. There is one more concept called static pods. In the interviews also they are asking what is static pod.
+
+01:07:24
+What is static pod? There is one more concept here called static pods.
+
+01:07:29
+before I explain this controllers let's explain what is static point now if you see guys if you see I already have some parts in the cube system namespace I already have some parts in the cube system namespace I am trying to get all now if you see do I have some controllers like this demon sets deployments like this I am trying to get all the objects do I have some controllers like demon sets deployments here
+
+01:08:00
+If you observe these parts, Q proxy parts, these Q proxy parts, is this parts is created and managed by which one now? I have some parts running in that namespace in the cluster. These parts are managed by whom they have a one controller called demon set, Q proxy demon set is this demon set is creating and managing these parts. This Q proxy parts. You can see.
+
+01:08:30
+current three ready three like that and also this unit parts this unit parts is this unit parts are created and managed by this demon set.
+
+01:08:45
+Yes, and if you see there are some core DNS parts core DNS parts is that core DNS parts are created and managed by this deployment Deployment will internally create a replica set. I will come to that point Deployment will internally create a replica set replica set is managing these ports So do have a controllers for these parts like core DNS qproxy Schedular, sorry not schedule or view net and all these things. Yes
+
+01:09:14
+But if anything goes wrong with this one, am I getting the parts automatically? Guys don't delete this in the actual servers. First demonstrating I'm deleting I'm deleting this part. Cube system port. Now if you see. If I check again, will I have again two parts to replicas because this is expected to maintain two parts to replicas. When I again see is that part is created automatically.
+
+01:09:43
+is it created again. So, who is looking after those parts? They have some deployment that deployment is internally created a replica set that replica set is looking after that. Similarly, if these parts are deleted, this cube proxy cube view net parts are deleted, do have some controllers which will manage those parts demon sets. But I will come to this I will explain what is the difference between demon set.
+
+01:10:12
+deployment, replicas, all these things I will come and discuss later. But are you guys clear? What is this controllers? What is the job of that controllers? Basically, those are also APS in the Kubernetes. Can I create and manage the parts using those APS those controllers?
+
+01:10:34
+Yes. Now if you observe.
+
+01:10:38
+Your kubernetes control plane is also running as a pod your API server your control manager your scheduler your ETCD also running as a pod but do you guys observe any controllers for these parts is this parts are controlled by any controller here. Do you see any controller for ETCD API server control manager here do have any controllers like daemon sets deployments replica sets.
+
+01:11:08
+No, but who will look after these parts who will look after these parts?
+
+01:11:15
+These parts are called as a static parts. These parts are called as a static parts. What do you mean by static part? What is static part? Sometimes in the interview also they lost. Let me explain what is static part before I go for a controller.
+
+01:11:34
+So static ports are managed directly by the cubelet. Static ports are directly managed by the cubelet. What is cubelet?
+
+01:11:49
+agent agent which is running in that node static parts are directly managed by that cubit does API server have any control over these parts those static parts does your control manager I mean to say does your API server have any control on on those static parts know
+
+01:12:09
+we can see the static parts using API server. We are able to see the static parts using API server, but does API server have any control on those static parts? No. So, cubelet is responsible, cubelet, cubelet is responsible for watching each static part, and is it going to restart if it is crashed or if it is down, that static part went down, is cubelet is responsible for watching and again making sure that that's
+
+01:12:39
+static pod is created again.
+
+01:12:43
+Yes. So the static part, the static part running on each node is visible on API server. We can see the static parts using APIs. But does those static parts can be controlled by API server, which means the static parts has any control from API server. No.
+
+01:13:05
+The static parts to make it simple the static part will not have you know will have any controllers associated to make it simple. Does the static parts will have any associated controllers like replication controller replica sets or demon sets or deployments like that. No, so static part will not have any associated replication controller or replica sets or demon set. So who is going to watch?
+
+01:13:32
+and who is going to manage those static parts. The cubelet itself will watch it and manage the static parts. What is the main use of static parts? What is the whole purpose of static parts? The main use are main purpose of the static parts is to run the control plane itself to run the control plane.
+
+01:13:57
+because that control plane is managing your cluster. Do we need someone to manage that control plane pods? That control plane is managing your pods. Do I need someone to manage the control plane? Does control plane can manage control plane itself? Does they can manage themselves? No, right? So the complete cluster is managed by control plane. Do I need someone to manage that control plane if something goes wrong with the ETCD API server?
+
+01:14:26
+or scheduler does those things to be recreated automatically in that node. Yes. So what is the main purpose of the static pod? The main purpose of the static pod is to run the control play. In other words, the control plane is managed by cubelet that is static pod. Can I call all these things as a static pods? You can see API server control manager scheduler
+
+01:15:04
+this control manager, this API server, this scheduler, this etcd. I can see the IP address also along with my pod name. These are static pods. Now
+
+01:15:22
+Don't do this in the actual servers, but let me do here. Qubes ETL delete. I'm deleting this pod itself. I'm deleting this pod, this API server pod. If this API server goes down, will anyone be able to communicate with APIs again to deploy or manage anything? No. But am I getting pod automatically again? That API server, if you see, again, immediately my API server is back.
+
+01:15:52
+Who is looking after that API server?
+
+01:15:59
+Now is it possible for us to create a static pod sometimes in the CK exam also certified Kubernetes administrator also they will ask you to create some static pod is it possible for me to create a static pod. How to create a static pod. Now I want to create a static pod on specific node. Let's say I have these many nodes.
+
+01:16:27
+I want to create a static pod on the master or I want to create a static pod in this worker. How can I create a static pod? We have one file one folder ETC Kubernetes manifests. So this is my master 245 you can see my master I am in the master only 245 in that master node they have one folder called ETC Kubernetes manifest. If I place that pod YML.
+
+01:16:56
+if I place that pod.yml in this folder can I consider that as a static pod does cubelet will use this file and will it create a static pod
+
+01:17:08
+Now if I want to create a static pod on this node, if I want to create a static pod on this node, can I go to this node 206 node and can I place that pod.yml file in that node in this folder? So the cubelet running in that node, will it create a static pod in that node 206 node?
+
+01:17:31
+yes now let me show you now let me show you I am just creating one YML I am just creating one YML like this just to give an example nginx
+
+01:17:48
+something like.
+
+01:17:54
+I am creating one file like this.
+
+01:17:59
+TindySpot Metadata
+
+01:18:05
+Meta...
+
+01:18:08
+That's our day, Tom.
+
+01:18:12
+name and just giving something like this name space also if you want to mention you can mention labels also if you want to mention mention.
+
+01:18:27
+now spec I'm saying containers
+
+01:18:34
+name and the next image.
+
+01:18:40
+and the next
+
+01:18:44
+ports.
+
+01:18:51
+container port like this. Now if I this is just a YML in the current folder. Now if I place this YML in this server in this folder, the stuplet will take that pod manifest and will it create a pod and manage that pod. Can I call that as a static pod now. If I place this YML, let me do that. I am copying this file to that location. Kubernetes manifest
+
+01:19:21
+location. I'm copying that file now to that location. Now if you see
+
+01:19:30
+Can I call this as a static part now since I have not mentioned namespace since I have not mentioned namespace in which namespace this part is getting created.
+
+01:19:43
+in default namespace in default namespace. Now this is static part. Now if this part is down. If you see that part is also created in which node in whatever node I have placed that manifest file is it created in the same node. I have placed that manifest file in the 245 that is my master is that part is created in the master itself.
+
+01:20:07
+Now, even though I delete this part or for some reason this part goes down, does this part will be created automatically?
+
+01:20:16
+If you see is that what is recreated automatically because that is a static part who is looking after those static parts who is looking after those static parts the cubelet directly cubelet.
+
+01:20:32
+Now if I want to remove that static file, you know static part here fully remove that file guys don't remove any other files. If you remove these files, if you remove other files like this, whatever you have here, if you remove this etcd file or API server file control manager or scheduler, will it impact your cluster? Does your control plane will be deleted or so carefully do that.
+
+01:21:00
+Don't delete unnecessarily all the files. Just I'm deleting this file, nginxpart.ml. Now is that part is deleted, that static part? Do you see, do I have that static part now? No. But are we going to deploy all our applications also as a static parts? Are we going to directly use the static parts to deploy our applications? No. That is only for, that is only for control plane. Only for control plane.
+
+01:21:28
+Now our applications can I deploy it as a normal pods? Can I deploy it as a normal pods our applications? Yes, but instead of deploying directly for can I use controllers like a replication controller, replica set or demo set like that. So that those controllers will deploy and manage your pods.
+
+01:21:50
+Yes, is everyone clear what is static pod? Sometimes in the interviews also they are asking what is static pods and how it works.
+
+01:22:01
+What is the whole purpose of static pod? Is everyone clear?
+
+01:22:10
+In the CK exam also they will ask you to create a static parts on so and so load. So
+
+01:22:17
+In the CK exam also they'll say go and create a static pod in this node. In that case, do you need to understand what is static pod and how to create a static pod also.
+
+01:22:29
+Yes, now before I go for a controllers, let's understand this labels and selectors concept. We already use this labels and selectors, but let's understand this labels and selectors first.
+
+01:22:45
+What is label in general? In general, what is label in Kubernetes? We call it as a tags. Is tags also similar to labels in Kubernetes? For easy identification in AWS, can I add tags to my AWS resources? Labels and tags are similar, just a key value base. Now, in Kubernetes also, can I add labels to my Kubernetes resources?
+
+01:23:13
+Like if I want to add a label to the node, I can add if I want to add a label to the namespace, I can add if I want to labels to the pod, I can add for any Kubernetes object or resource. Can I add a labels?
+
+01:23:28
+Yes, so labels are key value pairs labels are key value pairs attached to the Kubernetes object. Can I use whatever keys whatever values I want to use?
+
+01:23:41
+You can make your own and apply. It's like a tagging. It's like a tag in the Kubernetes. It is like a tagging things in our Kubernetes, like labels, key value, key value, key value. So when one thing in Kubernetes, when one thing in Kubernetes needs to find another thing in Kubernetes, can we use this label concept?
+
+01:24:11
+In kubernetes one thing one thing in the sense one object needs to find another objects in kubernetes. Can I use this labels and selectors concept?
+
+01:24:22
+Yes, we are already using so we can add a labels. Can I use selectors? Selectors will use the label key to find a collection of objects. We can use selectors in the selectors. We can use the label keys to find the collection of objects with matched value. It's like a filter or query. It's like a filter or condition or query to your labels. These selectors is like a condition.
+
+01:24:51
+or query or filter to your labels. So selectors like this. Now these labels and selectors are used in many places. Already we use these labels. Am I adding labels to the parts? Am I using those labels in my service as a selectors so that service will find matching parts, collection of parts?
+
+01:25:17
+So these labels and selectors are used in many places. This is very, very important also.
+
+01:25:27
+So.
+
+01:25:30
+Why the key values are not same? You can give app colon app, but does it make any sense? If you take anything.
+
+01:25:41
+this key and this value also you can use same does it make any sense to you like if I say app app roll roll env env does it make any sense.
+
+01:25:54
+You can use key also as a app, value also as a app. That will not make any sense. Is there any way you can uniquely identify if I give app as app, role as role, env as env? Like that? No. It's a key value place, key and value as per your wish.
+
+01:26:21
+Now this we already used but I thought of explaining now let's continue with controllers now we already discussed this service guys what is service what is service of type cluster IP what is node port I'll come to this one later we cannot create a service of type load balancer I cannot create a service of type load balancer now because
+
+01:26:48
+It's not a managed Kubernetes cluster. It's a self-managed Kubernetes cluster. If I try to create a service of type load balancer, will I get this outside my cluster? Will I have external load balancer like ELB? Does that ELB will be created automatically, that external load balancer outside of your cluster? No. This will not work. Now, I'll come to this point later. What is this cluster, you know, service of type load balancer? I'll come and discuss this later.
+
+01:27:18
+for now let's proceed with replication controller
+
+01:27:24
+Now what is replication controller? Replication controller is also one Kubernetes object. Replication controller is also one Kubernetes object. kubectl api resources I want to filter like a grip.
+
+01:27:46
+because I don't want to see lot of list API resources there is a typo
+
+01:27:57
+Now do I have one object called replication controller? I'm just gripping guys so that I can match only that one. Otherwise you can no need to get now. Do I have that one object called replication controller here? One kubernetes API called replication controller. Now the namespace is true, which means is that object is that replication controller can be created in a namespace level.
+
+01:28:27
+Is it a namespace resource or a cluster resource? It's a namespace level, namespace resource. And what is the API version for that replication controller? V1, in the short form, in the short name, can I call that as RC? RC stands for what? Replication controller. Now, what is replication controller?
+
+01:28:56
+Replication controller is one of the key feature of Kubernetes. What is it? What it does? What is replication is going to do? Replication controller is responsible for responsible for what? Responsible for managing the life cycle.
+
+01:29:24
+It is responsible for managing the pod life cycle. So is it responsible for making sure that the specified number of pod replicas are always running is it going to make sure that specified number of pod replicas are running at any point of time in the cluster. Is it going to make sure specified number of pod replicas are always running at any point of time. If something goes wrong with that replica.
+
+01:29:54
+Is it going to replicate again which means is it going to recreate and restart again that quad?
+
+01:30:01
+Yes. So it is going to manage the pod lifecycle. Does replication controller will enable you to create a multiple pods, which means multiple replicas. Does this replication controller will enable you to create a multiple pods, multiple replicas like this by specifying like this number of replicas as to with this information. How many parts will be created with this information?
+
+01:30:29
+with this information how many parts will be created with the same part specification with this part specification how many parts will be created to if required can I say three replicas for replicas based on your requirement based on the load based on your requirement based on the load can I say three replicas for replicas like that yes so replication
+
+01:30:58
+Is it going to make sure that the number of parts always exist kind of a desired state reconciliation you are expecting these replicas for some reason one of the replica went down one of the part went down. Is it going to again do the desired state reconciliation? Is it going to replicate again?
+
+01:31:19
+So it is going to do that desired state reconciliation that we call it as an orchestration. If part crashes, does that replication controller will replace it?
+
+01:31:34
+And again, the pod and replication controllers are again associated using what how replication controller will make sure those parts are exist or not again, is it going to use a concept of labels and selector the way we are using selectors in service does replication controller also will use selectors to identify whether we have those parts or not.
+
+01:31:58
+Yes. So if I create a replication controller with replica as one, does it mean always one part is available? If I say if I create a replication controller with the replica as one, does it mean always my part will be available one part? If instead of one, if I said two, does always two parts will be available?
+
+01:32:23
+Yes, as of now, do I have any replication controller created in the default namespace or any other namespace?
+
+01:32:35
+our test namespace in our test namespace is this part sir.
+
+01:32:44
+created I have a parts but is this parts are created and managed by replication controller this one in that namespace and this one in that namespace is this parts are created and managed by any controller no so is it recommended to create a parts directly no now if I use replication controller does that replication controller will create and manage the pod yes now is it possible for me to scale the parts
+
+01:33:14
+I created a replication controller with two replicas at any point of time. Is it possible for me to replicate like this? Can I scale my parts from two to three or three to four at any point of time also later also based on the load? Will I able to scale up scale down the number of replicas of that controller? Yes.
+
+01:33:37
+these two types of scalings one is manual scaling one is auto scaling will I able to manually increase and decrease the number of replicas manually yes automatically automatically
+
+01:33:55
+automatically also using auto scaling pod auto scaler does Kubernetes support scaling the pods also automatically.
+
+01:34:08
+Now how to create a replication controller? Do I have something like this? Do I need to create a manifest like this? Replication controller manifest
+
+01:34:20
+Now I don't want to create a part directly. So we are not going to do like this. I'm going to delete these parts, whatever I have created directly. It is not recommended to do this. Instead of creating a part like this directly, instead of creating a part like this, instead of part, can I create a replication controller to create this part and manage the part?
+
+01:34:48
+Yes, so how to do that how to do that again API version
+
+01:34:58
+Kind, Metadata, and Spect. Now Kind, what kind of object I want to create? Replication Controller, Replication Controller. What is the API version for Replication Controller? I have given the table also, but you can refer from kubectl, V1. Metadata, Name, whatever name I am going to give here.
+
+01:35:28
+What is this name is this name is for pod or is this name for a replication controller.
+
+01:35:38
+This is for a replication controller RC name. Can I mention namespace also in which namespace this replication controller has to be created this replication controller and in which namespace the associated part should be created.
+
+01:35:58
+Yes, that can be any namespace that can be any namespace as per your requirement. Now can I add a labels also to the replication controller if required these labels is this labels will be added to your parts or is this labels will be added to this replication controller this are for replication controller. Are we going to use this labels anywhere? Is it mandatory to define labels for replication controller? No, not required.
+
+01:36:27
+It is not mandatory. It's up to you. Now, this is my replication controller specification. Am I going to have as is like this? Am I going to have this as is like this? This is not for specification. This is replication controller specification. Does this specifications will change based on the kind of object you are creating?
+
+01:36:56
+Yes, now here we have something like this replicas. Can I mention number of replicas number of pod replicas? How many parts you need? Number of pod replicas like this. Like whether you need a one replica or two replica three replicas like this, even though you don't mention this, what is the default number of pod replicas? If I don't mention this replicas field, what is the default number?
+
+01:37:26
+No.
+
+01:37:28
+template what is this template guys this is your pod template this is your pod template now when i am creating a pod whatever i am mentioning this one when i am directly creating a pod whatever i am mentioning like this metadata spec can i have this under this template under this template this is my pod template can i have under this template like this
+
+01:37:57
+Under this template again metadata, but here this is not allowed. Here this is not allowed under part template. This namespace is not allowed because we are creating a replication controller. Does replication controller will use this part template? Will it use this information to create a part?
+
+01:38:18
+Yes, so now under template and a template again, I have metadata. This is metadata for which one which is starting here. This is metadata for RC. I have again metadata, but this metadata is for which one that is I call it as a part template. This is part metadata. Can I give a name like this?
+
+01:38:44
+Labels these labels are for which one these labels whatever I am using here these labels are which one these labels are basically quad labels.
+
+01:38:57
+Now this specification here. I have a specification here. Also have a specification this specification is your replication controller specification. This specification is under template which is can I call this as a part specification?
+
+01:39:16
+This is under pod template. So this is your pod specification. So something like this. Your container name, your image name.
+
+01:39:31
+your image name your container port like this your container port like this
+
+01:39:40
+your container like this. Now if I create a replication controller like this, is it going to use this information? Whatever is there under pod template? And is it going to create based on number of replicas? I have mentioned here. Is it going to create those many parts using this pod information?
+
+01:40:04
+Yes, you are not directly creating a part is part is created and managed by replication controller. You are creating a replication controller replication controller is creating the parts and managing the ports using this information. Now instead of having like this, I deleted that part instead of part. Can I create a replication controller to create and manage that parts? Can I create something like this?
+
+01:40:33
+Can I say replication controller?
+
+01:40:40
+Now this is your RC name. Can I give some name like this? These labels are for RC. These labels are for RC. It is not mandatory. I'm just mentioning the namespace. But is this correct? When you are creating a replication controller, is this correct? No, it is different. I have replicas. I can say one replica. I have a template. I have a template.
+
+01:41:10
+Within that template do I have a metadata? Do I have a spec? Now, is this correct now? One second.
+
+01:41:29
+now here under metadata I can have a name this name is for what pod
+
+01:41:39
+Can I mention labels whatever labels I am defining here is this labels are for pod something like this.
+
+01:41:49
+If this labels are already used as a selectors in your service, does that service will point to these parts, whatever parts are created by this replication controller and managed by this replication controller. If I am using these labels in the service as a selectors, does that service will point to these parts, whatever is going to create and manage by replication controller? Yes.
+
+01:42:12
+Now, if I do like this, how many parts will be created by this replication controller? How many parts this replication controller will create one that part will have how many containers that part will have how many containers as per the specification one. Let's say if I do like this, how many parts will be created and each part will have how many containers? Each part will have how many containers to parts?
+
+01:42:41
+each part will have one container. If I want to create a multi container parts does it can I have something like this again another container it is going to create a multiple parts with multiple containers can I do something like this multi container parts something like this if you have that requirement.
+
+01:43:04
+Now if I do like this two parts each part will have how many containers?
+
+01:43:13
+Concept is important is Not what I am typing here not what I am writing here is not important The concept is important based on your requirement based on your use case Can you leverage all these Kubernetes resources or objects to deploy and manage your applications? Here I am taking a sample application If you are by hearting are you going to use same image copy paste in your actual applications actual service? No
+
+01:43:43
+Instead of this image, instead of this image, are you going to use your actual image, your actual application Docker image?
+
+01:43:53
+That is important.
+
+01:43:59
+that can be in ECR, that can be in the Nexus, that can be in the JFrog.
+
+01:44:09
+So I am creating a RC in this namespace. So these replicas using this part template will be created in which namespace. You are creating a parent, the child will be in the same parent only, right? You are creating a parent. Are you going to stay with your parent as a kids? You are the kids, parts are like a kids. Parts are like a kids. Replication controller is like a parent. Is replication.
+
+01:44:38
+controller is taking care of the ports like is your parents are taking care of you.
+
+01:44:47
+under the same namespace.
+
+01:44:51
+under the same namespace. Now let me create like this. I don't want to create.
+
+01:45:00
+I want to create a RC, but I have not deleted a service guys. I have not deleted a service still I have a service, but is that service has any endpoints if I see this service Do I have that service has any endpoints?
+
+01:45:19
+Does that service has any endpoints as of now? No. Now, let me create a replication controller now. I don't want to create a pod. I want to create a replication controller.
+
+01:45:41
+Now I don't want to create a pod, I want to create a replication controller.
+
+01:45:48
+Let me delete from line number one to 13. Now I am creating a parts but I may directly creating a parts here. No here one more thing I can use is selectors one more thing I can use is selector or selectors.
+
+01:46:12
+These selectors is replication controller selectors. Can I use something like this? Your part labels as a select here is this replication controller is going to use this selectors to look after these parts and manage the parts.
+
+01:46:28
+But for RC for RC this is not mandatory for RC. The selectors are not mandatory even though you use selectors. That is fine. But RC the selectors are not mandatory. Now, let me deploy I have given number of replicas as 2. How many replicas will be created now before creating. Let me show you. They have any replication controller as of now in that namespace.
+
+01:47:02
+Now in that namespace, I am creating one replication controller with two replicas. Is that replication controller will use this part template and will it create a number of parts, the two parts? Now if I apply.
+
+01:47:18
+cubes detail apply type on it that maven web app RC unknown field something called unknown field called selectors let me use I think it is selector selector
+
+01:47:38
+now let me apply now if you see
+
+01:47:46
+in that namespace that is in the default not in a default namespace that is in a test namespace cube CTL.
+
+01:47:56
+now if you see do I have one replication controller here they have one replication controller here now
+
+01:48:06
+with that name. What is this a desired current desired current ready like that it is showing what is this desired is it a containers or is it a pods here whatever I see desired current ready. Is it a number of containers or number of pods number of pods. Now is this replication controller is expected to have a two pods do you have currently two pods and is those
+
+01:48:35
+Now who is creating and who is looking after these parts now who is creating and who is looking after these parts is this controller is looking is this controller is looking this replication controller is looking after the parts. Now if something goes wrong with one of the part I am intentionally deleting the part I am intentionally deleting the part. Now if you observe am I getting the part automatically easy triplicating again.
+
+01:49:05
+Now you see is that part is recreated replicated. Now who is taking care of those parts? Who is managing the life cycle of that part? RC. Now if you see, service I have not deleted. If I see the end points, now can I see two end points for that service? CubeCity will get EP. Can I see two end points for that service, which means.
+
+01:49:31
+is that service is pointing to both the parts because that part has because that part has a label.
+
+01:49:40
+that part has a label.
+
+01:49:48
+that part has a label like this when I created a service, when I created a service, did I use those labels as a select test? This service has that selected. So is that pointing to both the ports? This one and this one both. Now does that service will act as a load balancer within the cluster or when you are accessing from outside also using node port, is that service will act as a load balancer within the Kubernetes cluster?
+
+01:50:17
+Is it going to distribute the traffic to those two ports? Now services for communication services for communication, but controller that replication controller is for what purpose is that replication controller is creating and managing that ports if part goes down that part will be automatically created now.
+
+01:50:40
+If required, can I scale the parts like this manually also in my manifest I can change or imperatively also I can change in manifest. Can I say replicas as one or two or three or like that I'm making it one now if I am applying again now instead of two replicas what is the desired replicas now what is the desired replicas now.
+
+01:51:07
+Now do I have only one part instead of two parts?
+
+01:51:13
+I can scale like this can I scale imperatively also like this cube CTL scale RC your RC name which replication controller you want to scale can I say something like this replicas as two three like this this is imperatively but if I do like this in the file will it be updated or directly in the cluster it will update or update directly in the cluster it will update not in the file.
+
+01:51:43
+Now if I see why I am getting this error guys why I am getting this error.
+
+01:51:52
+Why I am getting this error?
+
+01:52:00
+namespace I have that in a different namespace now I have scale like this now can I see three replicas now desired three current three ready three which means do I have a three parts now now if that service can I see that service will have a three endpoints now that whatever service that maven web app service if I see the endpoints you can describe that service or you can see the
+
+01:52:29
+as the endpoints to that service. Is everyone clear how replication controller works?
+
+01:52:40
+So tomorrow I'll continue tomorrow. I'll continue what is the replica set how different it is from replication controller. What is demand set how it is different from other two. What is deployment why it is recommended. I'll continue tomorrow. This is each class is important. I'm trying to cover from very basics and what is happening in the background also make sure you are attending all the sessions and make sure you are practicing so that it will be easy for you.
+
+01:53:11
+One concept is related to other if you don't practice if you don't attend regularly you cannot understand subsequent classes Suppose you have you guys have not attended namespace class parts class if I you attended directly this Deployment or replication classes will be able to understand what is namespace first what is part? No, so each class is related to other make sure you are attending all the sessions Thank you guys. That's it for today. I'll continue tomorrow
+
+01:53:41
+with the replica set, the demon set and the plan. Thanks.
+
