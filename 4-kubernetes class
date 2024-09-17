@@ -1,0 +1,1101 @@
+00:01
+This conference will now be recorded. In last week's session, we were discussing about what is namespace in Kubernetes in detail. Why namespace? What is the use of namespace? And what is namespace in Kubernetes? Now, as we already discussed, I created a namespace in this Kubernetes cluster. First, let me connect to my machine.
+
+00:29
+where I have a cube seed yelling start.
+
+00:36
+Let me connect to my AWS account first.
+
+00:56
+So let me connect to my server where I have a kubectl. As I already told multiple times, is it mandatory to have a kubectl installed in the master itself?
+
+01:11
+No, I can have in any machine. I just need to have a network. I just need to have a network connectivity from that machine to the API server. And I need to have a kubeconfig file. So as of now, instead of creating a separate machine, what I have done, I have installed kubesetail in the same machine, master machine itself.
+
+01:35
+Because even after completing the course also people are asking sir, is it mandatory to install Cubectl in the master?
+
+01:46
+I know why they are asking because they have not yet attended, they are not attending the classes they are just going through the interviews maybe in the interviews they might ask is it mandated to install kubectl in the master. So they are asking but they don't know which is already discussed in detail and which is already covered as part of the course because they might be busy in not attending the classes and not practicing they might be that much busy.
+
+02:15
+They're not at all attending the classes. They're not practicing, but they're directly going for the interviews.
+
+02:23
+That's why I keep on saying this concept because don't get confused. This kubectl is not mandatory to install in the master. In fact, did I install in another machine also one more easy to instance, which is part of the same network and did I able to communicate with that API server from other machine also I have shown in the class also.
+
+02:48
+Yes, two things are required. One is network. One is network between that client machine to your cluster. And another one is what? You need to have a kubeconfig file. kubeconfig file. If we have those two, then we can communicate. Now, as we already discussed, did I have a namespace created in the last session called a testns?
+
+03:18
+As of now, do we have any applications or any Kubernetes resources deployed in that namespace as of now, not only in that namespace in any namespace did we deployed any applications so far? No. So before I deploy application, you need to understand the Kubernetes APIs or objects. Kubernetes APIs.
+
+03:48
+our workloads, our resources, all are saved.
+
+03:54
+workloads or resources or entities all are same. Don't get confused how many words
+
+04:02
+Sometimes people call it as a Kubernetes APIs, Kubernetes objects, Kubernetes workloads, all are same.
+
+04:11
+something like this. Just to make it simple.
+
+04:17
+Just to make it simple, we used AWS. You are already familiar with AWS. In AWS, we have AWS services or workloads. I mean, it is something. So in AWS, can I create some workload? Can I create some service? As an example, can I call all these things as AWS services or objects or workloads like that? ECR, EKS, RDS, IAM, auto-scaling.
+
+04:49
+EFS, ES3, can I call all these things as a services which I can create and use as per my requirement in the AWS. Similarly, in Kubernetes also do have some kind of objects or resources or workloads which I can create as per my requirement in Kubernetes cluster. So we have a pods.
+
+05:16
+we have a pod, we have a deployment before I explain deployment we have a replication controller
+
+05:27
+replica set
+
+05:30
+replica set, demon set, deployment, stateful set like this
+
+05:41
+when it comes to communication service.
+
+05:47
+When it comes to communication service, we have a different types of services here cluster IP node port load balancer. Headless. Like this. When it comes to data storage.
+
+06:06
+when it comes to data storage.
+
+06:11
+when it comes to data or storage which means kind of a values storage or values. So here we have a concept of persistent value persistent value claim.
+
+06:29
+storage class like this we have some kind of a
+
+06:35
+concept like this storage class like this. This is about values and networks. Using these concepts, will I able to run my application that process, my application process that can be a stateful process or stateless process, stateless application or stateful application. Will I able to deploy my application using these Kubernetes resources, any one of these?
+
+07:02
+pod replication controller, replica set, demo set, deployment or stateful set. Not all the things needs to be created. As per your requirement, can I create any one of these to deploy my application? Yes. Like this you have a lot of Kubernetes APIs. When it comes to permissions, when it comes to permissions, we have a lot of things like this.
+
+07:35
+roll...roll binding...
+
+07:40
+Cluster role.
+
+07:43
+cluster role binding service account. This is like a permissions, permissions to access Kubernetes cluster, role-based access control.
+
+07:58
+Is it like I am in your AWS case in I am in AWS do have some kind of a policies users groups roles where I can grant permissions and manage permissions to AWS resources. But using this are back in Kubernetes using these Kubernetes concepts will able to manage our grant permissions to the Kubernetes resources who can create who can delete these parts who can create or update these deployments like this.
+
+08:27
+Can I grant permissions to Kubernetes objects or APIs using this R back concept in Kubernetes administration?
+
+08:38
+Yes, like this you have something like this you have network policies also network policies network policies in Kubernetes network policies service network policies when it comes to scheduling scheduling in the sense as we already discussed in Docker Swarm also in Docker Swarm also is it possible for me to control in which node
+
+09:06
+I want to deploy my container like that in Docker Swarm. We already discussed using labels, constraints, drain concept. We discussed all these things. Similarly, Kubernetes also, will I able to do kind of a scheduling, which means in which node my pods has to be scheduled like that? Yes. We have some scheduling concepts also, scheduling and maintenance concept in Kubernetes also.
+
+09:38
+like node selector
+
+09:44
+node affinity.
+
+09:50
+FAD affinity anti affinity
+
+09:58
+taints and tolerations.
+
+10:04
+drain here drain cardan and uncardan so we have some kind of a scheduling and maintenance maintaining a cluster kind of administration
+
+10:24
+So we'll slowly understand all these things. Okay, what is what? First step.
+
+10:32
+Let's start with very simple and basic Kubernetes API or object called pod. Pod. As I already told in Kubernetes, is it possible for us to create and manage the containers directly? Is it possible to deploy schedule deploy manage containers directly in Kubernetes? No. In Kubernetes we are running the containers, but do I need to wrap that container under?
+
+10:59
+One Kubernetes API called a pod. They need to create and deploy and manage the containers using pods in Kubernetes. Yes. So what is pod now? Let's understand what is pod. I hope everyone is clear about this namespace guys. In detail, we have spent one day to understand that namespace. What is resource quota? What is namespace? We covered all these things.
+
+11:29
+Hope you are clear now. Now let me start with pod. Kubernetes pod.
+
+11:38
+First, let's understand one by one pod always runs on a node. What does it mean? Cluster is different node is different all these things. You need to be familiar. So kubernetes cluster does kubernetes cluster will have servers. I mean to say is that cluster is nothing but a group of servers.
+
+12:01
+If I am creating a pod, does that pod will be run on some node that can be any node in the cluster? Suppose I have 100 nodes in one cluster. When I am creating a pod, does that pod will get scheduled in one node in that cluster, one server in that cluster? If I am creating a pod, does that pod will get scheduled in some node? Again, can that node be a worker node or master node? Node is different. Node is basically that can be a master node or worker node.
+
+12:32
+Fod always runs on a node.
+
+12:36
+pod always runs on a node that can be a master node or work node within the pod. What we will have within the pod what we will have containers. So which means when I am creating a pod, if that pod is scheduled to some node, does the containers of that pod will run on that node? Suppose I am creating one pod that pod is scheduled to some machine, some worker machine, whatever containers is part of that pod.
+
+13:04
+Does that containers will run on that node where that pod is scheduled? Yes. So pod always runs on the node pod is the smallest building block or basic unit of scheduling. Pod is the smallest building block or basic unit of scheduling in Kubernetes, which means pod is the smallest one or basic unit I can schedule in Kubernetes. That is a small one.
+
+13:34
+which I can schedule scheduling in the sense of deploying which I can deploy in the Kubernetes that is the smallest one in Kubernetes cluster. Ford represents the running process in Kubernetes cluster Ford represents the running process when it comes to Docker or Docker Swarm. What is the smallest one or basic unit of scheduling in Docker or Docker Swarm in Docker or Docker Swarm? What represents the running process?
+
+14:04
+container. But here, does Kubernetes will accept the containers to be created directly? Does Kubernetes will directly manage the containers? No. That container, do I need to create as a pod? Do I need to wrap that container under one Kubernetes object called a pod?
+
+14:26
+So if I want to deploy this container, do I need to create a pod by specifying what container should be part of that pod? Do I need to create a pod while creating a pod? I need to specify what container should be part of that pod.
+
+14:44
+So pod is kind of a logical concept again here. So Kubernetes will use pods to manage the containers. Inside a pod, as I already told, inside a pod, what you will have? Inside a pod, can I have one or more containers? Is it possible for me to have a pod with single container? This is my pod. I can create a pod with single container.
+
+15:12
+Is it possible for me to create a pod with multiple containers? Multi container pod single container pods.
+
+15:23
+So based upon the requirement, based upon the requirement and use case, can I create a pod with single container? Can I create a pod with multiple containers? Yes, but which one is widely used? Are we going to use single container pods or multi-container pods widely? Single container pods. The most popular one widely used one is single container pods.
+
+15:50
+I will explain in some time what is single container, what is multi container. We will discuss in some time later, but can I have a multiple containers or single containers in the pod if required.
+
+16:05
+Yes, now most important understanding or concept in the pod in the interview perspective also what is common for all the containers which is running in the same pod. What is common for the containers which are running in the same pod which is widely asked in the interviews also. So if I am creating some pod and that pod has multiple containers
+
+16:33
+What is common for these containers which are running in this pod, which are scheduled in this pod.
+
+16:44
+network unique network IP and storage unique network IP and storage. What does it mean? If it is a pod in Kubernetes, does pod will have a IP address in Kubernetes? Does each and every pod will have a unique IP address in the cluster? In Docker or Docker Swarm, in Docker or Docker Swarm each container will have a unique IP address in the cluster. But here if it is a Kubernetes.
+
+17:13
+Does each pod will have a unique IP address in the cluster? Each pod, that pod may have a single container or multiple container. So here pod will have a IP address, unique IP. So if I have a multiple containers for these two containers, is IP is same? Is that IP is same?
+
+17:37
+pod network is networking is same. Will it have a unique network IP and storage, storage in the sense here I can attach volumes to the pod. Here I can attach volumes to the pod. I can attach volumes to the pod. If required, can I mount that volume from both the containers if required? Can I mount the volume, this value, whatever is attached to my pod?
+
+18:05
+Can I mount that value from this container as well as this container also if required?
+
+18:15
+So unique network IP and storage and any other specifications, any other specification applied to that part is common.
+
+18:26
+Now sometimes in the interview they are asking one question guys very very important understand how one container Can communicate with another container? Which are in a same pod which belongs to same pod or the both containers are created in a same pod How this container or application can communicate with this container? How pods how containers in a same
+
+18:56
+can communicate with each other container in the same pod. Now here pod will have IP address, pod will have IP address not container. Now network is common. So can they use local host? They no need to use pod IP also. If this container want to reach this container, this application want to reach this application, they belongs to same pod. Do they need to use any IP like a pod IP?
+
+19:24
+or service IP or load IP, your server IP or your pod IP like that. If this container has to reach this one, can they still use localhost because both are sharing the same network space. So can they use localhost and respective port number.
+
+19:43
+localhost.
+
+19:46
+because both containers are in the same pod. They are sharing the same network space.
+
+19:54
+But here is this possible guys can I have a two containers both containers on same container port. Let's say this container is also on 8080. Can I create another container in same pod with 8080 again is this possible.
+
+20:11
+Is this possible? No.
+
+20:15
+So you will have a problem because network space is common for these containers. So we do have a port conflict in the same network area. You cannot run multiple containers on same port. But if this is running on some port if this is running on 3000 if another container is running on 8080 does they come does they communicate with each other using local host and respective container port local host 8080 or local host 3000.
+
+20:47
+This is very very important you need to understand. Communication is key. Networking is key in any application. Not only just a computing CPU and memory. Networking is also very very important. How it works you need to be familiar. Now is everyone clear how containers in same pod be very clear.
+
+21:16
+How one container can communicate with another container if they are in the same pod? Do they need to use any IP like a pod IP, server IP, service IP like that? No. Will they able to use just localhost?
+
+21:31
+and respective port number on which those containers are running. Yes. So is everyone clear? This is very important question in the interview also lot of times you will get this question how one container can communicate with another container in the same pod if they are in a same pod. Is everyone clear what is common for all the containers which are running in a same pod your network IP that pod IP storage and any other specification.
+
+22:02
+As I already told, can I call pod is a group of one or more containers? Can I call pod is nothing but one group of containers? One or more containers which will be running in some node, which will be running in some node. What does it mean? This is very important again. Suppose I am creating a pod. I am requesting my Kubernetes to create a pod with two containers. Pod with two containers.
+
+22:32
+both the containers of that pod will be running in same node. This is let's say worker one. Let's say this is worker one. Is Kubernetes scheduling containers individually guys? Is Kubernetes is going to schedule and manage the containers individually? No. Kubernetes is going to schedule and manage what? Codes. So which means if I'm creating a pod with two containers,
+
+23:01
+Is it possible that the container this container will be running in one node another container will be running in another node is that possible if I am creating one pod does that pod containers will be distributed to two different nodes no so the Kubernetes is scheduling this pod so in whatever node this pod is scheduled in the same node do I have both the containers of that pod will I have a
+
+23:30
+that pod in same node. I mean to say containers of that pod will be running in same node.
+
+23:37
+Yes, but if I am creating a different pod, is it possible that pod and its respective containers will be scheduled in maybe other node? This is different pod. Is that possible that that pod may get scheduled to different node? Yes, so which means. Does pod containers will be running in same node if I am creating one pod?
+
+24:04
+that card has two containers does both containers of the quad get scheduled in the same node will run in the same node. Yes.
+
+24:13
+Is pod is abstracting the network and storage away from the underlying containers? So is pod is abstracting the network and storage away from the underlying containers? Now pod has a network. Now pod has a IP. So if I want to reach these containers, can I use this pods pod IPs instead of container IPs? Is pod is abstracting the network?
+
+24:41
+and storage also.
+
+24:45
+from underlying containers is bodies take taking the networking and storage on away from the underlying containers. Yes. So
+
+24:59
+Each pod, as I already told, does each pod will have a unique IP address within the cluster? Suppose I have one Kubernetes cluster, will I able to see same IP for multiple pods in that cluster?
+
+25:15
+not in the server I am saying in complete cluster will I have any pods which will have a same IP address pod IP no.
+
+25:26
+No.
+
+25:28
+Any data, any data saved.
+
+25:34
+inside the pod will it disappear if the pod is getting deleted and recreated if the pod is deleted and recreated do you have any data which is part of that pod container no so if I want to deploy stateful applications if I want to deploy stateful applications in my kubernetes as a pod then do I need to use Valumes concept here again do I need to use Valumes concept here again.
+
+26:03
+Yes.
+
+26:06
+So is everyone clear what is pod basically? What is pod? Pod is basically a group of one or more containers. Pod will abstract the network and storage away from the underlying containers. Now, how to create the pod? Before I create the pod, let me explain pod model types. Pod model types. As I already told,
+
+26:34
+When you deploy a pod into a Kubernetes cluster, it will contain a single container. Pod with single container. But there are some instances you may need to deploy a pod with multiple containers. We call it as a multi container pods or sidecar containers. We call it as a multi container or sidecar containers. Sidecar containers multi container pods.
+
+27:03
+or sidecar container pods. There are two types of pod models. One is single container pod or one container pod. Single container pod or one container per pod. This model is most popular. This model is most popular. Pod is the wrapper for a single container. Pod is
+
+27:32
+Which means...
+
+27:36
+Kubernetes is in the Kubernetes pod is the smallest object that Kubernetes can recognize. It will manage the pods instead of directly managing the containers. If I am creating a pod with single container, that is one container per pod. If I deploy this pod, if I deploy this pod in my cluster, that pod will have how many containers? Only one.
+
+28:03
+But there are some instances there are some instances where you will have a multi container ports multi container ports are we call it as a sidecar containers. Multi container ports are we call it as a sidecar containers. The name itself is saying sidecar. What do you mean by sidecar? Side. This is your main application.
+
+28:31
+This is your sidecar, sidecar in the sense some kind of helper.
+
+28:36
+Helping hand to this main container So in this model Multi-container pod or sidecar container pods in this model A pod a pod can hold multiple multiple multiple Co-located containers. What do you mean by co-located?
+
+29:06
+What do you mean by co-located here multiple co-located containers, which means if I have a pod with multiple containers does these containers will be co-located. I mean to say in the same server does these two containers wherever this pod is scheduled does these two containers will be co-located in the same node wherever this pod is scheduled.
+
+29:31
+Yes, so in this model a pod can hold multiple co-located containers, but again don't think that.
+
+29:45
+you are going to deploy like this. This is your microservice A, this is your microservice B. Don't consider that you are going to deploy like this. So I have one microservice. This is my application A image container. This is my application B microservice B container. Don't consider that you are going to deploy like this. Don't consider you are going to deploy like this. So mostly,
+
+30:14
+One micro service.
+
+30:20
+image will be running as a container. But in what scenarios I will have this multi container or sidecar the name itself is saying sidecar. So if you have these type of scenario, you will have one primary container the main application and also utility container utility is nothing but that sidecar that helper. Can I enhance can I enhance my main application by deploying the helper
+
+30:49
+that sidecar container along with my application container. The main container can enhance the functionality of the main application by deploying helper container. Examples for sidecar example for sidecars are like a proxies networking proxy. Monitoring agent log shippers for that primary some kind of a helper hand. Let me take one use case.
+
+31:18
+Let me take one use case.
+
+31:23
+that sidecar container use case. Now I have one requirement. I have one requirement. Let's say.
+
+31:34
+get the file from FTP servers.
+
+31:45
+I can say external.
+
+31:49
+storage.
+
+31:52
+get the file from FTP servers and read I mean to say process.
+
+32:02
+process that file.
+
+32:06
+Which means read that file and insert into DB. Let's take this is one requirement development requirement. Let's say this is one development requirement. As a developer, does developer can write everything into a single code base, single code base, which means we'll be able to write some code. There are three things here. Three things. One is.
+
+32:36
+get the file from FTP server that is one requirement first if I want to break this task first task get the file from FTP server second task read the file
+
+32:55
+then read the file, then insert that data, insert the file data into DB, into some DB.
+
+33:08
+Let's say this is my requirement as a developer as a developer. He can write everything in a single code base reading the file from FTP server. I mean to say get the file from FTP server then read that file and insert into a DB he can write in a single code in that case that is created as a Docker image this complete whatever code he has developed if it is part of same code base.
+
+33:36
+Can I create a Docker image out of that application? That code, whatever developer has done this, it has written a code to do all these things. We can create a Docker image. I can apply the Docker image as a pod with this single container, pod with single container.
+
+33:58
+No.
+
+34:00
+Here, let's say.
+
+34:04
+This also works, but let's say there is some problem. Now, instead of FTP server, instead of FTP server, sometimes I may need to read from S3 bucket, or I need to get that file from NFS, or I need to get from some different location. Maybe I have that file in the getter, or I have file in S3, or I have file in NFS, or I have file in FTP. So this is getting changed. If it is a single container like this, same code base,
+
+34:34
+Even though there is no change in this logic, do I need to modify that code? Do I need to modify this code? Instead of S3, I need to read from FTP. Let's say
+
+34:49
+Yes, but without this one without this one does this application works? First you need to get the file from external sources that file is not there So I need to have this but if there is a changes in this one Sometimes it is from s3. Sometimes it is from ftp. I need to modify this code
+
+35:12
+Now instead of this, can I break this into a main container and helper container like that sidecar helper or utility?
+
+35:26
+utility or helper. This is main as part of the main logic. Can I have these two as part of a separate logic separate image reading the file and connecting to the database and inserting the data into this one this utility can I have this location this logic utility container get the file?
+
+35:51
+from external sources.
+
+35:54
+that external source can be anything. Now
+
+36:01
+this as a separate code base this will just get the file
+
+36:09
+from external sources. Then is it going to make that file available to the main container, main application?
+
+36:21
+This is expect you know, this is going to just get the file and keep it available for your main application main container Whatever file it is going to get from these external sources by utility Can I can we read that file from the main container and process that file and insert into a DB like this? Yes, now let's say Now I am getting from FTP FTP now. I want to get from s3 then
+
+36:51
+Do I need to modify this main logic? Or can I just enhance or modify this utility? Can I update the code instead of getting from FTP? Can I get the file from S3 now by updating only this helper logic?
+
+37:08
+So in this case, do I need to deploy these two together any time? Does these two containers should run together? In this type of use cases you have, if I have these type of use cases you have, in that case, can I create a multi-container pods? That pod will always have two containers?
+
+37:33
+these type of requirements you have are networking proxy. Suppose you are using some kind of a service miss, you are using some kind of a service miss like Istio. So in that service miss, there is a NY proxy networking proxy. If you want to reach networking, if I want to connect to that application, I want to do some kind of a networking isolation, networking abstraction. There is some concept called service miss.
+
+38:03
+So wherever my application container is running along with my application container, I need to run some some kind of a that service miss proxy NY proxy or I want to run some kind of a log agent along with my application container. I need to have some kind of a log agent monitoring agent like that along with your main container. You need to have a log agent or applicable networking proxy like that. Can I have these type of side cars?
+
+38:34
+If you have these type of scenarios, you will apply multi container or sidecar container.
+
+38:45
+As I already told what is common for the containers which is running in the same pod. Now can I have that type of a utility that file sync just the container name is file synchronizer here. Can I have some code which will get the files from these external sources like maybe this can be S3 this can be FTP. Can I have this container which will get the file from external sources and make it available.
+
+39:14
+for this container for the other container main container like this. What is common as I already told is values is common for both the containers, which is running in the pod.
+
+39:29
+Now can I mount can I mount this container with same value? So is it possible that this container will get the file and create that file in the value in the storage in the value which is attached to that part and same value. I mounted with this container also same value. I mounted with this container also then whatever file is. Created in this storage by this helper container.
+
+39:58
+Does this main container can read that file from that volume and will it process that file Insert into the DB So this way can I have a helper or sidecar containers? This can be some kind of a business requirement some kind of a
+
+40:18
+network proxy or log agent or monitoring agent like that. So can I run multiple containers along with my main container? Yes. But only one application, which doesn't mean you are going to deploy all your microservices into a single pod. Are you thinking you are going to deploy like this? You have a lot of microservices. Are you going to deploy all your microservices into a single pod? No.
+
+40:48
+So is everyone clear what is multi container or what is sidecar main container and some helper utility.
+
+40:58
+but this is based on the requirement but the most popular and widely used pod model type is what most popular and most widely used pod model type is single container pods.
+
+41:13
+As I already told, sorry, as I already told what is common for all the containers which is running in the same pod. Does all the containers in the same pod will share the same network space?
+
+41:27
+network space which means does one container can communicate with another container using localhost also let's say some API is running in this container does this container can communicate with this container will it able to make some kind of a network calls or API calls using localhost and this port localhost this container port if this container if this
+
+41:56
+Can they use localhost and 3001 port?
+
+42:03
+Does this container to reach this container? Do they need to use any pod IP server IP like that? No. And also, is it going to share same values also if required? I can attach one storage to this pod. If required, can I access that storage by mounting? I can mount this container and this container also with same storage. So is storage is also common?
+
+42:32
+containers which is running in the same pod. So is everyone clear what is single container pod? What is multi container pod? If it is a multi container pod, what is common for all the containers which is running in same pod?
+
+42:50
+No.
+
+42:53
+I want to create a pod. Now I want to create a pod. So how to create a pod? Now I want to create a pod. How to create a pod?
+
+43:08
+Should I contact guys whom should I contact if I want to do anything whether I want to create a pod delete the pod Whatever I want to do. Who should I contact? I should contact my control plane I should contact my control plane. What is the meaning of control plane? Do I need to contact the master? The master do I need to request my master? Can you deploy this pod?
+
+43:37
+I need to request my master. I want to deploy my container my pod. I need to request my master. So how can I request my master? I need to communicate with API server. Can I use kubectl cli? Via kubectl cli I can request.
+
+43:57
+Now I can do it in two ways. I already explained I can manage these Kubernetes resources in the Kubernetes cluster. I can create update delete using two ways. One is imperative. Another one is declarative. So if it is a imperative, can I execute some comments like this? Guys, don't focus too much on the comments.
+
+44:26
+internet also kubectl comments so you can go to the official website also and you can practice so this is my official website now can I execute some commands imperatively like this just to give an example I am executing this command what do you think what will happen I am executing this command kubectl run nginx hyphen hyphen image equals to nginx
+
+44:56
+If I execute like this, it is an imperative command. What it is going to do? Is it going to create? Ford with the name called engine X and part will have how many containers that part that part will have how many containers that part will have one container. One container that container is created using which image?
+
+45:27
+that is going to be created using which image.
+
+45:34
+something like this. And the next image. Since we have not mentioned any tag also, what will be the tag that QBurnett will use? Latest. And there is no registry details, so this image will be there. This image will be downloaded from which registry? Is it going to download from Docker Hub?
+
+45:55
+So this is imperatively. This is imperatively. Imperative. If it is a declarative, do I need to write a detailed manifest file? Do I need to write a detailed manifest file if it is a declarative?
+
+46:12
+So that manifest file as I already told that manifest file I as I already told what format I can use does QVernety supports YML yes does it support JSON does it support JSON yes but 99.99% what in which format we are going to define or declare YML. So if it is a YML.
+
+46:40
+API version kind metadata spec now I'm just starting with pod I'm Just starting with pod don't consider. This is final Don't consider this is final Are we going to directly create a pods? If you ask me are you going to directly create a pods? No, so I'm just explaining basics first
+
+47:08
+We have some problems if I directly create a pod. So I will explain that in some time, but let me explain first what is pod. Without explaining this pod, if I directly explain whatever we are going to use like a deployment or replica set, we are going to use these things like a deployment replica set, stateful set, will be able to understand in detail. No, so that's why I'm explaining what is pod. Then I'm going to the advanced concept.
+
+47:38
+We have some problems if I use FOD. Now, FOD can be created directly using imperative or declarative in the form of YML. Now, if I want to create a FOD, I am going to write a manifest like this, kind. What kind of Kubernetes object I want to create. Now, what I want to create. What kind of object or what resources I want to create. FOD. So kind is what? Kind is what?
+
+48:10
+pod but do you see is this correct you guys are doing small small mistakes is this correct pod no as I already told multiple times if you don't know can I use one kubectl command kubectl api hyphen resources to understand api resources l is missing kubectl
+
+48:39
+API resources.
+
+48:43
+Now can I call all these things as API resources or objects or workloads whatever I see here all these things. Now if you want to create a pod if you want to create a pod this is one API resource kind what is kind here pod is P is caps is P is caps and API version sometimes I see people are doing mistakes is this correct again API.
+
+49:13
+version v small your guys are doing like this is this correct no and again what you guys are doing capital V1 you guys are giving sometimes capital V1 is this correct again
+
+49:28
+You have to hear. Is it a capital V1 for this pod the API version? Is it a capital V1? No, it's a small even. Like this. And sir, what is this? I can see some additional tag here called namespaced some for something I can see true something I can see false. What do you mean by this namespaced true? What do you mean by this namespaced false? So.
+
+49:58
+Wherever you see namespace does it true. What does it mean? Is it a namespace specific which means can I create these objects in a particular namespace not in a cluster wide? Does pod is namespace specific?
+
+50:17
+Yes. Now wherever I see namespace does false. The scope of that API, the scope of that object or API, is it a namespace specific or cluster resource? Is that a cluster resource? It's a cluster resource. If you see this node, node is not a namespace scope. These nodes are common irrespective of any namespace. The nodes, the servers. Yes.
+
+50:45
+And also this namespace also you can see as a false is namespace is a cluster wide resource Namespace is a cluster wide resource within that namespace. I can have these pods Deployments like this similarly do I have some things? Like false also if you see volumes values persistent value Persistent volumes that is storage is that storage is a namespace. I mean to say cluster wide resource
+
+51:15
+persistent value.
+
+51:18
+So which means are you guys clear? What is this meaning of namespace? It will true namespace at Falls. If it is namespace at Falls, it is not a namespace level resource. Is it a cluster level resource if it is namespaced as a false? Yes. So wherever you see namespace does it true? Does it mean is that object or resource? Can be managed in some namespaces within a namespace code? Yes.
+
+51:49
+Now that is namespaced. Now here metadata under metadata. What is this name? This metadata is nothing but what in general I have already explained metadata is nothing but it's a data about data. So whatever name here I am giving this name is for what this name is for what whatever I am going to give here. This name is basically your pod name. This is your.
+
+52:19
+Pardon me.
+
+52:22
+Can I add a labels to my pod again? Can I add a labels to my pod something like this?
+
+52:32
+Guys if you are doing imperatively also if you are doing imperatively also, can I see some options like this? Cube CTL run image name you can pass environment variables. You can define the Port details you can add the labels also while creating a pod like this. These are the examples Can I do whatever I am doing? Declaratively can I do same thing using imperatively also? Yes, but this is not recommended
+
+53:02
+This is not recommended. Why it is not recommended. If I am using declarative, can I maintain these manifests as part of version control system? Can I keep a track of what changes has been happened to my Kubernetes manifest? Who has done what?
+
+53:19
+Can I track, can I maintain the version history of my Kubernetes definitions, Kubernetes manifests or declarations, what I want to deploy or declare in Kubernetes? Can I maintain in the version control system like a CM and track the history who modified this deployment manifest or service manifest? What are the changes has happened to this manifest? Can I keep a track? So that's why, which one is widely used?
+
+53:46
+Are you going to do imperative way of declaring or deploying in Kubernetes? Are you going to use declarative way?
+
+53:56
+declarative way. So I can add a labels here. Here I can define the namespace in which namespace this object, in which namespace this part has to be created. I can say something like this. If I don't define this namespace, in which namespace this part will get created by default.
+
+54:25
+This part gets created in a default namespace. Whatever namespace your cubectl is pointing by default. Your cubectl is pointing to let's say default namespace is this part get scheduled or created in that namespace.
+
+54:47
+is namespace is physical is namespace is physical or logical it's a logical it's logical grouping of your cluster so I can define a namespace also like this namespace when I am doing imperatively can I use something like this I fun yet and that namespace name can I do like this imperatively if I am doing can I do like this iPhone n.
+
+55:15
+in which namespace I want to create like this.
+
+55:19
+Yes.
+
+55:22
+If it is a declarative I can define same thing here. Something like this your namespace name your ns name whatever namespace you want to deploy your namespace name.
+
+55:36
+Now what is this spec? Spec stands for specification. Do I need to specify what should be part of this pod whatever I am trying to create do I need to specify do I need to define the pod spec what should be part of this pod so that kubernetes can create a pod based on the specification you are defining here. This is your pod spec. So here I will have a container section.
+
+56:05
+I will have a container section and volume section. So whatever values I want to attach to this part, can I define those values here under this volume section? Whatever values I want to attach to this part, I can define in volume section. But whatever containers I wanted to create as part of this part, can I define in the container section?
+
+56:34
+Yes. So here something like this name. What is this name container name image from which image you want to create that image.
+
+56:48
+details then ports ports will have a something like this container port and which port that container is listening or running.
+
+57:01
+These are the bare minimal things. If required, we are going to use some advanced concepts also slowly. But let me explain. These are the bare minimal things. Now, suppose for this container, I want to pass some environment variables. Can I use something like this? ENV. For this container, I want to pass some environment variables. Can I use something like this? ENV. Environment variable.
+
+57:30
+name and value if required can I pass environment variables also for that container environment where name
+
+57:46
+variable name whatever environment variable you want to pass name can I pass its value the value of that environment variable I can pass something like this environment variables also if required is it possible for me to request how much CPU how much memory this
+
+58:12
+and how much CPU and how much memory we are looking for this container and also is it possible for me to limit also how much CPU how much memory this container can take that you can use something like this resources this here you have two things requests and limits if say I am requesting this much CPU let's say 200 M memory
+
+58:41
+256 YMMA.
+
+58:44
+Which means am I requesting my Kubernetes for this container? Minimum I am looking this much memory, this much CPU for this container. Let's consider your Kubernetes cluster. None of the nodes, none of the servers has this much CPU, this much memory available. Already, a lot of parts are reserving a lot of CPU, a lot of memory. None of the nodes, none of the nodes.
+
+59:12
+has this much CPU, this much memory available. Do you think your API server will schedule this part? If none of the server has this much CPU, this much memory? No. So if you have that much memory, that much CPU available in any node in the cluster, does your scheduler will try to schedule that part to the node where we have this much CPU memory available? Yes. So this we are requesting or reserving.
+
+59:41
+We are requesting minimum. I need this one. Does it mean you are actually your container will take this much you are just requesting does it mean always your container will take this much? No, you are requesting but does Kubernetes will resolve that memory even though that that much is not used by that container does Kubernetes will resolve consider that this is already used considering that it is going to reserve.
+
+01:00:10
+even though that much is not used it is reserved. Now does any other container if trying to request if this much is not available does other container pods does other pods will get scheduled?
+
+01:00:23
+Even though it is not utilized it is reserving it is going to resolve this much. Even though that is not utilized this much, but again whenever there is a load is it possible for me to limit it should not go beyond this much memory even though you have enough memory in that server. I don't want that container to go beyond this much request this much CPU and memory. Is it possible for me to limit like this?
+
+01:00:52
+This is very, very important. Otherwise, you will mess up your pods, because if you don't define this, even though you are deploying another application as a separate pod, is there a chance that other pod will take a lot of CPU and memory because of that this pod may get impacted in that node?
+
+01:01:27
+So pod level also you need to define. Can I control how much CPU, how much memory each pod, each container can take by using this one in the pod level container level? This is also important. At the namespace also, can I set the resource quota? Can I set the resource quota so that multiple teams cannot mess up with other namespaces? At namespace I can use resource quota. At namespace level I can set the resource quota.
+
+01:01:56
+But container level can I set the resources? How much CPU, how much memory each container can take in that part in that namespace? Yes. So resource quota is different. Resources are different. Resource quota is different. Resources are different. Resource quota is applied at what level guys? Resource quotas will be applied or set at what level? Namespace. Namespace level.
+
+01:02:26
+So when I'm creating a containers, can I set the resource request and limits for container for each and every pod? Yes. So this is at a container level. Now let's say I have set the resource quota itself 1 GB and one CPU. Resource quota itself is 1 GB, one CPU. Now is it possible for me to do something like this?
+
+01:02:54
+Is it possible for me to use like this one to CPU? Is it possible for me to request to CPU and 2 GB request? Is it possible? Is it allowed? No. So resource quota is different resources are different, but slowly I will explain all these things but is it recommended? Is it mandatory or recommended to define the resource quotas and limits for?
+
+01:03:23
+Containers also while creating a containers in ports. Yes, it is recommended. Otherwise you will mess up other applications other ports.
+
+01:03:36
+So this also we can do this also we can do like this. You have a lot of options also guys like this. You have a lot of options also like liveness probe probes kind of a health checks liveness probes readiness probes liveness probe readiness probe like this. You have a lot of options slowly. You will understand all these things.
+
+01:04:01
+And also is it possible for me to mount volumes like kind of a if and we option can I mount volumes to my containers? We are defining a volumes here. Can I mount that value with this container using value mounts option kind of a if and we yes, so we are going to use all these options based on your requirement based on your requirement. You are going to use all these options based on your requirement.
+
+01:04:30
+For now, let me explain bare minimal. I am not...
+
+01:04:36
+explaining with all the details slowly. You will understand this is bare minimal. Now if I create a pod like this, how many parts will be created within that part? How many containers will be there?
+
+01:04:52
+It will create one pod that pod will have how many containers?
+
+01:04:59
+to a sorry one container sorry. Now if I want to have a multiple containers in the same part, can I repeat this section? Can I have something like this? One more container from which image it has to create what container port, how much resource request and limits all these things.
+
+01:05:21
+If I do like this, how many containers will be created in that pod? Two. So again, for each container, can I define resource request limits, liveness probe, readiness probe, value, mounts, all those things? Yes. That is based on your requirement. This is containers. If I want to use any values, do I need to define values also like this? The way I am defining containers.
+
+01:05:49
+Can I define multiple values name.
+
+01:05:55
+Can I is it possible to attach multiple values to the single part the way I am creating multiple containers? Is it possible to attach multiple values also to the same part? Yes.
+
+01:06:08
+This is how you can request. But slowly we'll understand all these things. Now let me deploy this application.
+
+01:06:18
+Now I want to apply this application.
+
+01:06:23
+Let me apply this application. Now, if I want to apply this application, if I want to apply this application, do I need to first have a Docker image created out of this application? I want to run this application in my Kubernetes cluster. I want to apply this application in my Kubernetes cluster. First, do I need to have a Docker image, that container image created first for this application?
+
+01:06:53
+Do I already have a Docker image created and available in the registry that can be public registry or private registry. Now I am explaining with public registry. Later I will explain how to use private registry. So do I already have a image available in the public registry. This is my registry. This is my repository. This is my tag. Now can I create a pod for this? Can I create a pod and can I create a container for this application in that pod?
+
+01:07:25
+If it is a imperative, if it is a imperative, can I execute something like this?
+
+01:07:32
+This is your part name. This can be anything. I can say something like this maven web app image. Can I use this image?
+
+01:07:41
+now I fun I fun container put all these options all these options imperatively something like this I fun I fun port something like this I fun I fun port
+
+01:07:57
+that is your container port.
+
+01:08:02
+something like this, hyphen hyphen four.
+
+01:08:06
+As per my requirement this image is running on which container port what is the port of that image 8080. Now I can apply like this I can apply like this imperatively.
+
+01:08:25
+Guys if I want to deploy declaratively do I need to write a manifest like this let me show you now API version kind Metadata spec Now API version I want to create a pod API version v1 Metadata name can I give something like this my pod name? If required can I add labels like this?
+
+01:08:54
+some key value pairs app, something like this, maven web app like this. Guys, can I give here ABC XYZ as a label key label value also? Yes, I can give anything that is a key value labels, but is it recommended to give some meaningful names, easy to identify, easy to recognize? So I'm giving something like this app.
+
+01:09:24
+maven web app like this Instead of app can I give something like this also name maven web app app maven web app like this anything Some meaningful name is it possible for me to add multiple labels also
+
+01:09:40
+Like another label also here.
+
+01:09:44
+like any other label.
+
+01:09:50
+First version of app or second version of app like this. Is it possible for me to do multiple labels also? Yes now namespace namespace If I don't mention any namespace Like this in which namespace this part gets created if I don't mention default default namespace
+
+01:10:15
+Now if I want to deploy in that namespace I need to do but is this correct again is this correct Is this correct again? Like this. No This is not correct. You need to have a proper indentation Sir, how to know all these things how to know all these things while practicing? with the experience with experience with practicing with the deploying you will know all these things but when you are learning
+
+01:10:45
+Can I go and refer any official website like Kubernetes official website itself? Will I able to know?
+
+01:10:55
+Kubernetes pod. What is pod? If required, how to create a pod? Can I know all these things from the official website itself? What is pod? Now let's say, can I know? This is one example. But your pod will be able to create with whatever image you want to use, on whatever container port you want to use, based on your requirement. Instead of this Nginx image, can I deploy my own image? Whatever you created.
+
+01:11:26
+Now you can understand what is pod. This I already explained. This already explained what is pod, right? How to create a pod like this, we already explained. Now you can get from official website all those details. But with practice and experience, you will get.
+
+01:11:50
+That is what experience. That is what experience with more practice, with the most more practice, doing the more assignment you will get experience. But you don't have actual in the real time projects you have not worked. But whether it's a real time, whether you are using with the actual sample application, does the concept will change the way you are going to use Kubernetes?
+
+01:12:16
+The way you are going to deploy applications in Kubernetes will change? No.
+
+01:12:22
+Same concept, but here am I deploying sample application kind of a simple and sample application instead of actual applications, real applications? Yes. But does that matter here? Whether you are using a sample application or actual application, does that matter here? No. As for the application requirement, the developers will write the code. As I told multiple times, only the code will change.
+
+01:12:50
+In sample application, you will have very less code. But in real applications, do you have a lot of code, 100 lines of code, 200 lines of code? Instead of one source file, you will have a hundreds of source files like that. Maybe here I'm explaining with one or two microservices. But in actual applications, do we have a tens of microservices, hundreds of microservices? Yes. But does the concept will change?
+
+01:13:17
+that microservice, Kubernetes, Docker, infrastructure, storage, networks, all these things remain same. So if you more practice, if you do lot of practice,
+
+01:13:31
+If you do a lot of practice, if you do a lot of assignments with the best practices again, if you do a lot of practice, a lot of assignments with the best practices again, will you be able to manage your work, will you be able to compete with the guy who has experience, real experience in the DevOps or Kubernetes, will you be able to compete with that guy if you do a lot of practice and assignments and all these things?
+
+01:14:00
+Yeah, you can do that. But that is very important. Not only just attending the classes does matter. Does it matters to practice a more do the lot of assignments? Yes. That's why we are saying from day one assignments and practice is very, very important. The more you practice, will you experience lot of errors, lot of issues also? Lot of errors will come. Lot of issues will come.
+
+01:14:27
+The more issues, the more errors you get while practicing, will be able to understand that error, will be able to troubleshoot and fix that. It will improve your troubleshooting skills also. Will be able to understand, fix the problems also. If you are getting same type of errors or issues in the actual servers also, actual Kubernetes projects also, will be able to easily identify and fix the problem. If you know how to troubleshoot, what is the error on all these things, yes.
+
+01:14:57
+That's why I'm saying, practice is important. Sometimes in the interview, they will ask you to write a Kubernetes manifest file for pod. Let's say you have not done lot of practice. Will you able to write this Kubernetes manifest file on the fly? If someone is asking in the interview, share your screen. Can you write a manifest file?
+
+01:15:19
+They are going to do something like this. Create a pod. Create a pod with this image. If you know how to do this already, what is pod and how to do that, you can write.
+
+01:15:35
+As I already told, CKA and CKAD exams also, is it kind of a multiple choice question? Are they going to ask a question and give answers where you can select some checkbox or radio button? No, it's a scenario based question, use cases. They're going to give some question like this, create a pod with so-and-so image, and so-and-so container, so-and-so port, in so-and-so namespace. In that case, do you need to do something like this? Maybe imperatively?
+
+01:16:05
+are declaratively.
+
+01:16:11
+But if it is a Kubernetes CK exam, will you be able to directly go without doing a lot of hands on, a lot of practice? If you are not doing, will you be able to go and clear the interview, even though we cover all these concepts? No. Because time is very, very important. Do I have a time limit there? Within the time limit, do you need to complete all these questions, whatever they are asking? Yes.
+
+01:16:37
+If you have already done a lot of practice, will you be able to manage that questions within the given timeline? Will you be able to attempt? Yes. As I already told, even though I am taking a Kubernetes exam, will I be able to open this official Kubernetes website? Can I learn the, can I search that if they're asking something on FORD, I can open this and I can look. It is allowed.
+
+01:17:06
+In CK exam this website is allowed. You can open this one. But will you able to completely depend on this one without knowing the concept? Is it possible for me? It is possible for you to understand this in the exam, then use that in the exam.
+
+01:17:26
+know, but you already know some concept you already know some concept.
+
+01:17:32
+You already know the concept, but will I able to refer this? Will I able to refer this at high level? Suppose they're asking something on resource quota. I already know resource quota, but I have some doubts. Can I quickly go to that resource quota page? Can I quickly refer? If I have some small doubt here.
+
+01:17:54
+If they're asking, can I copy paste this one and modify as per my requirement? Yes. But if you don't know what is this, what is resource quota, how it works, will you be able to learn all these things in an exam and attempt? No. So you are allowed to open this, but a lot of practice is required so that you can quickly go and refer that page. What is that? How it works?
+
+01:18:22
+but you should not completely depend on this one. But if you have done lot of practice will I able to quickly recap what is what just for a reference within 30 seconds or 10 seconds I can refer this I can attempt.
+
+01:18:38
+So a lot of practice is important. That is what we call it as experience. The more you practice, you are getting more experience. The more assignments you are doing, you are getting more experience. You are going to get a lot of errors, issues. Will you be able to improve your troubleshooting? You know, will you be able to understand all that concepts very in detail if you are facing more errors?
+
+01:19:04
+Now are we going to get same or similar kind of errors in the actual projects also whatever you are going to get. Yes similar or same.
+
+01:19:16
+So that way you can manage your work. So that's why practice is important. Now let me proceed here.
+
+01:19:25
+Not only just attending guys, the practice and assignments is also important. That's why we are saying assignments are mandatory. Assignments are not punishments.
+
+01:19:37
+Now I want to deploy this application. Can I have something like this? Containers, name of the container, I can give whatever name I can give. Maven web app container, something like this. Image, can I use this image? Whatever image I want to deploy, something like this. Again, if I don't give any tag here, what image will be used? What is the tag it will use by default?
+
+01:20:07
+But you are giving this registry details are not correct. This repository is not exist or the tag doesn't exist in that repository. Are we going to have some kind of error while creating this pod?
+
+01:20:22
+Yes, make sure you are giving correct registry details repository details and a tag. Suppose this tag doesn't exist in this repository. It will throw error. Now this tag is there but your repository name is wrong. You are giving your repository name like this if this repository doesn't exist also are we going to get error again? Yes, even though repository name is correct.
+
+01:20:51
+your registry details are not correct again are we going to get error while creating a pod yes so make sure you are giving the correct details what error you will get while you are creating a pod image pull back of error image pull back of error or error image pull if you see this means if you see this error
+
+01:21:20
+pod is not a created successfully if you see this error. What do you mean? Why we are getting this error is it because of invalid registry repository tag is used invalid registry or repository or tag is used otherwise if it is a private repository if it is a private repository if I don't authenticate again will I get this error even though registry repository and
+
+01:21:50
+Tag is correct. If it is a private repository, if I if I'm not authenticating in Kubernetes again, will it throw error? Yes, for these two reasons you will get this one. How to use private repositories. I will explain later how to use private repositories. I will explain later. Now is this a public repository? And is this repository registry and a tag is correct?
+
+01:22:21
+Yes, now ports ports container port. Is it always 8080 guys is this container port always is 8080? No based on what type of application you are deploying. Let's say I'm trying to deploy python application python that flask application. Can I say port as 5000 here? Python application. Yes, if I am deploying that node.js application.
+
+01:22:50
+that node.js application can I say port as double nine eight one that is my container port.
+
+01:22:58
+Yes. But as per that current requirement, is this container is expected to pass any environment variables? Is it expected to use any values as of no? As per that application requirement, no. But if you have application container that is expected to pass environment variables, expected to use values, do I need to use all those details in this part manifest? Yes. Slowly we'll understand all these things. This is sufficient.
+
+01:23:27
+Now if I create like this one pod with how many containers.
+
+01:23:35
+one now don't consider you are going to deploy like this as I already told as I already told don't consider you are going to deploy multiple microservices like this are you going to do like this is it possible for you to deploy that application again same port
+
+01:23:55
+same port no but even though this is running on a different port let's say you modified your docker file you modified your Tomcat container port to different port still are you going to deploy like this no why because whenever there is a change in this application this micro service I am running this also in a same port same container
+
+01:24:23
+So whenever there is a change in one microservice, I am going to create a Docker image, new Docker image, and I am going to deploy that new Docker image again. In that case, if this part is deleted and recreated, even though there is no change in the other application, is it deleting that container and again, is it recreating?
+
+01:24:46
+So is that correct?
+
+01:24:50
+Even though there is a change only in this container, I'm going to update this image and I'm redeploying. Since both are running in the same pod, does this one also will be stopped, deleted, and again will be recreated, this one along with this one again? So do you think that is correct? One more reason where we are not going to deploy different microservices in the same container? No. So.
+
+01:25:18
+You have a multi containers, but that multi container is not a different application altogether. Can I have some kind of a helper or utility for this container if there is a requirement? Yes. Is everyone clear? What is single container? What is multi container?
+
+01:25:39
+Now, I am going to deploy like this, I am going to deploy like this.
+
+01:25:46
+Now this is manifest.
+
+01:25:51
+I am creating something like this one file.
+
+01:25:55
+maven web app pod.yml like this. So this is my pod manifest. Is it possible for me to do the dry run on this manifest whether this manifest is correct or not. Whether this yml is correct or not. Yes. How to do that. kubectl apply ifnf this yml file ifn ifn dry ifn run
+
+01:26:25
+equals to client.
+
+01:26:29
+So because of this option, is it going to actually deploy the pod?
+
+01:26:36
+No, now it is kind of a dry run. Now is it showing is it throwing some error, error validating this unknown field unknown field meta da something like this. What do you mean? Am I using something like this meta day? Is it correct? No meta data.
+
+01:27:04
+Now if it is correct, again it is giving some more again, meta.
+
+01:27:13
+Additional E is there additional E is there A is there Additional A is there Metadata Now if everything is perfect, is it giving something like this pod created but in the bracketed dry run In the bracket it is dry run Does it mean it is actually created is actually pod is created in the cluster? No here There are two options client and server
+
+01:27:41
+What do you mean by client? What do you mean by server here? If it is a client is this manifest is a validated against the cube CTL locally within that client is it validated via Cube CTL only client validation. Yes, but when I am using server is this request is going to that API server is it API server is validating that one whether it is correct or not. API server.
+
+01:28:09
+Either you can use client or server like this in the dry run. Now if I want to actually deploy can I remove this dry run option can I execute. Yes but let me make some mistakes. Now this indentation is not correct. Is this indentation is correct now let's say is this indentation is correct. No now will I get some kind of a parsing errors now when I do the dry run. When I do the dry run. Am I going to get some parsing error.
+
+01:28:39
+Error converting YML to JSON did not find expected key. Line number four. I have some problems here.
+
+01:28:50
+something like this you will have.
+
+01:28:55
+Now, if dry run is successful, there is no error. Now, can I execute something like this kubectl apply? Can I execute something like this kubectl apply? Now, with the help of manifest file, am I requesting my API server to create that Kubernetes resource in my cluster?
+
+01:29:19
+Now, as I already told what API server does, what scheduler does, we already discussed is that API server is going to perform authentication and authorization and validate that request. Validate that request if everything is proper. If that manifest is proper, is it going to purchase that information in ETCD? Then the pod is not scheduled. The pod is not scheduled. Is your scheduler comes into picture? It will try to.
+
+01:29:48
+schedule the pods which is not scheduled is that scheduler is going to assign a node is that scheduler is going to assign a node to that pod which means in which node that part has to be scheduled will be decided by whom
+
+01:30:04
+in which node that part has to be scheduled will be decided by scheduler. So by default, what scheduling logic it will use is that scheduler will try to compare if your part is your container is requesting some CPU and memory, is it going to compare with available CPU and memory in the nodes? Then if any node has that much CPU and memory available, the scheduler will say, but scheduler
+
+01:30:32
+the scheduler or that control plane will use will communicate with whom in the nodes to manage that scheduling assigning and maintenance it will communicate with whom the cubelet the agent which is running in that node that is what it is going to happen. Now let me apply.
+
+01:30:56
+Now did I got a message saying that pod is created. I think I already explained here what is the difference between kubectl apply kubectl create. I think I already explained right. So kubectl apply kubectl create. Similarly we have a kubectl update.
+
+01:31:24
+cube ctl delete like this now apply you already know if this is I'm using if that resource is not there if that object is not created is it going to create that kubernetes object in the cluster. Yes, if it is already there is it going to compare current state with the desired state the current state in the sense whatever is already running in the cluster desired state in the sense whatever you are having in the.
+
+01:31:52
+that manifest file if there is a change between current state and desired state is it going to update.
+
+01:32:01
+If there is a change between current state and desired state, it will update that is what it is going to do.
+
+01:32:08
+Now if I want to delete that application that Kubernetes resource completely from the cluster, can I use this kubectl delete? Yes. Now I deployed a pod, but when I'm executing kubectl get pods, why I'm not able to see that pod?
+
+01:32:36
+Why I am not able to see that part?
+
+01:32:42
+Understand this.
+
+01:32:45
+namespace in which namespace I have created that pod in my pod manifest. I have mentioned a namespace in which namespace I requested that pods to be created test ns but now when I am executing this cubectl by default cubectl is pointing to which namespace
+
+01:33:09
+Now, can I use something like this? I have an n that namespace name.
+
+01:33:17
+Now, can I see in this namespace as of now, how many parts are there?
+
+01:33:26
+What do you mean by this one by one? I have one part. What do you mean by one by one here? What is that one? Desired and actual. Is it a desired number of parts or is it a desired number of containers in that part? I am seeing the containers. This one and one, is it a number of containers in that part? So this represents basically.
+
+01:33:55
+containers in that pod.
+
+01:33:59
+desired containers.
+
+01:34:02
+and actual containers.
+
+01:34:07
+actual
+
+01:34:10
+or current actual or current containers. So why it is one because in my pod how many containers I was expecting one so desired is one is that container is ready now above I can see one. So which means is that container is ready. You can see in running state. Sometimes you see something like this 0 by 1. What do you mean 0 by 1 you see some errors here is that
+
+01:34:40
+Is that container ready? No, in that case, do I need to troubleshoot? Why that is not ready? What is the problem with that container in that pod? Suppose you are expecting two containers. Sometimes you see two by one by two, which means you are expecting two containers to be running on that part. But if you see something like this one by two, what does it mean? Is both containers are ready running successfully in that part? If you see something like this, no.
+
+01:35:11
+Only one container is successful other container is failed. Do I need to troubleshoot and identify that why that is not ready? What is the problem? Yes, so this is current and actual containers. This is pod pod will have what as I already told pod will have a containers. Now is that container is ready?
+
+01:35:36
+Now if I want to see more details about this Kubernetes object, any Kubernetes object, the way we have a Docker command in the Docker inspect in kubectl in kubernetes what command I can use if I want to see more details there is a command called describe. What I want to describe if I directly say kubectl describe this one, will it understand what resource it is? No
+
+01:36:04
+So do I need to say what you want to describe? Do I need to say kubectl describe pod? Because this is pod. This is pod. I'm saying describe this pod. Which pod? This pod. Now I'm getting error. It is saying pod, this one not found. I'm getting this error pod, this one not found. Why? Because this pod is the kubectl is making a request to the API server in which namespace it is trying to look that pod.
+
+01:36:35
+default but they have that part in this namespace. Do I need to mention that I found in that namespace? Now, am I able to see the more details about that Kubernetes resource that part?
+
+01:36:52
+Now name my pod name namespace in which namespace that pod is created. Now labels they have some labels added for my pod and also this node. What is this node? I can see some IP node which means is this pod is scheduled in this node. Whatever node it is showing here that node name or IP address. Yes the status.
+
+01:37:22
+the status is showing as running which means is that pod container is running successfully.
+
+01:37:29
+And what is this IP? I can see 10.40, 44.0.1. What is this IP? What is that IP? 10.44.0.1. What is that IP? Is that node IP or pod IP? As I already told, does each and every pod will have a IP address?
+
+01:37:51
+That is pod IP now that pod they have a containers in that pod. I can see only one container because how many containers I requested as part of that pod only one is that container is created out of this image. Is that container is in a running state is that container started in this time. Is it ready?
+
+01:38:17
+But as of now, there are no values used. There are no values used, our own values that we will discuss later. Now, if you see, there are events also. There are events which I can see when I am describing the pod. Now, if you see here, does the scheduler successfully assign this pod to this node? Events are nothing but what happened. What are the events happened for that resource? So if you see.
+
+01:38:47
+is the scheduler schedule that part to this part as this node
+
+01:38:54
+Now the scheduler schedule this part of this node then cubelet the cubelet. What do you mean by cubelet in this node? Do we have some cubelet agent is that cubelet is pulling that image? Is it pull that image is it created a container out of that image is that cubelet started that container for that ford?
+
+01:39:20
+So this is how I can see more details about any Kubernetes resource. Suppose I want to see more details about nodes, servers. Can I do something like this? kubectl describe, but without mentioning, if I mention something like this, will it able to understand what it has to describe? Can I say now, is this correct? kubectl describe pod, is this is the pod? No.
+
+01:39:48
+can I say QCETL describe node describe node I want to see more details about that node now can I see more details about that node
+
+01:40:00
+That is node right that node is master node that node also has some labels right that node it doesn't have any issues as of now. It doesn't have any issues you can see that node doesn't has any issues does that node has any disk pressure disk pressure I will input output operations is there any pressure on the disk on that node as of now. No, do I have any.
+
+01:40:29
+is that has any insufficient memory is it saying cubelet cubelet has sufficient memory it is saying it has a sufficient memory. So is this control plane is using cubelet to check all these things from the node is cubelet is reporting back the status is cubelet is reporting back to the control plane. There are no issues as of now.
+
+01:40:57
+Let's assume there is a disk pressure. There is a insufficient memory for your cubelet. Then does that node will impact if cubelet is impacted if cubelet is down your node will have issues. Does you know master machine will be able to communicate with cubelet if cubelet is down or if that node has insufficient CPU memory or disk pressure. If that is the case, can I see that node has not ready? Can I see that node has not ready?
+
+01:41:26
+are down here kind of a down here
+
+01:41:32
+Yes, so can I use this describe command to describe or troubleshoot any issues on the nodes parts deployment services, whatever it is.
+
+01:41:44
+Yes. Now I can see something like this. What do you mean by cubectl all? All in the sense, is it going to return all the Kubernetes objects like a pod services deployments?
+
+01:41:58
+Yes, but as of now except the pod except the pod, do I have any other Kubernetes resources here? No. If I want to get only pods, can I use something like this?
+
+01:42:21
+only services if you want to see only deployments I can use something like this deployments replica sets replication controllers I will explain what is what later I can use something like this also now if I want to see high level there is a one more option cubectl get pods
+
+01:42:50
+If you observe what is the difference when I am using this iPhone worldwide when I am not using that iPhone worldwide. What is the additional information I can see when I am using iPhone worldwide what additional information I can see.
+
+01:43:05
+Am I able to see these details? Additional details here. IP node like this. What is this IP guys? Whatever IP I see here, what is that IP? Pod IP. What is this IP? Is that is a node IP in which in that node the pod is running. So as of now, this pod is running in which node as of now? Is it running in this node?
+
+01:43:40
+Yes.
+
+01:43:43
+the pod is running in that node. Now, by default, by default in Kubernetes, our pods will not get scheduled in the master. Whatever pods I'm creating, by default our pods will not get scheduled in the master. Why the pods are not getting scheduled in the master? There is a concept called the taints. There is a concept called the taints here. There is a concept called taints here.
+
+01:44:15
+our master node has a taint if you describe your master node describe node you describe your master node our master node has a taint can I see something like this taint something like this so this is key this is effect so can I see some taint on the master
+
+01:44:40
+What is this taint? What is toleration? I will explain later. I will explain later. What is this taint? What is this tolerations? I will explain later, but just now for now, just understand they have some taint on the master. Some kind of a special marking on the master. Are we tolerating this taint? Are we tolerating this taint in our pod manifest when I'm requesting the pod when I'm requesting a pod am I tolerating that taint?
+
+01:45:09
+Do I have anything like this tolerations? I'm tolerating, am I tolerating the taint, whatever I have on the master? No. So because of that, because of that, is that pod is considering, I mean to say, is master node is allowing that pod to get scheduled on that node? Since we are not tolerating, the master node is not allowing. Master node is rejecting. Master node is rejecting that pod. So that's why it is not scheduled on the master. But do I have any taints?
+
+01:45:39
+and the workers by default. If I describe my workers now, if I describe my worker nodes, do I have any taints on this worker 101 or other node by default, do I have any taints on that 101 or 70. So is master is what is those nodes are rejecting this part is that nodes are rejecting that part. No, because there is no taints.
+
+01:46:08
+There is no taint. So that's why by default, is our parts are getting scheduled in the master. Unless until we are tolerating the taint, the parts will not get scheduled in the master. It is only in the worker. Now my part is scheduled. My part is scheduled within that part container is running. Now how can I access this application now within the cluster or outside the cluster I want to access? How can I access?
+
+01:46:37
+within the cluster I want to access or outside the cluster I want to access. How can we access? That is where that is where this comes into picture. That is where this comes into picture. Service that is where service comes into picture. So today I just created a pod. My pod is running
+
+01:47:06
+I am not accessing that application as of now. So how to access that application within the cluster, outside the cluster, what do you mean by within the cluster? I have a Kubernetes cluster. So.
+
+01:47:24
+I have some machines here. My part is running now. Let's say within the cluster within the cluster in the sense.
+
+01:47:34
+Within my kubernetes cluster, let's say I have one more application one more one more micro service altogether Suppose this micro service want to access this application this micro service. Can I call that as a within the cluster? Can I call this one want to reach this one? Can I call that as a within the cluster? Yes Outside the cluster in the sense outside in the cluster in the sense if you want to access from outside of your cluster This can be another server
+
+01:48:04
+or this can be end user, this can be end user laptop or desktop or this can be one server outside your kubernetes cluster can I call this as outside cluster
+
+01:48:18
+Yes. So how to access that application that pod which is deployed within the cluster or outside the cluster What is service? We will discuss tomorrow. We will discuss tomorrow very very important. These are basics guys You no need to be strong in the advanced concept. If you are strong in the basics Will be able to become expert in the advanced concept. Yes, but if you are not good in the basics itself
+
+01:48:48
+If you are not good in the basics itself, you cannot become an expert. Basics are very, very important. If you are good in basics, will you be able to easily understand the advanced concepts also? Will you become an expert? Yes. So basics are important. So I'll continue tomorrow about that. What is service? Why do we need service? And also what is the problem with pod?
+
+01:49:17
+why we should not use pod I will explain that tomorrow. Thank you guys try to practice will continue tomorrow.
+
+01:49:30
+People are asking sir. What is the maximum bill? I will get if I continue same setup in AWS Let it be 20,000. Let it be 40,000. Don't worry about that bills renew us Focus on the concept don't go every day Every day how much bill I have whether I have a one rupee 20 rupee 30 rupees that doesn't matter Don't bother about that because are they going to deduct that amount from your card automatically?
+
+01:50:01
+So what maximum they will do, they will suspend your account. They will suspend your account. Let them suspend. You can request maybe once. You can request to again reset that bill. I mean to say you can request a wave of, I am a student, I am learning AWS concepts. Can you please request? You can maybe request one time or two time. That's
+
+01:50:27
+That depends on that AWS customer care guy. If has a very good, he's a kind hearted person. He'll consider that to request. If he's not a kind hearted person, he will say, no, I will not make the zero.
+
+01:50:42
+That depends on them. But even though that they don't wave off your bill, can you ignore that account? Can you create another account? Create another AWS account with a new mail ID. You can use same card, whatever you used other card, you can practice there also. So don't think too much about bills. Focus on the actual concept.
+
+01:51:07
+Utilize AWS with whatever extent you want to utilize.
+
+01:51:13
+Do whatever you want to do. Don't focus on bills, focus on the actual concepts and subjects, okay?
+
+01:51:22
+Guys I will have 20000, 40000, 50000 bills also. I don't care. I focus on only what I wanted to explain, what I wanted to explain to you guys. I don't focus on the bills.
+
+01:51:39
+Thank you guys I will continue tomorrow on the actual what is service what is problem with part and all those things see you tomorrow. Guys again I am repeating Kubernetes is not a rocket science you are not developing your own product like Kubernetes you are just learning Kubernetes it is not a rocket science I agree this is difficult but if you practice more if you go through the recordings if you go through the notes if you go through the recordings and do the practice multiple times.
+
+01:52:08
+Will it be easy for you? Yes, definitely it will be easy. But you need to put an effort. You need to put an effort.
+
+01:52:19
+Guys the packages are they're giving packages like anything if you are good at technology They are not considering your experience whether you have a two years whether you have a three years whether you have a five years Nowadays, no one is considering how much experience you have Let me tell you one of the scenario What happened one of our student? one of our student
+
+01:52:47
+I was saying this is almost 3 years back.
+
+01:52:56
+He is a BCom graduate. He is a BCom graduate. He is not from B.Tech background. He is not from B.Sc background also. He is a BCom graduate. He was part of Mithun Technologies batch. If I am not wrong, batch 8.
+
+01:53:27
+So this is three years back.
+
+01:53:31
+He joined with 2 plus years of experience. He got package as a 7 lakhs when he got a job. That is three years back with 2 plus experience. He worked in that company for one and a half year. He got a hike also.
+
+01:53:53
+He got a hike also within that one and a half year. His salary was nine lakhs. But you know what he has done in this one and a half year.
+
+01:54:03
+The company itself was not using Jenkins. They were using some projects. They are using Jenkins. Some projects they are using Azure DevOps and they're using Kubernetes also. Multiple projects they are supporting. They're using Kubernetes, Jenkins, they're using Azure DevOps like this. So they provided some training and what he has done within that one and a half year, he has completed CKA, CKAD.
+
+01:54:32
+CKS also has done. This is very advanced concept that is not required. He has done CKS, CKAD. After one and a half year with the 3.5 years of experience, he jumped into another company. He got 18 LPA.
+
+01:54:52
+Again in that company he worked for one and a half year again. He worked for that company in again one and a half year. So total five years experience. He tried outside. He got one offer with the 28 lakhs LPA with five years of experience. But you know he is very good at technology. He is very good at technical skills.
+
+01:55:21
+retained him that director that company that I know I mean to say that project director not manager like a Managers above senior managers will be their senior managers above there will be a director So the director they don't want to let him go out. They compensated 33 LP I don't want you to go out. We will use 33 LP now you understand five years of experience resource getting a 33 LP
+
+01:55:50
+you can understand how industry is there, how technology there is no limitations for people who are very good at technical
+
+01:56:02
+33 LPA like two three years back even 15 years of experience people also doesn't have a 30 LPA even the guys who has 15 years experience also doesn't have a 30 LPA nowadays packages are not constrained if you are good at technology if you are good at technology if you are good at technology the packages there is no limitation
+
+01:56:34
+So consider first become an expert in some area, become an expert in some area. You know need to be expert in development, DevOps, all these things. At least become in some expert in some areas. So you can demand you can whatever package you need. But without having a technical skills, I have a cases even five years students, five year experience, people are still getting 10 lakhs only.
+
+01:57:03
+5 years people still getting 10 lakhs but same 5 years experience getting 30 lakhs it's almost 200% more than what this guy is getting that is because only how good you are in technical. So if you want to become an expert in technical do you need to spend lot of time do you need to spend effort understanding practicing doing the assignments and all those things. Yes without doing that you cannot become an expert.
+
+01:57:32
+You cannot demand any package also.
+
+01:57:40
+So I just thought of sharing this one with you because you have a wrong assumptions. Why I have only 8 lakhs? Why other people are getting 20 lakhs 30 lakhs? That is because of the technical skills. They owe they have.
+
+01:57:56
+Thank you guys, I will continue tomorrow on the actual service concept. See you.
+
