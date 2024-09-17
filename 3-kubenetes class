@@ -1,0 +1,966 @@
+00:01
+This conference will now be recorded. So in yesterday's session, we were discussing about what is self-managed Kubernetes cluster, what is managed Kubernetes cluster, and how to set up Kubernetes cluster. I hope you guys are able to set up the Kubernetes cluster. Anyone tried setting up the Kubernetes cluster? You guys are successful in setting up the cluster.
+
+00:36
+Okay, most of the people done good. Now we have a cluster. We have a Kubernetes cluster.
+
+00:49
+We just have a Kubernetes cluster up and running. And also we have a part networking also create, I mean to say deployed. So within the cluster, if one part has to communicate with other part, we need to have a networking, part networking within the cluster. So we have that.
+
+01:11
+quad networking also.
+
+01:15
+in the cluster. Now, as I already told, I need a kubectl to communicate with the API server. As of now, where do I have a kubectl installed and configured? Did I install in the same machine, in this machine, here itself? Otherwise, if required, can I have one more server, different server also? Only client machine?
+
+01:44
+But as I already told since the kubernetes is initialized on the initialized on the private IP even though I have this kube config file. Let me go to this machine. Let me go to this master machine. Let me access to that machine.
+
+02:07
+if I have this kubeconfig file.
+
+02:14
+If I have this Q you know this config file in my local laptop also. Will I able to communicate. Let me take this content in this master that can file is part of this location. If I have this complete file, make sure you copied completely. Otherwise it won't work. Now, even though I'm having this file in my local laptop. Now let me go to my local laptop.
+
+02:44
+This is my local laptop.
+
+02:48
+Let's say I have a cube I mean to say I have a cube CTL installed guys if required as I already told will be able to install cube CTL in any system whether it's a Linux whether it's a Mac whether it's a Windows also you can install cube CTL.
+
+03:11
+You can install kubectl.
+
+03:16
+in windows or mac or linux now i am using macbook i already have a cube ctl installed i followed these instructions i have installed cube ctl if you see in this is my local laptop so do i have a cube ctl here sorry one second
+
+03:38
+I'm just verifying do I have a cube CTL in my laptop. Yes, but if I just have a cube CTL does it mean will I able to communicate with my cluster?
+
+03:59
+No. So what file this is expecting? What file this kubectl is expecting? It is expecting some kubeconfig file. That kubeconfig file should be in which directory? Since I am using MacBook, since I'm using MacBook, does all these commands work in the Mac, like Linux commands?
+
+04:20
+Yes, but if you are using windows, if you are using windows, do you need to have this dot cube folder in your windows home directory? You can go to something like this. You can go to your windows that explorer. You can go to your user home directory. This way you can go to your user home directory. You need to create one folder called a dot cube hidden folder. Now I'm doing like this. I'm doing like this.
+
+04:48
+I'm having a cube folder. I'm going to create a cube folder in my user home directory. Now, within that dot cube folder in my user home directory, can I create a config file? And I'm making this config file. I'm pasting this config file, this content of the config file from the master. I'm copying this content. I'm pasting that here.
+
+05:20
+Let me save this. Now even though I have a cube config file now, when I am executing cubectl get nodes, now I will get a different error. What is the problem now?
+
+05:34
+Let's see I am going to get kind of a timeout error now connection timeout. Why connection timeout? Why my laptop from my system? Why I am not able to reach the API server?
+
+05:57
+Is it anything to do with? Is it anything to do with Kubernetes concept here?
+
+06:10
+It's the issue with what? It's a issue with the network.
+
+06:17
+It's a issue with network.
+
+06:22
+Even though I open even though I open that six double four three the API server port for every Every this API server is running in the master even though I go here even though I open that API server port And which port API server is running. Let me go to that security group. Let me go to the security group
+
+06:47
+let me go to inbound rules let me go to inbound rules even though I open that 6443 for everywhere still will I able to reach
+
+07:06
+Still reliable to reach.
+
+07:11
+Just to make it simple, I am going to definitely get a connection timeout. Just to make it simple, if you see the cube config file.
+
+07:20
+Is this the API server? Is the API server is running on this server, this IP on this port? Now just to make it simple, just to make it simple, can I do that ping sorry telnet or curl with iPhone V the telnet from my laptop.
+
+07:43
+This is nothing to do with the Kubernetes now. Am I checking whether I am able to reach this IP on this port from my laptop? If I am able to reach, then will I able to communicate with API server?
+
+07:59
+Now why this is not happening even though open the port because this is a private IP Will I able to reach the private IPs will I able to reach private IPs from internet from a different networks? No now Sometimes these type of things you already observed in your office environment some applications you will be able to access Or some clusters you will be able to access if you are in office network same office laptop You come and connect to you in your home
+
+08:28
+your home network, it won't work. In that case, are you going to use some concept of VPN? If you have a VPN servers in that network and you connected to VPN from your laptop, then your laptop also will be part of the same network where other servers are running, other clusters are running via VPN, yes. Then you can access.
+
+08:52
+This is nothing to do with Kubernetes. It is networking concept. Do you need to be familiar with networking concepts also as a DevOps engineer, like basic networking concepts, like what is public subnet, what is private subnet, what is VPN, what is NAT, all these things.
+
+09:12
+Yes. Now, but how come I am able to access that cluster from this machine because is it part of same cluster? I mean to say same network also this machine.
+
+09:29
+Let me connect to that. Let me connect to that server again.
+
+09:38
+Let me connect to the server.
+
+09:42
+this server.
+
+10:00
+Now here I have a kubectl, I have a kubeconfig file. So here if I'm executing kubectl get nodes, am I able to reach that API server?
+
+10:15
+Kind of a same machine only kind of a same machine only. Kind of a same machine that is again same machine, but I'm not in a different machine 172.31.3.215 and which port. If that is running API server.
+
+10:34
+Now, am I able to reach the web network connectivity? Yes. As I already told, not only just network, any request goes to the API server. Is it going to perform some kind of authentication and authorization before it is processing this request? Is it going to do some kind of authentication and authorization? So where that information is there? As of now, in kubeconfig file, do have some other sections also here?
+
+11:07
+Cluster Information
+
+11:10
+It has three sections that kubeconfig file has three sections. One is clusters information and another one is context. To which kubernetes it is pointing and users. So is it is is that kubesetel is going to pass this user information to the API server for authentication and authorization?
+
+11:36
+As of now, it is using certificate based authentication. As of now, it is using certificate based authentication, X509 certificates. So these certificates is issued by the Kubernetes itself. These certificates is issued by the Kubernetes itself. So when the client is sending the certificates, does Kubernetes will trust these certificates and allow authentication?
+
+12:04
+it is going to trust these certificates and allow the authentication.
+
+12:10
+And this is admin certificates. Since this is admin certificate, does this guy can do anything in kubernetes because this is kind of admin user admin certificate. Does this guy can do anything in kubernetes any operation in kubernetes? Yes.
+
+12:28
+Now, if I have this kubeconfig file in another system also, completely different system, that can be your Jenkins server. That can be your Jenkins server. Let's say I have some Jenkins server. In this Jenkins server, if I install kubectl, if I have that kubeconfig file, the Jenkins server also will be able to communicate with Kubernetes for deploying automatically using pipelines also if required.
+
+13:01
+Let's say this is my Jenkins server. Let me start this server or any other server or any other server. Is this server is also part of same network where I have my cluster? If you see this server networking, this server networking, the server is in this VPC. And also, do I have this Kubernetes cluster also in the same VPC, same network?
+
+13:30
+But even though your CI-CD tools, your Jenkins servers is in a different VPC, my dev cluster is in different VPC, production cluster in different VPC, in that case, if my Jenkins wants to connect with this cluster, even though they are in different VPC, what concept I can use in AWS networking so that still I can communicate even though that is in different VPC.
+
+14:00
+vpc peering vpc peering. Now let me connect to this server just to give an example let me connect to this server this is kind of a Jenkins server one second still that server is not ready let me connect to that server now.
+
+14:21
+Let's consider this is your Jenkins server. Is it part of the cluster?
+
+14:27
+Is it part of the cluster? No. Cluster, I'm saying cluster. Is it part of the cluster? Is that server is part of the cluster? No. Now, here, if required, can I install kubectl as whatever user? Let's say you want to, your Jenkins will run as a which user guys, your Jenkins pipelines will be executed as a which user.
+
+14:57
+Jenkins user, but if I configure cube CT, sorry, if I configure the cube config file as a Ubuntu user in this system again, does Jenkins pipelines will be able to communicate with your Kubernetes cluster again, if I configure cube config file here as a Ubuntu user. No, do you need to switch to the Jenkins user and do that installing cube CTL and configuring
+
+15:26
+Otherwise you can use some plugins also. If you don't want to install software manually, can I do the same thing using plugins? Can I install some plugin kind of a Kubernetes plugin where I can use that plugin to do that deployment by providing that kube config file also? Yes. Now let me show that. Here I don't have a kubectl.
+
+15:53
+software as of now kubectl is not there as a ubuntu user let me demonstrate that doesn't matter now can i install kubectl in any server as i already told
+
+16:10
+Now can I install cubectl in linux windows wherever
+
+16:17
+Now I'll install kubectl in Linux. I'll just follow these instructions and download. That kubectl binary is downloaded. Now I'll execute this command, which will install that kubectl into user local bin. User local bin. Then do I have a kubectl now in this machine?
+
+16:45
+yeah but again will it work
+
+16:52
+If you do like this, no. Do I need to configure that cube config here? If I don't have already, if I have not done already, if I have not done already, I'll create a folder like this, cube, in the current user home directory.
+
+17:13
+mkdir.cube Now can I create a cube config file But is that file is part of this server? It is not part of this server. Can I get from this location? In this server in the adminconf file You can scp from this machine or you can just cat the content of this file And have that in this server
+
+17:42
+Now this is also part of same network and did I open all the ports I mean to say all port for that range also even though I don't do this in this machine even though I don't do this even though I don't do this this 0.0.06443 did I already done that for this range 172.31.0.0
+
+18:10
+is my Jenkins server is also part of that range. If you see the Jenkins server private IP is that is also the trench your Jenkins server private IP. If you see is it in that range 172 dot 3145 39 because same network same network now.
+
+18:30
+Even though it is a private IP, this time is it able to communicate with that cluster API server? Now is this machine is part of the Kubernetes? Is it part of the cluster? Is it a master or is it a worker? No but still will I able to deploy my applications from here? Will I able to communicate and apply my applications from here? Is everyone clear? What is kubectl? That client? How it works?
+
+19:00
+People are getting confused a lot of times. Do I need to mandatorily install kubectl in the master? Do I need to have a kubectl always in the master? Not required. That can be in any machine, even in your local laptop also. Even in your local laptop also. Your cluster is running somewhere else. Your cluster is running in AWS or your own data center. Will you able to communicate with your cluster using kubectl from your laptop if you have a network?
+
+19:29
+and authentication authorization.
+
+19:33
+Yes, is everyone clear what is cube CTL?
+
+19:39
+just instead of creating a one more machine instead of creating a one more machine. I just created I installed cube CTL in the same machine. Is everyone clear? What is cube CTL?
+
+19:51
+Now as of now let me close this I don't want to confuse more so I'll close this I am using same machine that is my master machine in this machine I already configured kubectl if you see this machine is it nothing but your master machine because I have installed kubectl in the same machine that is your master machine.
+
+20:15
+As of now, we just have a cluster. Did I deployed any application in the cluster as of now? No. Now come to the deployment, coming to the deployment. Before I deploy, we need to understand some Kubernetes concepts. When we are using Docker Swarm, how we are deploying our images, our Docker images, our container images, how we are creating?
+
+20:44
+What we are creating to deploy this one? Are we creating a services in Docker Swamp?
+
+20:54
+The service is creating containers internally.
+
+20:58
+creating and managing
+
+21:04
+containers but now in Kubernetes can I directly Deploy this container has is the way we are deploying in the Docker Swarm No So in the Docker Swarm you have a concepts like service in the Docker Swarm you have a concept like service Service stack
+
+21:32
+containers right in Kubernetes in Kubernetes you have we call it as a Kubernetes objects or resources or APIs or workloads all are same all are same
+
+21:54
+In Kubernetes, we have a concept called objects, resources, APIs, or workloads, all are same. The way we have a container, services, a stack in Docker Swamp. In Kubernetes, we have some concepts.
+
+22:25
+In Kubernetes you have some concepts or Kubernetes resources. We call it something like this replication controllers replica sets.
+
+22:37
+Demon sets Deployments stateful set
+
+22:48
+The way we have here, volumes. Here also we have some concept called persistent. Excuse me. Persistent volumes. Persistent volume claims.
+
+23:10
+config maps secrets Storage class
+
+23:20
+Like this, you have some concepts here. Now, if I want to deploy any application, I mean to say any image, basically application is nothing but your image, container image. You are trying to deploy your application as a container. Do you need to make sure you have an image created for that application with the required software and application code? Yes.
+
+23:46
+So if you want to deploy your application image, that is your Docker image, here as a which Kubernetes resource, you want to deploy what is the smallest building block or basic unit of scheduling in Kubernetes. What is a small object or small resource which you can create in Kubernetes is pod. Pod. Will I able to directly create and manage the containers in Kubernetes?
+
+24:12
+No, so even though I want to create a containers and manage the containers that container has to be wrapped it under what that container has to be created or wrapped it under what with the help of pod with the help of pod. So we have some concepts here pod. This is the smallest building block or basic unit of scheduling. Before I explain this part.
+
+24:40
+Let me explain one more important concept called a namespace namespace. Don't get confused this namespace with Linux namespace. Whatever I was explaining whatever I was explaining in the Docker, right? I was saying containers will be using namespaces and C groups concept in the Linux kernel that namespace is different. This Kubernetes namespace is different.
+
+25:09
+What is this namespace? Right? It's this Kubernetes namespace is a logical grouping of your Kubernetes cluster. Let's say multiple teams, multiple teams are using same Kubernetes cluster. I want to segregate, I want to isolate one team Kubernetes related resources like pods, deployment services.
+
+25:34
+from other team Kubernetes resources, like other team pods, deployment services, and all these things I want to isolate from other teams. I don't want to mess up.
+
+25:46
+in the same cluster, multiple teams are using the same Kubernetes cluster, multiple projects or multiple microservices are deployed in the same Kubernetes cluster. Do I need some kind of a logical isolation of one application or one team Kubernetes resources with another application or another team Kubernetes resources?
+
+26:12
+Just to make it simple, let me relate this one with your home. So.
+
+26:21
+You have your home, right? You have some place. You have your home. This is your home. Now is this home will be shared with all of your family members?
+
+26:35
+like your brother, sister, parents. Now, I need some kind of isolation or security. I need some kind of isolation or security or privacy, whatever you call it. Now, can I break this home into logical pieces like multiple rooms?
+
+26:58
+multiple rooms or areas. This is your home. Let's say
+
+27:05
+The underlying infrastructure is same. The underlying infrastructure is same which means this is your home. Within this home...
+
+27:17
+Your home is shared with multiple people or make it more simple. Let's say paying guest nowadays in Bangalore, Hyderabad. Most of the people stay in paying guest, right? So that building is common. You will it be shared with multiple members there from a different, different locations, different, different states, even countries. So how that paying is isolated from others? Are they logically having I mean to say physical there? They're physically.
+
+27:46
+having some walls or they breaking that into multiple small small sections so that this guy this guy is isolated from other guy this guy is isolated from other guy. Now let's say I have a Kubernetes cluster let's say this is my Kubernetes cluster lot of teams are working on this one let's say we are working on one e-commerce project.
+
+28:14
+We are working on one e-commerce projects. Let's take this as an example. E-commerce project and they're following microservice architecture. They're following microservice architecture. They may have a microservice called products inventory. They may have a microservices called payments. They may have a microservices called orders like this. And a lot of teams are working in these microservices.
+
+28:45
+Team, just to give an example, team A is working on these microservices. Team B is working on these microservices. Team C is working on this microservice. Now, they are creating some images to deploy this application, these microservices, in this cluster. Now, can I mess up like this without logical boundary in the cluster? If I mess up like this, is it easy to manage your cluster and resources in the cluster?
+
+29:16
+This is your products related pod or deployment. I'm creating all these payments, microservices related Kubernetes objects, like a pods or deployments and secrets and config maps. And I am creating a order related application, microservices related pods deployment. Then it to have some kind of a cleaner approach for better organizing and managing these resources in the cluster.
+
+29:45
+I need to have some better way to manage and organize these resources logically. I need to isolate. So to logically break this Kubernetes clusters, can I use a concept of namespace in my Kubernetes? To logically break this Kubernetes cluster, can I use a concept of namespaces here? Kubernetes namespace? Yes. Before I deploy any application, I
+
+30:15
+Create a namespaces. If you see by default how many namespaces we have, nodes is different, nodes are different, namespaces is different. Node, node is nothing but what?
+
+30:30
+Node is nothing but what? Node is nothing but your server. The hardware. The server. Now, namespace is different. NS in the short form. Full form. Namespaces. By default, how many namespaces are there already in this cluster?
+
+30:54
+kind of a logical boundaries logical boundaries by default already we have four namespaces four namespaces. Now if you see.
+
+31:06
+kubectl get all. What is the meaning of all here? All the Kubernetes resources. Can I call these things as a Kubernetes resources? Like parts, services, deployments, daemons, statefulsets. Now, I'm trying to get all the Kubernetes resources. By default, it is pointing to which namespace this kubectl is pointing to that cluster. Within that cluster, which namespace by default, it will point
+
+31:35
+by default it will point to this namespace.
+
+31:41
+by default it will point to that namespace. As of now, they have any Kubernetes resources like a parts, deployments, demand set, stateful set, other than this only one service in that namespace.
+
+31:57
+No. Now, if you see, if I say something like this, kubectl get all, ifn, what is this ifn stands for in the short form, or I can say full name like this, ifn, ifn namespace, like this also I can give, ifn, ifn namespace, or in the short form, ifn. If you see, do we already have some Kubernetes, I mean to say resources or objects created already in this namespace?
+
+32:27
+In this cube system namespace, they already have some pods. They already have some service. They already have some demon sets, deployments, replica sets like this. These Kubernetes resources are objects.
+
+32:42
+We already have something in this kube system namespace. So if you observe, what are these things? Is this objects or Kubernetes resources is belongs to Kubernetes system itself? Do I have Kubernetes system related parts like a QAPI server part, Q proxy part, scheduler part, core DNS part? Do I have a deployment to manage that core DNS part? Do I have a demand sets to manage this?
+
+33:12
+We've net ports, Q proxy ports. So do we have already a few, sorry, Kubernetes resources or objects created in this namespace?
+
+33:23
+So this namespace is used for what purpose? They have already logically segregated these objects from other Kubernetes resources. So this is related to Kubernetes system itself. Is it recommended to deploy our own application parts or deployments or services in this namespace in the cube system namespace? Is it recommended to deploy our own application parts, deployments, services?
+
+33:52
+in this namespace. No. This is for isolation. Does they already isolated Kubernetes system related components into separate namespace?
+
+34:08
+Yes namespace is different node is different. Now is this parser created in whatever nodes I have even though these are running in created in this namespace does all these parts are running in these names these nodes whatever nodes I have in this cluster. If you see I have three nodes now whatever parts I have is those parts are created in any of these nodes in the cluster.
+
+34:38
+Let me show you.
+
+34:43
+If you see these are the nodes I have in this cluster. These are the parts created in that namespace. Is that parts are created in those nodes like one, some parts are in 215, some parts are in 101, some parts are in 70. Is those parts are running in those nodes?
+
+35:04
+For all the namespaces, for all the namespaces, does the underlying nodes will be common? I mean to say, does all the namespaces will share the same nodes, which is part of the cluster? Nodes is common, then servers is common, but within those servers, is it logically? It's a logical grouping. Is it logically segregated into a separate namespace, all these application related pods, deployment services? Yes. So,
+
+35:35
+We have a concept called namespace. In the interview also, they'll ask, what is namespace in Kubernetes? Why do we need namespace in Kubernetes? So namespace is like a virtual cluster within your Kubernetes cluster. Can I call that as a virtual cluster? Virtual, kind of a logical cluster within the Kubernetes cluster.
+
+36:04
+So this namespace is called as a virtual cluster within the Kubernetes cluster. So we have a namespace concept first.
+
+36:15
+As I already explained, as I already explained first here itself, in Kubernetes, we have a lot of Kubernetes objects or resources. Kubernetes object is basically Kubernetes APIs. Can I call parties also an API? Can I call deployment is also an API or object or resource or service?
+
+36:44
+So this Kubernetes object is nothing but one APA. Kubernetes objects are persisted entities in the Kubernetes system. Does Kubernetes will use these objects or APAs to represent the state of your cluster? Does Kubernetes will use these objects or entities basically to represent the state of your cluster? Does all these things make a cluster?
+
+37:08
+FOD represents something in the cluster. Replication controller represents something in the cluster. Deployment represents something in the cluster. So all these are Kubernetes resources or object. Kubernetes object is record of intent. Once I create this object, once I create a FOD or once I create a deployment or replication controller, does Kubernetes will consistently make sure that object exists?
+
+37:37
+in the cluster if I create a deployment does Kubernetes will make sure the deployment exists in the cluster if I create a service does Kubernetes will make sure that service exists in the cluster.
+
+37:51
+Yes, now to work with these Kubernetes objects or resources, whether you want to create or modify or delete, you need to use Kubernetes API. You need to use Kubernetes API. I need to communicate with Kubernetes API. So how can I communicate with my Kubernetes API? Can I use the CLI command line interface also?
+
+38:21
+to create, delete all these things. There are more than this also. Can I use kubectl, that command line interface to create or update or delete any of these things? Any Kubernetes resources or objects? Guys, to make it simple, you have AWS. In AWS also, we have like AWS services, like EC2, ELB, auto scaling groups, VPC. If you want to...
+
+38:50
+manage AWS resources, create or update or delete AWS resources. Are you communicating with AWS using API or GUI or CLI like that?
+
+39:04
+Similarly, similarly in my Kubernetes, I have these APIs, these objects. If I want to create or update or modify or delete these objects, do I need to communicate with API Kubernetes API? How can I communicate with that API? Can I use CLI, command line interface like kubectl? Not only CLI, can I write some Python code or Java code also by invoking the APIs whatever is exposed by Kubernetes?
+
+39:33
+Can I programmatically also create and update or delete the pods or deployments, all these objects, programmatically also by writing a Python code or Java code also like that? Yes, but that is not required. That is not required. As a DevOps engineer or as a developer, can I use kubectl to communicate with my cluster to update or delete or deploy anything here?
+
+40:01
+Yes, as I already told yesterday itself, even though I am executing a comments like this in the background, this if and we kind of a verbose this if and we kind of a verbose it will show what is happening in the background. If you see this verbose starts from till one to like till eight. Now if you see it is printing some logs.
+
+40:31
+If you see is it making some kind of a API call in the background, even though I'm executing a comment, even though I'm executing a command in the background. Is it making some APA calls? Is it making one rest API call to this?
+
+40:46
+Is it making some rest API call to this?
+
+40:54
+By passing the required request headers.
+
+40:58
+It is returning 200. This is returning 200 response. Is it internally using that kubeconfig file to make a call to this API server with the required headers authentication? It is responding with 200. This is responded in a JSON format. It has given the data in a JSON format. But in the kubectl, that CLI, is it using this data and displaying my details like this?
+
+41:27
+If you see, even though we are using CLI in the background, is it some programmatic language? Is it some programmatic code?
+
+41:37
+It is making API calls using programmatic code, kind of a go language. But do we need to learn and understand go language and do we need to write this kind of a code not required.
+
+41:50
+Now, this is CLI. Now, as I already told, I have one microservice. Let's say I have products microservice. I have orders microservice. If I want to deploy those applications in Kubernetes, I may need to create a deployment, or I may need to create a service for that. I may need to use volumes. I may need to use config maps and secrets. Do I need some kind of a logical isolation within the cluster?
+
+42:17
+If multiple teams, multiple projects are using same Kubernetes cluster, do I need some kind of a logical grouping, logical separation in that cluster? Yes. So to do that, Kubernetes is offering what?
+
+42:34
+Kubernetes is offering what? There is a concept called namespace.
+
+42:42
+There is a concept called namespace. So you can think of namespace as a virtual cluster inside your Kubernetes cluster. You can think of namespace as a virtual cluster inside your Kubernetes cluster. You can have multiple namespaces within the cluster. Can I have n number of namespaces created, even 10, 20, 100 namespaces also?
+
+43:07
+That is just a logical grouping. Does namespace will consume any CPU, any memory, any storage?
+
+43:17
+No, it is like a folder just to make it simple just to make it simple. You have a laptop or your desktop base or your home also have explained. Let me take another use case. This is your laptop. You have a lot of files. You have a lot of files your personal files. You have a lot of files like personal files personal documents. Office documents.
+
+43:44
+office documents. Or some other documents all these things you have. How can I logically or how can I properly organize all these things in my storage? Can I use some kind of a folders concept? Can I logically or isolate folders? Can I apply a permissions on that folder also if required my personal documents should not be accessed. I can log that folder if required like that.
+
+44:14
+Similarly, similarly in Kubernetes, lot of teams are using my cluster. Lot of teams are using my cluster. I want to isolate one team or one application Kubernetes resources from another application Kubernetes resources. Then can I create a namespace and can I deploy in the respective namespaces that team applications?
+
+44:42
+Yes. So is it possible to have n number of namespaces created in the cluster? In the same cluster, can I create a number of namespaces? Yes. If you just create a namespace, is it going to take any CPU, any memory from any node? No. That is just a logical name. But within that namespace, if I create a pods, within that namespace, if I create a pods, pod will have a containers.
+
+45:11
+Does that pod container will take some CPU and memory in whatever node that pod is scheduled?
+
+45:19
+Yes. So namespace is a virtual cluster inside your Kubernetes cluster. You can have multiple namespaces in a single Kubernetes cluster and are they logically isolated from each other? The way I have explained kind of a privacy. What you do in your home, in your room, let's say you are sharing your home with your siblings.
+
+45:46
+whatever you do in your home in your room your private room does your sibling who is staying next to that your room in a separate room will be able to understand what you are doing within your who you know within your area no right. So similarly I can use this namespace concept similarly I can use this namespace concept to logically isolate others. So does this namespace will help you and your teams.
+
+46:16
+to organize secure and even performance.
+
+46:24
+Can I, does this namespace will help you and your teams to organize your applications in the Kubernetes and also can I apply a security at a namespace level? Namespace level, something like this case same concept. Guys, if you want to understand any concept, you no need to be very good in technical. If you think logically general use cases also you can understand. Let's say I already have a namespace.
+
+46:53
+Can I apply a security to this namespace, which means no one can enter this namespace except that respective team members except that respective team members only the objects in this namespace can access the objects in this namespace can access only by the team who is supposed to use this namespace. Does other members does other team who is working in a different application different namespace. Can I restrict them?
+
+47:23
+to create update delete the Kubernetes objects in this namespace. Can I apply a security at a namespace level?
+
+47:32
+Just to make it simple, if you lock your personal bedroom, does your cousin, your sibling will be able to enter your bedroom, your private room? No, right? Only you are eligible. Similarly, if I have a namespace as created, now I am going to deploy my applications, that microservices related parts in this namespace. The team who is working in that namespace only, will they able to create, update, delete these objects in that namespace?
+
+48:02
+Can I manage the security at namespace level in the cluster? Yes. Now, other team, other team, if they try to get also, can I restrict for other team members, other projects to restrict? They don't want to create, update, delete anything here. I can apply a security. So does this namespace will help me to organize my applications, my cluster more efficiently? Does this namespace will?
+
+48:32
+help me to organize the applications or teams more efficiently, I can apply the security. Even performance also, what do you mean by performance? If this cluster is common for everyone, if the cluster is common for all these namespaces, now is your cluster resources is common? Cluster resources in the sense the CPU, memory, storage,
+
+48:59
+All these things are common for all the namespaces in that cluster. Does all the namespaces will use same resources in the cluster? Yes. Now, let's consider this use case. You are creating a namespace, but this team, let's say one team, team A, they are creating a lot of pods. A lot of pods they are creating, a lot of deployments they are creating in that namespace. Does other team will also?
+
+49:30
+So other team also sharing the same resources, same nodes. Does other team will have enough CPU and enough memory to deploy their applications if unnecessarily this team is creating lot of deployments, lot of parts in that namespace. Does other team will have enough resources, enough CPU and memory?
+
+49:51
+No, it is like this. You are having your room you occupied 75 percent of your home area does other siblings will feel congested because you are want to have more relaxed way does other siblings your parents your They will run out of the space if you occupied more space I need more very big room. If you say does others will feel congested They will run out of the space.
+
+50:21
+Similarly here, in my Kubernetes cluster, I have namespaces. If one team is deploying a lot of pods, a lot of containers, a lot of pods they are deploying, does other teams will run out of CPU and memory to deploy their pods, their applications?
+
+50:41
+So can I limit that one also? Can I limit that one also? I mean to say can I allocate how much resources can be utilized by this namespace? Can I say this the namespace in this namespace only 30 parts can be created or only 10 GB memory can be used in this namespace or 20 GB memory and 10 CPUs can be used in this namespace. Can I control that one also? Can I apply a resources resource quota?
+
+51:12
+We call it as a resource quota. Can I set the resource quota for namespace? Kind of a ration quota for you and your family, right? Ration quota, you are eligible for some ration quota. If you go to that store dealer, even though you ask 20 kgs more ration, does that ration dealer will give you? No, right? Based on the quota only you are eligible. So similarly, if I set the resource quota,
+
+51:40
+If I said the resource quota for these namespaces as a Kubernetes admin, does that team can be able to create more than whatever resource quotas I have set? Will they able to provision more than that whatever I have set as an admin? No. So does this namespace will help me to organize, secure, and manage the resources in the cluster more efficiently? Is everyone clear what is namespace? This is very, very important.
+
+52:09
+Before I deploy any application you need to understand what is namespace, why we need a namespace and how it works. Is everyone clear? What is namespace? Why do we need namespace and how what is namespace?
+
+52:25
+No.
+
+52:28
+By default, you have some namespaces. When I documented, there was only three namespaces. But by default, how many namespaces I have in the cluster, in any cluster you create now, how many namespaces you have by default.
+
+52:50
+four namespaces by default you have four namespaces you have a default namespace. What is this default namespace? While creating these Kubernetes resources while creating any Kubernetes resource like this while creating any Kubernetes whether you are creating a pod, whether you are creating a deployment or config map or secret or value whenever you are creating any Kubernetes resource if you are not mentioning the namespace.
+
+53:19
+in which namespace that Kubernetes resource or objects gets created.
+
+53:33
+in the default namespace. Is this namespaces will change based on the Kubernetes cluster which you are creating three inverse is asking no. Now, in my local laptop also yesterday, in my local laptop also yesterday, I created one minikube cluster. There also have same namespaces. Now, I already have one more Kubernetes cluster that is EKS cluster. I was demonstrating EKS to the morning batch, morning 6 o'clock batch. I have a EKS cluster.
+
+54:02
+So I have a cube CTL configured for that EKS cluster in a separate machine. In this machine, I have a cube CTL configured for that EKS cluster. Now let me show that, let me go to that machine and show the namespaces.
+
+54:20
+whatever machine I am connecting in that machine I configured a cube CTL for EKS cluster for morning batch I was demonstrating EKS I am demonstrating EKS I was explaining EKS for morning batch now if you see I have a cube config file for the EKS cluster in this I have a cube CTL it is pointing to a different EKS you know this cluster EKS cluster this is EKS cluster.
+
+54:48
+Now here also have same set of namespaces by default, but I have created some additionally. If you see we have a default, we have a cube public cube system cube node release, but these two these two if you see the dates also age also is this created later point of time. I mean to say later.
+
+55:11
+These two I created manually, but by default do have these namespaces. Default cube system node like that, but this is different cluster. This is different cluster. I already deployed a lot of applications in this cluster.
+
+55:30
+I had applied a lot of applications already some is running in cube system. Some parts are running in ingress some parts are running in test ns. I will explain that later. But for now is everyone clear how many namespaces will be there by default.
+
+55:50
+Now, while creating any Kubernetes resource, like pod, replica set, service, value, anything, if you don't mention namespace, in which namespace that Kubernetes resource or objects get created, that is created in the default namespace. That is created in the default namespace. So default is for deployments that have not given any namespace. So.
+
+56:21
+Cube system you have one more namespace called cube system. So what is this? This cube system is for all the things relating to Kubernetes system. Whatever is related to that Kubernetes system itself, that API server, scheduler, etcd, cube proxy, we've met, is all those things are created and managed in that cube system namespace.
+
+56:49
+If you see already when I say cube CPL get all the objects in this namespace, am I able to see lots of things are already created like parts got created, services there, demon sets are there in this namespace.
+
+57:07
+This is for Kubernetes system. So any deployments to this namespace will play a dangerous game. Is it recommended to deploy your own applications, other things, your own application related parts, deployments in this namespace? No. Now, we have a cube system. It is readable by everyone. This is readable by everyone. Everyone will have access. The name itself is saying public. There is no restrictions on this one. Everyone can access.
+
+57:35
+We are not going to deploy in kube public and this kube node release also. We are not going to deploy our applications in kube public or kube node release also.
+
+57:46
+we can create our own namespace and apply. But again, in actual application, are you going to deploy all your applications in this default namespace again?
+
+57:59
+No, you are not going to apply in default namespace. If required, can I create a namespace? Can I create a namespace and then create my applications related Kubernetes objects in that namespace? Yes. So that is about namespace. So namespaces are used for isolation. Due to Corona, everyone is familiar with isolation now. Even I went for isolation last year.
+
+58:33
+in last year last year to 2021 May I was also went for isolation. So this namespace is also
+
+58:46
+This namespace is also.
+
+58:49
+used for isolation. So we can use these namespaces for isolating in couple of ways. So can I use this namespaces to split my projects, my teams, applications into multiple namespaces as I already told, like product inventory team is there, payments team is there, orders team is there, they're working on their own applications, microservices.
+
+59:15
+Can I create a separate namespaces for each team or each that application? Can I deploy those applications in that respective namespaces? So it will be logically isolated from others. So is this namespaces will be useful in preventing cross-project or cross-team contamination, which means I can isolate one team from other team even though in the same cluster.
+
+59:44
+I can apply a security, I can set the resources as an admin. Does this namespace will help Kubernetes administrators to organize, secure the cluster more efficiently? Yes. Now, how to see the namespaces? What command we can use? Can I use this command to see the namespaces?
+
+01:00:12
+Yes. Now, if I want to create a namespace, can I do that using command like this? kubectl create namespace, your namespace name, something like this. But in real time, are you going to have a namespace like test or Balaji or Mithun like that? Here I'm explaining with tester. But in the actual clusters, do you have respective team name or application name, the way I have explained?
+
+01:00:41
+product inventory NS payments NS order NS like that that respect to team names or application names that application name or micro service name that meaningful name micro service name or that application name or the team name as a namespace name.
+
+01:01:01
+Easy to remember and identify if I give namespace as like test does anyone can understand this namespace is used used for which application which team.
+
+01:01:13
+No, some meaningful name we will give. Now, to create our object, to create our update, we will use the same method.
+
+01:01:26
+or delete.
+
+01:01:29
+unique Kubernetes resource or object.
+
+01:01:36
+to create or update or delete any Kubernetes resource or object. Even this namespace also can I call it as one Kubernetes resource or object.
+
+01:01:49
+Yes, so to create any Kubernetes resource or object we can use we can use cube ctl. What is that cube ctl? That is CLI. Create update delete read CLI. Now there are two ways within CLI. One is we can do this.
+
+01:02:17
+in two ways one is declarative declarative approach
+
+01:02:27
+Declarative.
+
+01:02:30
+Declarative approach another one is imperative approach Guys these also sometimes asked in the interview declarative and imperative imperative in the sense
+
+01:02:43
+Imperative in the sense.
+
+01:02:49
+imperative in the sense using comments using comments
+
+01:02:56
+directly command imperatively declarative in the sense we can declare and apply we can declare we can declare or define
+
+01:03:11
+we can declare or define then we can declare or define.
+
+01:03:20
+We can declare and apply. I mean to say create or update or delete.
+
+01:03:31
+create or update or delete
+
+01:03:36
+in the form of in the form of manifest file in the form of manifest file
+
+01:03:46
+In the form of files declarative approach in the form of manifest files. What is that manifest file? We call it as a Kubernetes manifest files in the form of manifest file. We call it as a Kubernetes manifest files. So that manifest files we will return in the form of which one this manifest files we will write in the form of which one in the form of yaml yml.
+
+01:04:15
+I'm not talking about administration as of now. Srinivas is asking as a normal user, will I able to create namespace, delete namespace that I will come to later, that is administration part.
+
+01:04:29
+administration part as of now, as I already told this cube Ctl is is it configured with root certificate root user certificates root credentials. Since he is a root credential, since we are using root credential, am I able to do anything in the Kubernetes kind of admin is admin for Kubernetes.
+
+01:04:51
+Am I able to do anything because that is a root user right I am using root user credentials that admincon file did I use that admincon file as a kubeconfig file here so since he is an admincon file am I able to do anything or everything here in this cluster using that kubectl again mauta is saying no since admin I am using admin certificates since that admin is able to do anything
+
+01:05:22
+in this Kubernetes cluster. Yes. But how to do that authentication and authorization? There is a separate concept called r back. Today only I was covering our back at the end of the dark Kubernetes. Almost this are back will come to picture when I will explain this are back once you are familiar with all the concepts without familiar with what is this? What is this? What is this? If I directly explain our back, you'll not understand.
+
+01:05:51
+So, this RBAC is basically role based access control that this I will explain at the last almost after 20 classes you will get this RBAC concept. I will explain this RBAC at last.
+
+01:06:09
+Like IAM in AWS, in IAM do you have, in AWS do you have a concept of IAM to manage access to the AWS resources? Using IAM, are you controlling who can do what in AWS? Similarly, do I have some concept in Kubernetes for defining who can do what within my Kubernetes cluster?
+
+01:06:32
+In Kubernetes cluster, also there is a concept called authentication and authorization that I can control using RBAC, Role-Based Access Control, in Kubernetes. That I will explain later. For now, don't worry all these things. Now, as I told, to create any object like a namespace, deployment, pod, service, anything, I can communicate using CLI with API server.
+
+01:07:01
+There are two ways we can do. One is imperative, another one is declarative. What is the meaning of imperative? Can I call this as a imperative command?
+
+01:07:14
+cubectl create namespace that test. Now, instead of doing this imperative way, can I do it in a declarative way by defining that what type of object I want to create in the form of YML, Kubernetes manifest file, YML.
+
+01:07:34
+Sometimes in the interview they are asking this question also. Does Kubernetes supports JSON files also? Instead of YML files, does Kubernetes supports JSON files also? Yes. But 99.9999% we are going to use which files to define the Kubernetes resources.
+
+01:07:56
+YML files.
+
+01:08:03
+If it is a declarative, it is in the form of YML. You have something like this.
+
+01:08:11
+YML kind metadata spec. So this specification this specification will vary based on what kind of Kubernetes resource you are creating. Suppose I don't want to do this way. Imperatively I don't want to create a namespace like this. I don't want to create a namespace like this
+
+01:08:37
+cubes it'll create namespace and just giving namespace like this test type and NS just a naming standard I am using iPhone NS what is iPhone NS stands for namespace it is not mandatory but a kind of a naming conventions I can create like this also or like this also that naming convention now is this the namespace name now test type and NS will be the namespace name now. Yes.
+
+01:09:07
+If I don't want to do this way, can I do it in a declarative way in the form of YML?
+
+01:09:15
+Now, in the YML, you have these attributes, these root attributes, API version, kind, metadata spec, kind, what kind of object you want to create. Can I call all these things as the Kubernetes objects or resources or APIs? Kubernetes has a lot of APIs. You can execute this command kubectl api resources.
+
+01:09:41
+Can I call all this as Kubernetes API resources or objects or workloads? Whatever I see here. All these things are Kubernetes. I can see those resources API resources by executing this command kubectl API resources. All these things are API resources to create any of these API resources or objects. Can I use declarative or imperative? Yes.
+
+01:10:10
+but which one will be widely used imperative or declarative.
+
+01:10:16
+declarative in the form of yml now if i see cubectl api resources i can see all the api resources can i see one api resources resource called namespace the kind kind is what what kind of resource is this kind under kind i can see namespace now if i want to create a namespace can i say kind as that namespace
+
+01:10:45
+in this manifest file if I want to create that namespace can I say kind as namespace something like this guys if I do something like this do you think it will work n small something like this no it is exactly like this n capital space s small you see here
+
+01:11:14
+If I do like this, do you think will it work? Yes, capital. Will I get an error? Will I get an error saying that invalid object or resource?
+
+01:11:27
+I'll get a message from API server saying that invalid object or resource.
+
+01:11:35
+So kind is namespace. What is the API version for this namespace? Because as I already told, does all these are APIs basically code in the background? Does all these are code in the background, APIs? These APIs are implemented in which programmatic language? This Kubernetes APIs are implemented in which programmatic language, Go language. But do I need to learn Go language?
+
+01:12:03
+to create update delete all these objects or a PS. No, we are just using declarative. We are just using declarative. Now, what is the API version for this namespace? Can I see what is the respective API version for that kind by executing this cube C tell API resources? Can I see what is the API version? What is the API version for that?
+
+01:12:29
+V1 V1 I will create a I will do that as a V1 again is this correct in the YML do I need to have a space after this key and value do I need to have a space here
+
+01:12:45
+I need to have a space and also sometimes people are doing something like this capital V1 is that correct again.
+
+01:12:55
+No, it's a small V1.
+
+01:13:01
+it is a small v 1. Now metadata what is this metadata in general in English what is metadata? Metadata is it a data about data.
+
+01:13:18
+It's a data about data. So under this metadata, can I give something like this name? So this name is what whatever name I am going to give here. It will be that namespace name.
+
+01:13:33
+Will it be the namespace name?
+
+01:13:38
+whatever I am going to give here, that will be your namespace name. For namespace, you no need to define any specification. Now, there is a concept called labels. There is a concept called labels. In Kubernetes also, can I add labels to any Kubernetes object, whether I am creating a namespace, whether I am creating a pod, whether I am creating a deployment, whether I am creating a service.
+
+01:14:06
+Can I add labels to any of these resources?
+
+01:14:12
+What is labels? What is labels in general? In the Docker also we discussed about labels. What is labels in general? Does labels are key value pairs? Does labels are key value pairs for uniquely identifying for uniquely identifying for identification purpose uniquely identifying any object. Can I use this labels concept?
+
+01:14:40
+Can I use any key value pair here? I can give ABC XYZ also. Can I give like this also? Yes, it won't complain. But am I going to use some meaningful labels for identification purpose?
+
+01:14:56
+Let's say I am creating this name space. I am creating this namespace for this team. Can I say something like this label team name? Let's say product inventory team something like this. Inventory team like this.
+
+01:15:16
+Can I give some labels like this for easy identification purpose?
+
+01:15:23
+Suppose I can give kind of a contact person also DL distribution list, but here special characters will not be allowed this you cannot give something like this if you want to give a DL of the team product inventory team at the rate tcs.com you can't you like these special characters.
+
+01:15:49
+Since you already know in which company you are working, can I just give the DL name without that at the rate at tcs.com or at the rate IBM.com like that. So I can do like this. Now if any issues are happening in this namespace by looking at this labels in this namespace, can I contact that respective team using this labels also if required.
+
+01:16:13
+Can I reach out to the DL if some issues are going on in this namespace? So can I use these kind of labels for identification purpose for uniquely identifying by giving some meaningful labels?
+
+01:16:31
+Is it mandatory to give the labels again? Is it mandatory to give the labels again? No. But is it good to have labels for uniquely identifying?
+
+01:16:43
+Yes, something like this I can create. Now let me create a namespace like this. Just I am giving just like this some labels like this. This label is also not mandatory, but if you want to give you can give a label like this. I am creating a namespace like this.
+
+01:17:05
+declaratively now if I have this yml does it mean this will be automatically applied and created if I just create a yml.
+
+01:17:14
+If I just create a YML, do you think it will be automatically created? No. So do I need to use that YML using kubectl commands? I can use kubectl create. Are apply that file name.
+
+01:17:31
+So we have something like this, kubectl create, kubectl update.
+
+01:17:39
+update, cubectl, delete like this cubectl, update, cubectl, create, cubectl, delete something like this
+
+01:17:53
+QCTL apply is also there. This is also very very important question sometimes in the interview they are asking what is the difference.
+
+01:18:05
+between cube CTL apply and create cube CTL create you can easily guess this you know need to be expert in the any technology or tool you can understand what is the difference between create and apply. So if I use create will it just create whatever has been defined in this manifest is it going to create this object whatever I am defining in that manifest.
+
+01:18:34
+that object in the cluster if I do something like this.
+
+01:18:41
+If I say something like this, cubesetel create. Now this is the resource I have defined. Does namespace will be created?
+
+01:18:52
+But if with this name with this name already there is a namespace. Is it going to throw error saying that the resource already exists with that name if that is already there. Yes, if it is not there, is it going to create?
+
+01:19:12
+Yes, now it is there but I want to update maybe I want to update the labels. I want to add one more label So if it is already there I want to update can I use create command if it is already there and I want to update can I use create command to update? Will it work? Now in that case what command I need to use if it is already there I want to update can I go with this update command?
+
+01:19:42
+Can I go with this update command if I want to update? I am trying to execute this update, but that is not there. Will it throw error? I'm trying to execute update command, but this object is not there. Is it going to throw error again? Yes. So this is to create this is to update but what is the supply? Is the supply is a combination of create and update. It's kind of a create or update.
+
+01:20:12
+create or update. So if I use kubectl apply, if that is not there, is it internally going to create? If I am using kubectl apply, if that object is not there, is it going to create that object in the cluster? Is it going to create that resource in the cluster? Yes. But if it is already there, if it is already there, and there are some changes in this file, in this specification, there are changes, is it going to update?
+
+01:20:41
+If it is already there and there are some changes, is it going to update?
+
+01:20:47
+If it is not there, it is going to create if it is there if there are no changes will I say message saying that will I say message saying that I'm configured I mean to say there are no updates if there are no changes in this manifest and actual object. I will say something like no changes kind of a message already object is there but there are some changes in this declaration. Is it going to do the update? Is it going to update?
+
+01:21:18
+Yes, so is it like a create or update is this cube CTL apply is like a create or update if it is not there it will create if it is already there if there are any changes it will get update is everyone clear. What is this cube C it'll create or apply. So that's why most of the cases whenever you are working which one you will see guys are you going to see most of the cases this one only apply only.
+
+01:21:45
+Instead of using create separately or update separately most of the cases. Do you see apply only? Like this
+
+01:21:56
+Yes, so we can create a namespace like this. Now I will explain the resource quota later. Now I am just creating a namespace, but I have not defined any resource quota quota for this namespace. Then is there any limit for the number of parts I can apply in this namespace number of CPUs number of memory I can use for applications in this namespace. If I don't create a resource quota.
+
+01:22:27
+No, if required, can I define a resource quota also? Maybe I will explain that later because here itself, if I explain, you will get a lot of errors. Your deployments may fail, but because you are not aware about what is that resource quota, Kubernetes will not allow you to deploy more than what you are setting the resource. But you will have a problem troubleshooting because you are completely new to Kubernetes. But in the real time, are you going to define the resource quota?
+
+01:22:56
+while creating a namespace itself how many parts how much CPU how much memory you want to set for that namespace.
+
+01:23:05
+There is a concept called resource quota. This is also very, very important in the interview perspective also. Not only interview perspective, for working perspective also. Sometimes in the interview they're asking this question, what is resource quota?
+
+01:23:24
+guys if an interviewer is clever he will not ask any question straightforward he will not ask any question straightforward if the interviewer who is taking the interview is clever guy he will not ask any question straightforward like this what is resource quota
+
+01:23:43
+What is what he will not ask because they know the mentality of the people they are hard coding this they are like a by heart in this interview question. They will go to the Google and they will buy had this question or we are also sharing the interview questions. You are only by heart in that question and answer for that question. But logically you don't know.
+
+01:24:07
+Logically, you don't know what is that resource quota, but he will explain. But for what purpose I can use that resource quota, what I am trying to solve the problem, what type of problem I am solving using resource quota, you don't know, but you know the answer. Will that helpful in a working environment? If you know the answer, but what purpose, what use case it will solve.
+
+01:24:31
+So if the interviewer is more clever, he will not ask a straightforward questions. He will not ask straightforward questions like this. Some guys actually they don't know what first of all what is Kubernetes. I too face that interviews long back. I was giving the interview. The interviewer is going to Google Kubernetes interview questions because that guy also don't know Kubernetes. He was going to Kubernetes interview questions like this.
+
+01:25:01
+This happened to me in one of the interview. Like he was asking by looking at that Google. That time, even though you don't know Kubernetes, you also went to the same blog what interviewer is asking. Even though you are asked, went to the same page, what interviewer is looking. That guy also don't know, you also don't know. You will get a job. But will be able to manage once you go into that actual job.
+
+01:25:31
+So don't focus only on the interview perspective. Don't focus only on the interview perspective. You can crack the job. If you sit in front of the system and only focus what is Docker interview questions, Kubernetes interview questions without learning also. If I spent 30 days in front of the system by reading all the interview questions of Linux, AWS, Docker, Kubernetes without learning and practicing, you can crack the job. If you are good at communication.
+
+01:26:00
+you are very good at explaining
+
+01:26:03
+You can crack the job.
+
+01:26:07
+But surviving is difficult. Surviving is difficult. If you don't survive also, you'll not have that happiness of the job. You got a job, but you will not have a smile in your face if you don't survive, right?
+
+01:26:25
+So understand the concept. That's why I'm saying understand the concept. Don't buy hot, don't learn stepwise anything. Step one, do this, step two, do this. I can do in any order. If you know the concept, I can come in a reverse way. If you know the concept, instead of doing whatever I supposed to do in step one, I can do in step 10 also.
+
+01:26:50
+If you have that way of learning, it will be easy guys. No, they may not ask directly like this. They will explain. I am sharing my Kubernetes cluster with lot of teams. Now one team is over utilizing their resources. They are deploying lot of parts and other teams are not able to deploy their applications. Then how can you manage the cluster? I don't want a team, one team to fully use my resources of the cluster.
+
+01:27:20
+They will have these type of questions. You will come, sir, they're asking some real time question. That is not a real time question. That is one use case. That is one requirement. So to achieve that requirement, can I use this concept called resource quota, namespaces and resource quota?
+
+01:27:45
+So interviewer may come differently. If they directly ask, what is resource quota, you might have explained. But if they ask in a different way, if you don't understand the concept, you blindly followed running notes, you blindly executed indirectly. If they're asking, you will have a problem clearing the interviews.
+
+01:28:04
+even though you know the subject but you are not able to explain.
+
+01:28:09
+So learn concept versus perspective.
+
+01:28:16
+So now there is a concept called resource quotas. Sometimes in the interviews, they're asking this one also directly or indirectly. As I already told, when several teams or users are sharing the Kubernetes cluster with the fixed number of servers, when several users or teams are sharing the cluster with fixed number of servers, which means fixed number of capacity, CPU and memory, do we have a concern that one team can use more than it's a fair share of their resources?
+
+01:28:46
+Does one team can use more resources than whatever they deserved?
+
+01:28:52
+In that case, do we have a concern there? Other teams will run out of the problem. They will run into a problem because they don't have enough CPU and memory in the cluster. So can I use resource quotas concept here as a Kubernetes administrator? As a Kubernetes administrator, can I use a resource quota to address this concern? Does resource quota will provide a constraint or limit? Does resource quota?
+
+01:29:22
+can define using resource quota. Can I define a constraint or limit the aggregate resource consumption per namespace? I can limit the quantity of objects the quantity of objects in the sense number of parts that can be created in that namespace as well as total amount of compute resources like CPU and memory. How much CPU how much memory all the parts all the containers aggregated Lee how much they can take in that namespace.
+
+01:29:50
+I can define some resource quota like this how much CPU how much memory how many parts like this I can create how many parts I can create how many volumes I can create also I can set the limit something like this something like this I can create a quota resource quota just to give an example. I am taking like this now while creating a namespace itself and creating a resource quota like this in the same namespace.
+
+01:30:20
+For this namespace, I'm creating a resource quota.
+
+01:30:27
+Now if you see here I don't have this much CPU first of all in my cluster I am just giving something like this. Now if I say number of parts as one will I able to create more than one part in this namespace now because of this resource quota. No if I say number of parts as two will I able to create two parts will I able to create more than two more than two not allowed.
+
+01:30:58
+But if I said 10 also, will I able to create 10 parts now? Yes, but does other also others also comes into picture. All the 10 parts, all the 10 parts, will it able to take more than aggregation of all those 10 parts, will it able to go beyond 1 GB of CPU, 1 GB of memory? Now let's say even though you have given part limit as 10, let's say one part itself is.
+
+01:31:25
+requesting one part itself is requesting one CPU and one GB. Then even though you have limit as 10 parts, do you able to create another part second part third part like that if that part itself is taking this much CPU this much memory. No, so this way will I able to set the quota of resources for that namespace in the cluster. Does this help administrators?
+
+01:31:52
+Does this help administrators to manage your cluster more efficiently? Organize your cluster more efficiently. Yes. So this I will explain later why I am saying explain later. Now I will do something like this, but you don't know your parts are not going to be created. You will have a lot of problem while practicing. You are trying to deploy your parts. Your parts will not create because of this quota. First of all, if you don't know.
+
+01:32:20
+Will you able to troubleshoot and identify where exactly went wrong?
+
+01:32:27
+First of all, you need to understand all these things. So that's why this resource quota I will explain later. That's why I'm saying this resource quota. I will explain later, but I have given an idea but in actual clusters while creating a namespace itself. Are you going to set resource quota? Are you going to work with the team? Suppose this namespace is created for one team. Are you going to ask with the team lead or manager? How many parts you are expected to deploy in this namespace?
+
+01:32:56
+how much CPU, how much memory you are expecting for all your parts. Can you give some details? So based on the communication or based on the discussion with the development team lead or architect, will you set the quota so that they cannot go beyond that? You will sit with the developer lead or architect. You will set up the quota. Then they cannot go beyond that. But anytime if they want to additional deployments, I mean to say they want to deploy more parts again.
+
+01:33:25
+Then again, do they need to request administrators, the guys who is managing the cluster for you know, increasing the quota. Again, if they want to deploy more parts sometime, do they need to work with Kubernetes administrators to increase this quota? As an admin, if you don't have enough nodes, in your cluster itself, you don't have enough nodes. Before you increase the quota, will you add some additional nodes to the cluster?
+
+01:33:54
+then you will increase the quota. Suppose you don't have those many nodes, those that much CPU and memory is not available in your cluster. As an admin, will you add more nodes to your cluster? Then will you increase the quota so that it will not impact any applications, any parts, any namespaces.
+
+01:34:14
+Is everyone clear how important this namespace and this resource quotas? In the actual applications.
+
+01:34:24
+we are going to use all these concepts in the actual servers case actual clusters. Now let me create a namespace only for now. Let me create a namespace only. Now this is my cube ctl machine. Can I have yml like this?
+
+01:34:42
+Guys, whatever I am doing manually, if I have these YMLs in my version control system, if I have these YMLs in the version control system like SCM using Jenkins also, will I able to create all these Kubernetes resources automatically using pipelines again. If I have all these YMLs, whatever I want to create or deploy in Kubernetes, if I have these YMLs as part of my SCM tool.
+
+01:35:09
+using Jenkins also available to automatically create update delete all these Kubernetes resources using pipelines automation.
+
+01:35:19
+Yes, now I am manually doing so can I execute something like this? Cubectl apply, I find F that file name I'm using apply. So since this is not there, did I got a message saying that created namespace test ns is created. Again, if I'm executing, is it saying unchanged because it is already there. There are no changes here in this manifest. There are no changes here unchanged.
+
+01:35:48
+But if I use create will it throw error if I use create will it throw error since it is already there is it saying this namespace already exists. Now if I want to do any modifications. Can I do something like this if I want to add some additional labels like this.
+
+01:36:08
+Now if I use create now will it work? No, I need to use update but instead of using create or update can I use apply now there is a change with the desired state and current state. Do I have some changes in the desired state? This is my desired state. Current state is whatever you already have in the cluster. Whatever you already have in the cluster is current state. This is my desired state.
+
+01:36:36
+Since there is a change in the desired state and current state. Now is Kubernetes is again match with the desired state is that updated now? Now if I want to see now, can I execute cubes etl get ns? Can I see that namespace created 78 seconds ago?
+
+01:36:58
+Now if I want to see more details, can I use something like this? Cubectl describe command the way you have a Docker inspect command here. Can I use Cubectl describe command? What you want to describe what object I want to describe namespace object, which namespace this namespace? Can I see more details? Like this. Now you can see in the you can see in the
+
+01:37:28
+YML format also if and only a ml you can see in the YML format also But for seeing in the YML format, you should not use describe you have to use get Get namespace that namespace name if and only a ml now, can I see that in a YML format? Can I see what labels whatever has been added like that? Now if you see when I am describing that namespace is it saying no resource quota
+
+01:37:56
+no limit range defined for that namespace. What is resource quota I have explained what is this limit range also I will explain later. What is this limit range I will explain later. For now there is no resource quota there is no limit range. Now if required as of now do I have any applications deployed in that namespace not only in this namespace. In the default namespace also I have not deployed anything.
+
+01:38:26
+As of now, we have not deployed any application. We just created a namespace. Guys, if I want to see objects in all the namespaces, can I do something like this? All objects in all namespaces, can I do something like this? Iphone, Iphone, all Iphone namespaces like this? All objects in all namespaces, can I do something like this? Is it listing all the objects in all the namespaces? As of now, except in cube system.
+
+01:38:55
+Do I have anything in any other namespace?
+
+01:39:00
+No in the short form I can use iPhone a in the short form. I can use iPhone a what is that iPhone a also stands for?
+
+01:39:10
+All namespaces, but if I want to see only ports, can I do something like this also cubes? It'll get parts cubes. It'll get a deployment like this also cubes. It'll get services like this also.
+
+01:39:28
+But if you want to see in a specific namespace, can I use iPhone N, that namespace name? If you want to see only services in that namespace, if you want to see only parts in that namespace, you can see like this. As of now, did I applied any part in this namespace, whatever we created? No. So today, we only discussed about, today we only discussed about namespace. We have not discussed about.
+
+01:39:57
+What is pod how to deploy pod that I will continue in the next class that I will continue in the next class. So what is pod how to create a part first will understand the pod. What is single container pod? What is what is multi container pod? What is service? Service is also very very important. What is service in Kubernetes will understand in the next class. So I'm planning to take a class tomorrow also.
+
+01:40:24
+is that fine because last week also I have taken if you want to practice darker and darker swarm I can give you off tomorrow but don't expect off from every saturday next week onwards it's up to you now if you want to practice till darker darker swarm I can give you off tomorrow otherwise I can continue tomorrow
+
+01:40:48
+If you want to practice I am giving off tomorrow but don't expect off from going forward guys. Next week onwards there is no holidays on Saturdays. Only this week holiday I am giving. But practice man. I can give off but you need to utilize that offer. You are saying I will practice sir but you are going for a movies or outside. You are going for movies or you are roaming around on the roads that will not help.
+
+01:41:20
+Guys utilize these sessions. I'm trying to explain at very basic level. I'm starting with very basics, like I'm making you to sit and like a write ABCDs. Then I am trying to make a sentences. And then I am trying to make kind of a full pages or paragraphs like that. I'm explaining from very basics to advanced level so that you can easily remember and you know work.
+
+01:41:48
+You don't need any proxy. You don't need any support for interview or work also. But you need to attend all the classes. You need to practice. You need to utilize this opportunity. Otherwise, without practicing, it is not possible to understand any concept.
+
+01:42:09
+You will say Balaji sir is teaching some Chinese language. You will feel like that. If you don't understand, if you don't attend, if you don't practice a lot.
+
+01:42:23
+Guys, practice makes man perfect. I am not saying this word. This is there from ages. This is there from ages, not only in IT field. Any field you are there. You are doing farming or you are doing some learning. I mean to say you are doing farming or you are learning some vehicle like driving you are learning. Does practice makes you perfect? Same applies here also.
+
+01:42:50
+Same applies here also in the software, in the IT. How much you practice while learning any technology or any tool, you will be expert in that. So when you are practicing, I am here to help you. You are getting some issues, you are getting some errors. As a trainer, I am available for you in this batch so that I can assist you. But once your batch is done,
+
+01:43:15
+Once your batch is done, you are going to start practicing after six months of your course. Then you will also not have an interest if you get some error. And also do you get my time after completing your course? Will I be dedicatedly available for your batch the way I am available now? No, right? I will be busy with my trainings, my work. I may not spend with you the time I am spending now. So you need to do everything in the right time. For everything there is a time.
+
+01:43:45
+Even though you are doing the task but you are not doing in the right time, in the right age I can say, right age or right time, again you can't succeed in any area. You have to do whatever you are doing in the right time, right place with right persons then only you can become successful. You guys are not practicing after 7-8 months you will open.
+
+01:44:14
+your this material will be able to remember anything even though I explained full paragraph sentences also from ABC's will be able to remember after seven eight months if you start opening and practicing no so do it in the right time when I am available here so that you can easily understand and also there is a lot of support from the team also nowadays you are posting some issues in the Skype group before I respond.
+
+01:44:43
+Does already others are giving the solutions because they already know they already practiced a lot on that subject already your friends only I mean to say your batch mates only are they giving a solution before I respond. But if you do it after the eight months does other others also will respond forget about me does other your batch mates also will look into that messages and respond no.
+
+01:45:10
+So try to do it in the right time. Guys, I am explaining a lot of theory. I am explaining problem. I am explaining theory. Then I am explaining the concept. But if you want to practice whatever I am discussing, do you need two hours or four hours of time every day to practice that concept if you are up to date, not required. You can just hardly spend one or two hours. But if you want to do multiple times, you need to spend some time.
+
+01:45:40
+So recordings are available, material is available. Spend at least minimum, if you are working employee, spend minimum two hours for practicing. But if you are not working employee, you are striving for the job, software job, you are looking at your, you know, striving for the job, then can you spend at least five hours, 10 hours, even 12 hours also? If you want to become successful, yes.
+
+01:46:08
+But the people who are already in jobs, they might be joined only for enhancing. They are not looking for a job. They're only joined for enhancing. They want to enhance their technologies or tools to get a better opportunities. But the guys who don't have a job, do they need to put more effort? Don't compare with others who are already in job because they're joined for enhancing. They're already having a job. But the guys who don't have a job spend a lot of time.
+
+01:46:38
+I see reverse nowadays. Actually, the guys who already has a job is practicing a lot, attending the classes. The guys who don't have a job, not at all attending the classes. Reverse I am observing.
+
+01:46:54
+These are my suggestions guys.
+
+01:46:58
+These are my suggestions as a you can treat me as a brother or mentor whatever it is or a trainer. I am giving a suggestions but it's up to you whether you want to follow. If you follow at least you will get benefited. Otherwise there is of no use.
+
+01:47:22
+Thank you guys. That's it for today. Lot of Bodha also, lot of Bhagavad Gita also not good for everyone. Have a great weekend. Come back with full energy from Monday. We'll start discussing about actual Kubernetes. Thank you.
+
+01:47:47
+We'll see you on Monday.
+
