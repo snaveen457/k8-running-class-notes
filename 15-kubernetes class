@@ -1,0 +1,1008 @@
+00:01
+This conference will now be recorded.
+
+00:06
+In last session we were discussing about what is liveness probe, what is readiness probe and also what is this config map secret and how to use config maps and secret.
+
+00:23
+We discussed all those things. Now I'll explain one more important concept, one more Kubernetes concept, stateful set. As we already discussed, we have pod, we have RC, RS, DS, deployment.
+
+00:45
+We already know we should not directly create a pod for deploying applications in Kubernetes. If pods are ephemeral, if pods goes down, pods will not be recreated automatically. So that's why we used RC, RS, DS deployment and all these things. We already know what is the difference between you know, daemon set, replica set, replication controller and deployment. So which one is recommended?
+
+01:14
+to deploy the applications in Kubernetes.
+
+01:20
+Deployment is the recommended way to deploy the applications because of some features whatever features we are getting with the deployment because of that and again deployments are recommended for what type of applications there are two types of applications we already discussed stateful and stateless. So this deployment is recommended for what type of applications this deployment stateless.
+
+01:50
+But is it possible to make the deployment as a stateful using values concept? Yes, but still there are some differences. There are some differences we'll discuss. In Kubernetes, if I want to deploy the stateful application, which one is recommended even though I can use values with the deployment? That is not fit maybe. That will not fit for most of the requirements.
+
+02:19
+So in that case, what is the best way to deploy the stateful application in Kubernetes is stateful set. This is one more Kubernetes object. We have a stateful set. So stateful set is going to work in a different way.
+
+02:39
+how different it is we will try to understand. So stateful set in kubernetes there is one more kubernetes concept called stateful set. As I already told one second this one.
+
+03:09
+As I already told, deployments are used for stateless application. However, you can save the state of the deployment by attaching a value and you can make it stateful. But how it will work? What is the difference? Right now, let's consider I am creating one deployment with three replicas. I am creating this is my Kubernetes cluster. This is my Kubernetes cluster. I have some nodes.
+
+03:39
+I have several loads.
+
+03:44
+Some servers are there, whether I'm creating a two pods, three pods here. I'm creating a deployment. Deployment is creating a pods. Now in my deployment, my pod manifest, I'm using one value. Let's say I'm creating three pods. I'm using one value. Is each pod will have its own storage if I'm using a deployment with the volumes? Does each pod will have its own value?
+
+04:14
+is it going to have its own value?
+
+04:22
+if it is a deployment now am i going to get a volume separate separate values for each pod i am creating a deployment with two replicas or three replicas am i going to get like this
+
+04:38
+No, we are not going to get like this. Basically, there is a PVC concept here. You are using PVC and other PVC will map with PV. Even though you are using directly values also same case, even though you are directly using values also same case, you are not going to get a separate value. Is all the parts will share the same value, same storage of the deployment.
+
+05:05
+is all the parts is going to use same value same storage for the deployment. Yes.
+
+05:13
+So if I'm using deployment, one second.
+
+05:21
+If I am using deployment.
+
+05:39
+If I am using deployment with values, all the parts of the deployment, all the parts of the deployment will be getting a same storage, same value. But let's say I don't have that type of requirement because let me tell you, suppose you are running database, database also you are running in real time whether you are running database in the virtual machine.
+
+06:06
+It is a virtualized deployment of your database, whether it's a containerized deployment, that doesn't matter. When you are running a database in real time, do you have a database that's also running as multiple replicas? Whether it's a server, whether it's a container, that doesn't matter. Are you going to run databases also as multiple servers? The way you have application servers multiple, or containers are multiple. Similarly, are you going to have a database process also multiple?
+
+06:38
+Are you going to have only single database server? Are you going to have a single database server in real time? No, you are not going to have a only one database server. Do I need to have a database also highly available?
+
+06:54
+If I have a single DB server, let's consider the database server is having some issues. Does your applications will be able to communicate with the database and connect and read and read the data. If you have a single database server. No. So in real time, whether you are running directly in the servers, whether it's containers, that doesn't matter the way you have a multiple application servers or container. Similarly, do I have a multiple database servers also?
+
+07:22
+or containers if you are running in a container CS.
+
+07:38
+you will have multiple servers or multiple if you are running as containers.
+
+07:46
+But databases also you need to have a some kind of a cluster setup. You need to have some kind of a cluster setup database cluster. So like a primary DB primary database process.
+
+08:03
+and your secondary databases. You will have a secondary databases like primary and secondary in the database also. You will going to have a database clusters. The way you have a, this one database also will be have a kind of clusters. So you are going to have a multiple database instances. But you need to have some kind of a cluster setup, secondary DB, primary DB.
+
+08:33
+So you will have multiple databases also like this. Whether it's a server, whether it's a container, that doesn't matter here. So what is the role of the primary DB? What is the role of the secondary DB? Anyone from DB background here? Do we have anyone from database background here? Databases also will run in a cluster mode.
+
+09:14
+Why we need to have this? Let me tell you. Suppose I have only one database. Let's consider I have only one database. That database might be using some storage. You have your applications. You have your application servers or containers. That doesn't matter here. Whether it's a server, whether it's a container, if it is a Kubernetes squad, that doesn't matter here. Let's say. Your application servers are applicable.
+
+09:42
+containers or parts whatever it is. It is trying to communicate with the database and you have only one database let's consider. You have only one database process. If something goes wrong with that process, if something goes wrong with this server or the storage, do you have a database available for your application to read and write the data? If something goes wrong with this one, something goes wrong with network.
+
+10:11
+something goes wrong with servers, something goes wrong with storage.
+
+10:16
+So do we have any other database server available to read and write the data? No. So in real time, you will have a database that's also running in multiple servers. But again, is those database servers again, will use same storage, even though you are using multiple database servers, is it again recommended to use like this? Shared storage for your database servers, is it recommended to use like this? Like a single.
+
+10:46
+Copy of data? No. Single copy of data? No. You should not use single copy because even though you have multiple database servers, if it is a shared storage if something goes wrong with the storage again, do we have a corrupted data? I mean to say we don't have any other copy of the data.
+
+11:06
+we will have a some issues here. Now, this is not the case. Now, if I want to run databases like this in Kubernetes, if I want to run databases like this in Kubernetes, and each one should have its own storage, but if I go with the deployment, is this is the case now, is it going to happen like this? If I'm going to with deployment or replica set, replication controller, whatever it is. If I'm going like this,
+
+11:34
+I am creating a even though I am creating multiple database pods. Will I end up this is the value will be shared is the storage will be shared like this.
+
+11:46
+it won't work also. Krishna prasad is saying no. This is what I have explained Krishna prasad just now. If I create a deployment with multiple replicas is all the parts of the deployment is going to use same value. If that is yes is this yes or no. Will I end up this in a you know this case.
+
+12:17
+So I don't want this to happen. It will not work also because it will acquire some locks. Database will acquire some locks. If this process is writing some data, does this process will be able to use same file? This one? No. Even though you create like this, it won't work. If you create a database, Mongo database, like three replicas deployment, it won't work. You will have problems. So I don't want this to happen. Now,
+
+12:46
+deployment will not work for you. So in that case instead of going for a deployment if I go for a stateful set is each replica of a stateful set will have its own storage. Does the each replica of a stateful set get its own storage its own value.
+
+13:10
+If I go for a stateful set, am I going to get like this each member each replica of a stateful set will it get its own storage its own value. Yes, that is the first difference. That is the first difference. One difference here is when I go for a deployment all the replicas of the deployment will be using same value same value when I go for a stateful set each replica of a stateful set.
+
+13:39
+will be using its own value. As I already told, if it is a deployment, all the parts of deployment will be sharing the same value and data across all the parts will be also same.
+
+13:53
+but this won't fit for my requirement for most of the cases like database also I want to run as a cluster. Now there is another Kubernetes object called statefulset. Statefulset is Kubernetes object used to manage what type of applications as I already told.
+
+14:20
+stateful application. So using stateful set also, the stateful set also will deploy and manage the parts. The stateful sets also will create and manage the parts and will able to scale the parts of stateful set. Will able to scale the parts of stateful set. The stateful set will deploy and manage the parts, yes.
+
+14:43
+So stateful set will work in a different way. As I already told, does every replica, I mean to say every replica, every part of a stateful set, will it have its own state, which means each of the part will be creating its own PVC and PV. Let's consider I'm creating a stateful set with the three replicas, which means three parts. Does each part will have its own value?
+
+15:12
+So total how many PVCs how many PVs will be there if I create a stateful set with the three replicas how many PV persistent value claims how many PV persistent values three PVC and each PVC three PVC and each PVC will have its own value. So will I have a three PVC and three values if I create a stateful set with three replicas
+
+15:42
+If I do the same thing with the deployment, three replicas of deployment, then is it going to have a three values and three PVCs? No.
+
+15:54
+Only one.
+
+16:08
+only one will be there. But if I have this type of requirement, I want to run my database also in the Kubernetes.
+
+16:20
+in the Kubernetes. I want to run this database process also in the Kubernetes. Let's say I will end up like this if I'm using deployment replica set. If it is a server, will it have its own storage servers that block storages that can be additional block storage which you can attach to that server. If it is a server can have database running in the server also if required as I already told multiple times. Yes.
+
+16:49
+this database I can run in the servers. Now primary DB and secondary DB. What is the role of the primary DB? All write operations will happen via which one? Primary DB. All write
+
+17:18
+Your application will connect to all these databases. It is not going to use only one server details. In the connection string in the application code in the connection string, are we going to use all these three server details so that your application knows all the three database servers but application knows which DB it has to connect when it is writing the data. All the right operations will happen via primary DB. What about secondary DB?
+
+17:48
+Does all read operations? All read operations?
+
+17:54
+will happen.
+
+17:57
+via secondary what is the advantage if I have this database also kind of a cluster do we have a lot of load on single server do we have a lot of load on single server do we have a lot of load on single database server if I have like this no
+
+18:16
+Will I get a better performance? One reason will I get a better performance in the database also DB calls also. If your database performance your DB performance is not good database performance is very slow. Will it impact your application performance also because application is connecting to the database database is taking more time to respond. So if database is very slow. The obviously does application become slow.
+
+18:49
+Yes, so you need a better performance. Now if I have something like this, all write operations will happen via primary, read operations will happen via secondary databases. So to have a better performance, one thing.
+
+19:06
+Yes and one more thing if something goes wrong with this primary DB if something goes wrong with this primary DB does out of these two secondary DBs does one guy will become a primary if something goes wrong with this primary DB out of these two secondary databases does anyone will become a primary yes
+
+19:32
+And if something goes wrong with this primary, out of these two, one guy will become a primary and do you have a high availability in the database and its data?
+
+19:45
+Yes, but one more important point here all the right operations will happen via primary does primary knows where secondary is working secondary is running because it has to flush the data because it has to flush the data. Let's consider this application this application server or container whatever it is this application process whether you are running this process as a container or server that doesn't matter
+
+20:15
+application has connected.
+
+20:21
+to this primary DB and it has created some record. It has created some record. This application process is connecting to secondary DB. It is trying to fetch the data. So does that data, whatever has been written, does the data should be available in the secondary databases also? Otherwise you will not have it. We will have issues with the data. Now, all the primary is taking right operations, but does the data has to be flushed?
+
+20:48
+are synced with your secondary databases? Will that happen automatically? If I just created three database servers, will it happen automatically? Suppose if I just create three database servers like this, if I install Mongo, do you think that will happen automatically? No. So you need to do some kind of a database configurations, database setup. We need to make this as a primary.
+
+21:15
+Do I need to report these two as a secondary to this main database process? Do I need to give where is your secondary servers on which IP and which port that secondary servers are running? Do I need to give all those details through this primary while setting up this kind of a setup? So if this primary knows, if this primary knows where secondaries are running, the moment it has written the data to the primary, will it going to flush or sync that data to the secondary databases?
+
+21:45
+that secondary storages.
+
+21:48
+Yes, so this is kind of one database setup. We call this as a database administration. The database administrator administration, which means setting up the databases as a clusters and managing the database related operations is called as database administration. So now same thing I can do it in the Kubernetes also. But now if I go with the deployment. I won't.
+
+22:18
+it won't work like this. Now I have to go for a stateful set. If I go for a stateful set, if I create a Mongo database, MongoDB with the three replicas, am I going to get like this? This is one part. This is another part in that I will have a database process in this another part will I have a database container like this. If I create a stateful set, each one will have its own storage. That is one thing.
+
+22:47
+Next step. Each
+
+22:52
+member of a stateful set each replica or each member or each pod in a stateful set will have a unique network identifier also unique network identifier. What do you mean by unique network identifier? or stable network identifier stable network identifier stable host names stable host names that is very very important because
+
+23:23
+the part is recreated because these details are already used in the primary. These details are already used in the primary. So if this part goes down if the part has recreated by need to have a stable network identifier so that again this can identify where it is running.
+
+23:43
+because these details are already used here while configuring the database repelset database also have a concept of repelset. I need to have a stable network identifier stable host names guys when I am using for you know deployments replica sets. Am I getting a stable host names that is your pod names. Am I getting a stable host names table pod names. No kind of some random some kind of a random.
+
+24:12
+but when it is a stateful set when I create a stateful set with the name mango let's say I am giving stateful set term as mango or mango D how the names will be the names will be something like this the stateful set name with incremental number so suppose my stateful set name is mango the stateful set name mango D I fun 0 I fun 0
+
+24:42
+so I will get a part name like this type 10 then another one iPhone 1
+
+24:56
+iPhone to like this iPhone to like a incremental number Now even though this part is deleted even though this part is deleted Stateful set again will it recreate will it recreate because again that is one controller But is it going to recreate with same network identifier and with same storage whatever it was using earlier
+
+25:24
+is this part will get a stable storage as well as stable network identifier again.
+
+25:34
+Yes, it is going to get a stable network identifier as well as stable storage. Even though this part is gone again. Does the part will be created with user to same storage? Whatever it was using earlier and I am going to get same network identifier same hostname again.
+
+25:54
+Yes, so that is the another difference. Now suppose I use these details while setting up this kind of a cluster setup. If I use something like this secondary is running here. Secondary is running here. This is secondary database on that post on that port. It is running like this. Even though part is deleted and recreated. Same network identifier you are getting again.
+
+26:25
+Do I need to modify these configurations? Do I need to reconfigure that kind of a database configurations again here? Not required. Stable network identifies stable value it is going to get. That is another difference. One difference is stateful set part. Does each stateful set part will have its own storage, own value?
+
+26:53
+Yes and the next difference is it going to get a stable network identifiers and values even though the parts are getting restarted recreated.
+
+27:05
+Yes, that is another difference. One more thing. It is not going to create when we are creating a stateful set. It is not going to create all the parts at the same time.
+
+27:19
+when I am creating a stateful set it is not going to create all the pods at the same time it is going to create one after the other it is going to create one after the other so as I already told if I create a stateful set with name like this it will create a pods like this 0 1 2 like this as I already told now one more important when I am creating a stateful set with the three pods
+
+27:47
+is all the three parts will be created in the same time? No, it is going to create one after the other. First, this one will be created. Once this is completely ready, once this is completely ready, is it going to create another replica when we're creating or updating also same, when we're creating also same. But if you observe when I'm creating a deployment, does all the replicas of the deployment will be created at the same time?
+
+28:19
+Yes, that is another difference. Not only deployment like replica set replication control also same behavior. And when I'm terminating when I'm deleting the stateful set in which order these parts get terminated in the reverse order when I'm deleting the stateful set permanently in which order it will get deleted or updated basically in the reverse order, which means when I'm deleting or updating the stateful set.
+
+28:49
+the reverse order which means suppose I have three replicas does this one will be updated first then it will update this one then it will update this one when I terminate also this one terminates first later this later this when I am updating and terminating but creating is it in this order is it going to create in this order.
+
+29:15
+Yes, so this is the another difference. This is the another difference. Stateful set. Now as I already told, stateful sets will provide stateful sets will provide stable unique network identifier. Each part in a stateful set is given a hostname that is based on your stateful set name and incremental number. Suppose if I create a stateful set with mango.
+
+29:44
+with the three replicas it is going to start from zero not from one. It is not going to start from zero like zero one and two like this stable network identifies and also am I going to get a stable persistent storage.
+
+30:05
+each and every part in the Kubernetes cluster stateful set will have its own value. Even though parts are getting deleted, recreated, it is going to get the same value. And again, if you delete stateful set, is it going to delete the values? No. Even though you are deleting a stateful set, values will not get deleted.
+
+30:36
+Now, as I already told, ordered and the graceful deployment and scaling as I already told creation will be done one after the other, starting from zero to n in the reverse, it will terminate or update in the reverse, it will terminate or update. So these are the features of stateful set. Now I want to deploy my qno database also.
+
+31:05
+It's up to you guys as I already told instead of you want to run your database. Can I directly go for a manager databases like RDS in AWS? You may run your applications. You can run your applications. You can run your applications as a pods. Does that applications can communicate with the databases that database can be running as a RDS instances in AWS.
+
+31:32
+In that case, who will create this database kind of a repels at database also. There is a concept of repels at our cluster database cluster or database repels at so we call it. So who will create this repels at our cluster if I go for RDS managed databases who will do this for us. AWS AWS will create this kind of a repels at. Then it is going to give one end point.
+
+32:00
+it is going to give one kind of a URL. Now can I use that URL as part of my application code to connect to the database, that RDS database to read and write the data? Yes. But do I need to make sure there is a network between the Kubernetes nodes, the servers in which my pods are running? Does that server should have a network connected with RDS?
+
+32:25
+If they're in a same VPC, I choose the same VPC while creating RDS also I have used same VPC my Kubernetes server also in same VPC. It can communicate but if they're in a two different VPCs you need to know that VPC networking concept route, you know VPC bearing all those things.
+
+32:48
+Now instead of that way, is it possible for me to just create some servers and is it possible to directly run my database in the servers, virtualized deployment on my own? In that case, do you need to create and set up that kind of a cluster? And do you need to manage that availability of that database servers? You has to take care.
+
+33:17
+My architect is saying I don't want to run database in RDS. I don't want to run this MySQL or Mongo in RDS or in the servers. I want to run this database kind of a clusters also database clusters also in the Kubernetes then which one will work for that requirement. If we want to run that any kind of a stateful application in the cluster mode like a database cluster Mongo cluster MySQL cluster Kafka cluster rabbit MQ cluster.
+
+33:48
+You know MQ cluster there is a cluster in that one also clustering in that one also then which one will work for these Type of requirements for any stateful applications is a stateful set now I Want to run database? Mongo database in Mongo database also your application is using Mongo database. This is the official website of MongoDB This is the official website of MongoDB
+
+34:18
+In the Mongo database also, there is a concept called. Ripple set. Kubernetes replicas is different. MongoDB repels it is different. Don't get confused. Kubernetes replica set is different. MongoDB repels it is different. MongoDB repels it repels it in a sense. Will I have a multiple Mongo database replicas multiple Mongo database process running? Kind of a primary and secondary years.
+
+34:48
+So in Mongo Database, there is a concept called repelset cluster. For high availability in Mongo Database, I need to set up Mongo Database repelset.
+
+35:01
+Don't get confused with kubernetes replica set. This repels set is basically mango database repels set. I need to run multiple members like this. I need to have multiple database members like this. I need to set up some kind of a repels set. Like this is my prime, this is one database process running in this IP on this port. This is another database process running in this IP and this port. I need to set up like this.
+
+35:30
+primary secondary this is database concept this can be done in the servers this can be done in the Kubernetes if it is a Kubernetes I will take I will take stateful set so repel set in the sense multiple Mongo database process are running and they know with each other they know each other. Now let me deploy stateful set.
+
+36:00
+to deploy that Mongo database, a ripple set. Before I go for a replica of that stateful set, let me explain one more concept, service concept. Let me explain one more concept, service concept. As of now, what type of services we discussed?
+
+36:31
+As of now I used cluster IP, I use another one card.
+
+36:37
+node port I use cluster IP another one called node port. Now there is a one more type of service called headless service. Another type of service called headless service. What is this headless service? I will be using headless service while creating this stateful set.
+
+36:58
+What is this headless service basically a service a kubernetes service without load balancing without load balancing. I need a service without load balancing because now I am running my databases. I am running my database in my kubernetes as a stateful set. If I create a service of type cluster IP or node port is it going to do kind of a load balancing between those databases.
+
+37:29
+If I use service of type cluster IP or load port, is it going to do some kind of a load balancing between those database members where I'm using that service name? Yes, listen the question carefully don't immediately answer. If I'm using service of type cluster IP, if I'm using service of type load port, is it going to distribute the load between those three database replicas? Is it kind of a going to do the load balancing?
+
+38:01
+Yes, I have shown practically also still people are saying no, no Did you guys understand the concept of service?
+
+38:12
+When I was using service name was it distributing the load. Is it acting as a load balancer?
+
+38:22
+or it is not acting as a load balancer.
+
+38:31
+We already done lot of times. Did I show that practically also? That's why I have customized my code also. I have customized my code where it was showing IP address of that pod. Now when I'm using the service name, when I have two pods, was it distributing the traffic like one time it is going to one pod, another time it is going to another pod? When I use service of type node port or cluster IP.
+
+39:02
+yes it was doing then you guys are saying no then you guys are saying no it is not acting as a load balancer
+
+39:14
+So that was happening when I am using cluster IP and node port. But now let's say I have a database, I have a three members. Does my application needs to connect to all these database members? Is it, if it is going to connect with any one of the database member, is it going to work? Because there is a primary and secondary concept here. Your application has to connect all these members. Your application has to connect
+
+39:43
+all these members now now I am running this database in my cubanet is as a pod if I create a service of type cluster ip service of type cluster ip is it going to distribute the traffic
+
+40:02
+If it is service of type cluster IP or node put it is going to distribute the traffic that won't work here. Does my application has to contact all the members because if it is a write operation it will happen via primary if it is a read operation it will happen via secondary. So does it has to connect all the members of this application this database process.
+
+40:26
+Yes, now if I create a service of type cluster IP or not, what is it going to work?
+
+40:34
+like that no that is where another service is there that is where another service is there service we call it as a headless service there is a concept called headless service again it's a service it's a kubernetes service only service without load balancing service without load balancing when I am using that service name is it going to provide all the member details suppose I am using headless service name
+
+41:03
+in my application for if I am using my headless service name this headless service name in my application for is that headless service will return all the members whatever members of that headless service is it going to return the details of all those members I mean to say this I know this hostname this hostname or IP address all these members to your application is so in Kubernetes there is one service called headless service.
+
+41:31
+In the interview also they are asking this question, what is headless service?
+
+41:39
+headless service. So there are different different types of services we already discussed one is cluster IP another one is node port.
+
+41:51
+whether it's a node port or cluster IP, there is a load balancing within Kubernetes. Now there is a one more service called headless service. Sometimes you don't need a load balancing and you need just service, single service. In this case, you can create a term called headless service. You can create a headless service.
+
+42:21
+We you don't need some time load balancing, but you need to access those services directly without load balancing. Then you can create a service of type headless. Now how to create do I have a type like this when I am creating a service we have mentioned type in our service specification. We have mentioned type like cluster IP you have mentioned you have mentioned node port like this.
+
+42:51
+Now can I mention like this headless no there is no type like this now here if you want to create a headless service you will say cluster IP something like this cluster IP none cluster IP none so if you see like this cluster IP none it's what type of service this when your service specification if you see cluster IP none what type of service it is.
+
+43:23
+It's a headless service. So for headless service, are you going to get that virtual IP or cluster IP? When I am creating a service, this headless service, am I going to get that service IP, that cluster IP? Am I going to get that IP? No. It is not going to have that single IP, that service IP. When I'm using this headless service, is it going to do the details about that service, whatever?
+
+43:51
+whatever parts it has identified is it going to give all those part details wherever you are using this headless service. Yes a service without load balancing is called as a headless service. Now while creating this you know this type of stateful applications I need this type of service can I go for a headless service can I create a headless service and use that
+
+44:22
+Yes, that is one important point to be remembered. Is everyone clear what is headless service? Stateful set is different, headless service is different. But they are like sometimes you are going to use headless service with stateful set. Is everyone clear what is headless service?
+
+44:46
+Now let me create a stateful set. Let me create a stateful set. Now I am creating a stateful set like this. I am creating a stateful set like this. Let me explain this manifest. Let me explain this manifest so that you can understand. Now
+
+45:08
+What kind of Kubernetes object I am creating now?
+
+45:16
+stateful set. What is the APA version for that stateful set?
+
+45:28
+So this name this name is for what I am giving like mango D
+
+45:37
+mango d mango d process mango database process this is name is for what is the is it a name of that stateful set
+
+45:47
+Here can I give ABC XYZ also if required.
+
+45:53
+Yes, but some meaningful name I am giving MongoD MongoD in the sense Mongo database process Mongo D process MongoD process. So namespace I have given like this. So in which namespace this Mongo database stateful set will be created and its parts will be created.
+
+46:15
+because I have given like this in the test but as of now I don't have a namespace with the name test I don't have a namespace with the name test I think my namespace name is test type of my namespace name is test type of NS
+
+46:33
+If required can I create a namespace like persistence namespace persistence in the sense like database can I create a namespace like mango ns or persistent ns like that if required
+
+46:52
+that up to you like in whatever namespace in which namespace you want to create that you can create. So let me connect to my kubernetes that machine as of now I don't have any namespace called test if required I can create in this namespace again if I don't mention this at all if I don't mention this at all in which namespace default.
+
+47:19
+Now what is this termination grace period this spec this spec is basically which is specification
+
+47:27
+which is specification that is Statefulset specification. So in this Statefulset specification there is an option called termination grace period but this is not this location that's why I have commented that's why I have commented here the location is the termination grace period. What do you mean by this termination grace period I will tell you when you are deleting your Statefulset how much seconds it will wait while it is deleting in the reverse order
+
+47:57
+Once it will delete the last one, then it is going to wait 10 seconds again. It will delete the other one. So kind of a graceful kind of a graceful termination you are terminating. It is up to you how many seconds you want to do. But here is it same whatever I have given like selectors the way I have given in the deployment replica set. Is it same here also like selectors in my stateful sets, you know, specification selectors.
+
+48:26
+Now here is it same like replicas like how many replicas you want to create for this stateful set. Now if you see there is one additional field here what is the traditional field here in the stateful set which is not there in the replica set deployment. What is the service name? So while creating a stateful set itself do I need to mention the service name what is the name of the service which you are creating for that.
+
+48:57
+while creating a stateful set itself you are giving that name service name so do I need to create a service with this name if I am using this as a service name do I need to create a service with this name
+
+49:14
+So here I'm going to create a service with that name.
+
+49:20
+But it is no need to be a headless service. It no need to be headless service. But most of the cases we are going to use headless service only. If it is a headless service, how different it is. How different it is if it is a headless service. Everything remains same API version service metadata. This is my service name. If I give ABC here, I will use that here in the stateful set ABC like that.
+
+49:49
+same namespace. Now, if you see here, you see something different. What do you mean by cluster IP null? This is what type of service?
+
+50:04
+This is headless service. Now selectors, selectors, app mongo d. Do I have labels? Do I have labels that are mongo db, part template labels in the stateful set? Again, there is a template. Am I giving that labels here? Under part template metadata labels, app mongo d. So I am giving same as a selectors here. Fortis 27017, target fortis, also 2717.
+
+50:33
+but here I am giving that service name. Three replicas will be created. This is my pod template, labels of my pod. Now this specification is what?
+
+50:47
+This specification is what? Pod specification. That pod specification. Now within that pod specification, we have something additional called this termination. Now containers. Now this is my container name. This is my image name. But if you see, you see something new here. Sir, what is this command? Why you are overriding command? When you created a database pod last time using deployment or replica set, I don't see this.
+
+51:17
+Why you are doing like this?
+
+51:21
+Now if you see last time we deployed lot of database ports as a deployment or maybe as a replica set we deployed that time I just mentioned like this I just mentioned like this name of the container image name I don't have this command I don't have this command option why I am using this because if I want to set up a database in a repel set I mean
+
+51:50
+have that database like a primary secondary options. Do I need to start my database process with the different options? Do I need to start my database process with the different options? Yes.
+
+52:04
+So if I want to run database that in a repelset mode, the database I want to set up kind of a primary and secondary. So I need to start the database process in a different mode. I'm going to say with the different options. So I am trying to set up my database like this, primary, secondary like this.
+
+52:30
+Now if I try to set as is, if I try to start as is, it won't work. It won't work. I need to start my database with some options, customized options. I need to start my database with different, different options here. So.
+
+52:48
+while starting database I need to use some options different options. Now if I don't use this commander is it going to use the default command whatever is part of that image that image while creating image you have some entry point or CMD is that will be used in a normal mode it will start in a normal mode it will start. Now I am passing at runtime this is equivalent to Docker run you are passing at runtime.
+
+53:18
+Is this will be used as an arguments if you are a Docker if this mango image is using the entry point if this mango image is using entry point does these things will be used as an arguments for that entry point so that the database process will be starting with these options.
+
+53:38
+But if your image is using a CMD, if your image is using a CMD, is it going to overwrite that complete CMD and is it going to execute something like this? MongoD space, this is one argument, this is another argument like that. At runtime you are passing the arguments to your CMD or entry point. Let's say this is your Mongo image. You are using this image.
+
+54:06
+you are using this image let me show the Docker file of any version of that Mongo image let me show you maybe let me show you this latest one this is the latest one maybe let me use that one now if you see it is using some kind of a command only it is not using any entry point yeah it is using entry point and this is argument there is some script there is
+
+54:37
+With this option, this is passed as an argument for this script. This option, if I start this database with this option, will I be able to set up that kind of a repel set like a primary DB, secondary DB, stuff like that, if the database process started with this option? No. So instead of doing this way, this is equivalent to Docker run case. This is equivalent to Docker run, changing the commands at runtime.
+
+55:07
+I am using command option now is this will be replaced completely with like this MongoD space I fun I fun bind I fun IP space 0.0.0 space I fun I fun repelset this is my repelset name like that why I am doing like this because I want to start the database process with the different options so that I can set up the database repelset if I don't do this.
+
+55:34
+Will I able to set up that primary secondary kind of a setup even though I have three replicas? No. This is nothing to do with Docker, nothing to do with Kubernetes, nothing to do with Kubernetes Docker. Even though you are starting database in your server directly, do I need to start my database process with these options if I want to set up the database as a repelset?
+
+56:00
+Yes. Now we are using all these options. Hope you are clear. What is this command? Can I use this command for any type of image? If I want to change the command if it is using cmd while starting the container in the Kubernetes pod. If I want to execute a different command instead of cmd can I use this command option? For any pod any image? Yes.
+
+56:26
+Is everyone clear why I am using this one here? What do you mean by this command here?
+
+56:35
+Now this one you already know. What is this resources guys? What do you mean by this resource request and limits?
+
+56:55
+minimum and maximum resources you are requesting for that quad. So if none of the nodes has this much CPU this much memory does this mango database parts get scheduled if none of the server has this much CPU this much memory guys, but this is very less. This is very less. I am taking very less but in real time you will see something like this minimum 2 GB minimum 2 GB or one core processor like that.
+
+57:25
+Guys these are containers, don't get confused. Are you going to, do you really need this much GB for that container? Because that is not a server. That is not a server. Containers are lightweight. Does containers takes very less CPU and memory because containers will not have a complete operating system. Containers will not have a full blown operating system. So very less but not this much less.
+
+57:54
+but not this much less don't think always it is like 120 mi like this it will be like 1gb 2gb maximum 4gb or even though it is very high very high like you need lot of CPU maximum it will be like 8gb or 4gb will never go beyond 8gb
+
+58:17
+maximum for containers because you don't need too much memory too much because the container will have only one process running that can be your database process your application process.
+
+58:31
+single process without operating system. Do you really need more CPU, more memory to run your container? No.
+
+58:38
+So for now I'm requesting only this much. You already know this one. Now what is this? You already know, put. Now you already know this value mounts. You already know this value mounts because I need to mount this database directory with some value so that I will have a data across pod restarts and pod is crashed and all those things. But when it comes to stateful set, here you see little different.
+
+59:07
+You see here little different till value most it is same but here when I am creating a directly normal pod when I'm creating a replica said deployment what was the option we have here what was the options we have here we have an option called values we have an option called values in that values in that values what we are doing in that values and
+
+59:36
+Referring some kind of a value. I was having a volumes I am referring some kind of a value that can be host path like this or that can be persistent values That can be persistent value like PVC We are referring PVC and we are creating a PVC But when it is stateful set, is it a volumes? Do I have an option called volumes here? Like this they have an option called volumes here like this. No
+
+01:00:05
+So it is what option we have if it is a stateful set value claim templates because when I was using deployment and creating a PVC and creating a persistent value claim like this then I am referring that PVC but as I already told if it is three replicas four replicas is the
+
+01:00:34
+all those replicas of that replica set are deployment is it the same value if I am using replica set and deployment it is the same value for all the members but here but here in the stateful set is it same behavior
+
+01:00:51
+No, so that's why instead of we are creating like this instead of we are creating a separate persistent value claim object and instead of we are using that PVC like this. Does that stateful set itself has one option kind of value claim templates using this volume claim template information. Is it going to create a PVC? You are not directly creating a PVC is stateful set is going to create a PVC using this in
+
+01:01:20
+information you are not creating a persistent value claim directly is your stateful set is going to create a PVC using this information is your stateful set is going to create a PVC using this information yes but how many PVCs will be created using this information how many persistent value claims will be created using this information that is based on that is based on number of replicas.
+
+01:01:50
+that is based on number of replicas. Now here using this value claim template information, I am creating total three replicas, which means three ports. So how many PVCs will be created using this value claim template?
+
+01:02:09
+3 PVC. Does each PVC will get its own volume?
+
+01:02:16
+Yes, so I am not directly creating PVC. Is Statefulset is going to create a PVC based on this value, claim templates information, whatever I am giving in my Statefulset specification.
+
+01:02:34
+Yes, now PVC will be created by that stateful set. But again, who will create a values for that PVC? This PVC will be created by stateful set, but who will create a values for that PVC is whatever is created by this one. I need to have a storage class dynamic. If I don't have a values available. If I don't have a values available in my Kubernetes cluster again.
+
+01:03:03
+Does this PVC will be waiting or pending for volumes?
+
+01:03:09
+If I have a door, if I don't have a storage class, whatever PVCs is getting created using this information will be pending for values. If I don't have a storage class or values available now, do I already have a storage class configured in my cluster? Does that storage class will create a persistent values for these claims? Whatever is getting created by stateful set.
+
+01:03:40
+So this is how it looks like is everyone clear is everyone clear the manifest of stateful set what do you mean by this volume claim templates why we are not using volumes here.
+
+01:03:56
+Why we are not using ValiumSphere is everyone clear?
+
+01:04:01
+Now, let me create a stateful set like this. Let me create a stateful set like this.
+
+01:04:10
+Now let me delete whatever I have in that application. Cubectl get all in the current namespace. I have some applications in the default namespace. I have some application. I delete all these things.
+
+01:04:27
+I will delete all these things.
+
+01:04:35
+in the default namespace also because I need to have some space available. Now in the test namespace also let's see what and all we have.
+
+01:04:46
+what and all we have so let me delete this one also
+
+01:04:58
+In this namespace also I will delete.
+
+01:05:03
+Now let me create a straight full set for my mango DB.
+
+01:05:11
+now this is my manifest this is my manifest guys if you observe that indentation you need to check if you see is this volume claim type volume claim template is sibling of sibling of your containers the way we have a sibling of volumes it is little different it is not a sibling of here let me see let me do the dry run kubectl apply
+
+01:05:41
+iPhone F, MongoDB stateful set, iPhone iPhone dry run equals to client or server. Now it is perfect. There is no issues. The sibling, it is volume claim template is not a sibling of your container. Is it a sibling of your here? Is it a sibling of your pot template itself? If you see that volume claim templates, is it a sibling of your pot template?
+
+01:06:12
+If you see it is not sibling of your values. It is not sibling of your containers. Here if required can I use config maps as a values let's consider I want to mount some configuration file to this one. Can I still use values here? Can I still use values here and use any config map as a value if required if I want to mount any configuration file as a value to this container.
+
+01:06:42
+Can I use that config map as a valium like this here? That is also you can do that is also you can do if you have the type of requirement. Now this is my YML before I deploy the have any stateful sets in any namespace stateful set in any namespace this iPhone a stands for iPhone a stands for all the namespaces or you can do iPhone iPhone all iPhone.
+
+01:07:12
+name spaces. There are no stateful set in any namespace. Now let me apply. Before applying let me show you pvcs. Qubes, cd, etal get pvc in that namespace. This one I used for a different one. This one this pvc I used when I created a mango database in a normal
+
+01:07:41
+We use this PVC.
+
+01:07:44
+Now this PVC was associated with this PV. This PVC is associated with this PV. This is different way when we deployed in a normal deployment. Now, when I apply this, is it going to create lot of PVCs now when I'm creating a stateful set? Is it going to create a lot of PVCs also using this volume claim templates? Using this volume claim templates, is it going to create lot of PVCs?
+
+01:08:13
+does each PVC is going to be used by one member of this stateful set
+
+01:08:22
+Yes, now let me show you if you see and also when I created is all the databases are created at the same time all the members if you see is it creating one after the other first it is creating this one then it is creating this one once that is ready then it is created this one do you see is it created one after the other like that the stateful set members
+
+01:08:50
+Now if you see the naming conventions also my stateful set name is this my stateful set name is this mango there is some typo here there is some typo here that is fine there is some typo here that is fine not an issue otherwise ok let it be otherwise I will delete and recreate.
+
+01:09:15
+Otherwise, I will delete and recreate.
+
+01:09:24
+Let me delete and recreate.
+
+01:09:31
+naming conventions fine there is no issue but concept is important now let me I delete I deleted everything now here let me give the correct name something like this Mongo
+
+01:09:51
+D.
+
+01:09:53
+here also there are lot of typos that is fine mongodi this is correct only mongodi mongodi like that is up to you now let me create
+
+01:10:12
+Let me apply again, cubectl apply. Now if you see.
+
+01:10:22
+If we apply does name will change? No, it is going to create another stateful set. When I apply already stateful set is created with some name. You modified YML and apply. Is it going to consider that as a new stateful set? Because you are changing the name of that controller itself. You are changing the name of that controller itself. So it is going to consider it as a new stateful set. So that's why I have deleted.
+
+01:10:54
+Guys these are just basics. You can think and understand.
+
+01:11:01
+now I have something like this all are running kubectl getpv now
+
+01:11:12
+If you'll see.
+
+01:11:15
+Since I have changed the name itself, is it created a You can consider what is this sir? Why I have these many PVCs because I changed the controller name itself was this was created when I was using wrong name Is this PVCs got created when I was using that wrong name
+
+01:11:35
+Yes, now this one, this one whatever is there here, this recently it is used by that correct controller now. To make it nothing simple, I will delete all these things I will apply. I will delete everything I will apply again because I don't want you to get confused. If you are clear about the concept, you can understand all these things.
+
+01:12:01
+to make things simple, I will clean up everything and I will demonstrate from scratch. I will delete PVC's also. Now I am going to delete kubectl delete PVC, hyphen hyphen all all PVC's in this test namespace. Since the reclaim policy was delete, is it deleted PV's also now? Is it deleted all the PV's also because the reclaim policy was delete
+
+01:12:30
+I don't have anything. I just cleaned up everything just to make things simple. Now I don't have any PV. I don't have any PVC. And I don't have any. That stateful set pods in that namespace.
+
+01:12:48
+but don't do like this in the real time don't delete everything now let me apply now let me apply
+
+01:13:04
+that stateful set for that stateful set yml now you see p only one is created only one is created because it is creating one after the other now two pvcs are there now can I see two volumes now now total three total three pvcs in that namespace they have a three
+
+01:13:31
+As I told, values are not namespace specific. Values are not namespace specific. When I say cubectl get pv irrespective in which namespace that is created, I am able to see. But pvcs are namespace specific. Now, I have 3 pvcs and 3 pvcs created now. Because I created a stateful set with how many replicas.
+
+01:14:01
+Now again it is created one after the other. Now I just have a three database pods. But is this set up done this is this MongoDB repeat you know this replication in MongoDB this repel set in MongoDB is this done by default is it anyone is primary is it anyone is secondary. We are just having three databases three database process.
+
+01:14:27
+have this replication like this did we set up anything like a primary secondary as of no.
+
+01:14:37
+We are having just three members like that. And also if you observe one more thing while creating this database for did I said that username and password the way we passed earlier environment variables to set up that root username root password for this one did I said that one as of now also no because this is different way we are we are trying to set up the database in a different way. We are trying to set up the database like primary secondary. I am not doing as of that one.
+
+01:15:05
+Now I cannot use as is do I need to set up this one kind of a replication in MongoDB kind of a replication or we call it as a repel set MongoDB repels it. So what is MongoDB repels it? It's a group of MongoDB instances that maintain the same data set. MongoDB repels it is different. MongoDB repels it is a group of Mongo database instances or process.
+
+01:15:34
+that maintain the same data set a ripple set contains several data bearing nodes one arbitrary node. So this is all database concept but you no need to be expert in this database administrators do have a separate teams who is experts in managing the database as maintaining this kind of a things. Yes, but you need to understand the concept there is a database team we call it as a persistence team or database team.
+
+01:16:04
+There will be a separate administrators who will do all these things, but you need to be familiar with all these things as an operations guy. No, I need to set up like this, whether it's a server, whether it's a container, whether it's a part, I need to set up like this by executing some comments by executing some comments this primary secondary all these things I need to set up.
+
+01:16:33
+Now that is not done. Now what I will do Can I go in any one of the member I mean to say can I go inside any one of the pod Can I make one guy as primary database
+
+01:16:50
+Now if your database process is running in a servers, if your database process is running as a servers in a VM virtualized deployment, you will go to that server, you will access to that server and you will execute some commands to make that primary. Now my database process is running as a pod, as a container. Then can I go inside this pod? Can I go inside this container and execute some commands to make that as a primary and initiate the repel set? Yes.
+
+01:17:20
+Now let me go in one of the port like this cubectl ex ec-it anyone it no need to be this one anyone.
+
+01:17:36
+Now why I am getting this error not found error
+
+01:17:42
+because of the namespace in which namespace I have
+
+01:17:49
+I have in this namespace. So I am going inside that shell. Now they have some database process running here. MongoDB process with these options because we overwrite that one. Do I have some database process running on PID one process ID one the database process because these options if you remember in my part manifest did I change that command that arguments.
+
+01:18:23
+My database process is running like this. Now I am inside one of the database quad container. This is shell process. Now I need to connect to the Mongo shell. There is a concept called Mongo shell. Will I able to execute a database that Mongo related commands in this bash shell? No. Like the way you have a shell for your system, they have a shells for your database also like MySQL shell or Mongo shell.
+
+01:18:52
+you need to connect to that shell. Now if I want to connect to that mango shell what command I will execute here. Once I go inside that pod container. I'll execute one command called mango.
+
+01:19:05
+Now I executed one command called mango. Now what is this? Is it now a database shell? That mango shell here can execute some mango database related commands.
+
+01:19:22
+Now if you see RS this is database command is nothing to do with anything RS repels it that MongoDB repels it I'm executing some command like this RS dot status now as of now am I having any repels set configurations do I have that database triple set configured as of now. No. No here I can execute.
+
+01:19:50
+I need to execute some comments but before executing that comment let me come out of this mango shell. I will come I will get the host name and show you if I want to come out of this mango shell can I again type exit here. Now again am I back to that this Linux shell the moment I type exit and enter I came to this Linux shell. Now if you see host name. How this host name?
+
+01:20:18
+What is the hostname of this database? This member disk. If you see the hostname, this is hostname is one Linux command. I executed this hostname. If you see how the name is formed. How the name is formed.
+
+01:20:38
+This is in the form of FQDN only. If you see what is this MongoD first MongoD-0 is it like a that pod name or consider as a post name.
+
+01:20:53
+If I just execute hostname, if I just execute hostname, it is giving only that hostname. It is giving only that hostname. If you see that hostname is nothing but is it taking your part name? Is it taking that as a part name? Now what is this iPhone F option when I am using hostname iPhone F it is differing showing something like this. What is that kind of iPhone F like a fully qualified?
+
+01:21:21
+Now is that hostname is something like that? FodName. What is this?
+
+01:21:31
+service name dot what is this namespace name dot svc dot thruster dot local like this it is there like this it is there this is fully qualified hostname this is normal hostname now using these hostnames can I set up the triple set can I set up the triple set I have multiple members now let me clear the screen
+
+01:22:01
+Let me again go to that mango shell. I am again going to that mango shell. Now as of now this repels it has not been initialized as of now. There is no repels it now by executing some database comments like RS dot initiate. There is a command RS dot initiate to set up the repels it. There is a command called RS dot initiate.
+
+01:22:26
+So you have to execute some commands. This is database related. Now I'll execute some commands like this. I'm going to execute some commands like this. I went inside one of my database port. One of my database port. Now I connected to mango shell. If your database is running in different namespace you use like this that namespace name.
+
+01:22:55
+bash or sh whatever is available you execute inside that again connect to the mango shell like this as of now i don't have any repel sets initialize now can i execute this database command after connecting to mango shell here i am initiating that repel set here am i adding the members members to that repel set this is one member this is another member this is another member like you are joining the database members
+
+01:23:24
+you are joining the database members. This is one member, this is another member, this is another member. If all are in the same namespace, can I directly give like this? Post name also fine. No need to be FQDN. But if you are using FQDN, make sure you are using correct FQDN. If I execute like this, do you think it will work? Do you think it will work if I am copy pasting in that mango shell? Now I am getting some error.
+
+01:23:54
+I am getting some error. No host described. Why I am getting this error?
+
+01:24:01
+Why it is not initialized? Is this correct? Is this correct?
+
+01:24:09
+my database is not initialized, the triple set is not initialized because now to make things simple if I have a curl, curl is not there in this mango shell, curl is not there in this mango shell again I will come back to that normal shell. Now if I do curl-vtelnet if I have a curl curl-vtelnet am I able to reach this one? Curl not found if it is apt
+
+01:24:39
+ok it is apt only let me install curl inside the container and directly installing curl software apt install curl-y apt get
+
+01:25:01
+If I have a kernel package, let's see a PT update. I'll first update this because inside that I don't have that package inside the container. I'm executing curl. I'm installing curl because the container library doesn't have a kernel software and installing curl. I'm updating the package manager inside that. What package manager again based on the base image this suppose does this a PT works always?
+
+01:25:29
+If the base image is CentOS1 or if the base image is Alpine Linux, if the base image is used as Alpine Linux base image by that Mongo database, if the base image is used as CentOS, again does this APT works? No. So they're using, they're using base image, the Mongo database base, what they're using, if you see, they're using which base.
+
+01:25:58
+Ubuntu so that's why this APT is working Suppose if they are using Alpine base image does APT will work No, so for Alpine what is the package manager APK for Alpine APK Now let me update let me install that curl software Just to show you the connectivity you should know the all these troubleshooting space
+
+01:26:30
+Now I am installing the curl package.
+
+01:26:34
+Now, if I execute that curl, curl-v kind of a telnet, I'm trying to do kind of a telnet.
+
+01:26:45
+Now when I am using any of these details, is it able to talk to the other one? What is the problem? Could not resolve because I am using wrong names, wrong names. Now it is not tester in which namespace I have these database members.
+
+01:27:08
+You have to understand the concept without understanding if you just copy pasted all these things whatever I have given in the running notes. Again it may not work guys. If you blindly copy paste and you are saying sir I am practicing whatever you are doing but you are blindly practicing which means without understanding what is what you are copy pasting and practice will be able to again will it help you again.
+
+01:27:36
+even though you are practicing kind of a by heart practicing you are doing exactly whatever is given that won't work again you need to understand what is what now this is not working so let me change can i give something like this hyphen ns now same thing i will do something like this hyphen v telnet
+
+01:28:05
+instead of that if I use like this you see is it able to resolve is it able to connect to that pod on that port now let's consider you have created in a default namespace your stateful set is running in a default namespace instead of test ns then it gives like this default
+
+01:28:29
+yes so don't copy paste as is understand what is what now i am giving like this
+
+01:28:36
+I am giving like this. Let me execute this one. Now. So, let me execute this one.
+
+01:28:43
+there is some thing okay this command will not work this command will not work in shell this normal linex shell this has to be executed where in the mango shell so I am connecting to mango shell I am connecting to mango shell as of now if you see as of now if you see there is no state that the mango DB repels set is
+
+01:29:14
+let me copy paste this one all the members now if you see some command got executed it is saying some kind of a success message now if i see rs.status rs.status repelset status in the database now can i see some details like this the repelset has been initialized
+
+01:29:44
+do have members in this database repels set. Now if you see, this is one member, this is one member. Now if you see, is it elected as a primary itself out of those three, does one guy become primary? I just added three members out of that guy, does one guy become primary? Which one is primary now? Is this primary? Is this one is a primary? Is this primary? Yes. And other two.
+
+01:30:12
+other two is it showing as a secondary
+
+01:30:19
+Now is my database repels it has been initialized is this initialized now this repels it like this primary secondary is this done now. Yes now I have to protect my database I have to protect my database with the user name and password then can I execute some command like this. I am creating a user database user with this name WDB password is this WDB 1 2 3 like this.
+
+01:30:48
+Now I am creating a user, the admin user, root user for my database in this command and executing. Now user also created. Now let me come out of this exit, exit. Now do I have kind of a database
+
+01:31:11
+Now this is a headless service. This is a headless service. If I see cluster IP is some coming as none, we don't have any IP address here because what type of service is this?
+
+01:31:32
+Now, let me get EP endpoints.
+
+01:31:42
+Is it having all those member details here?
+
+01:31:47
+Same way as a cluster IP, but when I'm using this service name, is it going to do kind of a load balancing between these endpoints if I use this service name? Is it going to do some kind of a load balancing between these endpoints if it is a headless service? No. Now this is my database. I have done my database. Now can I deploy my application? That application can connect to this database and insert and read and write the data in your applications.
+
+01:32:19
+Now that application your application. Yes, if you want to use that config map secrets, can I create a config map like this secret like this and can I use that config map and secrets in my application instead of directly hard coding here instead of directly hard coding here in my application. Can I use value from config map value from secret discredits?
+
+01:32:48
+when you are deploying your application when you are deploying your application and here you are using that service name hostname as a service name you are using you are using that hostname as a service name here that hostname as a service name this is headless service guys it's up to you now this is like a enhancements and best practices which I already explained which I already explained instead of hard coding like this
+
+01:33:16
+Can I create a config map like this that MongoDB username, DevDB, whatever username I configured for my database and my password is like this DevDB123 I created a secret. Now here I have hard coded here I have hard coded like this instead of like this. Can I use value from that config map key reference config map name key name like that also? Yes, it's up to you. For now, I'm hard coding like this. This is my service name.
+
+01:33:47
+If my application pod is in different namespace database is running in a different namespace. If I use like this will it work again. Now my database is running in test ns. If I deploy my application in another namespace. If I use like this will it work again.
+
+01:34:08
+If my database is running in that namespace, my application, if I am going to deploy in a different namespace, will it work like this? No. In that case, do I need to use FQDN, fully qualified domain name, this service name dot namespace name dot svc dot cluster dot local like this. But if I deploy in a same namespace like test-yphone-ms.
+
+01:34:38
+I know need to do like this just service name also works just service name also works now let me deploy let me deploy this one using that service name guys enhancements to this application now one more enhancement I am already using that resources concept here one enhancement you can do use instead of directly hard coding here you can refer to my config maps and secrets one more thing.
+
+01:35:06
+If I want to perform health check on this application, what needs to be defined for this application container?
+
+01:35:13
+what needs to be defined for this application container if I want to perform the health on the application.
+
+01:35:21
+Probes liveness proof readiness proof this application is running on a root context. Can I give path as just a slash? Can I give that path that HTTP get call that path? Can I give just a slash because this is running on the root context itself. If you want to test health on any path also you can test.
+
+01:35:48
+Based on your requirement, do you need to add all these things based on your requirement? Probes, environment variables, values, because this is a stateless application. Am I using any values, persistent values or there is no requirement for attaching configurations also as a values, there is no requirement. So I'm not using all those things. Based on your requirement, do you need to use all those things? If there is a requirement, you want to mount some files as a configuration.
+
+01:36:16
+You can use config map as a volume here, liveness probes, readiness probes, all these things.
+
+01:36:23
+based on your requirement now let me apply as per my requirement there is nothing here now I am creating my application
+
+01:36:41
+may be in same YML, different YML, it doesn't matter. Now I am deploying like this. Now if my application has to be scaled based on the load, what another object I need to create here, along with the deployment, if I want to scale my application parts based on the load, what is the other object which I need to create, which we already discussed, HPA. If HPA needs to be created, if you want to scale.
+
+01:37:10
+And suppose I don't want to use like this along with the deployment can I create a required config maps and secrets along with the deployment required config maps and secrets and refer that based on your requirement. So all these are Kubernetes resources objects. There's on the requirement you can create and apply. Now let me apply this.
+
+01:37:40
+deployment now in that namespace. Let's see. I requested less CPU less memory. Now it is able to accommodate it is able to accommodate now is my application parts are getting created and running is that application parts are connecting to this database members using that service name and using that service name whatever created as a post name here.
+
+01:38:08
+in my application code. Now if I see, see the logs, logs of your application container, logs of your application container.
+
+01:38:23
+if you see the logs of your application container.
+
+01:38:31
+What is the namespace of the type? Now, if you see, I'm using just that one service name. If you see is application driver your database driver. If you are from a development background, you can understand what is the database driver. Is your application, whatever database driver, your client, your database client driver, is it able to resolve all the members?
+
+01:38:59
+Do you see? Is it able to resolve to this one, this one, this one?
+
+01:39:05
+This is something to do with the development. You need to worry about all these things in the development. There is a concept called database drivers, DB drivers. Your application will use this database drivers. Your application will use this database drivers to connect to the database. That is part of your application code itself. So the developers will use all those drivers. Let's say this is my code.
+
+01:39:37
+This is my code.
+
+01:39:40
+Now there are some dependencies right that pound dot XML they are using here if you see they are using some kind of a dependency They're using some kind of a dependency mango db So because of this mango db dependencies is it going to have the database drivers part of your application code? Which will help that applications to connect to the databases using the database credentials. Yes So this clients this client
+
+01:40:08
+client application or driver. This can be any client application or driver that can connect to those databases with the help of that one. Now it is able to identify all the members and communicate. Now let me access this application, that UI application and which port that application is created, that service port is created. 32, some port is used.
+
+01:40:35
+because I deleted completely I recreated a service that's why ports are getting changed if I don't delete the service and recreate whatever port it is assigned is it going to be changed is it going to be changed or no I am deleting that and again I am deploying the services that's why ports are getting changed
+
+01:40:59
+3 2 4 5 6 let me use that 3 2 4 5 6
+
+01:41:07
+3 2 4 5 6 let me use this IP address
+
+01:41:17
+Now I am able to access that front end application which is running as a two replicas. This is a stateless application. Now whatever data I am using here is it connecting to one stateful application that mango database and is it writing the data as of now is mango database is running in a normal mode or it is kind of a database cluster. I have in the Kubernetes within Kubernetes. I am running my database as a cluster.
+
+01:41:47
+as a cluster within kubernetes cluster within my kubernetes cluster is my database is running as a cluster my DB is running as a cluster kind of a primary secondary but instead of VMS instead of VMS is it running as a container process the database is running as a container process in the ports.
+
+01:42:09
+Yes, now this is a primary there is a secondary all these things. Now I'm intentionally deleting. I'm intentionally deleting one of the database. This is a primary database. I'm intentionally deleting cube CTL delete quad. Since I have multiple members. I have a database also highly available. And again, this is in kubernetes. If that part is gone, am I going to get another quad?
+
+01:42:39
+Now I'm intentionally deleting. Let me show you. I have multiple members as a databases. Now even though I am intentionally deleting.
+
+01:42:52
+Let me reduce this zoom size. Yeah, now I'm intentionally deleting but still is my database. If you see is still I can see that data which means is my application process is connecting to another member and fetching the data.
+
+01:43:12
+Is my database is also highly available now?
+
+01:43:17
+Was this the case? Was this the case when I am running as a single member, single process as a database? No. That time there was a downtime. And also, there are multiple members. One of the member goes down. Does other guy become a member? I mean to say primary. Now I'm trying to insert data. Does other guy might have become primary out of those two? Yes. Now, since it is running in Kubernetes,
+
+01:43:46
+Is that pod got recreated again? Is that pod got recreated again because there is a controller that stateful set recreated when it is recreated again, is it getting same network identifier which means same hostname and whatever value it was using. Whatever value it was using you see get PVC. You see get PVC.
+
+01:44:10
+like if you see is this PVC is attached with this pod you can see the naming conventions also kind of a PVC name with this one this one even though it is getting restarted is it attached with same storage do we have a stable storage and stable network identifier when I go for a stateful set now if I go inside one of the pod when I go inside one of the
+
+01:44:42
+if you have a bash you can try with bash now I am inside this inside this pod now let me connect to mango shell now if you see here is this become a secondary now because this went down out of those secondary does the one guy become a primary when I execute RS dot status now I can see this is not a primary this is not a primary now is this become a secondary because it went down and again it is joined the cluster
+
+01:45:12
+it went down and it joined the cluster the database cluster. So when it went down out of other two available secondaries does one guy become a primary now do you see this is primary now? This one is a primary now. So this way can I run my stateful applications in my kubernetes cluster that stateful applications like a database clusters Kafka clusters rabbit MQ clusters memcache clusters
+
+01:45:43
+kind of a stateful applications as a group of process here. Yes. So this is very, very important if you want to run your applications, stateful applications, any stateful application like Jenkins databases in memory cache. Can I use this stateful set to run in the Kubernetes? Yes. Is everyone clear guys? What is stateful set?
+
+01:46:13
+At the same time today you got one more concept like databases also as a cluster why we need to run databases also multiple members and if it is Mongo database how to run database also in a cluster mode if it is a MySQL also can I run MySQL also as a cluster in kubernetes by creating a MongoDB the way we create stateful set. Yes, but does the comments will same ways.
+
+01:46:38
+whatever commands I have executed to set up that MongoDB cluster, does the same commands will work for MySQL? No. The commands will be different, but the concept is important. Is everyone clear what is stateful set and how it works?
+
+01:46:57
+Now before I wrap up the session for today, now I am always working in this namespace. Let's say I am always working in this namespace. I don't want always every time I need to use this iPhone n option. Is it possible for me to change the context? My QBurnit is context. As I already told when I was explaining that cube config file.
+
+01:47:22
+As I already told while I am explaining that cube config file cube config file has three sections Cube config file has three sections
+
+01:47:34
+that kubeconfig file has three sections.
+
+01:47:40
+What are those sections? One is clusters, one is clusters. Is it possible to have multiple clusters in a single kubeconfig file? Let's say I have a dev kubernetes cluster, production kubernetes cluster, stage kubernetes cluster. Is it possible to have all those clusters details in a same kubeconfig file? Yes. Now, this clusters is an array. As of now, how many cluster information are there in this kubeconfig file?
+
+01:48:09
+I have highlighted how many clusters information are there, only one cluster section. What is the another section? Another section which I have in a cube config file.
+
+01:48:24
+Context current Kubernetes context this cube CTL this cube config file is pointing to which cluster as of now Is it pointing to this cluster? This is the name of the cluster This is the name of the cluster the API server is running here. The certificate is this one So currently is it pointing to this cluster? This is my cluster name here Is it pointing to this cluster currently the context? Yes
+
+01:48:53
+And what is the another section which I have here? What is the another section which I have here? Users. Now it is pointing to this cluster as a this user as a this user. As of now it is using certificate based authentication. It is using certificate based authentication. So when I'm executing kubectl commands is it connecting to this cluster using this details when I'm executing kubectl commands.
+
+01:49:23
+Is it connecting to this Kubernetes cluster? I mean to say the name of the cluster is this, which means is it connecting to this cluster using this details, this details? Yes, but which namespace? Which namespace?
+
+01:49:42
+which namespace by default default namespace. Now, is it possible to change the context, context to do the different clusters? If I have a multiple clusters like this, if I have a multiple clusters like a dev cluster, QA cluster, prod cluster, is it possible to change the complete context of the cluster itself instead of dev cluster? Is it possible for me to point to the production cluster, QA cluster, complete cluster itself? I can change the context.
+
+01:50:12
+Within the same cluster also, is it possible to change the namespace different? I mean to say namespace instead of default namespace. I want to talk to the different namespace. Yes, so you can change the context. You can change the context for that. You have some comments.
+
+01:50:37
+cubes.etl context. So you follow this official website only. Now I can add multiple clusters. I can change the clusters like this. You have a cluster section. You have a user section. You have a context section. Now if you want to set the details, suppose you have another cluster, you want to add the context. You can execute this command. This is your cluster name. This is your API server. This is your certificate.
+
+01:51:07
+You can add the users also like that credentials also like this if you want to set the context now I want to just change the context I have only one cluster I want to change the context now I can use some commands like this I can use some commands like this kubectl config commands now if you see I want to see something like this kubectl config view view
+
+01:51:38
+Is it showing at high level? Is it showing high level? How many clusters you have? Users information at high level without in detail context details it is showing when I'm executing cubes, it'll conflict you. Now I want to change the context to a different cluster altogether. If I want to change the context to the different cluster altogether, there is a command you
+
+01:52:08
+Now I want to change the context. Can I use this command?
+
+01:52:19
+changing the context.
+
+01:52:22
+Change in the context, Iphone, Iphone set context, CubeCTL, call pick.
+
+01:52:30
+I fun I fun this one set context I fun I fun you need help again you can execute this I fun I fun help command for this sub command so when I am using the context now
+
+01:52:47
+If I have a multiple clusters, if I have a multiple clusters in my cube conflict file like this, if I have a multiple clusters, now if I want to point, can I set something like this? This is your cluster like a dev Kubernetes cluster. You have multiple entries like this. You have multiple clusters like this. You are completely, you want to completely change to the different cluster. Now this is just one name. Now
+
+01:53:16
+With this name I have another entry that is pointing to dev cluster. Can I execute something like this? Your cube ctl will point to that cluster. Now I have only one cluster. Now I have all I will not change the cluster level within same cluster within the current context. I am using this option if and if and current if and if and current that in the current context. Can I set the namespace?
+
+01:53:43
+Now I'm change within the current context, I'm just switching the name space kind of a setting the namespace. Can I set something like this? I for my name space equals to test Ms in the current Kubernetes cluster only in the current context only, I'm just changing the namespace. Now I executed like this. Now if you see the config view, if you see that config view within that cluster, now is it pointing to this namespace by default?
+
+01:54:13
+Now within that current cluster is it pointing to this namespace by default. Now when I execute any cube CETL comments. When I am executing any cube CETL comments is it pointing to this cluster to this namespace now. Is it pointing to this cluster. This is this one to this namespace. Now without mentioning iPhone N also if I execute am I able to see that whatever is there.
+
+01:54:41
+in the test namespace now. Now when I execute kubectl apply also when I execute kubectl apply also without mentioning the namespace name in which namespace now that objects will create kubectl apply kubectl create without mentioning the namespace it will create in a test ns. Now can I change the context of my kubernetes cluster using this kubectl set context altogether a different cluster.
+
+01:55:10
+or in the current cluster different namespace. Now if I want to change it back to default can I execute something like this different namespace like this default again I can change now is it pointing to default namespace now because I again change the context.
+
+01:55:31
+Now this way can I change the context of my cube CTL to a different cluster different namespaces within the cluster also. If you are working in a real projects do you have a multiple Kubernetes clusters like a dev cluster prod cluster QA cluster and different different namespaces. So does these commands will be helpful to change the context in the current cluster different namespace altogether a different cluster.
+
+01:56:01
+Is everyone clear what is this kubectl context? What do you mean by this kubectl context? What are the entries you have in the kubectl config file? But let's say if I have a altogether a different different config files also if I altogether if I have a different different config files while executing a kubectl command can I use one option?
+
+01:56:30
+While executing this kubectl command I can use one option like -.kubeconfig let me tell you kubectl get.-.help command let me show you there is one option you can pass that config you can pass that config also config file also as an option
+
+01:57:00
+So you can use kubectl something like this, I fun I fun kubeconfig, something like this, you can use kubectl, get pods, I fun I fun kubeconfig. Let's say I have a different different kubeconfig files, each environment also. Can I use something like this? Suppose this is my dev kubeconfig file, can I use something like this in the current user home directory?
+
+01:57:29
+You can't see.
+
+01:57:32
+dot q dot config. I'll not use equals to, I'll not use equals to, something like this. Now, if I have multiple files also, let's say I have a separate cube config file prod, separate cube config file for qa, separate cube config file for production. That way also can I use this option? Can I point to cube config file for prod, cube config file to stage, dev?
+
+01:58:02
+like this using this option. But if I don't want to do like this in single cube config file, can I have a multiple cluster details and can I change the context using that cubectl set context option also if required.
+
+01:58:21
+As is everyone clear how to connect to the multiple Kubernetes clusters. If you have a multiple Kubernetes clusters like a dev QA production with a different config files you can use this option. I fun I fun cube config. Let's say you have another config like a do if you have but as of now I don't have that config file like this. Like this you can use but if it is a same config file. Then I need to change the context.
+
+01:58:50
+If I'm not passing this one, what is the default config file in which location it will expect that config file that kubectl will expect in which location what is the default config file in the user home directory in the dot kube folder what should be the file name it will expect.
+
+01:59:10
+cubeconfig. Is everyone clear how to change the context if I have a cube multiple cube or netlist clusters how to work. This is also very important.
+
+01:59:24
+That's it for today guys, that's it for today. Try to practice whatever has been discussed today. Tomorrow I'll continue with one more important concept called resource quotas. I will discuss tomorrow this resource quota, which we supposed to discuss when I am discussing namespace. Now I will discuss this resource quota and limit range and also very important concept called network policy.
+
+01:59:53
+network policies in Kubernetes. This one I will continue tomorrow. Thank you guys. That's it for today. I will continue tomorrow.
+
