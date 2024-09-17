@@ -1,0 +1,1044 @@
+00:00
+This conference will now be recorded.
+
+00:05
+In last session we were discussing about what is EKS, what is cluster autoscaler and what is that load balancer service and how it works. I hope everyone able to set up the EKS cluster.
+
+00:33
+Now. As I already told in the last class. If I want to access the applications which is deployed in Kubernetes cluster. From outside from external systems which is basically external in the sense outside that cluster. We can create a service of type load balancer, but if I have hundreds of application hundreds of micro services I deployed in my Kubernetes cluster.
+
+01:01
+Do I need to expose each and every deployment as a load balancer service? Not required.
+
+01:11
+If there is another concept called Ingress controller, Ingress resource, I don't need to expose each and every application which is deployed in my Kubernetes cluster as a load balancer service. There is another concept called Ingress controller.
+
+01:29
+By using ingress controller and ingress resources, I can route the traffic to the Kubernetes services. I can route the traffic to the Kubernetes services within the cluster. I can define how the traffic can be routed to the Kubernetes services within the cluster with single external load balances.
+
+01:53
+If you see in the last class, we'd applied some applications. In the last class, we'd applied some applications.
+
+02:10
+In our Kubernetes cluster, we'd apply some applications, like two, three applications, or I think we'd apply. Did we create a service of type load balancer for each and every application to access externally?
+
+02:24
+Last class, yes. Let me connect to my Kubernetes cluster.
+
+02:47
+Let me connect to my cluster.
+
+02:53
+I have a two notes as of now and we deployed few applications here. We deployed few applications here to access this application. I mean to say to access this deployment. We created one service.
+
+03:10
+to access this deployment, we created one service to access this deployment, we created another service. If you see, these two are off-type load balancers. In other namespace, also we deployed a few applications. Did I create another service for this application, for this accessing the spring deployment, that spring application? We have all these load balancers, and we mapped these load balancers with the domains like this.
+
+03:38
+spri this is mapped with that domain and other application like java is mapped with that one, mave this is mapped with other domain like this. No, not maven, this is Python. Python, that Python app we also would apply. Now we are able to access.
+
+04:06
+all these applications using those load balancers. But if I have hundreds of microservices, each microservice we are deploying as a deployment or replica set, it is going to have hundreds of load balancers in the cloud to access those applications, which is not really required. We don't really require those many load balancers.
+
+04:31
+In Kubernetes, there is one concept called Ingress and Ingress controller.
+
+04:39
+Don't get confused with that network policies ingress. That ingress is different. Whatever ingress I am talking about, there is a separate object, ingress object in Kubernetes. Using that ingress object, that ingress resource, we can define the routing rules, how traffic can be routed to the Kubernetes services within Kubernetes using that ingress rules.
+
+05:07
+No.
+
+05:13
+Let me show that how it works basically when we have really ingress. So, this is not the.
+
+05:28
+Let me open that up.
+
+05:48
+Yeah, here. So how it works when we are using ingress. So kubernetes ingress.
+
+06:09
+is a resource again it's one Kubernetes object. Using that ingress object I can add the rules we can add the rules for routing traffic from external sources to the services to the services Kubernetes services using this ingress object. I can add a rules to route the traffic.
+
+06:31
+from external sources.
+
+06:36
+to the services in the Kubernetes cluster. It is one object, it is one API. So we have an API called ingress, Kubernetes, kubectl API resources. If you see, we have one Kubernetes resource called ingress. They have one Kubernetes resource called ingress here, kind ingress, namespace.true in the short form ing.
+
+07:06
+in the full-form ingress. So this is also an object. The way we have a pod, a deployment, service, all these things, this ingress is also an object. Using that ingress object, I can add a rules, routing rules, from external sources to the services in Kubernetes. So using Kubernetes ingress, we can add rules to route the traffic from external to the external sources to the service endpoints in the cluster.
+
+07:35
+If I just create a ingress rule, do you think will it work? If I just create a rule, do you think it will work routing rule? No. So we need someone we need someone to read and process that rules. We need someone to read and process that rule. So ingress requires ingress controller. There is a one more concept here that ingress object requires ingress controller.
+
+08:05
+for routing the rules specified in the ingress object. We need an ingress controller. We need ingress controller to process or read those rules. So we need to deploy that ingress controller. What is ingress controller here?
+
+08:26
+Ingress controller is basically a reverse proxy service. Ingress controller is basically a proxy service, reverse proxy service, deployed in the Kubernetes cluster as a deployment. That ingress controller is basically one proxy application, one reverse proxy application deployed in the cluster. Basically, that ingress controller is nothing but one deployment, that deployment, one deployment, one application. I'm talking about this one.
+
+08:57
+this box so do I need to deploy some ingress controller this is my ingress rules this is my ingress rules is this ingress controller will read these rules and route the traffic to my kubernetes services within the cluster I have some kubernetes services let's say this is my maven web application pod this is my python application pods or spring application
+
+09:26
+we created a service for those parts. And using this ingress controller by using the ingress rules, can I define the traffic, route the traffic, whether the request has to go to this Kubernetes service or this Kubernetes service based on the rules we are defining in the ingress? Yes. So we need to deploy ingress controller. That ingress controller is one proxy service.
+
+09:52
+One reverse proxy application that gets deployed again as a deployment in Kubernetes. You have a lot of ingress controller implementations available. Like you have a lot of ingress controllers implementations available. One is nginx ingress controller.
+
+10:10
+one is nginx ingress controller and other one is haproxy ingress controller
+
+10:19
+like this you have a terrific
+
+10:24
+like this you have lot of ingress controllers and Istio nowadays people are using Istio Istio is also act as a ingress controller but Istio is not only ingress controller it is many more it has lot of other things also Istio is a service mess Istio is a service mess a service mess is a altogether a big concept so using Istio not only you can route the traffic to the services in kubernetes
+
+10:54
+You can apply a lot of other things. You can do the traffic management. You can apply the security, telemetry, monitoring, all these things you can achieve using Istio. That Istio is altogether a big concept, service mesh. So we are not covering that what is Istio and all these things. But I strongly recommend you to go through whenever you have a time, try to go through this website, istio.io.
+
+11:22
+Istio works with Kubernetes. Now try to understand what is this Istio. Istio will act as this controller, this ingress controller. But not only just ingress controller, it is going to do more things. Using Istio, we can do the traffic management. I mean to say routing, how the traffic should be routed to your Kubernetes services. Using Istio also you can do that.
+
+11:51
+You can apply a security policy enforcements telemetry monitoring. It's a service miss service miss is altogether a big concept. Istio extends the Kubernetes to establish programatical networking concepts. So it works in Kubernetes also, but it is not only just ingress controller, it is many more.
+
+12:16
+So whenever you have a time, try to go through this website so that you can understand what is Istio. Now, like this, you have a lot of Ingress controllers, Nginx Ingress controller, HAProxy Ingress controller, Terafiq, even Istio also can be used to route the traffic to the services within Kubernetes from external sources. Now, I'll demonstrate with Nginx Ingress. I'll demonstrate with this Nginx Ingress controller.
+
+12:44
+This nginx ingress controller or haproxy ingress controller or sti or whatever it is, it is like one software, one application which gets deployed in the Kubernetes. If I want to use ingress, do I need to deploy this ingress controller first in my cluster?
+
+13:03
+Yes.
+
+13:06
+Now I will demonstrate using this Nginx Ingress Controller. I am talking about this component. Do I need to deploy this Ingress Controller application in my Kubernetes?
+
+13:21
+Yes. So any request which comes to the Kubernetes cluster from outside, does that request has to be come via this ingress controllers? Whether you are using Istio, whether you are using HAProxy or Nginx, does any request coming from external sources, does that request should come via this ingress controller? So that this ingress controller using the rules, using the rules, then this ingress controller will route the traffic to this service.
+
+13:50
+or the service based on the rules. Any traffic which is coming to my Kubernetes cluster should be via ingress controller, whether you are using Nginx, whether you are using HAproxy, whether you are using Istio. You need to access the services via this controller. Now, if I want to reach this ingress controller application, again, it is running as a deployment, as a quads. Do I need to create a service?
+
+14:19
+to reach this ingress controller application this ingress controller ports from outside
+
+14:25
+What type of service needs to be created for this ingress controller? To access from outside
+
+14:41
+load balancer load balancer. You need to create a service of type load balancer for this ingress controller whether you are using parafic whether you are using HAProxy whether you are using a nginx ingress controller whether you are using Istio that does not matter for that application you need to create a service of type load balancer but other services whatever applications I
+
+15:07
+They really need to create a service of type load balancers for these applications, other actual applications, actual microservices.
+
+15:18
+Not required, not required. So any request comes to Kubernetes cluster will come to the Ingress controller. To route the traffic to this service or this service, can I create the rules using that Ingress Kubernetes object? Can I create the rules using that Ingress Kubernetes object?
+
+15:39
+Yes, what type of rules we can define in that engine X ingress object? What type of rules I can define? What type of routing rules I can define? Does this engine X ingress supports host based routing or path based routing like a layer seven.
+
+15:58
+to route the traffic to the Kubernetes services. Yes.
+
+16:17
+to route the traffic to the Kubernetes services, host-based routing or path-based routing can be defined in this ingress rules. Without ingress controller, does this ingress rules will affect, will become effective without this ingress controller? No. Without ingress resource, I mean to say without these rules, does this will be able to identify to which Kubernetes service it has to route if I just have only ingress controller.
+
+16:46
+and there is no rules. It will not able to identify to which one it has to route the traffic. So we need to have these two together. Now, as of now, I don't have any ingress controller. There are popular ingress controllers. Ingress in Kubernetes, if you see, as I already told, as I already told.
+
+17:13
+Ingress is one kubernetes resource. Using Ingress, I can expose HTTP or HTTPS routes from outside the cluster to the services. To the services within the kubernetes cluster. Traffic is controlled by rules. Traffic is controlled by the rules defined in the Ingress resource. Now from outside, this is my kubernetes cluster. This is my kubernetes cluster.
+
+17:42
+From outside request comes to that ingress controller is that ingress controller is going to use the rules to determine to which service it has to route the traffic which Kubernetes service it has to route the traffic like this whatever I have explained in the diagram yes.
+
+18:00
+Now to deploy this ingress controller, to use this ingress resource, do I need to have an ingress controller first to use this ingress rules? Do I need to have an ingress controller deployed in my cluster first? You must have an ingress controller to satisfy an ingress. Only creating an ingress resource has no effect.
+
+18:29
+unless until you have a ingress controller. You may need to deploy an ingress controller such as nginx ingress or you can choose many number of ingress controllers are there. You have lot of ingress controllers. If you see contour is there, HA proxy is there, STO is there, STO is there, nginx ingress is there.
+
+18:57
+Nginx Ingress Controller, HistioProxy,
+
+19:02
+This engine X or HAProxy, Sto, contour, all these things are there. Now I am trying to demonstrate this engine X ingress controller. This engine X ingress controller works for a Kubernetes with engine X as a web server engine X as a proxy server. Is this engine X controller is nothing but in the background. It's a reverse proxy. Now. I will deploy this engine X ingress controller in my cluster. Then.
+
+19:31
+This Nginx Ingress Controller will route the traffic to the services in your Kubernetes cluster based on the rules. Based on the rules you have created. Now how to install Nginx Ingress Controller you can install in many ways. I'm trying to show this official document only. There is official GitHub also.
+
+20:00
+let me go to this nginx ingress controller this official website of nginx ingress controller I can install using manifest files also using that yml files or I can install using helm also as I already told some time back helm is a package manager helm is a package manager for kubernetes using helm also I can apply this nginx ingress controller or using this
+
+20:29
+I can apply this engine X ingress controller. So when I go to the installation part, you can see installation with the manifests or installation with helm for now. Let me use manifest.
+
+20:44
+Now all the manifests, all the manifests, they're maintaining in one GitHub. All the manifests, they're maintaining in one GitHub. You can clone that GitHub. You can go inside that folder, and you can apply all the required concepts, like a namespace, a service account. That Nginx Ingress Controller also requires permissions to talk to the Kubernetes APIs.
+
+21:10
+Nginx Ingress Controller also requests permissions to talk to the Kubernetes APIs. Then do I need to create some kind of a cluster role, role binding, service accounts, all these things?
+
+21:29
+So all these YMLs, all these YMLs is already part of that GitHub. Who is managing that GitHub?
+
+21:39
+That is managed by nginx itself. So already they have all those YMLs. You can apply all those YMLs. You can apply all those YMLs like this. For our students' purpose, what I have done, I kept all those YMLs into our own GitHub. Our own GitHub.
+
+22:04
+I kept all those variables into our own GitHub. This is for practicing. But if there is a requirement to install Nginx Ingress Controller in your project, don't use this repository. Don't use this repository. Whatever I'm showing here, don't use this one. Because I might be using old version of Nginx Ingress Controller images, old version of APIs, all those things. If there is a requirement, do you need to follow the official website?
+
+22:32
+Since you already familiar with all the kubernetes concept, it will be easy to follow this official websites to install. But don't follow Mithun Technologies GitHub in your project. If your manager asks, how did you install? Don't say, I installed by using this instructions. That is not correct.
+
+22:55
+For now, in this, I kept all those YMLs. In this, I kept all those YMLs. Like here, using this YML, I'm creating a namespace and service account. Using that YML, I'm creating a namespace and service account. I'm creating required rule because is Nginx Ingress Controller FOD need access to the Kubernetes API?
+
+23:21
+to see how many services are there, how many endpoints are there. So we are creating a required cluster role, required cluster role. And we are attaching that role. We are attaching that role with service account, whatever we are creating. And is this service account is used with the deployment or the part of that ingress controller? Yes.
+
+23:47
+So we have all those YMLs, common YMLs, deployment YML, service YML, all these things I kept here. But if you follow the official website also, you have all those things. As per the instructions, you need to apply all these things. You need to read and understand all these things.
+
+24:11
+same thing but official website No, I Want to deploy this nginx ingress controller. Let let me clone this one to the server Where I have a cube ctl where I have a cube ctl wherever I have a cube ctl because I need to apply those manifest So let me clone Let me clone So the server where I have a cube ctl I don't have a git installed
+
+24:40
+Let me install GIT.
+
+24:53
+Now let me clone that. Now I have that folder, that Kubernetes Ingress. Basically, this is my own repository in Mithun Technologies GitHub, where I have all those VMLs. If you follow official website also, they are maintaining some VMLs in their own GitHub. In their own GitHub. So in this GitHub, they have all those VMLs. You can apply all those VMLs using these things.
+
+25:20
+If you know if your ingress controller is not getting deployed, you are not able to access that ingress controller, you can see the troubleshooting steps also here. What went wrong? What needs to be modified? If it is not working also you can see here.
+
+25:37
+now I clone this one let me go inside that folder
+
+25:43
+in this installation instructions I already explained what is ingress controller what is ingress here now I clone that one let me go inside that folder under deployments folder here now this deployments folder has again lot of folders like this first I am creating a namespace and service account I am creating a namespace and service account as of now
+
+26:14
+Do I have one namespace called Nginx Ingress? Just now I created using that YML. This YML has a namespace and service account also. I have created one namespace called Nginx Ingress. Then I am applying all the YMLs which is part of that common folder. I am creating a required config maps used by Nginx Ingress controller, secrets used by Nginx Ingress controller, rules used by Nginx Ingress controller. I am applying all these things.
+
+26:44
+and just giving a folder name
+
+26:48
+I'm just giving a folder name without any file name does all the YML files will be applied whatever I have in that common folder in this common folder. Yes.
+
+27:01
+Now I have deployed required roles role binding service accounts or secrets all these things now I need to deploy ingress controller I need to deploy that ingress controller. We have two options here to deploy the ingress controller one is deployment another one is demon set Whether you want to run that ingress controller as a deployment you can apply Whether you want to run that ingress controller as a demon set
+
+27:31
+If you want to run, you can run.
+
+27:35
+Now if it is a deployment, do I need to make sure at least I have a multiple replicas of that ingress controller which means multiple pods if I am deploying as a deployment.
+
+27:48
+Yes, what will be the problem if I have only deployment with single replica all the external traffic all the external traffic will be processed by that ingress controller port if I have only one ingress pod only one ingress pod do have a lot of load on this ingress pod because all the external traffic will come via that ingress controller it will come to this load balancer.
+
+28:15
+that load balancer will route the traffic to this ingress if I have only one ingress controller pod we have a lot of load if something goes wrong with this ingress pod do we have any other pod which will accept the traffic from outside no even though pod will be recreated or restarted is it kind of a single point of failure if I have only one replica of this ingress controller pod
+
+28:44
+Yes, so that's why if you are deploying as a deployment do I need to make sure I have a multiple replicas of ingress controller This external and traffic comes to this ingress controller parts these parts Will process the traffic So it has to handle the load So if it is a deployment make sure you modify the number of replicas Make sure you modify the number of replicas
+
+29:13
+Now if it is a deployment, this is one deployment basically. Kubernetes deployment. Only one replica is there. Make sure you have a lot of replicas. You are deploying as a deployment using this image. What is this image? Is it our own application image?
+
+29:35
+No, is it a Nginx Ingress Controller software that Nginx Ingress Controller application?
+
+29:44
+in which registry in which registry we have that image if you see here. N index so which means can I can you know, can I call this as a third party application third party software or application?
+
+30:00
+So who is creating and managing this NGINX Ingress software?
+
+30:05
+that nginx company now we are deploying that as a pod we are deploying that as a pod with all the required options with all the required options we are deploying required environment variables we are.
+
+30:21
+passing with required readiness probes. I know readiness probe is also defined. Ports also defined. With all these things, we can deploy. Either as a deployment, you can deploy or as a daemon set also you can deploy. If you see the official website also, they're saying that here. They're saying that here, deploying ingress controller. We include two options for deploying ingress controller. One is deployment. Another one is.
+
+30:51
+Before creating a deployment or demand set, make sure you update the command line arguments of the ingress controller corresponding to your requirements.
+
+31:04
+Now, if I am deploying as a daemon set, how many replicas? It is not based on the replicas. So how many parts I will have in the current scenario? How many parts, Nginx ingress parts, I will have in the current scenario?
+
+31:21
+How many parts I will be having for that ingress controller if I deploy as a demon set. Krishna prasad saying is one. Is it correct?
+
+31:33
+Is it correct only one part of that ingress?
+
+31:42
+based on the number of nodes you have so as of now how many nodes I have in the cluster
+
+31:53
+So will I have a two pods, each pod in one node. In this node, I have one ingress controller pod. In this node, I have a ingress controller pod. So it no need to be a daemon set. It no need to be a daemon set. You can apply also as a deployment, but make sure you have more pods. For now, for now I am deploying as a daemon set. For now I am deploying as a daemon set. But it no need to be a daemon set.
+
+32:20
+you can apply as a deployment also by modifying the number of replicas now let me deploy that one as a daemon set as a daemon set I will apply so what I will do so there is a folder called daemon set in that you know deployments folder there is a file I am creating like that so here
+
+32:47
+I have one folder called daemon set within the daemon set folder. I have that yml which will create a daemon set for ingress controller. You can create as a deployment also. That is fine. Now if you see in the nginx ingress there is a namespace called nginx ingress. Nginx ingress now do I have a you know some parts getting created for that ingress controller.
+
+33:23
+the house some parts getting created for ingress controller. Now, all the external traffic, all the external traffic should reach this ingress ports. Now, how can I reach this ingress ports from outside out the cluster? What type of service can be created for this ingress ports, this ingress controller application?
+
+33:47
+I need to create a service of type load balancer. Now I can see pods are running. Now get access to the Ingress controller. Get access to the Ingress controller. Create a service with the type load balancer. Kubernetes will allocate and configure a cloud load balancer for load balancing the Ingress controller pods. Now I am using AWS. For now, I will apply this YML. Basically, this YML is nothing but a service YML.
+
+34:16
+This YML is nothing but a service YML. Kubernetes service. Service name is this type load balancer. Type load balancer. Now I am creating a service for this. Sometimes in the interviews, they're asking one question also, guys. What is the difference between labels and annotations? If you see something called annotations here, do you see something called annotations here?
+
+34:42
+What do you mean by this annotation? Sometimes in the interviews, they're asking, what do you mean by these annotations? So these annotations again kind of a metadata, again kind of a metadata, but it is not exactly same as label. Using these annotations, can I have some internal logic, internal logic, internal code based on these annotations added to these services? Can I have some internal code logic written?
+
+35:10
+in that respective implementations? Yes. So the way we have labels in Kubernetes, there is annotations also. There is annotations also. So what do you mean by this annotations? What do you mean by these labels? Labels you already know. Labels allow you to identify and select the Kubernetes objects. Annotations are non-identifying metadata.
+
+35:39
+Annotations is again metadata, but it is not used for identifying. It is used for some logic within that implementation. Within that implementation. Right. Kubernetes will implement. APS Kubernetes APS can have some logic based on the annotations which are written. Now if you see here, there is something called annotation service that beta dot Kubernetes dot IO.
+
+36:09
+slash AWS load balancer back end protocol TCP. Now, since we are using the service of type load balancer with EKS, does EKS will create a load balancing on TCP protocol because of this annotation? That EKS has some logic, that EKS APIs has some logic, that EKS APIs has some logic based on this annotation because of this annotation and this value. Now,
+
+36:38
+Is it going to create a TCP protocol or load balancing? I mean to say listeners will be on TCP.
+
+36:46
+Yes, so annotations are used internally. It is implementation specific. It is implementation specific based on the managed Kubernetes service you are using that controllers will have some logic based on the annotations, based on these annotations. So annotations again metadata only. Annotations also metadata only. But it is not identifying metadata.
+
+37:16
+is this annotations will be used internally in the APIs to implement some logic.
+
+37:29
+Yes, these annotations will be used internally in the APS Kubernetes APS to implement a specific logic. So now again, if you have a different requirement, can I change these annotations? If you see now, EKS load balancing annotations, service annotations, right? This is service
+
+37:57
+some of these load balancing options, these annotations. If you see here, I'm using this annotation.
+
+38:08
+what protocol one of these annotation. So like this you have lot of annotations. This is service specific. I mean to say implementation specific, so it is going to create a service on TCP protocol that load balancer on TCP protocol. Now I am creating a service of type load balancer. Let me apply this.
+
+38:44
+Now the moment I create a service of type load balancer now in the Tangenix Ingress namespace. Can I see one load balancer created? Now this load balancer is pointing to which application is it pointing to your own microservices, your own pods.
+
+39:04
+No, this is going to route the traffic to which pod this when I am using this load balancer outside request comes to this node port and node IPs it is going to route the traffic to this ingress service it is going to route the traffic to this ingress ports. Now this is the only load balancer I need but other applications do I really need a load balancers let me show you I have lot of services in the cluster with service of type load balancer.
+
+39:35
+Do I really need these also as a load balancer this Java web application service? Do I need to have this as a load balancer this python application service? Do I need to have this as a load balancer or this one spring application? Do I need to have this as a load balancer?
+
+39:56
+not required those are can those services can be simply those services can be a simply cluster IP services because when I use ingress controller by defining the ingress rules does ingress controller will be able to route the traffic to Kubernetes services based on the rules I defined
+
+40:21
+Yes, so using this ingress controller and ingress resource, can I control the traffic? How the traffic should be routed to Kubernetes services in your cluster? They have a complete traffic management controlled in Kubernetes using this ingress resource and ingress controller.
+
+40:43
+Yes, now I don't need to have all these things. I don't need to have all these things as a
+
+40:54
+load balancers now I no need to have all these things as a load balancers now let me change now even though it's a cluster ip will I able to access this application route the traffic to this service
+
+41:13
+I'm changing it to cluster IP. Let me apply.
+
+41:22
+Now similarly, let me change for other applications. I don't need to have this one also as a load balancer. I'm changing it to cluster IP. I'm changing from load balancer to cluster IP. Now since I'm changing the cloud controller, the cloud controller which is running in this Kubernetes EKS cluster, is it going to delete that load balancer in the cloud now?
+
+41:48
+whatever load balancer got created is that load balancer also got deleted because I changed it from load balancer to cluster IP.
+
+41:58
+yes let me show you let me show you now they have a load balancers for this service this service do have a load balancer and external IP they have a load balancer and external IP for this service no if I go to the cloud if I go to the cloud if I go to load balancer section is that load balancer got deleted
+
+42:55
+Now if you see, go to the load balancing section
+
+43:00
+whatever load balancers was created that load balancers got deleted here
+
+43:07
+Now this is I created for previous batch, I know morning sessions, AWS batch. I was explaining about load balance in AWS session. So this is created. So now I have these two. Now one is for that ingress controller. I have one more load balancer for that Spring app. That Spring app is running in the different namespace. Let me change that one also. Now let me change.
+
+43:36
+that one also service of type load balancer. I don't want this to be a load balancer. I can change it to cluster IP. Now I changed it to cluster IP. Let me apply.
+
+43:55
+Now I have only one load balancer that is basically for the ingress controller. Now am I able to access these applications, whatever I mapped already, like java This domain is mapped with some load balancer. That load balancer itself is not there. Am I able to access now? Because.
+
+44:20
+This domain is mapped with that load balancer that load balancer itself is not there. How am I able to access this application now? No. Because is this domain mapped with the load balancer that is different load balancer, which got deleted when I changed it from load balancer to cluster IP.
+
+44:42
+Yes, that's why load balancer itself is not there. So now can I map all these things, this application that Python application, let's say Python app. like this also.
+
+45:07
+python app. Can I map this domain also to the same load balancer? This domain also to the same load balancer. From external traffic, it has to go. Can I map all these domains to that ingress controller load balancer, whatever load balancer is created for that ingress controller?
+
+45:29
+Yes. So where can I do that? If you have a domain, you can do in Route 53. If you don't have a domain where you can map these type of things to practice.
+
+45:43
+in your local laptop host file in your local laptop host file if you are using windows laptop if you are using windows laptop where exactly will have a host file as I already told multiple times it is in C system 32 drivers
+
+46:03
+So you can...
+
+46:13
+follow these instructions to modify in your host file but I have a domain can I map that domain globally now if I refresh here I have only one load balancer
+
+46:30
+Now I have only one more parameter.
+
+46:34
+this load balancer again it's a classic load balancer if you see it is listening on port 80 and port 443 TCP protocol request comes to load balancer on this one it will route the traffic to this node port if request comes to load balancer on this one it will route the traffic to this node port and it is going to forward the traffic to these instances these are your Kubernetes instances any request comes to this load balancer from outside.
+
+47:02
+is that request will be processed by this service, Nginx Ingress service. Request comes to this node on this port, this port. Then it will route the traffic to the respective ports. Now, I'll map this load balancer with my domains in Route 53.
+
+47:23
+This is nothing to do with Kubernetes.
+
+47:41
+Now I already have a hosted zone. I already have a hosted zone. Here I'll change all these records. I'll change all these records. These things I already was using for morning class also. Let me clean up this one. Now any application like this, java This domain, if a request comes to this domain, I want to see.
+
+48:09
+this to resolve to this load balancer I want to resolve that to this load balancer basically the second one this is basically created for different purpose the second one is pointing to your nginx ingress load balancer right let me select this one now let's say I have one more domain let's say I have one more domain like this
+
+48:35
+maybe let me create another domain like subdomain like this just to give an example I'm taking this if python app dot mythun tech devos dot co dot in route the traffic to that load balancer that is in Mumbai region this load balancer this one
+
+48:58
+Now I mapped these two. Similarly, if required, I can map this one also, this domain also, to the same load balancer.
+
+49:09
+Let me click on this edit record Edit record
+
+49:15
+now here I will route the traffic to this load balancer
+
+49:23
+Now all my domains are pointing to same load balancer that is basically ingress load balancer.
+
+49:33
+I'll create this one later. Now if anyone access like this, python app. Is it going to resolve to that load balancer IP? As per this diagram, this is my DNS. This is my DNS. Now in this DNS, I mapped my domains. I mapped my domains with this load balancer. Now when I'm accessing like this.
+
+50:01
+I know java web app dot mitruntekdevops dot co dot in or python web app dot mitruntek co dot in this is dns concept nothing to do with kubernetes is the domain will be resolved to the ip of that load balancer that load balancer created for your ingress controller
+
+50:23
+yes now i have this domain mapped i have this domain mapped python app dot mithun tech dev app dot core dot in i mapped this one also now i will get some kind of a 404 i am getting some kind of a 404 when i am accessing like this this is result to load balancer request is going to load balancer load balancer to the nginx quad but why i am getting 404 this
+
+50:52
+but it will take some time.
+
+50:57
+this pyth also should work but it will take some time why I'm getting 404 when I'm accessing this one when I'm accessing this one why I'm getting 404 what is missing
+
+51:17
+What is missing? Did I created a rules? I have done this part. Nginx Ingress controllers are running. Service of type load balancer also created. My load balancer is mapped with all these domains in the Route 53. All this is done. Now I have this one also. I have my applications also running. I have services also there. But what is missing? Did I do this part?
+
+51:47
+that creating a rules does nginx ingress controller has any idea where to route the traffic to which kubernetes service it has to route the traffic as of now.
+
+52:02
+no so I will create a rules I will create a rules what type of rules this ingress controller can support host based routing host based routing as well as
+
+52:20
+path based routing.
+
+52:25
+host-based routing or path-based routing. If this is the case, if you understand, this is the case, if you understand what type of routing I can define here, because host itself is different. Now host itself is different. Let's say I have another application, that's spri For that one also I'm getting error. What type of routing if you understand here?
+
+52:50
+If you see host itself is different
+
+52:54
+Post itself is different. I can define a post-based routing in the ingress rules, in the ingress rules. So can I control the traffic to the Kubernetes services within my Kubernetes using this ingress resource? How the traffic should be routed within my cluster?
+
+53:16
+Yes. No.
+
+53:22
+Recently they have changed the API version. Now if you show here I have given the document also, documentation for that ingress. I have given the documentation.
+
+53:41
+Now I need to define ingress rules also like this. Ingress rules also like this. Now I can take this rules. This is like a.
+
+53:53
+Kubernetes object again. Now if you see, APA version is this one. Kind is ingress. This is the name of the ingress. Inspect.
+
+54:06
+Nginx ingress this ingress class name is nginx ingress class name is nginx because in within my kubernetes cluster I can have engine you know n number of ingress controllers this rule has to be used by which ingress controller I can define using this class name so we already deployed nginx ingress controller so I am using that ingress class name as nginx this is my rules now here can I specify something like this if this is the host
+
+54:36
+If this is the host route the traffic to some service, whatever Kubernetes service. Let's say if that is the.
+
+54:48
+host can I route the traffic to this service
+
+54:52
+this kubernetes service that service name in your kubernetes cluster and on which port and which port service is created here the port that is service port. So on which port that service is created what is the service port of that one 80 but let's say service is created on 80 again if I give 8080 like this do you think again will it work.
+
+55:18
+These are the small, you know, small, small mistakes that development teams also do. Every day we will get a lot of issues like this. Even though my pod is running, even though there is a service, I have created an ingress rule also, but still I'm getting some kind of a 404 or 502 errors. That could be because of wrong configurations. So if you are using ingress, these type of issues are common. Developers doesn't know anything on these things.
+
+55:48
+they may randomly give service name invalid service name they will give or they will give incorrect ports. Again will be able to access this traffic this application even though you have all these things in place.
+
+56:07
+Let me give a correct no correcting now in which namespace this rule has to be created. In whatever namespace I have that service and pod in which namespace that service and pod is there that application is there.
+
+56:26
+I am talking about application and service I am not talking about ingress in which namespace I have that application this Java web application
+
+56:37
+in which namespace I have that parts and deployments if you see.
+
+56:43
+Let me zoom it. In which namespace I have that part and deployments. Default. Now, while creating itself, while creating that application itself, the way I am creating a deployment, the way I am creating a service, if there is a requirement for ingress also, do I need to create a ingress also like this? That ingress also along with deployment and service like this? Can I create maybe same file?
+
+57:12
+or a separate file same file or a separate file also for better readability and maintainability. Can I have this in a separate separate files instead of single file deployment service ingress network policies HPA volumes all these things instead of having in a single file for better maintainability and readability can I maintain in a separate files multiple files like deployment dot ml service dot ml ingress dot ml.
+
+57:40
+networkpolicy.ml, hpa.ml like that also.
+
+57:48
+Yes, config map mls, secret mls based on the requirement. You can maintain a separate mls also. Now I am creating an ingress. That rule name can be anything. You can give some name like this.
+
+58:07
+Java app Ingress rules like this Now, let me create this one also as of now if you see Do I have any ingress rules in the current namespace or in any namespace if you see
+
+58:26
+Do I have any ingress objects created in the cluster? No. Now let me apply this file. Now I will get some kind of warnings. I'll get some type of warnings. I will show you. Kind of a warning. But it is not error. It is warning. What do you mean by this warning?
+
+58:51
+What they are trying to say warning extension slash V1 slash beta 1 ingress is deprecated in version 1.14 plus in 1.14 plus that version is deprecated. It is going to be completely removed from version 22 plus. It is going to be completely removed in version 22 plus. It is kind of a warning. As of now what version of kubernetes I am using.
+
+59:23
+in this cluster if you see what version of kubernetes I am using in this version as of now what version of kubernetes you can see kubectl get
+
+59:34
+wide what version of kubernetes we are using
+
+59:40
+1.21 now if the cluster is upgraded to 1.22 does this yml will work does this yml will work i am getting a warning now but version 22 and above will i get a warning no it i will get a error i'll get a error what they are trying to say here they are giving deprecation warning so which means they are not going to support this one in the later versions because it's a beta version
+
+01:00:11
+they are already implemented this one you know need to use beta versions what they are trying to say you are using something like this this is deprecate going to be deprecated because they have changed the versions. Now for now it will work for now it will work if I try to access also because I there is a ingress rule created there is a ingress rule created it is just a warning of that API version there is a ingress rule created
+
+01:00:39
+Now if I try to access this application that java web app dot am I getting the response now is ingress is able to ingress controller is able to use that rule is ingress controller is able to use this rule if this is the host is ingress controller is forwarding the traffic to this service on this port in kubernetes.
+
+01:01:04
+irrespective of any path irrespective of any path path doesn't matter here any path any path after this host it is routing the traffic to this service it is working but it is giving a warning deprecation warning so the API version is changed now if you are upgrading your Kubernetes versions later you need to see whatever manifest whatever Kubernetes objects you have created
+
+01:01:31
+Is it going to be compatible with future versions also?
+
+01:01:38
+you need to check whether it is compatible with future versions. Let's say you have all these files with this API version and you have upgraded your Kubernetes cluster. Will it work if they are completely going to remove that API version in this release? Now if I upgrade to my Kubernetes to 1.20 to this YML, is this ingress rules will work if I upgrade my cluster to this version? No. So do I need to modify my YMLs also?
+
+01:02:07
+based on the deprecation warnings.
+
+01:02:12
+you need to check compatibilities also. Now since it is giving warning, I don't want to proceed further. I will use whatever it is suggested. Now if I go to ingress kubernetes in the official document ingress kubernetes in the official document. Now if you see is this is the API version now. They're saying.
+
+01:02:40
+netw API version is this instead of this one instead of this one
+
+01:02:54
+instead of this one it is beta version I know need to use beta versions now there is actually they have released proper versions now I can say something like this netw slash v1 but based on this API version is this specifications also will change will it same as is now if I apply as is again it will not work because the specifications also changed
+
+01:03:21
+Let me show that I change just AP version and trying to apply. I'm trying to apply.
+
+01:03:29
+F1F now am I getting warning I kind of errors not warning error validating this one this is unknown this field is unknown this field is unknown because the specifications also changed if you see when I am using this APA version whatever I see in the rules here is it same when I am using this APA version if you see is it exactly same
+
+01:04:01
+No, now they have modified right here rules something like this. Let me update this one also as per that rules Fine rules is fine Rules is fine
+
+01:04:18
+host is also fine because they are here they are just demonstrating path based but I am using host based here so when I am using host that is also fine host based that is fine so something like this rules is fine host so this is also fine host is also fine HTTP is fine under that you have a HTTP you have a paths you have a paths but here do you have something different
+
+01:04:48
+and our paths now.
+
+01:04:51
+under paths we have something different here one is prefix path type and path path type what type of path prefix the options here we have is prefix exact we have a options here prefix exact now I don't want to use exact anything is fine prefix path.
+
+01:05:21
+something like this. I am giving just a slash which means this is my host, this is my host, this is my host and a path type is prefix path is slash which means after this anything this is just a prefix I am not using exact. So anything after this path doesn't matter whether you are using like this Java iPhone web app or whether it is again sub path like this sub path like this.
+
+01:05:51
+or whether it is just a Java or whether it's a ABC that doesn't matter. So I'm using path type prefix path is slash. So anything after this host anything after this host is it going to route the traffic to this ingress rule whatever I am defining here if I define like this. Yes. Now path type is prefix path is slash then next.
+
+01:06:20
+back-end they have changed something like this back-end now this back-end is not an array this back-end is not an array so this back-end within this back-end again they changed something like this they are not directly giving service name and service port back-end service separate port separate service now name of the service like this name of the service like this this is
+
+01:06:50
+port this is port something like this port within that port again there is another field called number there is another field called number now with this api version do i need to define rules like this
+
+01:07:09
+with this API version.
+
+01:07:15
+Yes. Now this is how I am defining path type prefix slash. Can I use instead of prefix can I use exact also? You can see in the official documentation here they have given path types exact is what prefix means what if I am using prefix all the parts will it match anything after this slash? Yes. Suppose if I am using exact if request is coming for this only then only it
+
+01:07:44
+If request is coming for this exactly then only it will route if it is coming like anything other than this is it going to match because of exact option. No. So you can understand what do you mean by prefix what do you mean by path here all these things I am using a path type as prefix. Now let me change my ingress rule as per the latest version.
+
+01:08:10
+Uh...
+
+01:08:13
+unknown field port why do have any indentation problem
+
+01:08:22
+So back in.
+
+01:08:25
+back end is fine.
+
+01:08:29
+back end is fine. Okay indentation problem.
+
+01:08:34
+port like this backend service name is this port is this something like this indentation problem only now standards you will have a two space you know two things but that is fine
+
+01:08:51
+like this.
+
+01:08:56
+Now let me apply. Now am I getting warning? Now earlier I was getting warning. Am I getting warning from Kubernetes now saying that deprecation warning? No, because I am using that one. Now is this is also working as expected with this latest APA version latest changes also do you see is it working fine? Yes. Now similarly can I create another rule for other application also that Python application
+
+01:09:26
+Can I create a rule, Ingress Rule?
+
+01:09:29
+If I want to access, can I create a rule?
+
+01:09:40
+that python app also.
+
+01:09:44
+the way I have created ingress rule for this application. I can create ingress rule for other application, but does the name should be same? Does name will be, can we have with same name, another rule in same namespace? This name, no. So I will say different, some name like this. But host, let's say Python.
+
+01:10:12
+app. Now I'll route the traffic to respective service. Let's say I'm giving service name like this, python and port 80, port 80, port number 80. Now let me apply the rule.
+
+01:10:32
+let me apply the rule now there is a ingress rule again one more ingress rule also there one more ingress rule also there for this one now if you see still
+
+01:10:47
+am i getting now different error 502 bad gateway what is the problem why i am getting 502 bad gateway even though i have ingress rule
+
+01:10:59
+What is what could be the reason if you troubleshoot? What is the service name of that Python? Application
+
+01:11:15
+What is the service name? Python SVC. But in my ingress rule, my ingress rule, what is the service name I have used here?
+
+01:11:27
+What is the service name I have used? The back end service name just Python. That's why I'm getting this error. Let me give correct only Python SVC, but I have given wrong port the port number service port number. I have given 8080 again. Do you think will it work if you apply this one also again?
+
+01:11:51
+now do you see is it working again no but let me give the correct name correct port number also let me give service port as 80 let me give service port as 80 let me apply now i have created a rule
+
+01:12:10
+Let us wait for some time.
+
+01:12:18
+prefix I should have given empty I should have given empty
+
+01:12:24
+or let me see if I have anything like this but let me see this Python app with untaggeddevops.co.in but here is my hostname is correct
+
+01:12:43
+Is my hostname is correct? Let me see.
+
+01:12:54
+you don't need to give anything ok it is coming on HTTPS somehow it should not be on HTTPS it should be on HTTPS only
+
+01:13:08
+Now let me try that.
+
+01:13:18
+This is.
+
+01:13:22
+This is my domain, http pythonapp.
+
+01:13:49
+whatever I use.
+
+01:13:54
+that is a painful.
+
+01:13:59
+There is a typo.
+
+01:14:02
+Now still fine or too bad gateway. Let me do something like this slash API slash task
+
+01:14:15
+will find out together why. Let's see.
+
+01:14:25
+So it is Python app SVC or Python SVC. Let's see that service name.
+
+01:14:33
+service name is Python app SVC but here I have given I think just Python SVC
+
+01:14:43
+python svc have given that service name is python app svc let me apply this
+
+01:14:52
+Now let's try to access without any prefix also I should able to get the root context
+
+01:14:59
+Now do you see is it working? Am I getting a response from that Python application? Within that any prefix, because I have given prefix as slash, suppose I have another API also, another API. Is it routing the traffic to that service?
+
+01:15:15
+This is the host any prefix sign it is routing the traffic to that service. So this is kind of a host based routing. This is kind of a host based routing. Let's say I want to do path based routing. Same host but path is different. What do you mean by that? Let's say you are trying to access like this. You are trying to access like this.
+
+01:15:46
+Now you are trying to access like this.
+
+01:15:53
+Host is same you are trying to access like this path is getting changed
+
+01:16:04
+Now if host is same path is different can I define path based routing instead of host based routing.
+
+01:16:16
+Which means let me demonstrate but for now I'll create a separate file. But now I'll create a separate file because if it is a path based routing. With same hostname with same hostname you cannot create a multiple with same hostname you cannot create a multiple ingress rooms. So I'm creating only one.
+
+01:16:41
+File.
+
+01:16:47
+In that file I will create all the rules
+
+01:16:57
+Now if this is my host I'm just saying mitu Now something like this I'll route the traffic to this one Let's say I have different path
+
+01:17:18
+something like this.
+
+01:17:22
+again same post but this is getting repeated path type prefix again or you can use exact also
+
+01:17:36
+path so if this is the path java iPhone web iPhone app can I route the traffic to that other service
+
+01:17:49
+back end service
+
+01:17:55
+Name of the service.
+
+01:18:00
+port of that service that port number port number is 80 service name maybe that Java web app svc now if this is the host and again you can remove this one also like irrespective of host irrespective of host as I know as already documents given here you are least
+
+01:18:27
+you know need to view that host at all any host is fine but that host has to be mapped with your ingress controller if that is the host if this is the path can I route the traffic to respective service based on the path irrespective of any host or specific host also fine
+
+01:18:48
+you can route the traffic like this now let me do this let me give a no different name because I already have a rules on different this name
+
+01:19:08
+cubectl apply ifnf path based rules let me create now
+
+01:19:18
+This is my host.
+
+01:19:25
+Now let me access that host first is this host has to be mapped with your load balancer. I am getting kind of a DNS error because this host is not mapped with your load balancer in the DNS. I am getting this error. So first we do first let me do that. I'll create a record here. If this is the domain I am not giving any sub domain. If this is the domain let me route the traffic to that load balancer that is nginx load balancer.
+
+01:19:56
+It is in Mumbai region.
+
+01:20:00
+This is the load balancer of Nginx Ingress Controller. I mapped that in the DNS. Now, if this is the domain, I'm not using any path. Request goes on root path. Request goes on root path, but there is some cache here. Let me use explicitly HTTP. Now, is that request is going to that Python application as per this Ingress rules?
+
+01:20:29
+Now when I access something like this, Java iPhone web iPhone app, again there is some cache here. I configured HTTPS. So request is going on HTTPS, but let me use HTTP. Or let me open a private window.
+
+01:20:50
+when I am doing like this is request is going to that application that Java based application like this is ingress controller is doing the traffic management is ingress controller is routing the traffic to the different different services based on the host based on the path
+
+01:21:13
+Yes. And here, let me take another use case. I have wrongly created a labels and selectors. Let me take this Java application. I have a service, but I am using wrong selector. Service doesn't have any endpoints. Again, will it work? Now I'm giving the wrong labels here. I'm just giving Java web as a selector here. But my part has this label. My part has this label. Java web app.
+
+01:21:41
+Now I am giving just Java web service also there. I am giving a correct service name. But that service doesn't have any endpoints. Now do you think will it work again?
+
+01:21:57
+again do you think it will work now let me access again what is this why not too bad gateway again why not too bad gateway why my ingress rules are correct I have given a correct service name correct service port also there is a service also
+
+01:22:18
+There is a service also with that name, service port also. Just for troubleshooting within the cluster, can I see something like this within the cluster, but this will not work because this is not part of the cluster. This system is not part of the cluster. If I just use Karla on this port, it will not work. But let me show you.
+
+01:22:41
+Is that service has any endpoints?
+
+01:22:47
+No, that is because of wrong selectors. That is because of wrong selectors. But let me give correct selectors again. Let me give correct selectors. But I have given invalid target port. Your application is running on port 8080. But let's say I have given port as 5000 here target port. But this container this container is running on port 8080. But you have given a wrong target port.
+
+01:23:15
+You have given correct selectors, but you have given a wrong target. What again do you think it will work?
+
+01:23:26
+even though I have given a correct service name again am I getting kind of a different error why not too bad gateway again
+
+01:23:40
+So if you understand the concepts, you can troubleshoot, you can debug very well. If you just blindly copy paste whatever running notes I'm giving without understanding what is what, you cannot understand and you cannot apply whatever knowledge you have learned in your actual projects. Once you have started working on docker, Kubernetes or any topics which we discussed. Now I corrected, I corrected again.
+
+01:24:09
+is it started working now and one more problem service is there service is there but my parts are in some crash loop back of my parts are in some crash loop back of or my parts are in you know pending state again will it work if your parts are not in a running state and not in a ready state again no so in that case do you need to fix the problem why it is in
+
+01:24:39
+Error state
+
+01:24:44
+Hope you understood all these things, how it is related with each other.
+
+01:24:52
+No.
+
+01:24:55
+CI CD, can I apply all these things from CI CD also? If I have a pipeline in place, can I create a image for this application? Can I create the Docker image of that application, push that application image and apply that image to the cluster as a deployment, creating a service for that, creating the ingress rule also from pipeline also, if required by maintaining all these things in a version control system.
+
+01:25:25
+But whenever I'm creating image instead of hard coding like this, can I create a image for each build? Can I tag with the branch name and build number or commit ID? And can I push that image then on the fly on the fly if required within my Jenkins pipeline, can I use some kind of a command which gets you know, which will update this tag with whatever image I wanted to deploy on the fly in Jenkins? Can I apply that one again?
+
+01:25:53
+I have given assignment also on that one. Using a CD, you can change on the fly that tag and apply. And if you are using all these concepts, rolling update, deployment strategy with liveness probe, readiness probes, all these things, we'll be able to achieve zero downtime deployment with liveness probe, readiness probe also with rolling updates.
+
+01:26:22
+And if I have a HPA also in place, if I have a HPA horizontal pod autoscaler, whenever there is a lot of load on this application pods containers, the spots will be increased and decreased automatically based on the load.
+
+01:26:37
+Since I have a cluster autoscaler, since I have a cluster autoscaler also in place, whenever my parts are in a pending state due to no resources available, CPU and memory, does cluster autoscaler will scale the cluster so that parts get scheduled on that cluster, that node?
+
+01:26:57
+So, understand the concepts what I am trying to say here is understanding the concept what is what based on the requirement you need to apply all these things if you buy hot line by line since Balaji sir is giving like this let me copy paste as is without understanding it anything if you try to practice that way also even though you practice 10 times or 100 times if you get a different requirement will be able to understand and implement that
+
+01:27:28
+line by line and practice no. So understand the concepts understand the basics basics are very very important if you are good at basics will be able to implement any complex requirement complex solution also yes.
+
+01:27:48
+Now let's come back to our actual topic. What else I can do using ingress one is traffic management that ingress controller I can use to do the traffic management. What else I can do?
+
+01:28:03
+If you understand, ingress may be also used to configure. You can do that traffic. I mean to say load balance of the traffic. And also, will I able to configure SSL and TLS certificates at the ingress controller level instead of external load balancer level within my Kubernetes at ingress controller level also? Is it possible to configure that SSL or TLS certificates, SSL and TLS of termination also?
+
+01:28:34
+Yes, now if I configure SSL or TLS in a Ingress controller within my network, within my network also from this external load balancer to the Kubernetes Ingress controller, Ingress, you know, to Kubernetes servers till it reaches Ingress ports, Ingress containers, does the traffic will be in a encrypted format, secure format within your network also from your load balancer to.
+
+01:29:02
+till it reaches your Kubernetes nodes, till it reaches Ingress containers, does the traffic will be in encrypted format if I configure SSL RTLS in Ingress level, Ingress controller level.
+
+01:29:15
+Yes, so within your network from load balancer, I mean to say if you understand this diagram, I can configure SSL or TLS at two levels. I can do here or I can do here. Now this we already discussed this we already discussed when we were discussing AWS. Now if I do the SSL TLS configuration here in the internet request will be encrypted and sent.
+
+01:29:45
+But from this load balancer to your Kubernetes nodes in the same network, will it comes in a plain text format? That is also fine. That is also fine because you are already, request is already in your network, private network. But if required, can I configure SSL TLS in this level? It reaches your Kubernetes nodes, it reaches ingress containers. Does the traffic will be in a secure format?
+
+01:30:14
+STPPS
+
+01:30:17
+Yes, now if required is that SSL and TLS off boarding will happen here, which means in the ingress controller it will off board the TLS or SSL then from ingress containers to your application containers does request go in a plain text format. From here to here. Yes, so that is what additionally you can do. That is what additionally you can do in the ingress controller. For now, I don't have any official CA.
+
+01:30:47
+I don't have any CA certified authority. I mean to say I don't have any certificates. I'll demonstrate this one with a self-signed certificates. I'll demonstrate this one with a self-signed certificate. But in real time, are you going to use self-signed certificates?
+
+01:31:05
+No, self-signed certificates we will not use using open SSL using open SSL open SSL is one software open SSL is one software. So using this open SSL I will generate a self-signed certificates open SSL using this open SSL I will generate a self-signed certificates using this software. Then I will use that certificates with ingress controller or ingress rules.
+
+01:31:35
+Open SSL if I have a valid certificates, can I follow the same concept instead of using self-signed certificates in ingress rules, you can use those certificates in the ingress rules valid certificates. So let me do that using self-signed I will generate. So here not only this traffic management. Now I can configure HTTPS that certificates also.
+
+01:32:04
+But instead of generating a certificate like this open SSL using this open SSL instead of generating a certificate, if I have a valid certificate, I will have that certificate key file and CRT file from certified authorities certified authorities. I have the CA the CRT file and key file. This process remains same. But I don't have that CRT file and key file from valid certificate authorities.
+
+01:32:33
+and generating a self-signed certificate using OpenSSL.
+
+01:32:39
+But here while generating that self-signed certificate using open SSL, let me use. This name CN common name for which domain you want to generate the certificate. So I'm using open SSL software. To generate certificate that certificate is valid for 365 days. Let me execute this command.
+
+01:33:05
+in whatever server you have a open SSL. Let me see if I have a open SSL in this server. Yeah, I have a open SSL software.
+
+01:33:18
+I'm creating one folder called search. Let me go inside that folder search folder. I don't have anything. I'm executing this open SSL command which will generate the certificate self-signed certificates. Now I have this CRT file and key file self-signed certificate generated for this common name this domain with unta But if you have a valid certificates from CA.
+
+01:33:46
+You can have these files from that CA. Once this is done. This process remains same. Since the certificates also kind of a confidential information. How can I maintain these certificates in Kubernetes? As a which Kubernetes object I can maintain because this is also a kind of a confidential data in Kubernetes as a which resource I can maintain these certificate files.
+
+01:34:23
+using secrets. Now if you see I am creating a secret in which namespace I am creating a secret because I am creating a secret in this default namespace because I want to use these certificates in the ingress rules which I created in the default namespace in the ingress rules which I created in the default namespace I want to use this certificate. So I am creating a secret also in the same namespace. If you see what type of secret
+
+01:34:52
+When I explained about Kubernetes secrets, I explained there are different types also. What type of secret I am creating now? kubectl create secret. What type of secret? TLS type.
+
+01:35:06
+TLS type. Then this is my secret name. I can give ABC also here. I can give ABC also here. This is my secret name using that key file and CRT file.
+
+01:35:20
+these two files using these two files I am creating one secret let me do that now I have a secret I have a secret
+
+01:35:33
+in that namespace this secret that secret has TLS files. Now once this is done. I can use that secret. I can use that secret in my ingress rules like this. I can use that secret in my ingress rules like.
+
+01:35:59
+I can use that secret in my ingress rules like this, like this last one. The way I have a rules here in the ingress. Can I define the TLS also that certificate details for that for that host? What is the certificates? What certificates has to be used? Can I use this section TLS section along with rules in my ingress rules so that ingress controller will use that secret? That secret has a certificates. Is my
+
+01:36:29
+certificates is configured at ingress layer if I use this in my ingress rules this TLS
+
+01:36:37
+Yes, so let me do that. Let me do that.
+
+01:36:48
+Let me come back to wherever I have that file by ingress rules file.
+
+01:36:56
+wherever I have my ingress rule file. Now the way I am using rules here can I use hosts also something like this indentation matters not the order can I use something like this TLS
+
+01:37:11
+TLS
+
+01:37:14
+You can see in the official document also here, guys. The way I have rules, I can use TLS, something like this. You can create a secret using your CRT file and key file. Interactively you can do, or using YML also you can do. That to see, you know, then you can use the TLS here. TLS.
+
+01:37:38
+Something like that.
+
+01:37:42
+sorry, it is not copied properly.
+
+01:37:48
+something like that.
+
+01:37:51
+TLS your host name for which host I have configured my certificates I have created certificates for the same host. This is the host name secret name What is the secret name which in which you have uploaded your key file and CRT file? This is the secret name
+
+01:38:10
+Now, if this is the host, it will use the certificates created in the secret. That secret already has a CRT file and key file. Now let me apply this. Cubectl apply. That rule. Now certificates also configured. Now if I just execute a HTTP also, is it going to redirect to HTTPS? Now I am saying HTTP.
+
+01:38:42
+STP, then
+
+01:38:46
+that mithun tech devops.4.in like this. Is it redirecting to HTTPS?
+
+01:38:54
+kavya is saying i don't know not able to hear you guys am i audible am i audible for others
+
+01:39:03
+Okay others don't have any issues okay fine.
+
+01:39:12
+Now, even though I am intentionally typing HTTP, if you see is that since we configure TLS certificates at ingress level, ingress layer is that ingress controller is redirecting to HTTPs. But why I am getting this error because am I using a self-signed certificate? It is saying message saying that error cert invalid because the browser, the browser which I am using here in this laptop.
+
+01:39:42
+It is not trusting that certificate because this is a self-signed certificate. The self-signed certificates will be accepted by the browsers in the systems like whatever browsers you are using like end users. No, it is giving some kind of a warning. It is giving some kind of a warning, but some browsers will give message saying that if you want to proceed, proceed. If you want to proceed, proceed. Otherwise it is not recommended.
+
+01:40:10
+I'm using other browser where let me access that application mythun tech devops.co.in now it is giving this connection is not private but it is giving warning safari warns you when a website has a certificate that is not valid this may happen if the website is misconfigured or you are using self-signed. So it is giving warning but it is saying.
+
+01:40:39
+If you want to visit, you can visit. It's up to your risk now, end user. I want to visit that website because it's a self-signed. Now am I getting is the request is processed on HTTPS. But is it giving a warning? Is the browser is giving a warning? This certificate is not trusted because it's a self-signed certificate.
+
+01:41:04
+Now you guys also access this application. Are you going to get some error saying that warning not error? I will say whether this is the application or other part Java if an web by fun app. This also sour on South and HTTPS because of the certificate but you will get a lot. But instead of self-signed if I use proper CRT file and key file which is issued to me by a valid CA.
+
+01:41:32
+then will I get this warning does inducers will get this warnings.
+
+01:41:38
+No. Are you guys also able to access this application which is hosted in my Kubernetes cluster?
+
+01:41:47
+Now are you guys able to relate end to end, end to end how this application is built, how this application is deployed, if it is in a Kubernetes, if it is a container, if it is in a Kubernetes, what and all things will take you to deploy this application.
+
+01:42:08
+No.
+
+01:42:13
+I'm able to access this application from anywhere. Sometimes in the interview, also they're asking, how request will reach your application if it is running in a Kubernetes cluster as a container? How request will reach from end user system? How request will reach from end user system if your application is running in a Kubernetes cluster as a pod as a container? What and all things will happen, guys, in the flow?
+
+01:42:40
+These type of questions will be asked now. I am one of the end user. I am typing something like this in my browser. How this request is reaching the application which is running in Kubernetes cluster as a pod as a container. What and all things are happening now? What is happening in the background? What is the flow? The request, how it is reaching? First, what is happening guys? First, what is happening? First, is DNS lookup is happening?
+
+01:43:10
+is DNS lookup is happening.
+
+01:43:15
+first DNS lookup is happening. Is it resolving to the IP of the domain, whatever IP is mapped with the domain?
+
+01:43:24
+Now is the request is going to that IP that is basically load balancer that is external load balancer.
+
+01:43:33
+that is load balancer that is external load balancer is that external load balancer is routing the traffic to the Kubernetes nodes nodes on node IP and node port but I configured that load balancer to talk to the nginx ingress controller so which means request is going to the load balancer to your Kubernetes nodes again is the request is processed by that ingress controller service.
+
+01:44:01
+that ingress controller service ingress controller ports. Request goes to Kubernetes cluster on node IP and node port that service that Nginx service will forward the traffic to these Nginx ports is this Nginx ports is again routing the traffic to the Kubernetes services based on the rules you are defining here. Based on the rules you are defining here Nginx ingress controller is forwarding the traffic to this service from this service respect to
+
+01:44:30
+respective pods, respective pods. But if I don't have an ingress controller, then is this load balancer will route the traffic to node IP and node port directly to that service? But if I have hundreds of applications running in the cluster, can I expose all those services to the external people using Nginx ingress con any ingress controller using ingress rules with single load balancer?
+
+01:44:59
+If anyone asks in the interview, what is the flow, request flow, how it is reaching? If you are running Kubernetes, you have an application running in a Kubernetes cluster as a pod, or within the pod, it is a container. Will you guys able to explain how request will reach from end user system to the container?
+
+01:45:22
+So this is all about Nginx Ingress Controller and Ingress Resource. I strongly recommend you to go through this issue.
+
+01:45:34
+I strongly recommend you to go through the STU also. Sir, how ingress offloads SSL and TLS that is already inbuilt that is already inbuilt mechanism. Did I done any changes any configurations in ingress controller? No that is inbuilt mechanism. If it is configured with TLS it will terminate that TLS.
+
+01:45:57
+It will offload or terminate the TLS and forward the request to the containers, your pods, your service.
+
+01:46:09
+Thank you, guys. That's it for today. Tomorrow, I'm going to start one more important concept called RBAC, Kubernetes RBAC, Role-Based Access Control. It is like IAM. In AWS, do we have IAM to manage access to the AWS resources? Who can do what in AWS is using IAM? Similarly, in Kubernetes, who can do what with Kubernetes? Within Kubernetes, who can create what object?
+
+01:46:38
+I can control that using RBAC that I will explain tomorrow.
+
+01:46:46
+Thank you guys that's it for today I'll see you tomorrow but before I wrap up the session we are almost reaching the end of the course we have only five classes left I strongly appreciate your feedback I'm going to send one feedback link kindly share your valuable feedback whatever you felt about this program this training basically it's a Google review it's a Google review I'm going to send that Google review link
+
+01:47:13
+Kindly share your valuable feedback, how you felt about this course, training, material, all these things. Your feedback is a lot to us. It will boost our energy, our commitment also. Try to share your valuable feedback, whatever it could be. How you felt about DevOps program in Mithun technologies, coming to the training, coming to the content, coming to the material, whatever you felt.
+
+01:47:43
+A genuine feedback guys, I am not forcing anyone here. I am not forcing anyone here a genuine feedback. Whatever you felt About this program kindly share your valuable feedback I'll share that link also Just give some wordings also just give some wordings also just to give Some wordings also don't select only one star like a stars like four star five star Don't select like that. Give some of wordings also
+
+01:48:13
+something whatever you felt about it. Comments. Thank you.
+
+01:48:21
+I'll continue tomorrow on our back. Thank you.
+
