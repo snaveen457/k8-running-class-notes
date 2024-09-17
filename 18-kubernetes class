@@ -1,0 +1,1092 @@
+00:00
+This conference will now be recorded. So far, we discussed about a lot of Kubernetes concepts, like what is Kubernetes? What is Kubernetes architecture?
+
+00:16
+and all the Kubernetes concepts.
+
+00:25
+We were trying to understand how to deploy the applications in Kubernetes.
+
+00:33
+all the Kubernetes concepts like deployments, services, network policies, values, value claims, config maps, secrets, stateful sets, we discussed a lot of stuff. As I already told in the beginning itself, there are two types, one is self-managed Kubernetes cluster, another one is managed Kubernetes clusters, another one is managed Kubernetes cluster, one is self-managed Kubernetes cluster.
+
+01:02
+or we call it as a bare metal Kubernetes cluster.
+
+01:07
+So to configure this self-managed Kubernetes cluster, we can use a software like Qbedium. You can use a software like Qproxy. There is one software called Rancher. One software called Rancher. Rancher is one software. Using Rancher also we can configure. Using Rancher also we can configure, we can manage Kubernetes clusters.
+
+01:35
+So Rancher is again one software that is altogether a different software, Rancher. So using this Rancher, we can manage the Kubernetes clusters. We can do.
+
+01:50
+from data centers to the cloud also, we can manage Kubernetes clusters using this rancher. We can create, we can manage. So using this rancher also. So rancher is also one software. So it will address the operational and security challenges for managing multiple Kubernetes clusters. So using this rancher also, we can configure managed Kubernetes clusters, self-managed or any managed clusters also.
+
+02:20
+Now what is the difference between the self-managed and managed here is very very important. If it is a self-managed, if anything goes wrong with your infrastructure, your servers, your control plane, your nodes went wrong, something went wrong with your nodes, something went wrong with your master node or worker node, are you getting another master or another worker automatically? If it is a self-managed Kubernetes cluster, no.
+
+02:51
+are you getting another node? I'm talking about node, another master node, another worker node automatically when I'm using a self-managed Kubernetes cluster node. And also if it is a self-managed Kubernetes cluster, do I need to make sure I have a multi master setup also for high availability and fault tolerance in the control plane? Do I need to make sure I have a multi master, multiple API servers, etcd, participated in the same cluster control planes? Yes.
+
+03:22
+And we are responsible for configuring, managing high availability, fault tolerance of all those control plane nodes and your worker nodes if it is a self-managed. But if I go for a managed Kubernetes clusters, who is going to configure and manage the cluster for us? Do I need to configure the cluster? Do I need to manage the availability of that cluster? No, that will be managed by the providers.
+
+03:51
+that will be managed by the providers. Like a cloud service providers. In AWS, we have one service for that. That is AKS. In GCP, you have one service for that. That is GKE. In Azure, you have one service for that. AKS. Like this, does most of the cloud providers has a managed services? Kubernetes platforms, Kubernetes.
+
+04:20
+platforms as a services available for their customers so that they can just directly run their applications on that clusters without we need to worry about setting up and managing the cluster.
+
+04:35
+Now when I am going for a managed Kubernetes clusters, what is the other advantage? Can I integrate with other cloud services? Just to give an example, if I am going for a managed Kubernetes cluster like AKS, can I go for, can I use other AWS services? Can I integrate other AWS services here?
+
+04:58
+other AWS services like IAM, ELB,
+
+05:06
+EBS, et cetera. Can I leverage these services along with my Kubernetes in this platform? Yes. Now we can do all these things. Now before I go for this managed Kubernetes cluster, in the self-managed Kubernetes cluster, is it possible for me to create a service of type load balancer, that external load balancer, if I am using self-managed Kubernetes cluster?
+
+05:33
+Is it possible for me to create a service of type load balancer that external load balancer which will sit in front outside of your Kubernetes cluster. Is it possible? No, there is no direct solution. There is no direct solution which can create a load balancer external load balancer for you.
+
+05:55
+Let me show that.
+
+06:02
+Now as of now even though my Kubernetes cluster is in AWS is it a managed Kubernetes cluster? Managed by AWS? No. It is like our own. I'm just creating a service. I just created a service.
+
+06:23
+on top of that servers.
+
+06:28
+we can't figure the Kubernetes, kind of self-managed only. Now let me connect to this. Let me connect to this.
+
+06:41
+Let me connect to this.
+
+06:48
+Now I have a three node Kubernetes cluster. This is self-managed. Now we deployed few applications yesterday. As of now, we created a service update, node port only. But in real time, as I already told multiple times, in real time, will I able to reach my Kubernetes nodes directly from internet? As I told in real time, are you going to have
+
+07:16
+public IPs for your kubernetes nodes are you going to create your kubernetes servers in a public subnet with public IP? Actual environments
+
+07:28
+actual environments? No. But as of now, as of now I created my Kubernetes cluster in a default VPC in a default subnets. So is all my servers, Kubernetes servers are in a public subnets because those are in a default VPC default subnets. So that has a public IP. I am able to access using that public IP on that port. But if it is a private servers from internet or from different networks, will I able to reach that?
+
+07:58
+private Kubernetes servers using the private API on this port.
+
+08:04
+No, that is one thing and one more thing, one more thing if it is a node port service, what is the port which we are getting in which range we are getting a port.
+
+08:19
+in which range we are getting a port what is the node port range
+
+08:26
+in 30,000 range we are getting again. Will I does any end users can I mean to say does end users has to use this port if they don't if they want to directly use if they want to directly connect using these nodes do they need to use this port also along with IPR domain even though they are using a domain do they need to use this port also if end users has to use yes but that is not going to work out right that is not going to work out.
+
+08:56
+Do I need some kind of a load balancer, external load balancer in front of my Kubernetes nodes? So request goes to that load balancer first, that load balancer will internally route the traffic, that load balancer will internally route the traffic to this Kubernetes nodes and node IP and node port.
+
+09:16
+on node IP and node port, something like that.
+
+09:22
+Something like this.
+
+09:29
+we have a service of type load balancer. We have a service of type load balancer, this one in Kubernetes. Now, when I'm using a service of type load balancer, it will expose us the service externally, externally using cloud, you know, cloud providing load balancer. So I need some external load balancer, which will sit outside of my Kubernetes cluster. Now, if you are using a Kubernetes,
+
+09:59
+Kubernetes clusters like Minikube, QBDM, any bare metal Kubernetes cluster, there is no support. There is no load balancer integrated. There is no load balancer integrated with these type of Kubernetes clusters. So unless until I am using cloud managed Kubernetes clusters like EKS, GKE, AKS and COPs like that, I cannot create a service of type load balancer.
+
+10:29
+with this default setup you can only use node port no that is not going to work out now actually if this is the client this is the client from client request should go to the load balancer this is external load balancer then this external load balancer outside of my kubernetes cluster this is my kubernetes cluster let's say
+
+11:01
+This load balancer should internally what it will do is it going to route the traffic to that Kubernetes nodes on node IP and node port. End users will not directly access your Kubernetes nodes like this. Node IP and node port they are not going to access like this. Instead end users will access the load balancer.
+
+11:27
+Does the load balancer will be able to route the traffic to your Kubernetes nodes and whatever Kubernetes node IP and whatever node port your application your service is running in the cluster.
+
+11:40
+So end users can access the application via load balancer. Basically if it is a load balancer, what is the default port and which port load balancers will listen or accept the traffic? The default ports 80 and 443. So the load balancer will accept the traffic. Does load balancer can do this reverse proxy like routing the traffic to your Kubernetes nodes on that node IP?
+
+12:10
+and whatever node port your service is running. Let's say your service is running on this port. Does load balancer can have those details like route the traffic on that port by using those nodes, whatever nodes we have in the cluster. Can I use those node IPs and node ports in the load balancer reverse proxy rules?
+
+12:31
+load balancer reverse proxy rules I can do that but if I am using a cloud managed load balancer is it going to provision this load balancer is it going to create a listeners target groups whatever it is required for this load balancer to route the traffic to your Kubernetes nodes if I use cloud managed load balancer like aks eks gke is this load balancer with the listeners with the rules the target groups routing rules.
+
+13:01
+everything will be taken care by Kubernetes itself if it is a managed Kubernetes cluster. Yes. But do I have that option when I am using self-managed Kubernetes cluster?
+
+13:13
+Does this load balancer will be created out of the box? If I am using self-managed, no. Just to demonstrate, if you see, I'm changing this service. I'm changing this service type to load balancer, this spring application service type to load balancer. I'm changing the service type to load balancer. Now let me tell you.
+
+13:42
+As of now, this is node port. This is cluster IP. We don't have any external IP. External IP is empty because as of now, it is node port. Now I changed it to load balancer. I changed it to load balancer. Let me apply that.
+
+14:00
+let me apply that now I change it to load balancer now if you see now type is load balancer but am I getting that external IP which means is Kubernetes is capable of creating external load balancer and give that load balancer IP here
+
+14:23
+Yes, am I getting external IP is that capable of creating a load balancer and provide that load balancer here is load balancer is getting created automatically. Do you think is the load balancer is getting created automatically here? No, it is not capable of creating. Now if I describe the service also, if I describe service also now, let me describe this service.
+
+14:54
+Now it is saying which is from node port to load balancer. But it is not capable of creating a load balancer.
+
+15:06
+it is not capable of creating a load balancer.
+
+15:11
+because it is a self-managed Kubernetes cluster. It is self-managed Kubernetes cluster. It is not able to provision the load balancer, cloud managed load balancer. Now, if I am using self-managed Kubernetes cluster, then what is the way? How can I route the traffic to my Kubernetes clusters or node apport and node IP? Can I bring some load balancer myself, kind of a one server where
+
+15:38
+Can I install nginx or HAProxy or FI load balancer here? Then can I manually define my reverse proxy rules in this load balancer? Request comes to load balancer. Then can I say, route the traffic to these nodes and so on and so forth? Can I manually create this load balancer, one server where I can configure HAProxy, nginx, or FI load balancers to route the traffic manually?
+
+16:06
+I will create a load balancer, I will define all these things manually. But there is one solution, there is one solution called Metal LB, Metal LB, Metal LB but this is not kind of approved. This is still in a beta system. Metal LB is a load balancer implementation for bare metal Kubernetes clusters using some standard protocols.
+
+16:36
+This is like a young project. It is not approved. It is not yet approved. Like it is still in a beta system. So if I do something, if I deploy some kind of a software, if I deploy some kind of a software called MetalLB, I need to install this MetalLB software. Like I need to do something in my Kubernetes cluster. I need to change some config maps. I need to deploy that MetalLB related.
+
+17:06
+software in the Kubernetes, then I can apply that metal LB related configurations. Then I can start using service of type load balancer, but this is not going to be work out for a production workloads. It is still in a beta system. So that's why if it is a self-managed Kubernetes cluster, can I bring some load balancer myself, like create one server, install.
+
+17:34
+F5 or HA proxy or Nginx here, can I do that reverse proxy configurations to my Kubernetes nodes on that node IP and node ports?
+
+17:45
+Yes, I can do this. But if I am using managed Kubernetes cluster, the moment I create a service of type load balancer, will I get a ELB? If it is AKS cluster, will I get a ELB in AWS?
+
+18:02
+Yes, if it is a case cluster Azure Kubernetes cluster will I get a Azure load balancer in the Azure cloud.
+
+18:10
+the way we have a ELB there is Azure load balancers. If I am using GKE, Google Kubernetes engine, will I get a Google load balancer in the Google cloud? Cloud load balancer? Yes. So if we are using managed Kubernetes clusters like AKS, EKS and GKE, then the cloud provided load balancer gets created automatically.
+
+18:40
+when we are creating a service of type load balancer. This is not possible if you are using a self manage but as I told there is a software called metal LB you can using this metal LB you need to deploy this metal LB software with required configurations you need to do lot of things here when you are installing this metal LB like you need to do lot of things as per the given requirements.
+
+19:08
+it is going to use some kind of a protocols, network routing protocols in the background. Then it will create a service of type load balancer, but it is not going to be a kind of a server. There is no physical server. There is no physical server or virtual server gets created. It is going to simulate load balancing behavior within the cluster, but that is not going to work out for a production workloads. Is everyone clear?
+
+19:37
+what do you mean by this service of type load balancer why we need this service of type load balancer in which kind of kubernetes clusters i can create this service of type load balancer is everyone clear
+
+19:55
+No.
+
+19:58
+This is possible if I am going with managed Kubernetes clusters. As I already told, if it is a managed Kubernetes cluster, is that Kubernetes clusters can be integrated with other AWS services like ELB.
+
+20:13
+ELB and also when it comes to values, when it comes to values, by default, do I have a storage class? Do I have a provisioner which can provision the values dynamically in that cluster like EBS values, values for your pods? So is that Kubernetes is already integrated or can be integrated with EBS also like provisioning EBS values and attaching those values to your Kubernetes pods?
+
+20:43
+which is running in that managed Kubernetes clusters. Yes. And also can I use IAM for authentication and authorization with that Kubernetes cluster? Who can do what within that Kubernetes cluster? Can I also leverage IAM identity and access management? Yes. So these things are already integrated in a EKS cluster. Now,
+
+21:10
+Let's understand what is EKS now. Let's understand what is EKS.
+
+21:18
+EKS full form elastic Kubernetes service. Guess again, I am saying whether it's a EKS cluster, whether it's a AKS cluster or Google Kubernetes engine or IBM Kubernetes engine or it's a bare metal Kubernetes cluster, whatever topics we discussed. Is it a different, the architecture of Kubernetes, the components which we discussed in Kubernetes like.
+
+21:44
+namespaces config map secrets deployment services liveness probe readiness probe persistent value persistent value claim liveness probe readiness probe statefulsets all these things remain same kubernetes is kubernetes whether you are using self-managed or bare metal or
+
+22:13
+the way we are going to set up the cluster will be different. But if it is a managed Kubernetes clusters, can I leverage other cloud services like load balancers, CBS volumes, IAM, all those things in my Kubernetes also?
+
+22:29
+Yes, that is the only difference. People say, sir, here we learn Kubernetes, but in my project, they are using EKS, they are using GKE, or they are using AKS. How to manage, sir?
+
+22:45
+Kubernetes is Kubernetes, nothing will change. But if you are using AKS, creating that cluster will be different, the look and feel of Azure console will be different. Like if I am using Azure, if I am using Azure, that Azure console will be little different. The way we are going to create a cluster, portal.azure.com, this is the website. So here,
+
+23:14
+You can log into this Azure portal the way you are logging into the AWS console. You can log into the Azure console and you can see your servers, your load balancers, your clusters, all these things. But it looks different. The look and feel will be different. The way we are going to create the clusters will be different. But does the concept of the Kubernetes or Linux or Tomcat or JBoss or Docker.
+
+23:43
+whether you are using in AWS or Azure or GCP whether you are using in your own data center does those concept will change Jenkins Linux like Tomcat No
+
+23:58
+But adapting this cloud will be taking some time. Adapting this cloud will be taking some time. So.
+
+24:11
+Kubernetes is Kubernetes wherever it is.
+
+24:15
+that doesn't matter. Now if you have a account, Azure account, you can log in and you can explore that one also here. Now this is my AWS account. Here in my AWS cloud, I can set up the required clusters also.
+
+24:32
+Now, there is another way of setting up the Kubernetes cluster called COPS. Nowadays, no one is using this COPS, but let me tell you what is this COPS? What is the full form of COPS? I think if I am not wrong, I have already explained when I was explaining the types of Kubernetes clusters in the second day or first day of Kubernetes.
+
+24:59
+What is corpse? Full form Kubernetes operations is a software, is a software using corpse we can set up highly available.
+
+25:21
+highly available.
+
+25:25
+Production Ready
+
+25:30
+production ready kubernetes clusters in AWS
+
+25:39
+Cops is supporting other cloud providers also, other cloud platforms also.
+
+25:53
+like Azure also in a beta version in a beta version city supporting in Azure also we can set up the Kubernetes cluster using cops but how different it is from EKS I can set up the Kubernetes cluster in AWS using cops but how different it is from leader you know EKS let me tell you when I am using a cops cops is leveraging cops is leveraging
+
+26:19
+in the background, auto scaling groups and launch configurations. In AWS, we already discussed what is auto scaling group, what is launch configurations and all those things. So when I'm using cops, cops.
+
+26:37
+will just create it will just create one large configuration.
+
+26:46
+and one auto scaling group for masters and another
+
+26:58
+another launch configuration and auto scaling group
+
+27:07
+one launch configuration and auto scaling group for master, another launch configuration and another auto scaling group for workers. So it is just going to create a launch configurations and auto scaling groups. So in the launch configuration, instead of you are creating a launch configuration manually because the bootstrapping script, the bootstrapping script is very difficult, right? In the launch configuration, do I need to define how to install all the Kubernetes softwares
+
+27:36
+and how to initiate the master, how to join the workers to the cluster. It is bit lengthy and it is very complex also. Now if I am using cops is cops is going to create those launch configurations and auto scaling groups for masters and workers. Once that is in place, does your AWS auto scaling group will take care about managing the masters and managing the workers also. If there are two different auto scaling groups with their own launch configurations.
+
+28:09
+Guys, we already discussed what is launch configuration, what is auto scaling group in AWS. The way we created a auto scaling group for a normal Tomcat servers, normal application servers. Can I create a auto scaling groups, launch configurations for Kubernetes masters, Kubernetes workers also if required?
+
+28:32
+Yes. Now it is very difficult because is that bootstrapping will be complex to set up the masters and workers, joining the workers, you need to write some script.
+
+28:47
+It is bit complex. So is this cube, you know, is this cop software is doing for us? Is this cops is creating a launch configurations and auto scaling groups in AWS for us? Yes, that is what actually this cops is doing. Now here in our YouTube channel, I already uploaded one video in our YouTube channel. I already uploaded one video. What is cops? How to set up the Kubernetes cluster using cops?
+
+29:18
+All these things I have already explained here. Where is that? Yeah, here. Kubernetes setup in AWS using COPS. This video I am talking about. So here we already discussed what is what, but this is COPS. How different it is from EKS. When I go for EKS, I will have a fully managed control plane.
+
+29:48
+I will have a fully managed control plane. What do you mean by fully managed control plane? That complete Kubernetes control plane will be owned and managed by whom? For us, if I go for EKS.
+
+30:02
+AWS But if I create a Kubernetes cluster using cops will I able to see my control plane nodes my master nodes also in my account? They have a access to my master nodes my control plane nodes if I am using a cops Yes but When I am creating a EKS cluster They have any control or any access to that control plane nodes that master nodes if I use EKS. No
+
+30:32
+So who will own and who will manage that complete control plane nodes, master nodes, if I go for EKS.
+
+30:42
+AWS So when I go for a EKS when I go for an EKS, I will be having a fully managed control plate
+
+30:54
+Amazon EKS, Amazon Elastic Kubernetes Service is a fully managed Kubernetes service. It's a fully managed Kubernetes service. EKS is the best place. EKS is the best place to run Kubernetes applications. EKS is the best place to run your applications, Kubernetes based applications, your containerized based applications. EKS is the best place to run. Because because of its what?
+
+31:24
+because of its reliability, because of its reliability, availability and also because of scalability and also security, because of security, availability, reliability and scalability. What do you mean by scalability here? What do you mean by reliability or availability here? Do I have?
+
+31:49
+Do I have my control plane and my worker nodes always available if I go for EKS? This complete control plane nodes will be completely taken care by AWS. If something goes wrong with this control plane, will I get another control plane automatically?
+
+32:09
+So is my control plane is reliable, reliable and highly available?
+
+32:16
+Yes. And scalability. What do you mean by scalability? Scaling your cluster also. Scaling your cluster. If I am using managed Kubernetes clusters like EKS, I have some nodes. Now, these nodes are already having a lot of pods. There is no resources available in these nodes. Is it possible to scale my nodes also, nodes in the cluster also? The way we scaled our pods.
+
+32:45
+Is it possible to scale our nodes also? If it is a managed Kubernetes clusters like EKS, yes. We can scale the cluster also.
+
+32:57
+So EKS is the best place to run Kubernetes application because of its security, reliability and scalability. And does EKS can be integrated with other AWS services such as ELB, CloudWatch, CloudWatch for monitoring, auto scaling groups, IAM, VPC, load balancing, EBS, all those things? Yes.
+
+33:24
+EKS makes it easy EKS makes it easy for you to run Kubernetes on AWS EKS makes it easy for you to run Kubernetes on AWS without you need to install operate and maintain your control plane You no need to install you no need to operate you no need to maintain the control plane It makes easy for you to run Kubernetes on AWS without you need to install and operate so
+
+33:54
+Who is going to install, who is going to operate, and who is going to maintain that control plane, that master, that control plane, AWS. So if they are managing, can I just focus on deploying the applications and managing my data in that cluster? Can I just focus only on deploying those, my applications, deploying my applications and managing the data in the EKS cluster without worrying about how to install, how to manage all these things? Yes. Kind of a platform.
+
+34:24
+kind of a platform as a service. We are getting a platform as a service. Then can I just focus on deploying and managing the data, deploying and managing the applications and data? Yes.
+
+34:38
+Now it has a managed control plane. EKS has a managed control plane. What do you mean by managed control plane?
+
+34:49
+It provides scalable and highly available control plane. What do you mean by control plane? What are the components of control plane?
+
+35:06
+What do you mean by control plane? What are the components of control plane?
+
+35:16
+Control plane is basically Masters. Madhu is saying Masters and Workers. Is Masters and Workers is called as control plane?
+
+35:27
+Is masters and workers are called as control plane? No, only masters are called as control plane. So what are the components of that control plane? Masters, API server, scheduler, ET, CD, and control managers. So EKS provides scalable and highly available control plane that runs across multiple availability zones. In the background, this control plane nodes will be managed by Kubernetes.
+
+35:57
+So they have only one control plane. I mean to say single master. If I go for EKS, no. We will have a multiple masters. Again, is those masters, is that control planes will run across multiple availability zones in that region. Like in Mumbai region, is those control planes will be spread into multiple availability zones like one A, one B, one C.
+
+36:23
+Yes for high availability for high availability. So EKS service automatically manages the availability and scalability of your API servers and ETCD. It will manage the availability and scalability of the Kubernetes API servers and ETCD layers. So Amazon EKS runs the control plane across three availability zones. So
+
+36:52
+Is that control plane nodes is that master nodes will be running across multiple availability those like three availability zones in that region in order to ensure high availability and it will automatically detects and replace unhealthy masters. Yes. So, do I have a highly available scalable control plane when I go for EKS cluster.
+
+37:20
+and these control planes will be who is going to manage that control planes completely.
+
+37:30
+AWS which means will I able to see these master nodes or control plane nodes in my account like a customer account you are one of the AWS customer you are using EKS will you able to see these master nodes in your account. No this is completely managed by AWS but in customer account which means in our account the guys who is using EKS in customer account.
+
+37:59
+manage worker nodes Will I able to manage the worker nodes in the customer account? I mean to say the guy who is using EKS. Yes again These worker nodes are nothing but auto scaling nodes This worker nodes are nothing but auto scaling groups This worker nodes will be created as a auto scaling groups and we will use those auto scaling groups in the EKS cluster Then if something goes wrong with this worker also Am I going to get another worker?
+
+38:29
+Go to Beadaholique.com for all of your beading supply needs!
+
+38:33
+Yes, this is how it works. Now, let me set up the EKS cluster. Let me set up the EKS cluster. There are multiple ways to set up the EKS cluster also, guys. Not only one way. One is, can I use management console? Management console, using management console. What do you mean by management console? GUI. Using GUI, using console.
+
+39:02
+Will I able to create my Kubernetes cluster required components required components to set up the Kubernetes cluster. Yes, otherwise, can I use infrastructure as a code also can I use infrastructure as a code like terraform cloud formation or both of scripts. Like a terraform cloud formation or both of script using terraform also is it possible to create a case.
+
+39:31
+and other required components of EKS. The way we can create a servers, IAM users, a storage using Terraform, is it possible to create a EKS cluster also using Terraform if you are using AWS? Yes. If you are using Google Cloud, if you are using Azure Cloud also, is it possible to create a AKS clusters or GKS clusters using Terraform or any other cloud, I know infrastructure as a core software also yes.
+
+40:01
+like using terraform there is a EKS resource in terraform there is a EKS resource in terraform using that EKS resource using those EKS resources you can create a terraform clusters using this EKS resource like resource aws-eks the name of the cluster in which vpc in which subnets you want to create that cluster
+
+40:30
+whatever IIM permissions is required for that cluster same thing whatever I can do using console manually can I do that using terraform also like I need to create required roles required roles like this required roles like this required VPCs required subnets required VPCs required subnets required IIM roles all these things
+
+40:58
+I can write it as a terraform script. I can keep the terraform script using the terraform script. Also, I can create the class.
+
+41:06
+console or terraform and what is one more thing which I can use.
+
+41:13
+how to create another way, EKSCTL, EKSCTL. There is again one utility, one kind of a CLI, EKSCTL. EKSCTL provided by AWS. By installing this EKSCTL software, by installing this EKSCTL software, by executing some EKSCTL commands, also will I able to create the cluster? But in the background,
+
+41:43
+whether I am using Terraform, whether I am using EKSCTL in the background, is it going to make some API calls in the background to the AWS to create all these things? Whether I'm using a console, whether I'm using a infrastructure as a core software, whether I'm using EKSCTL in the background, is it going to make API calls, web service calls to the AWS to create those resources? Yes. But in real time,
+
+42:12
+Is it possible to manage or maintain or manage the infrastructure manually, create the infrastructure and manage the infrastructure manually using console?
+
+42:24
+Are you going to use this console option in most of the projects in real time? No.
+
+42:31
+So instead of using console to manage and create the infrastructure, provisioning and managing the infrastructure manually, most of the projects, most of the teams is leveraging infrastructure as a code, infrastructure as a code, like a Terraform. Is the Terraform is the only option for infrastructure as a code? No, there are different, different tools are there. If I am using AWS,
+
+42:59
+Can I go with cloud formation templates also instead of Terraform? Can I do with cloud formation templates also if I'm using AWS? Yes.
+
+43:10
+If I am using Azure, can I go with ARM templates, Azure templates, ARM templates, the way we have a cloud formation in AWS, Azure has ARM, Azure resource templates.
+
+43:24
+But instead of using this cloud formation or Azure resource templates, most of the cloud providers, most of the teams are leveraging what nowadays what is the popular infrastructure as a code software. Nowadays, everyone is using Terraform. Terraform. I can do that infrastructure positioning management also using Terraform. Otherwise, I can use EKSCTL. Otherwise I can use EKSCTL. EKSCTL.
+
+43:53
+So AWS itself is offering one utility, one kind of a binary, EKS-CTL. So by installing EKS-CTL, a command line tool for working with EKS clusters that automates many individual tasks. So by installing EKS-CTL with required IAM permissions to that server, I will install EKS-CTL in one of the server by attaching required AWS permissions to that server.
+
+44:23
+to create a Kubernetes clusters, networks, load balances, all these things, then by executing EKSCTL commands, we'll able to do that, yes. Something like this, something like this. So by installing EKSCTL, I can execute a commands like this, EKSCTL create cluster, my cluster name, in which region you want to create. In the background, is this EKSCTL is going to create a required,
+
+44:53
+components to set up the cluster like IAM roles required IAM roles required node groups required EKS cluster IAM all those things yes so this is a kind of a utility now and demonstrate only console so that you can understand what is happening in the background you can understand what are the components are required while setting up the cluster so that you can easily understand what is required.
+
+45:22
+to set up the EKS cluster.
+
+45:26
+If you are familiar with console, if you are familiar with console like management console manually you are doing will it be easy for you to automate also whatever resources you are manually creating you will keep that in some kind of a terraform script.
+
+45:42
+Without familiar with your AWS resources or any other cloud resources, is it simple for you to use Terraform scripts? Writing the Terraform and using? No. If you are good at cloud resources, if you are already good at AWS or Azure, all those things, Terraform is like a code. You can just write a code based on whatever resources you want to create.
+
+46:09
+Now let me do it manually for now. I'll not use anything automation here. Now do I need to have a AWS account with admin privileges? I'm not saying root account. I'm not saying root account because as I already told in real time, are you able to, do you have root account details, root credentials? Does everyone will be having a root username, root password? No. I can manage
+
+46:39
+I can access AWS with my own credentials, but do I need to have a privileges? Do I need to have a privileges permissions to create EKS clusters, VPCs, all those things if I want to set up? Yes. So you need an AWS account with admin privileges. As of now I am using root only as of now I am using root only does root user is an admin user by default?
+
+47:06
+is that root user is an admin user by default, which means is that root user has all the permissions on the access to the kubernetes. I mean to say AWS.
+
+47:17
+Yes, that root user is kind of an admin user by default. All the access we will be having in the root user. Now, first I'll do this. I'll first create one IAM role for EKS cluster. First I'll create one IAM role for EKS cluster because is EKS cluster is that control plane is going to manage some AWS resources on behalf of us?
+
+47:48
+When I am using EKS cluster, is EKS cluster that EKS service requires access to the AWS like creating a load balancers whenever I am saying service of type load balancer, creating a EBS volumes with storage class. Does that EKS service requires permissions to create and manage some other cloud resources on behalf of us? Yes. So.
+
+48:14
+How can I grant access to the AWS resources to the AWS resources? We already discussed all these things in AWS sessions. How can I grant access to the AWS resources to manage AWS resources? IAM only, but in IAM there are a lot of components. IAM users, IAM role. Now, which one I need to use? EKS is one service.
+
+48:41
+I want to grant some permissions to the EKS service to manage some other AWS services. What concept I can use here?
+
+48:53
+IAM rule. So first let me create one IAM rule. Let me go to AWS. Guys I will terminate these servers. I will terminate these servers. These are like a self-managed Kubernetes clusters. I am terminating those servers.
+
+49:14
+If I terminate if something goes wrong with this one does anything will happen automatically because these are self-managed.
+
+49:27
+So let me terminate these servers. I don't want to have these servers again. I'm terminating all these servers, whatever I have created.
+
+49:41
+these servers and terminate for now.
+
+49:55
+Now first I will do this step. Now whatever I am doing manually can I have this in a terraform script also the way I have shown here somewhere.
+
+50:13
+So something like this.
+
+50:18
+the required IAM permissions like if you see this piece of code somewhere creating a IAM rule with this policy what they are doing they are creating one IAM rule that IAM rule for that rule they are attaching this policy EKS cluster policy so whatever I am going to do manually does this terraform whatever I have highlighted here.
+
+50:46
+is that will be done same thing if I do using caraform also this highlighted part
+
+50:54
+Yes. So this is just a piece of code that will be doing automatically. Now let me go to IAM first here. Now I am in Mumbai region. I want to create my cluster in Mumbai. First let me go to IAM.
+
+51:20
+Now here let me go to the roles. Let me go to the roles. Here I create one role. I already created some roles previously. If you say I already have some roles, EKS roles, but let me create from beginning. Create a role. Now to which service you want to use this role. Do I know do I need to use this service with easy to know or do I want to use this service with EKS service.
+
+51:47
+to which service I want to use this role whatever service I am going to create I want to use this role with EKS not with EC2 not with EC2 I want to use this with EKS so here from the list of services here from the list of services here I will type EKS and select this EKS I will select this EKS.
+
+52:14
+use cases for this role so let me select this EKS EKS I am selecting this EKS this role this one sorry EKS cluster so here choose the service as EKS here in the drop down choose the service as EKS then select this one EKS cluster this use case select this use case if I select this use case click on next
+
+52:44
+Now do you see is that policy is attached? AWS, EKS, cluster policy, even though you are doing using Terraform, is it same policy? Are you attaching to that role, whatever your role creating using Terraform, this role, same thing. That is how it is working in the background. Now.
+
+53:07
+This policy is attached, let me click on next If you see same thing whatever you see in the terraform, you like this with this policy you are creating a rule Now let me give some role like this EKS cluster role some name Like let me give some name like I already have other names and creating one IAM role This is
+
+53:44
+I created one IAM role. That IAM role I will use when I'm going to do this step. When I'm going to create this EKS cluster, when I'm going to create this EKS cluster, I'm going to use that role. So whatever role is created like this, this role will be used when we are creating that resource. When we are creating that resource like this. If it is a Terraform script, this is the resource which you want to create with this role. That role is created here.
+
+54:14
+like this so that I will use when I am doing here but before I create a EKS cluster do I need to have a dedicated VPCs and subnets in which I can create my cluster and in which I can create my nodes
+
+54:31
+Before I create that cluster, do I need to have some VPC with the required subnets to create my clusters, to create my workers, all those things? Yes. Is it recommended to use default VPCs in the actual environment which you want to deploy your clusters? No. Now I can create a VPC with the required subnets. Now, do I need to have a public subnets also? In which I can create my cluster
+
+55:01
+When I'm creating a service of type load balancer, do I need to get a load balancer, internet facing load balancer? If it is internet facing load balancer, do I need to have a public subnets also?
+
+55:15
+Yes, and also do I need to have a private subnets? Do I need to have a private subnets also in private subnets? I will create my worker nodes worker group that worker group that worker nodes. I'll create in a private subnets So do I need to have a required vpc required subnets like a combination of public subnets private subnets in that vpc
+
+55:40
+Yes. So you already you already know what is VPC, what is subnets. I don't want to waste much time again. Even though I am creating a case cluster using console. I don't want to create this VPC manually. It will take a lot of time because you need to create a VPC. You need to create a subnets. You need to create an at instances also because if your Kubernetes nodes, if your Kubernetes nodes has to
+
+56:09
+user, ECR images, the images which are there in ECR. If your Kubernetes nodes are in a private subnet, does your Kubernetes nodes will communicate with ECR or any other AWS services or internet by default? No. So do I need to have a NAT instances created and attach those NAT instances with private subnets so that that private subnet Kubernetes servers can communicate with AWS services and internet also one way.
+
+56:40
+If you remember, did we discuss all these things again in AWS? What is private? What is public? What is net?
+
+56:49
+Now do I need to have all that set up now again? If I want to set up my Kubernetes cluster with best practices.
+
+57:00
+Now AWS has a very good documentation also. EKS network considerations or VPC considerations.
+
+57:13
+AWS EKS VPC considerations if you want to create a case cluster what needs to be what are the best practices or what are the VPC or subnet considerations. So AWS EKS recommends a cluster with VPC cluster in a VPC with public and private subnets so that kubernetes can create a public load balancer in the public subnet that load balance the traffic to the force running that are in a private subnets.
+
+57:43
+So you need to have a VPC with public subnets, private subnets, all these things you need to create. Now I don't want to waste much time here. So instead of using Terraform, instead of using Terraform to create a required VPC like this VPC subnets, all those things, I don't want to do that using Terraform. AWS itself has provided one cloud formation template.
+
+58:11
+AWS itself has provided one cloud for you know formation template. I am going to use that cloud formation template. I am going to use I am going to use that cloud formation template creating a VPC for your EKS cluster with required public and private subnets. You have like this public and private subnets only public subnets only private subnets.
+
+58:40
+But as I already told, which one is recommended? Is it recommended to have some kind of public and private subnets both so that internet-facing load balancers will sit in public subnet? Your Kubernetes nodes can be created in a private subnet. And again, is it recommended to have only one one public subnet and one one private subnet in that VPC? No. Because they need to distribute your nodes or load balancers also to multiple subnets.
+
+59:08
+If something goes wrong with one subnet one availability zone, do you need to have other servers other load balancers in another subnet also? Another availability zone.
+
+59:21
+Yes. So what I am going to do, I am going to create a public subnet. I am going to create a VPC with two public subnets and two private subnets. And again, one public subnet and one private subnet will be deployed in one availability zone. If required, can I create three public subnets and three private subnets also, each availability zone? Like one will have one public, one private, one will have one public, one private, one will have one
+
+59:51
+public one private like that also based on your requirement.
+
+59:56
+Yes. So this is kind of a production workload kind of a setup. We can set up the EKS cluster. Do I need to follow all the best practices defined by AWS as well as Kubernetes also? When I'm trying to set up kind of a production clusters, production workloads I want to manage, you need to follow all the best practices, the standards.
+
+01:00:24
+defined right so I am going to create with required public subnets private subnets now there is a one cloud formation template also there is one cloud formation template also which is offered by AWS itself AWS EKS setup when I am doing there itself they are giving
+
+01:00:52
+the required cloud formation template also if you want to do but those are defaults if required will be able to create required VPC subnets as per your requirement because they are going to offer they are going to offer only the default like two public subnets two private subnets like that.
+
+01:01:13
+Now if you see when I am using management console right what I can do I can use some cloud formation template also I can use some cloud formation template also to create a VPC.
+
+01:01:32
+I can use some kind of a cloud formation template also. Now based on your requirement you can change. Now I am using the cloud formation template which is provided by AWS itself. Which is provided by AWS itself. This
+
+01:01:51
+CloudFormation template.
+
+01:01:56
+Let me show.
+
+01:01:59
+this cloud formation is going to follow YML as this code YML as a code right if you see this is in the form of YML kind of a variables kind of a blocks like this kind of a variables kind of a variables your VPC CIDR like these two are the public subnet CIDRs these two are private subnet CIDRs so the resources
+
+01:02:26
+what resources has to be created it has to create a VPC with this name it is going to create a internet gateway kind of a code this can be done using terraform also or manually also I can create all these things but I don't want to waste much time so using the cloud formation template using this cloud formation template I am going to create a VPC subnets all the networking comp.
+
+01:02:55
+Now let me go to here AWS.
+
+01:03:00
+Let me search cloud formation.
+
+01:03:05
+Let me search for cloud formation. But make sure you are in a Mumbai region when you are creating a VPC. Make sure you are in the right region. Switch to VPC. Go to this right region in which region you want to create in which region you want to create your cluster. Make sure you are in the right region because when I go to IAM is the region is like a global because IAM is a global service.
+
+01:03:34
+So the moment I go to global, I mean to say the moment I go to IAM, the region is changed to global. By default, it was pointing to this region when I search cloud formation. So first, before creating a cloud formation template, that stack, make sure you are in the correct region, in which region you want to create it.
+
+01:03:57
+your cluster then you can go for a cloud formation then you can go for a cloud formation template now here I am already in the cloud formation service as of now I don't have any cloud formation stacks created now let me create now
+
+01:04:20
+Let me create a stack here.
+
+01:04:24
+I have a template template is ready. This is my template. Let me take this URL complete URL. I will say this is my template. This template is ready. This is provided by AWS itself. I'm using that template to create a VPC and all those things. Click on next.
+
+01:04:46
+I will give some name like some name.
+
+01:04:54
+Now all that data got loaded from the cloud formation template from that YML. I click on next. No need to do anything. Just click on next, next, next.
+
+01:05:05
+create a stack now is that resources are going to be created as per the cloud formation template which we are using here whatever resources has been defined as per the cloud formation template like VPC, IGW, route tables, NAT instances, subnets all these things. Yes.
+
+01:05:27
+Same like Terraform also, same like Terraform. Same like Terraform. Now the resources are getting created. This stack is creating resources, like a VPC got created, internet gateway, private subnets, public subnets, and security groups. Security groups, ports, which needs to be open for cluster. The ports which needs to be open for setting up the cluster. All those security groups also getting created.
+
+01:05:57
+Now when I go to VPC now, will I able to see VPC, the required subnets, IGW, NAT instances, security groups also now whatever has been created by that.
+
+01:06:16
+Now if you see, do I have this VPC?
+
+01:06:23
+Now they have required subnets created also. There are a lot of subnets, but I'm talking about the subnets for this VPC. Now that EKS demo VPC.
+
+01:06:41
+let me filter with vpc so this is my vpc id now do i have four subnets like a kind of a two public subnets two private subnets
+
+01:06:54
+for that VPC.
+
+01:07:02
+that we don't believe.
+
+01:07:10
+Let me go to VPC subnets.
+
+01:07:16
+let me filter with VPC this VPC they have some subnets like this for subnets kind of a two public two private one private one public in one public and one private in one day another public in another private in one week but this is the staff you know default template which I am using if your requirement says you need two more subnets one private subnet and one public subnet in one see also then will able to create as per the design.
+
+01:07:46
+provided by your architect.
+
+01:07:52
+Yes. So all these things are based on the requirement. Now do I have a NAT instances also created? Do I have a NAT instance also created? You can see there are two NAT instances created. There are two NAT instances created for that VPC. Because each NAT instance is associated with each private subnet in that availability zone. If I go to the route tables, do I have these route tables also?
+
+01:08:22
+They have these route tables also for that VPC. You can see here public routes are there.
+
+01:08:32
+in the public route there is a this is private route sorry private route there is a NAT associated that NAT is associated with this subnet there is another private route another subnet is associated with this NAT there is a public there is a public route here there is a route to the IGW these public subnets these public subnets are associated
+
+01:08:58
+Hope you are already familiar because all these things we discussed in detail in AWS itself while discussing AWS itself. Now all these things got created. Now, can I proceed with this setting up the EKS cluster in this network? Whatever I have created by using this IAM role while creating this service. Can I go for a third step now?
+
+01:09:30
+yes now let me search with EKS elastic Kubernetes service elastic Kubernetes service
+
+01:09:43
+Guys there is one more service called ECS. There is one more service called ECS. One service called EKS. What is the difference between ECS and EKS? It is an elastic container service. Elastic container service. I am not saying ECR. ECR is different. ECR is different. I am saying ECS.
+
+01:10:12
+It is elastic container service. What is the C case?
+
+01:10:19
+elastic Kubernetes service. So what is the different rate? This is like a managed containers. So instead of you create a service instead of you create a service to create a containers does AWS can manage the containers also without creating a servers without we create a servers and install Docker is it possible for creating and running the containers without we install without we create a service? Yes.
+
+01:10:48
+that is possible with ECS, elastic container as a service. What do you mean by elastic container as a service? If I am using ECS, do I need to create a servers? Do I need to install Docker to create and manage the containers? No, kind of a serverless, kind of a serverless, serverless functionality. You no need to create a server. Does AWS will create a servers in the background?
+
+01:11:16
+and run the containers in those servers for you in the background. Yes, that is ECS, but this is not widely used nowadays. This is not widely used nowadays. So no one is using this ECS but very old projects like a legacy projects are using ECS. Now Kubernetes is popular now Kubernetes is popular everyone started deploying the applications in a Kubernetes rather than as the containers.
+
+01:11:44
+They are started applying applications as a parts using Kubernetes then do I have a service for that? Q. What it is also the way I have a service for containers. Do I have a service for Kubernetes where I can create a parts parts will manage the containers?
+
+01:12:03
+that is EKS. Is everyone clear what is ECS and what is EKS?
+
+01:12:14
+Now I went to EKS I went to EKS as of now they have any clusters they have any clusters as of now in EKS do I have any clusters no let me click on this create cluster I am giving some name something like this I am just giving name like this but in real time you will have your project name and environment name like this suppose you are working for some project like LIC India just to give an example.
+
+01:12:44
+like dev,eks like this if I am creating this one for dev environment this cluster is for dev environment can I have name like this
+
+01:12:55
+Yes, for now I am just giving EKS-demo and what is the Kubernetes version which you want to use even though Kubernetes latest version is 1.24 is EKS is supporting 1.24 latest version. No. So what is the default version? What is the default version which Kubernetes what version of Kubernetes will be used to set up this cluster 1.21.
+
+01:13:25
+If required, you can apply 1.22 also. If required, you can use 1.22, but I'll go with 1.21. So sometimes in the interviews also, they'll ask what version of Kubernetes you are using. If you are using EKS, what version of Kubernetes version you are using in EKS? As I already told, are we going to use or update to the latest versions immediately? No. First, you need to do it in the lower environments, even though you want to upgrade.
+
+01:13:54
+You will directly upgrade in the higher environments. No, you will first do it in the lower environments and you will try to deploy all your applications in lower environments. If your applications, your manifests, your applications, your Kubernetes manifests are compatible. If your applications are Kubernetes manifests are compatible with that version in the lower environments, then only you will upgrade in the higher environments.
+
+01:14:20
+then only you will upgrade in the higher environments. I am talking about environment level. Are you going to directly upgrade in the production? Any software versions?
+
+01:14:33
+No, so that and again you are not going to upgrade immediately. You will have a one or two versions behind. So I want to use this version. Now here do I need to select that role whatever role I have created here. Because that role has permissions that role has permissions to manage something on behalf of us. If I go to I am you can see that.
+
+01:15:02
+That policy has some permissions. That policy has some AWS permissions. Whatever role we created.
+
+01:15:13
+whatever role we created.
+
+01:15:22
+whatever role we created here right in the IAM we created this role one role now this EKS this role we created this role has attached with some policy if you if I expand this policy will I able to see some permissions does it have a permissions for auto scaling group does it have a permissions for EC2 to attach the values to the EC2 instance.
+
+01:15:49
+to create a values in the ease like EBS values create permissions like required permissions load balancing permissions because that Kubernetes has to manage that EKS has to manage some other AWS resources is that policy has all the required permissions for auto scaling easy to load balancing all these things.
+
+01:16:12
+Now we are attaching that one while creating this EKS cluster. So we are attaching that role whatever role we created while creating this EKS cluster. This one also same thing but I created for a previous batches. This one this one also same policy but I created for a previous batch. But now I am using this one. Even though I select this one also it will work. Because this is same policy.
+
+01:16:42
+but different role I created for previous batches. So I'm going to use this one.
+
+01:16:49
+Now I am creating a cluster with this version this role. Now let me click on next. In which networking you need to select networking in which networking in which networking you want to create this cluster. So in which VPC can I select this VPC whatever VPC I created for setting up the C case cluster.
+
+01:17:18
+Now choose the subnets choose the subnet in which your control plane your cluster will be created here I will choose all four subnets here I will choose all four subnets all four subnets I will choose whatever is part of that VPC all four subnets I will choose here now coming to the security groups though I already have a security groups also created with required ports like that control plane port API server ports already opened
+
+01:17:48
+Yes, I'll select both security groups. I'll select both these security groups. I'll select both here now Here one is important point here cluster endpoint access cluster endpoint access. What do you mean by cluster endpoint here?
+
+01:18:10
+Configure access to configure access to.
+
+01:18:16
+QBurnet is API server. How you want to reach that API server? Here you have three options. Here you have three options, public, public and private, only private. If I select private as a cluster endpoint, what does it mean?
+
+01:18:40
+Will I able to reach that API server from internet or from different networks even though I have a cube config file? Even though I have a cube config file of that cluster, will I able to communicate with API server from internet or from different networks?
+
+01:18:58
+So is it going to have some kind of a private load balance for my API server? Is it going to have some kind of a private load balance of sitting in front of my API servers? Not a public load balancer, yes. I can access only within the network. But in real time, are you going to choose this one only? Private endpoints only in the actual environment? Yes. Because are you going to expose?
+
+01:19:24
+Are you going to expose your API server to the internet or different different networks in the real time? No, but for now, for now I will choose public and private for now I will choose public and private which means will I able to access this API server from outside of the VPC as well as within the VPC also? Yes, I'll choose this one. Now coming to the network add-ons.
+
+01:19:53
+configure add-ons that provide a networking for the cluster pod networking. So when I am using kubernetes self-managed, they have a different different CNI container networking interface implementations like a V unit calico flannel all those things now when I am using EKS What is the CNI? What is the CNI? AWS itself has one CNI that container networking solution for a pod networking that is
+
+01:20:23
+VPC cni Amazon VPC cni which version of that cni which version of that cni i will go with the default only i'll go with this default version of that cni it is like a We've met whatever we used And also do we have a core dns q proxy concepts here core dns dns within the cluster service discovery in the cluster Core dns q proxy all these versions i'm selecting here
+
+01:20:53
+default options click on next. Now here logging configure control plane logging. What do you mean by this control plane logging? What is happening inside my API server, inside my control manager, inside my scheduler.
+
+01:21:13
+I want to see whenever request is going to API server, what that API server is doing. I want to see the logs, logs of the API server, logs of the control manager, logs of the scheduler. Now can I enable that logging so that these logs will be sent to the cloud watch. It will send audit and diagnostic logs from EKS control plane to the cloud watch because they have a control to they have access to this API server.
+
+01:21:44
+Control manager, scheduler, can I go inside these control managers? Do I have access to these machines when I am using EKS? No. If I don't have logs also, if I don't have logs also, will it be easy for you to troubleshoot and debug what is happening inside your API server, inside your control manager, inside your scheduler? Will it be easy for you to troubleshoot audit logs?
+
+01:22:11
+Who is accessing my Kubernetes API? What operation they are trying to do using that Kubernetes API audit logs, authentication logs. Is this logs are important in the live clusters in the actual environments?
+
+01:22:29
+who is doing what I want to log. I can enable all these things, but if I enable all these things, logs will be sent to the cloud watch. But again, is that chargeable? I can go to the cloud watch and I can query the logs again. Is that chargeable? Yes. But even though it is chargeable, do I need to enable all these logs in the actual clusters in the actual project, which I am trying to use? Yes.
+
+01:22:59
+For now, if you don't want that all the charges, you can disable all these things. You can disable all these things. If you want, you can enable, but if you don't want, you can disable. This logging of that control plane detail. Now, let me click on next. I have not enabled, I have just disabled. With all these configurations, I can review. I'm creating a cluster. That cluster is attached with this IAM role. This is the Kubernetes version.
+
+01:23:28
+in this vpc in these subnets I am creating control plane cluster endpoint access public and private all these things I can click on create now once I do this what I am getting am I getting all these things
+
+01:23:52
+Am I getting everything? I mean to say am I getting all these things after that step? No. Only we are getting what? Only...
+
+01:24:07
+Only
+
+01:24:10
+this one only control plane only control plane only the cluster only that control plane did I created any worker nodes did I added any worker nodes to that cluster
+
+01:24:25
+only that control plane.
+
+01:24:29
+Only control plane is created. Now
+
+01:24:35
+to this control plane. Can I add the notes now to control plane? Can I add this notes now notes, but it will take some time is it will take approximately 1015 minutes approximately it will take 1015 minutes. It is still in a creating face that cluster is in creating face. Now I have one cluster. If I go inside that cluster, there is a compute option here as of now do I have any nodes node groups?
+
+01:25:04
+Do I have any node groups added to this cluster that node group is nothing but your workers? Do I have option to add the node group now since that cluster is not completely created that provision.
+
+01:25:18
+I don't have that option. It will take some time maybe 4-5 minutes or up to 10 minutes also it will take. So give me some time just one minute. Let this in progress. I'll be back in a minute.
+
+01:27:32
+I am back, we will continue but it is still creating I cannot add any worker nodes to this one but meantime do I need some machine where I can configure some cubectl and configure that cubeconfig file for this cluster to communicate to start applying the applications do I need some machine kind of a client machine.
+
+01:27:59
+I can install configure kubectl and kubectl file of this cluster so that I can communicate with this machine because this is a fully managed control plane. Will I able to see any servers in my account control plane servers like a master servers in my account.
+
+01:28:21
+Will I able to see any servers like a control plane servers, master servers in my account? No. Now do I need to connect to that cluster to start applying and using you know start applying the applications to that cluster? Do I need to configure? Now can I create some server? Can I install kubectl? Can I get the kubeconfig file of that cluster?
+
+01:28:48
+And can I connect to that cluster using that kubectl and kubectl config file to start applying the applications? Yes. So meantime, let me create one server. But can I have that server in any VPC? Even in my local laptop also can I install kubectl and config that because what type of access I have chosen endpoint access while creating that cluster.
+
+01:29:16
+I have chosen public and private. So is it possible for me to communicate with that API server, that EKS cluster API server from my local laptop also by configuring kubectl and having the kubeconfig file from my local laptop also, is it possible? Yes. Otherwise, can I create some server itself? Can I create some server itself in any of the VPC in this AWS account?
+
+01:29:45
+Maybe in the same VPC where your cluster is created or maybe in a different VPC also because public and private endpoint access. Yes, but now that cluster creation is in progress. Meantime, at least let me create one server. Let me create one server. I'm creating one server. I'm not I have not done these two steps yet. I have not done these two steps yet.
+
+01:30:15
+These two steps can be done only this step is successful completed that is still in progress. Meantime what I will do I will create one instance. I will install AWS CLI cube CTL and I will configure that cube config right. I am going to this sixth step later. I will come back to this fourth and fifth. So let me create one server kind of a client kind of a client. This can be any server.
+
+01:30:43
+In fact, this can be your Jenkins server also. In my Jenkins server, if I have a kubectl, that kubectl config file, will I be able to communicate with that cluster, EKS cluster also?
+
+01:30:59
+Yes, now this is kind of a client machine. I'm choosing red hat all the default instance type. I'll use this key pair. That doesn't matter whether this is in a default VPC or same VPC because I have to choose the public and private endpoint access even though this client is in a different machine is this client machine will be able to communicate with API endpoint. Yes.
+
+01:31:28
+choose that large instance I am creating a server.
+
+01:31:34
+I am creating a server. Once this server is ready kind of a client machine will I have you know I will install AWS CLI, kubectl and all those things.
+
+01:31:48
+to configure that cube config. First, let me connect to this machine. This is kind of a client machine. Is this machine is a part of your control plane or worker? Whatever I have highlighted here, no, this can be any machine like a normal machine like a Jenkins
+
+01:32:14
+Let's connect to this one.
+
+01:32:23
+Now let me connect to that server.
+
+01:32:27
+As of now.
+
+01:32:31
+Do I have a cubesetel software?
+
+01:32:38
+Do I have any cubectl software in this machine? No. Now let me install cubectl whatever way. You already know how to install cubectl. Install cubectl. In which machine? Currently linux machine. I will follow this official website only. I will follow this official website. I will install cubectl in that linux because that is a linux machine. I will install cubectl in that linux machine.
+
+01:33:15
+Let it slow it is.
+
+01:33:22
+second place.
+
+01:33:25
+how it is very slowly.
+
+01:33:35
+with this much slope. Okay. One second. Let me check.
+
+01:33:47
+ok so let me install kubectl in that machine so i am downloading that kubectl binary that kubectl binary i downloaded by using this command then
+
+01:34:03
+this one I will install I will install by executing this command that binary I will install now I have a kubectl now if you see when I execute some command like this kubectl
+
+01:34:30
+So you have a kubectl installed. Now, if I just have a kubectl, does it mean I can access my kubernetes cluster like this? Do you see, is it working? kubectl get nodes, kubectl get pods, kubectl get ns. Is it working? What this kubectl is expecting in this machine? What kubectl is expecting in this machine? Do I need to have a cluster details?
+
+01:35:01
+then it have a cluster details
+
+01:35:05
+Where can I have those cluster details? kubeconfig file. They have that kubeconfig file in that current user home directory. They have anything in the current user home directory. They have anything.
+
+01:35:21
+in that current user form directory. They have anything called.cube like that? No. Now, this is a managed Kubernetes cluster. Then how can I get the kubeconfig file, guys? Will I able to SSH? Will I able to SSH to the master nodes or control plane nodes and get the kubeconfig file?
+
+01:35:44
+This is managed Kubernetes cluster. This is kind of a managed Kubernetes cluster. This is completely managed by AWS. Then how can I get the kubeconfig file? With the help of AWS CLI. Now my cluster is ready, but I will add the nodes later. I will add the nodes later. My cluster is ready, but how to get the kubeconfig file of this cluster?
+
+01:36:13
+with the help of AWS CLI. So I can execute some commands, AWS CLI commands, AWS EKS kind of a EKS list clusters like this. I can list how many clusters are there. I can get the kubeconfig file also, but I have a AWS CLI installed in this machine. They have AWS CLI installed in this machine to get that kubeconfig file. I can execute this command.
+
+01:36:42
+aws eks updateconfig this command. I can execute this command to get the kubeconfig file.
+
+01:36:52
+I can execute this command to get the kubeconfig file. This command not as is not as is. Now you need to update your options cluster name. What is my cluster name? What is the name of the cluster which I created is this is the cluster name the name of the cluster from which cluster you want to get the kubeconfig. This is the cluster and in which region I have my cluster.
+
+01:37:21
+one one yes please be on mute I hear some background noise someone is talking now using this command I can do that but do I have a AWS CLI installed to get that kubeconfig file in this machine no so let me install AWS CLI whatever way you want to install whatever way you want to install you can install AWS CLI
+
+01:37:53
+install AWS CLI again that is Linux machine I will follow installation instructions of Linux AWS CLI installing in Linux right in Linux I will install like this
+
+01:38:11
+I am going to install AWS CLI. We'd already discussed what is AWS CLI all these things. Now I downloaded the tabs or zip file. I tried to extract. So unzip software is not there. Unzip software is not there. Let me install that unzip software.
+
+01:38:38
+Now let me extract that file that awscl file then I will say
+
+01:39:01
+Now that nzip software is installed I have extracted that then I have executed this command which will install AWS CLI. Now I have AWS CLI if you execute AWS hyphen hyphen version can I see AWS CLI is installed this version of AWS CLI version 2.6.4.
+
+01:39:24
+But again, if I just have a AWS CLI, do you think it will work? These commands like getting the clusters, getting the kubeconfig file of that cluster, do you think it will work? If I just have a AWS CLI again? Now AWS concept, AWS concept here. What needs to be done? Do I need to authenticate and authorize with AWS? Do I need to have a configure this AWS?
+
+01:39:53
+here yes so I will use access keys and secret keys here I will use user concept here not the role concept I have to use user concept here now by default I logged in already with root user can I use this root user access keys and secret keys like does this root user will have all the permissions to the queue you know AWS also like all the permissions to the AWS also
+
+01:40:24
+Now I'm going to use this root user access key and secret key. Does this root user has a full access to the AWS resources like admin access to the AWS resources? Yes. Suppose if you don't have admin access, you are a normal user, at least do you need to have a read-only permissions to the EKS to you or your group to which you belongs to? Do you need to at least have a EKS read-only permissions so that you can get the kubeconfig file?
+
+01:40:53
+If you are a normal user, at least you need to have a EKS read only permissions. You are your group. Then only you can access. Now let me use this root user security keys.
+
+01:41:13
+Now I don't have keys handy. Let me generate one key. Let me download that for future reference also. This is my access key, root user access key. Now can I execute this command AWS configure command?
+
+01:41:30
+with access key that is the access key this is my complete secret key
+
+01:41:37
+Default region to which region you want to point suppose my infrastructure is in Mumbai Guys, make sure you are giving a correct name ap iPhone space. There should not be any space ap iPhone south iPhone 1 There should not be any spaces Like this What is the default output format which you want to see it supports json format table format and text format Whatever you want to see in a json format. You can say json
+
+01:42:06
+If you want to see in a table format, you can say table. Now I have configured my AWS CLI with root user credentials. Now am I able to see the clusters how many clusters I have in that account. This AWS EKS list clusters how many clusters I have in this account guys. This is a root user credential. If I execute this commander.
+
+01:42:36
+AWS CK's delete cluster does clusters will be deleted because this is a root user does root user has a full access. Let's say if I execute something like this is this cluster gets deleted.
+
+01:42:52
+Yes, so that's why in real time, are you going to give kind of admin access or full access to all the people who are working in that project?
+
+01:43:03
+using IAM using IAM users that groups concept can I give only required permissions like read-only permissions to the developers and other team members only administrators only admins have full access only they can create update delete the clusters so don't execute this comment for now because it has a full access even though I have given read-only access even though I give read-only access to the EKS
+
+01:43:30
+Will I able to see the clusters? Will I able to get the kubeconfig file of that cluster? Yes. This is AWS authentication and authorization. Now, do I got that kubeconfig file from that cluster and got created in this location in this system? Now, do I have the kubeconfig file?
+
+01:44:03
+If you observe, as I already told, we have three sections, cluster section, context, users. Now, if you observe here, as of now, this EKS cluster is using what type of authentication? Is it using X509 certificate-based authentication? Is it using certificate-based authentication? The way it was using in the self-managed, no. Is it using kind of a token-based authentication? Kind of a user tokens?
+
+01:44:35
+if you see here the user it is saying
+
+01:44:41
+authentication kind of some commander. So is this system is configured is the system is configured with one IAM user one AWS user. So whenever I am executing kubectl comments whenever I am executing any kubectl comments now it is using this kubeconfig file it is using this kubeconfig file it is communicating with cluster as of now to have any nodes because
+
+01:45:11
+masternodes will not be listed here. This is completely managed by Kubernetes. Masternodes will not be listed. Now, if you see namespaces, do I have some default namespaces? Those four namespaces.
+
+01:45:27
+Yes, but now authentication what is happening in the background in the background it is executing some kind of with that cube CTL is using this way of authenticating it is going to execute some comments like this AWS EKS it is going to execute some command like this AWS EKS get a token command in the background I am saying I fun I fun region this region I have my cluster.
+
+01:46:00
+name not required maybe this name this name if an iPhone cluster name iPhone iPhone cluster name this cluster name. So in the background cubes etal is executing this command cubes etal is executing this command and it is returning the token is this the token of that user is this the token of the user which we configured in this system like a root user root AWS user token. Yes.
+
+01:46:28
+Since it's a root AWS user token, is that root user has all the privileges in Kubernetes also? Is that root user has all the privileges in Kubernetes also? Is that AP server will allow to do everything in that EKS cluster because it's a root user token?
+
+01:46:48
+yes so this is what happening in the back room now i don't have any nodes i don't have any nodes as of now i don't have any nodes now without nodes if i try to deploy some applications do you think will it work any application whatever application you want to deploy now same kubernetes concepts same kubernetes concepts
+
+01:47:16
+Now let me try to deploy one application. Let me try to deploy one application any application. Any application like this. Let me try to deploy.
+
+01:47:33
+See ya.
+
+01:47:37
+Let me try to deploy any application.
+
+01:47:43
+Something like.
+
+01:47:48
+I'm trying to apply but I don't have any nodes. Do you think it will work whether one replica two replicas? I don't have any namespace. I am not mentioning namespace also this will get created in it. This will get created in it which namespace this deployment created in a which namespace in default namespace. Now why it is why it is showing in pending state.
+
+01:48:16
+Why it is showing in pending state? What is the reason? First of all, I don't have any nodes added to this cluster. I don't have any nodes added to this cluster. When I describe the pod.
+
+01:48:29
+when I describe the port. Now is it saying no more nodes available to schedule the ports
+
+01:48:41
+yes now let me add the nodes let me add the nodes now can i do these two steps because my cluster is ready my cluster is ready so can i add my nodes these two steps can i do now because my cluster is ready my cluster is active
+
+01:49:02
+yes now let me go to EKS let me go to EKS
+
+01:49:11
+Let me go to EKS.
+
+01:49:16
+Let me go to this cluster. Let me go to configuration. Let me go to compute here node groups guys if required. Can I create multiple node groups also not only just one node group. Can I create multiple node groups also if required with a different compute types also one node group with t2 dot double x large one node group with C2 dot C2 category one node group with the t category also if required. Yes.
+
+01:49:45
+not only single node group based on your requirement you can create a multiple node groups also node groups are nothing but auto scaling groups of workers so let me click on this create this add node group now I am giving something like this but before this I need to do one step before this I need to do one step before I create a worker group I need to create one IAM role again I need to create one IAM role again
+
+01:50:13
+For what purpose I need to create this IAM role for which nodes I know for which I need to attach this IAM role. I need to attach this IAM role for the workers because workers does workers require some Kubernetes permissions to communicate with that control plane. EKS worker node policy is required. EKS CNI policy is required to connect to that control plane and to participate in that cluster.
+
+01:50:43
+So that requires this EKS worker node policy and CMI policy. And for what purpose we are attaching this policy, EC2 container registry read-only policy. If my images are there in the ECR, does my Kubernetes worker nodes need to authenticate to pull the images from ECR? Does EC2, that worker nodes requires permissions to the ECR to pull the images?
+
+01:51:14
+So for that purpose I need to create one IAM role. First let me create that IAM role. Let me create that IAM role. I already have IAM role but let me create newly.
+
+01:51:29
+but this time what is the use case I need to select if I want to use this role with my worker nodes which type which use case I need to select now this is for EC2 EC2 select use case as EC2 click on next
+
+01:51:49
+Now policies, policies, can I attach all these three policies? One is
+
+01:51:57
+One least.
+
+01:52:00
+Amazon EKS Worker Node Policy, I am going to attach all these policies search with this type enter select this Clear this one and again Amazon EKS CNI Policy search with that select that clear that filter again and another one is this one EC2 Container Registry Read Only select this
+
+01:52:29
+Now click on next. Click on next here.
+
+01:52:35
+Now let me give some name EKS worker.
+
+01:52:42
+role something like this that worker role has these policies then this role can I use while creating this node group while creating this node group can I use that role here that role this role where I have attached those policies yes now while creating a node group if you want to add any labels to the nodes.
+
+01:53:12
+any labels to the nodes the way we added a labels cube ctl label node you can add a labels you can add a taints also you want if you want to add any tags also you can add all these things but i am not adding anything click on next now am i type as of now is that
+
+01:53:41
+AWS has a optimized AMS. AWS has optimized AMS. AWS has an optimized AMS created for EKS only. So as of now AWS is AWS is offering EKS optimized the miss optimized AMS like Amazon Linux bottle rocket like this. I am going with this Amazon Linux that AMS are optimized to use with EKS. So that is the AMA default AMA.
+
+01:54:10
+what type of instances on demand. Now instance type here can I select what type of instances I need based on the requirement. Suppose I really need very high configuration server can I select like t3.xlabs t3.wxlabs like 128 GB RAM and 32 CPU if you want to deploy too many applications like this.
+
+01:54:40
+based upon the requirement. Now here t2 is not supported t2 is not supported and I am selecting this t3.large I am selecting this t3.large two core CPU and 8 GB RAM because I want to deploy lot of applications like Prometheus, Grappanar related pods Prometheus related pods also I want to deploy I want to demonstrate monitoring also I am selecting
+
+01:55:08
+not very high like 8 GB and 2 core and again there is a limit for max IPs also this what is the max IPs they are offering if I am selecting t3.large here what is the max IPs they are offering 36 what is this max IPs what do you mean by this max IPs maximum pod IPs which means how many pods can be created in these type of instances 36.
+
+01:55:36
+even though you have enough CPU, enough memory because of IPs are not available, will you able to create more quads in these type of instances? No.
+
+01:55:48
+So you need to consider this also max IPs.
+
+01:55:53
+Now I'm selecting 3T3.Lars, which is offering 2 CPU 8 GB, max IPC is 36. That is the instance type. Again, is it chargeable? You may have a doubt. Sir, while practicing, will they charge? Yes, everything is chargeable. Is EKS also chargeable? That control plane also chargeable? How they are going to charge the control plane? Per cluster, per hour.
+
+01:56:19
+0.10 dollars they will charge for a control plane for one control plane. I mean to say per cluster 0.00 0.10 dollars per hour they are going to charge and again does the charges will be applicable based on the instance type I am using based on the EBS size I am using again all these things will come into picture.
+
+01:56:43
+Yes. So I'm selecting t3.nodes because I wanted to apply a lot of applications. Disk size is 20. Now, what is this node group configuration? What do you mean by this min size, max size, desired size? You observe same thing when we created in auto scaling also. The number of nodes has to be available. At any point of time, how many nodes I want to avail, I know, available for this cluster.
+
+01:57:11
+how many worker nodes I want available. If I say two, how many nodes will be available always?
+
+01:57:19
+Whenever your cluster is running out of CPU, running out of memory up to how many nodes I want to scale also I can define. But is it always 2 and 5 like this? Is it always 2 and 5 like this based on your requirement? Suppose you say always I need a minimum 30 servers. Whenever there is a load, it can go up to 50 servers also. Can I define like this based on your requirement? Yes.
+
+01:57:48
+So for now I am taking less two and five. Now node group update configuration. What do you mean by node group update configuration? Whenever there is a upgrade happening in the EKS nodes, you are upgrading your Kubernetes versions in the nodes. EKS is going to update that. Now how many number of nodes cannot be unavailable while update process? Can I give how many nodes can be down while doing the upgrade process?
+
+01:58:17
+in the percentages and numbers also. Upgrade will be taken care by AWS itself, but it will make sure only one node will not be unavailable while update process is happening, node level. So that is what the value here. With all these configurations, I am selecting subnets. Here, do I need to select public subnet? Is it recommended to select public subnets while creating a node group?
+
+01:58:47
+No, only private subnets. I'm selecting this private subnet as well as this private subnet. One is in one day another is in one week. Now is my worker machines will spread across these subnets in these availability zones is my worker nodes will be spread across in these subnets in these availability zones. Yes. If I want to SSS to these servers.
+
+01:59:16
+Can I allow configure SSH access to these nodes? I will enable SSH access if I want to SSH to that worker nodes. I will enable SSH access and select the key pair, which key pair I want to use and security groups. Select all these three security groups here.
+
+01:59:40
+click on next with this I am creating a one node group. Now this node group is nothing but auto scaling group in the background. Now if I go to auto scaling group can I see one group is getting created one auto scaling group is getting created in the background. I created a node group. Can I see one auto scaling group here now?
+
+02:00:06
+Can I see one auto scaling group here now?
+
+02:00:12
+After some time, if you keep refreshing here, I created a node group. That node group is nothing but one auto scaling. After some time, I can see one auto scaling group here. But what was the launch configuration used for that auto scaling? Does AWS EKS has its own launch configuration for that node groups? Yes. AWS EKS has its own launch configuration for that EKS node groups. So using that launch configuration.
+
+02:00:41
+It was using this launch configuration, EKS launch configuration. Now one auto scaling group is created. Now if you see, I think desired capacity, I kept the three. Somehow desired capacity, I kept three. When I created that auto, that node group, desired capacity, I kept three. So now is this auto scaling group is creating that nodes, that worker nodes and is it managing
+
+02:01:12
+is that nodes will be automatically joined to the cluster is that nodes will be automatically joined to that EKS cluster yes now here here when i go to ec2 section now can i see those nodes i am getting three nodes because somehow the desired capacity i kept as three now do you see three nodes are coming t3.large t3.large t3.large which got created this
+
+02:01:42
+servers got created.
+
+02:01:45
+the servers got created in that VPC subnets whatever subnets have selected if you see it is in that VPC it is in that VPC in those private subnet it has distributed it has distributed those servers into multiple subnets now when I go to this client machine if I see cubesetel get nodes now can I see three nodes because I kept a desired capacity as three desired
+
+02:02:17
+now three nodes are there now whatever parts which were in pending state is those parts got scheduled now is those parts got scheduled now in that whatever nodes came now
+
+02:02:32
+So this way we can set up the cluster. But once the cluster is ready, does the concept of Kubernetes is getting changed like Kube, CETL, Quad, deployment services?
+
+02:02:46
+Replicas sets replication controller stateful sets and all those things know Now if anything goes wrong with this servers These servers are managed by auto scaling even though intentionally terminate or stop this or if something really went wrong with this server Does that auto scaling group will replace this server with another server does that server will be automatically joined to the cluster?
+
+02:03:12
+Yes, so this way Kubernetes is managing your pods, Kubernetes is managing your pods, is AWS is managing the cluster for you? Kubernetes is managing your pods, your containers, is AWS is managing the cluster for you?
+
+02:03:30
+So this way, we are able to set up highly available, scalable, reliable Kubernetes on AWS using this EKS.
+
+02:03:43
+So this is how it works. So try to set up the EKS cluster this, tomorrow I'll continue with other concepts. Tomorrow also we have a class, tomorrow I'll continue with other topics. But before coming to tomorrow's class, terminate the current cluster and you can start using this EKS cluster and practice. You can practice all these node selectors, node affinity, pod affinity, anti affinity, values, all these things in this cluster also.
+
+02:04:13
+Thank you guys. I'll continue tomorrow. I'll share this installation instructions. I'll share this share this video. Try to set up this EKS cluster and start practicing. Which one we will use whether we will use a managed Kubernetes or self managed as I already told that depends on what type of infrastructure you are using your application is used.
+
+02:04:37
+Thank you guys, I will continue tomorrow.
+
