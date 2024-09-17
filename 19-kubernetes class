@@ -1,0 +1,1014 @@
+00:01
+This conference will now be recorded. In yesterday's session, we were discussing about what is EKS cluster and how EKS clusters will work, how to create a node groups to the EKS cluster. I hope everyone is able to set up the EKS cluster. Did you guys able to set up EKS cluster? Are you guys able to start deploying the applications in EKS cluster?
+
+00:37
+Okay, good.
+
+00:41
+Let's try to practice as much as possible. As I already told many times, we told from day one, the recordings will work for 90 days from the day of session. So when the recordings are available and working, try to go through multiple times, like three times, four times, five times, and try to practice so that you will become an expert in any topic which we are discussing here. So practice is very, very important.
+
+01:11
+Now, yesterday we created a EKS cluster.
+
+01:21
+Now as of now when I created a EKS cluster, I created a node group. I created a node group. I have an EKS cluster, Elastic Kubernetes Service. That cluster has one node group. While creating the node group minimum size I have given as 2, maximum size I have given as 5, but desired size I have given as 3. So currently how many servers are there? Workers are there for that group, node group.
+
+01:51
+because this desired size is 3 now let's say if I try to edit and if I change the desired size to 2 now how many nodes will I have I will have now I change the desired size as 2
+
+02:08
+Minimum size to desired size to maximum size 5. Now I will have how many nodes. Now as of now I have 3 and I have updated to desired to 2. So does that the additional server gets terminated.
+
+02:31
+Yes, let me show you. Let me show you. Let me connect to my Kubernetes, that client machine. Wherever I have configured my kubectl, let me connect to that client machine.
+
+02:54
+Now this is my kubernetes client machine.
+
+03:00
+This is my kubernetes client machine where I have a kubectl installed.
+
+03:17
+kubectl get nodes
+
+03:23
+Now first if you see it is intelligently terminating first is is it marking what that node that excess node is a disabled for scheduling. I mean to say is that EKS has already added that unschedulable as true is that marked first as true on one node. Now does any new parts get scheduled in this node because this is marked as unschedulable. No.
+
+03:53
+after some time is that node gets terminated because the desired is to currently there are three after some time is this node gets terminated automatically.
+
+04:06
+Yes, but who is doing that is Kubernetes is doing is AWS is doing that terminating the additional server AWS. So Kubernetes will just manage Kubernetes will just manage the Kubernetes resources like parts deployment services config map secrets network policies, values, value claims, stateful sets, replica sets, it will manage Kubernetes resources.
+
+04:35
+Does AWS will manage AWS resources like servers, load balancers, EBS, storages, all those things?
+
+04:46
+Yes, now here when I'm using when I'm using.
+
+04:54
+managed Kubernetes cluster when I'm using managed Kubernetes cluster like EKS in the Kubernetes architecture in the Kubernetes architecture. There is no difference, but will I have some additional controller the way we have a node controller replication controller endpoint controller. They have an additional controller called cloud controller.
+
+05:17
+Cloud controller. Yes. So I will have some additional component when I am using a managed Kubernetes cluster. When I'm using a managed Kubernetes cluster like EKS, AKS or GKE, you have a API server, you have a scheduler, you have a control manager. We will have one cloud control manager. What exactly that cloud control manager does.
+
+05:46
+Is it going to interact with cloud respective cloud provider to manage AWS resources like creating a EBS values whenever we are requesting values creating a load balancer in the cloud whenever I am creating a service of type load balancer is that cloud control manager will communicate with cloud.
+
+06:09
+That is the additional controller. That is the additional controller which gets created in the managed Kubernetes cluster in the managed Kubernetes cluster. You have additional components here is that kind of a cloud control manager. Is it going to communicate with cloud-provided a PS to create a load balancers that external load balancer creating a EBS volumes whenever you are using EBS provisioner storage class. Yes.
+
+06:39
+So that is how it is interacting with cloud. It is interacting with cloud. Now we have a cloud control manager also running as part of the managed Kubernetes cluster along with the node control manager, service, endpoint control manager, replication control manager. Like that, you have a cloud control manager also. That cloud control manager is going to.
+
+07:07
+communicate with cloud provided APIs to manage the or provision the cloud resources like load balancers and EBS volumes and all those things. Now.
+
+07:20
+I have only two nodes now. I had applied one application.
+
+07:29
+this application is running in those nodes, those pods, right? Those pods are running in these nodes. Now I want to access this application. Can I create a service? Can I create a service now to access this application?
+
+07:51
+Now, since it's a managed Kubernetes clusters, it has the capabilities to interact with cloud APIs and provision the load balancers in the cloud. Can I create a service of type load balancer here in this cluster?
+
+08:10
+Yes, now let me do that. I am going to create a service. I am going to create a service I am going to create a service api version Weaver kind service
+
+08:32
+metadata.
+
+08:40
+metadata name of the service any name java web app svc like this spec since my deployment is also in a default namespace i am not giving the namespace for this service also service also gets created in the same namespace the service type what i am saying the service type what i am saying i am saying load balancer this is external load balancer
+
+09:09
+which will present in the cloud
+
+09:15
+selector Same concept. What is my selectors for this service? Whatever labels I have for my pod Whatever labels I have for my pod And these are my pod labels. These are my pod labels. So I am giving those as a selectors now ports ports target port 80 this is load balancing port as well as service port now
+
+09:44
+load balancing port as well as service port. Now target port. What is my target port? Now this is 80 80. Before I create a service here if you see cubes utl get all do I have any service in this namespace for that application before I create no. Now let me go to the cloud also let me go to the cloud also here let me go to the load balancer section
+
+10:13
+Let me go to the load balancer section.
+
+10:18
+here.
+
+10:20
+This is for a different purpose case. This is for a different purpose. I created this load balancer for different application basically. I was teaching AWS for morning batch. Today also this was going on. So I created a load balancer in AWS manually and I was explaining AWS concepts. So that is different load balancer. Now when I create a service now, am I going to get a load balancer?
+
+10:51
+When I say cube C it will apply. Am I going to get one load balancer in the cloud automatically?
+
+10:59
+When I apply this one, kubectl apply. Now you see here, kubectl get all our service. Now, they have one service. They have one service called Java Web App SVC.
+
+11:14
+What type of service it is?
+
+11:21
+load balancer. What is this? What is this?
+
+11:29
+That is service IP cluster IP service IP cluster IP. So within the cluster one micro service want to communicate with other micro service. They can still use this service name guys. Suppose one more API one more application you deployed that micro service has to communicate with this micro service still can they use this service name within the cluster if one application has to communicate with other application within the cluster. Can they still use this name?
+
+11:59
+the application is in different namespace, then can I use FQDN within the cluster? Can I use FQDN of this service? Now, external traffic, if I want to access from outside external traffic has to reach this application, then can I use this external IP from outside the cluster if I want to reach? Now, can I use this one? External IP, that external IP is nothing but what here. If you go and see in the load balancing now,
+
+12:29
+If I go and see in the load balancing now. Do I see one load balancer here?
+
+12:36
+Can I see with same name A823E? Can I see one load balancer here?
+
+12:46
+So this load balancer, what type of load balancer it has created by that Kubernetes, EKS. What type of load balancer it has created. We have a classic application network. It has created a classic load balancer. Now, is this load balancer has a listener? We discussed AWS concept. Is this load balancer has a listener? And what port load balancer is listening? This external load balancer, port 80.
+
+13:15
+The moment request goes to load balancer on port 80, to which instance port it is forwarding? What is this instance port here? Can I consider this as a node port? Can I consider the node port service?
+
+13:30
+31463 so 31463 this one is it a node port
+
+13:40
+load balancer created with listener request comes to load balancer on port 80 it will forward the traffic on 31463 it is like a TCP layer layer for load balancer TCP protocol layer for load balancer port 80 it will forward the traffic to 31463 to which instance it will forward here can I see some instances here it is forwarding the traffic on this
+
+14:09
+to which instances it is going to forward. Is it forwarding the traffic to these two instances? What is these two instances? Is these two instances are my Kubernetes nodes, worker nodes?
+
+14:29
+worker nodes. Now if I access this one from outside, do I need to use node IPs and node ports as an inducer? Do I need to use node IPs and node ports? No. And on which port this load balancer created? Load balancer port is also 80. Now his request is going to load balancer. His load balancer is forwarding the traffic to Kubernetes node IP and node port. From that node IP to node port, is it forwarding the traffic to pod?
+
+15:01
+Is this happening now?
+
+15:19
+Is this is happening now?
+
+15:23
+So I am one customer, one user. Am I using this load balancer here in my system? Yes. Is request is going to load balancer? That load balancer? Yes. Is that load balancer is forwarding the traffic? Load balancer is accepting the traffic on port 80. Is it forwarding the traffic to that node IPs and node ports in the background? That Kubernetes nodes on node IP and node port? Yes.
+
+15:53
+Once it is reaching that node IP and node port, is that the request is forwarded to cluster IP from node IP to cluster IP, from cluster IP to any one of the pod IP. Request is going to node, node to the service, that cluster service, service to the pod. Now, can I consider this as an external node balancer?
+
+16:18
+External load balancer available for external customers. Can I consider this as an internal load balancer available within the cluster? Any application within the cluster want to communicate. Do they need to use this one? Do they need to request via this one? External IP is not required. You no need to go outside the traffic, outside the cluster. Internally, one application can communicate with other application with this one. But external customers.
+
+16:47
+Can they use this external load balancer?
+
+16:51
+like end users. Yes. So the request is coming to load balancer, load balancer to the nodes, nodes to the service, service to the pods. Now, my application context is this. My application context is this. Am I able to access that application via that load balancer? Now, is this application running as a pod in my Kubernetes cluster?
+
+17:17
+Or is this application running in a virtualized deployment in a virtual machine directly?
+
+17:24
+Is this application running as a pod container? It is running as a container within the pod. I am not doing virtualized deployment. Now, am I able to access this application? And again, if required, can I map this load balancer with DNS actual domain? Because this is kind of AWS provided domain name, which is not user friendly.
+
+17:53
+If I already have a domain, if I already have a domain, can I go and create a records in route 53 and map this load balancer with that domain.
+
+18:07
+As I already told in AWS itself, as I already told in AWS itself, if you don't have a domain, you don't want to purchase the domain, then how can you at least practice if you want to feel you are using a domain.
+
+18:24
+using your local laptop, your local laptop host file. I can get the IP of this domain by executing some kind of NS lookup command. I can execute NS lookup. I can execute NS lookup on this name, load balancer name, NS lookup on this. If NS lookup is not there, let me install NS lookup.
+
+18:53
+It is in bind utils package I think. Bind utils are bind tools. Let's see.
+
+19:02
+I install that package that package has a that package has an s lookup software binary. Now I can get IP any one of the IP.
+
+19:14
+Can I map the type with some name like this just you want to feel you are using a domain Java web app dot let's say.
+
+19:27
+something like this. Smith and tech.
+
+19:30
+dot com like this can i map like this locally in my local laptop in my local laptop if you guys are using windows system windows laptops windows desktop where do you have a host file in windows
+
+19:58
+where do you have a host file in your windows laptop if you are using windows laptops or windows desktops
+
+20:10
+Well, you guys practiced AWS, I think you have done. Did you guys practice these things when I am discussing in AWS? This is nothing to do with Kubernetes. We already discussed.
+
+20:27
+We already discussed this in AWS. If you are using Windows laptop, where do you have a host file? Krishna Prasad is saying certificate manager. There is nothing called certificate manager here.
+
+20:43
+in c system32 driver ctc host file. Since I am using macbook this is my local laptop this is my local laptop since I am using macbook mac is built on top of linux only so I have my host file in my laptop in this location. Now here I can do something like this.
+
+21:08
+Let's say that load balancer IP, that load balancer IP, whatever load balancer I got, that load balancer IP, I can map something like this, some kind of a meaningful name. But as I already discussed many times in the AWS, in real time, does applications will ask every customer, every users to have the entries like this in their host file?
+
+21:42
+No. So now I have done locally. I have done locally when I said java and if I access that application context I can access but does this will work for you? Does this will work for you?
+
+22:02
+when you guys are accessing? No. So instead of doing it locally, if I have a valid domain, if I have a valid domain, will I able to map this domain with that load balancer in my DNS configurations? But is it anything to do with the Docker or Kubernetes here, that DNS and mapping the DNS with your load balancers? No. It is a different topic, which we have already discussed.
+
+22:29
+which we have already discussed when we are discussing AWS. Now, I already have a hosted zone. I already have a hosted zone created, which we already discussed all these things in AWS itself. Let me go to Route 53. I already have a domain. I already created a hosted zone.
+
+22:56
+Now can I create a alias record, a record in this hosted zone for that domain, whatever domain I have, I can map the domain with that load balancer. I already created a lot of things here. Let me terminate all these things.
+
+23:16
+or maybe let me do this
+
+23:23
+Where is that? This one, java Now can I map to that load balancer, whatever load balancer I got now? I think this one, that the classic load balancer for that domain. Now if I access something like this, if I access something like this, java is it resolving to that load balancer in the DNS?
+
+23:53
+and is it routing the traffic to that load balancer load balancer to the Kubernetes nodes IP node port then service service to your ports. Now do you guys also able to access because this is a global DNS I have a valid domain I created a entry you guys also able to access. Now the guys who are accessing can we consider them as a end users for that application.
+
+24:23
+Like you guys are accessing this application. Can we consider you are an end user of that application? I am the owner of this application. Who is developing? Who is deploying and managing that application? Can I consider as a owner or application owner or application developer? That company, not me, that company. So is this application hosted somewhere in the world?
+
+24:51
+their own data center instead of my own data center. Did I hosted my application in AWS like a cloud infrastructure? And again, instead of doing a virtualized deployment, am I creating my applications as a containers and am I using Kubernetes to manage those containers in Kubernetes pods?
+
+25:13
+Now you can relate to actual applications also. You can relate this to actual applications also, whatever applications you are working or you are using. Now we'll be able to relate what is what, what is server, what is storage, what is load balancer, what is network. And also, that applications can be run in a virtualized deployment directly in the virtual machines. But as I already told multiple times, these virtual machines are heavyweight. Virtual machines will take a lot of time to boot up.
+
+25:45
+Will I able to utilize my resources more efficiently when I am using virtual machines? No, instead of virtualized deployment, can I go with a containerized deployment by creating my applications as a containers? And I can is it possible to isolate? Is it possible to deploy multiple containers in a same server? Yes. Now, instead of directly creating a service because sorry, instead of directly creating a containers.
+
+26:14
+with containers will not be recreated or rescheduled if something went wrong. Are we using some kind of orchestration tool to manage those containers, load balance those containers, scale the containers like Docker store? Now, which platform I am using to deploy my containers and scale the containers and manage the containers and load balance the containers? Kubernetes. So.
+
+26:42
+If you want to use Kubernetes, do you need to be familiar with whatever topics we discussed so far like a pod, service, deployment, replica set, replication controller, stateful set, config map, secrets, values, network policies,
+
+27:11
+as a deployment with HPA. All these things you need to be familiar.
+
+27:19
+I hope at least you are familiar, you know, got a clear picture of what is application, what is infrastructure, what do you mean by container, what do you mean by server, what do you mean by network, what do you mean by storage, what do you mean by container, all these things, how it works in the background. As I told multiple times, is it mandatory to deploy applications as a containers? Is it mandatory to use Docker Kubernetes or Docker Swarm?
+
+27:49
+Can I do in a traditional deployment? Can I do it in a virtualized deployment also if required? And also, is it mandatory to use? Is it mandatory to use AWS or Azure or GCP? Can't I do this one in a, you know, my own data centers also if required? On-premise, yes. But if it is on-premise, you know the challenges. If it is on-premise, you know the challenges. We discussed the challenges or problems.
+
+28:18
+with on-premise data centers when we discussed about AWS. So you need to understand the concept so that you can understand your application, architecture, your operations, DevOps concepts easily.
+
+28:35
+So based upon the requirement, you can use any of these concepts. Now I am able to access my application. Now similarly, will I able to deploy one more application also? Now here, another application also if required. That can be Node.js application. That can be Python application, whatever it is. That can be another Java application, another Java microservice, or Python microservice.
+
+29:03
+or Node.js application
+
+29:10
+Yes. Now, let me demonstrate. Let me demonstrate.
+
+29:37
+So let me create a maybe deployment.
+
+29:44
+Why I don't have that plug-in? I think I have uninstalled that plug-in.
+
+29:52
+that key word net is plug in I think it is not installed.
+
+29:59
+ok I think I have uninstalled that plugin that plugin is not there
+
+30:07
+Let me go to extensions.
+
+30:18
+Kubernetes plugin that plugin is not there it seems.
+
+30:30
+I hope this one but why it is not auto-propelating.
+
+30:38
+I have this plugged in. OK, let's see.
+
+30:52
+Okay, that is fine. At least I can copy paste.
+
+31:02
+Now I want to deploy another application, another microservice.
+
+31:12
+I'm trying to deploy another application. Now, can I create a deployment and services if required config map, secrets, HPA, whatever that application is expecting to create? Can I create a deployment, HPA, config map, secrets, whatever that application is expected to create in the Kubernetes? Can I create all the Kubernetes resources, whatever is required for that application?
+
+31:41
+config map, secrets, all those things. Now I want to create two replicas, labels, whatever.
+
+31:55
+labels you want to have.
+
+31:59
+for that application.
+
+32:11
+whatever you want to sell.
+
+32:17
+Now can I create?
+
+32:20
+from that respective image I think that port is 5000 I need to know the image what is my image I don't know that registry detail without image that is not possible because you are creating a part part will have a containers that container has to be created using image so now as of now in which the registry I have that image that is in the Docker Hub public
+
+32:50
+that is in the Docker Hub public registry. I'll use that image, this image.
+
+32:57
+Now I have a lot of tags also. I have this one also. I can use this image, registry, repository, and tag. And which port that image is running, I think it is running on 5,000. If I'm not wrong, that Python application is running on 5,000. Now can I create a service, something like this, target port 5,000. Now label that Python app.
+
+33:24
+Service app type load balancer.
+
+33:32
+Now if I want to deploy this in a different namespace also, is it possible for me to deploy this in a different namespace by creating a namespace in this cluster.
+
+33:44
+by creating a namespace in this cluster I can define but if you see do I need to improve this one do I need to improve this manifest which means do I need to follow some best practices what is missing here it is not mandatory but it is good to use what is missing here do I need to define resource request and limits resource request and limits at the same time is it recommended to have a liveness probe and readiness probe also to check the health of the application
+
+34:17
+So all these things are improvements are best practices which you need to use. Now if this application container is expected to pass some environment variables also, is it possible for me to create a config map or secret and refer those config map and secrets in this container environment variables if it is expecting. Otherwise, if it is expecting to pass configurations as a file like a property file XML file.
+
+34:45
+Can I use config map as a value? Can I create a config map with that file content? And can I move that file with this pod container config map as a values? That is again based on the requirement. And if this is a stateful application, do I need to use values also? Persistent values also? PVC, persistent value claims.
+
+35:13
+That is everything is based on the requirement. So based on the requirement, do you need to use all those things in your Kubernetes while applying your applications like config maps, secrets, volumes, services, network policies, all these things.
+
+35:29
+Yes. And again, if you have a requirement, this part should get scheduled in so and so node specific nodes. Can I use that scheduling concept node selector node affinity or pod affinity pod anti affinity, pain, tolerations, all those things based on the requirement.
+
+35:50
+Yes, so that is everything depends on the requirement. Now let me deploy this one. Let's say I don't want any downtime here. So can I follow this rolling update strategy?
+
+36:08
+are blue green deployments also required canary deployments if required yes now let me create a deployment
+
+36:23
+Let me create an applaiment kubectl apply-f
+
+36:30
+that Python.
+
+36:33
+Now if you see they have a two more parts getting created. I have another deployment this python application deployment. This deployment has internally created this replica set that replica set is creating the parts parts are coming up and there is a service. Now if you see they have one more load balancer. They have one more load balancer got created here.
+
+36:57
+to have a one more load balancer got created here for that application. Now when I access via this load balancer when I access via this load balancer, am I going to get a response from that other application that Python application?
+
+37:15
+It is still not ready that is still not ready because when you go to load balancing it is still coming up that load balancer is still coming up that load balancer is still coming up do you see is that getting load balancer now this load balancer is listening on port 80 it is routing the traffic to this instance port 3228 so his request is going to this
+
+37:45
+processed by this service request goes to that node IP and that port that will be processed by this service to these ports. Now am I able to access that other application which is running in the kubernetes cluster something is running on the root context itself that python application running something on the root context itself. Now can I see that response.
+
+38:14
+I think there are some APIs also. There are some APIs also, something like is there.
+
+38:23
+If you see there are some rest APAs. Am I getting some response like this? Rest APAs also.
+
+38:35
+Now this is also working. Now if required, can I map this one with another domain? Or another domain also if required in the DNS? Yes. That is how it is working. Now let's understand one more concept here. The scaling. Tuber rate is, is it possible for me to scale the parts automatically using HPA?
+
+39:05
+horizontal pod auto scaler based on the load on the pods based on the load on the containers is it possible for me to scale
+
+39:20
+using HPA ES. Now whether you are manually scaling whether you are automatically scaling that doesn't matter. Now let me use this one.
+
+39:35
+Now I will define some resources here. I will define some resources here. Resource requests and limits. I will define some resource requests and limits here.
+
+39:53
+resources, requests and we have a limits. Now based on the requirement on that application on that container, can I say how much CPU I need? Let's say I'm saying 500 milli core CPU memory. Memory.
+
+40:16
+can I say 1 GB if required limits maximum it can go maximum it can go CPU maybe one CPU memory can I say 2 GB 4 GB based on the requirement of that application on that container
+
+40:38
+maybe 2GB, 1GB like this
+
+40:43
+Now I am defining resources. Now
+
+40:49
+There is no HPA as of now, but let me apply this one.
+
+40:54
+Now there is a resource request and limits. There is resource request and limits. Since there is a change, since there is a change in my part spec, even though image version is not changed, since there is a change in the part spec, am I getting new parts? And is it terminating old parts?
+
+41:14
+and even though the deployment is happening, though I still have, will I able to still access that application?
+
+41:22
+even though the deployment is going on, I'm able to still access that application, no downtime. And one more important thing, is it recommended to have this liveness probe and readiness probe also? Because if something is wrong, even though your parts are running, I want to check the health on my application. Can I define liveness probe, readiness probe also here?
+
+41:45
+Lioness probe
+
+41:49
+the health checks, the way we have already verified.
+
+41:55
+This liveness probes, readiness probes, we already used all these things.
+
+42:06
+something like this... something like this... liveness probe... readiness probe...
+
+42:15
+I'm just copy pasting. I don't want to waste much time in detail. We discussed all these things like this is the health of my application on port 80 initial delay seconds, period seconds, like every 10 seconds. If you want to follow all these things. Now, is it going to perform the health on the application? Unless until your pod is ready, your readiness probe is successful. Does.
+
+42:45
+Does that part will reflected in your service endpoints?
+
+42:54
+If readiness probes failed, do you think?
+
+43:03
+that pod gets added to the service no if readiness probe is failed the service will not have that endpoint that service will not have that endpoint now if liveness probe is failed is it going to restart your pod container that container is it going to restart that container
+
+43:27
+years now if you see now again i have done the changes now even though it is running is it reflected in your service endpoints is it reflected in your service endpoints in this one it is still showing only old one unless until this becomes ready does this old part gets terminated no but still is my application down
+
+43:56
+Am I able to still access my application?
+
+44:02
+because I have one word part I have one word part that will be terminated once this becomes ready if this doesn't becomes ready is that word part will get terminated no so this way will I able to achieve zero downtime deployments also even though I am doing some background I am updating my application suppose I have a CI CD in place I have a CI CD in place you are the customer you are the end user you are accessing application like this
+
+44:32
+Now in the background if I have a CI CD pipeline in place whenever developers are modifying the code. So is that pipeline can take.
+
+44:57
+So if I have a CI CD in place, then.
+
+45:05
+Whenever developer modify the code, the Jenkins will be able to take that code, compile the code, run the unit test cases, run the sonar scans, and build an application package, build a Docker image, and push the Docker image to the registries. And using this Kubernetes manifest, the Jenkins can connect and apply those deployments.
+
+45:30
+So in the background, CI CD can happen. At the same time, end users can access the application without downtime. This way, you can leverage your Kubernetes concepts here. Now, if you see.
+
+45:49
+These parts are ready. So it has terminated the old parts. It has terminated the old parts. Now I can see only those two new part details here.
+
+46:01
+all these things you can follow. Now if I want to scale my parts automatically if I want to scale my parts automatically whenever there is a load on these parts containers whenever there is a load on this containers what needs to be created if required. What is the other object which I need to create. Can I create a HPA horizontal part auto scalar for this.
+
+46:29
+Yes, now even though you have a HPA Even though you have a HPA HPA is scaling your parts What if you don't have enough CPU enough memory available in the cluster in the nodes? Do you think your parts get scheduled? HPA will just scale your parts. What what will happen? If there are no enough CPU enough memory available in the cluster. Do you think your parts get scheduled?
+
+46:59
+Part goes to pending state even though it's a managed Kubernetes cluster, even though it's a managed Kubernetes cluster. I have created a node group with min size as to max size as five. Do you think will I get a third node automatically even though it's a managed Kubernetes cluster? Do you think you will get a third node automatically here? No.
+
+47:25
+Do I need someone who can act as a bridge between the Kubernetes and the cloud? Someone needs to identify the parts are in a pending state because of no CPU, no memory. Then it has to communicate with provider AWS to update the desired number. They need some kind of application or some kind of a process who can look after the Kubernetes parts. If any parts are in a pending state, does that application or process needs to communicate
+
+47:55
+AWS to adjust the design numbers? Does that has to communicate with AWS auto scaling groups to adjust the design numbers? Yes. So that is what cluster auto scaler does. That is what cluster auto scaler does. As of now, did I deployed any cluster auto scaler which can scale the cluster?
+
+48:21
+No, let me demonstrate that. Let me demonstrate that just to make things simple. Now how much CPU how much memory I am requesting for this parts how much CPU how much memory I am requesting for this part container how much CPU I am requesting how much memory I am requesting.
+
+48:45
+500 milli core 1 GB now, what is my total cluster capacity as of now? What is my total cluster capacity as of now? How many nodes I have total as of now how many nodes I have? Two nodes and what type of instance I have selected while creating that node group What type of instance I have selected while creating that node group P3 dot larger? So what is the CPU how much CPU each node?
+
+49:14
+2 CPU 8 GB now
+
+49:24
+I have two replicas for that part. Some other part is also running, that is fine. I requested two parts. Now maximum how many parts, whether you are manually scaling, whether you are automatically scaling, based on this request, you are requesting this much. Now, will I able to scale more than maybe four CPUs I will have total, four CPUs I will have total, and 16 GB I will have.
+
+49:53
+each I am requesting 500 maybe will I able to scale more than 7 parts or 8 parts like that
+
+50:03
+Will I able to scale more than 7 or 8? Don't consider 8. If I have some other ports other deployments also running other deployments also running and other ports also requested some CPU memory again, will it be like 7 8 can I go up to 7 or 8 also? No, if some other applications are running.
+
+50:26
+Now let me try to scale. I'm manually scaling. That scaling can happen. That scaling can happen using HPA also. I'm manually scaling something like this.
+
+50:39
+I'm manually scaling maybe 5 ports. Let's see if that works. kubectl apply-java web app. Now you see the ports.
+
+50:53
+now ok is it able to accommodate 5 pods you can see in a running state but health checks are getting performed at least 5 pods it is fine now let me see let me try to deploy maybe 7 pods or 8 pods now
+
+51:13
+The scaling can happen using HPA also. Now, let's see.
+
+51:21
+Now do I have some pod in pending state? Do I have some pod in pending state? Here if you see it is not in a running state it is in a pending state. Why it is in pending state? What could be the reason? When I describe my pod. When I describe my pod I can see. What is the reason why it is pending? What it is trying to say?
+
+51:47
+insufficient CPU low on resources we don't have enough resources but
+
+51:55
+am I getting third node automatically even though I have a AWS that worker group that node group is created as auto scaling group with minimum to maximum five am I getting the third node or fourth node automatically no why I am not getting third node or fourth node automatically do I need some process do I need someone to update the desired numbers in that group
+
+52:24
+Why it is not updating. I don't have anything here. But if I create auto scaling policies also, do you think it will work if you create auto scaling policies based on the CPU like that it will work. No, because you are just requesting. Do you think is it actually utilizing that much CPUs in those notes? You are just reserving you are requesting.
+
+52:47
+But there is no it is not really running out of CPU and memory. So auto scaling policies will not help here. So do I need some other way of identifying if any parts are in a pending state because of less resources then communicate with AWS to update the design numbers.
+
+53:08
+Yes, that is what cluster autoscaler does. As of now, do I have any cluster autoscaler deployed in any namespace? Do I have a cluster autoscaler deployed in any namespace? Do I have anything called cluster autoscaler here? No. So that's why it is not working. Now we have a cluster autoscaler.
+
+53:34
+Sometimes in the interviews also they'll ask what is difference between quad autoscaler and cluster autoscaler. What is cluster autoscaler basically? So Kubernetes cluster autoscaler. Does that Kubernetes cluster autoscaler automatically able to adjust the size of the Kubernetes cluster?
+
+54:02
+Does this Kubernetes cluster autoscaler, will it able to automatically adjust the size of the Kubernetes cluster nodes?
+
+54:11
+when when one of the following conditions are true when of when one of the following conditions are true when this is going to adjust there are parts there are parts that are failed to run in the cluster due to it will scale the cluster in these conditions when if any parts are failed to run in the cluster due to insufficient resources which means if any parts are in a pending
+
+54:41
+Is this cluster auto scaler can adjust the size of the cluster? Yes, what is the one more condition? There are nodes in the cluster that have been underutilized for some period then their parts can be placed on the other existing nodes. Is it going to scale down the nodes also? Which means not only just increasing the nodes, if you have some servers that servers are underutilized.
+
+55:11
+Then is it going to reduce the size of the cluster? Is it going to reduce the nodes in the cluster also? The way it is scaling, is it going to scale down also the size of the cluster? Yes. Now, can I use this cluster autoscaler in most of the providers like AWS, EKS clusters, Azure clusters, or GCP clusters also? Will I able to use this cluster autoscaler?
+
+55:38
+in managed Kubernetes like EKS, AKS, GKE also.
+
+55:48
+you can use in any of the platform. Now you can apply that cluster autoscaler. Now let me apply that cluster autoscaler now. But when I am deploying the cluster autoscaler does the cluster autoscaler requires AWS permissions because it has to communicate with AWS autoscaling APS because it has to get the current size, it has to update the desired size.
+
+56:18
+Does that cluster autoscaler request permissions also, AWS permissions to communicate with AWS APIs?
+
+56:28
+Without having the permissions, if I apply the cluster auto scaler, do you think we'll be able to make API calls? Will it be able to communicate with auto scaling group APIs in AWS? Then how can I grant the permissions?
+
+56:46
+EKS cluster autoscaler. Now I want to deploy a cluster autoscaler in EKS. Now if I go here they are explaining what is cluster autoscaler which I have already explained. Now you need one Kubernetes cluster you need a node group. So prerequisites before you are
+
+57:15
+Do I need to have one EKS cluster already if I want to deploy? Yes, I already have EKS cluster. And the node groups, the node groups, the node groups with auto scaling tags. I already have a node group. But is that node group should have these tags also, AWS tags? Because that cluster auto scaler will use these tags internally. If you see,
+
+57:44
+when I go to my kubernetes node group when I go to my kubernetes node group that EKS node group when I go to that EKS node group or EKS nodes also
+
+57:59
+Let me go to the TKS load group
+
+58:25
+So this is my EKS cluster. I have one node group here, this node group here. If you see this node group, right, let me click on this node group. This node group has some tags also. Is that node group here? Maybe you can go to the auto scaling group if it is not showing here. Let me go to that auto scaling group. That node group is created as a auto scaling group also.
+
+58:56
+Now let me go to that auto scaling group. Let me go to that auto scaling group. That node group is basically one auto scaling group. If I go to this auto scaling group, this auto scaling group. Now, if you scroll down, you can see some tags also. Now if you see already do we have those tags, whatever is required as a prerequisite to set up cluster auto scaler, whatever is required.
+
+59:25
+as a prerequisite to set up the cluster autoscaler I need to have this as a key k s dot i o dot cluster if an autoscaler my cluster name this is my cluster name value should be wound cluster autoscaler should be enabled to have all these things already added while creating a node group itself while creating a node group itself these got automatically added this got automatically added now that prerequisite also met
+
+59:54
+Then what is the next one? Do I need some kind of permissions to adjust the desired capacity? Now do I need kind of auto scaling permissions? Do I need some kind of auto scaling permissions? Otherwise, otherwise, the scaling will not happen. Now, I need this set desired capacity permissions in auto scaling, terminate instances in auto scaling group.
+
+01:00:23
+because it will increase the servers and it will terminate the servers. Now do I need this permissions for cluster autoscaler? Yes. Now cluster autoscaler cluster autoscaler also will be running as a pod cluster autoscaler also will be running as a pod in my Kubernetes cluster. Now is it possible to grant the permissions to that pod?
+
+01:00:53
+by attaching permissions to the role, by attaching the permissions to the role, which is already used in my node group. If you remember, while creating a node group, did I attach one IAM role to that node group? Did I attach one IAM role to the node group, that servers? Can I attach this policy also to the same role? Can I attach this policy also to the same role where
+
+01:01:21
+the pod that cluster autoscaler pods gets created. The cluster autoscaler pod also will be running as a container in my Kubernetes. If I have this role attached to that server, that cluster autoscaler is running in that server, does that cluster autoscaler will be able to communicate with AWS APIs?
+
+01:01:43
+Yes, so I'll create a policy with this JSON. I'll create a policy with this JSON. But here you need to update your cluster name like this. You need to update your cluster name like this. If you are taking this YML, if you are taking this YML, you need to take update your.
+
+01:02:07
+cluster name here instead of this you need to update your cluster name otherwise I will share one more YML one more YML with you guys you can attach that one also something like this something like this you can use this one whatever I am going to share in a running notes only this statement or if you want to take this one make sure you are updating your cluster name here so what is my cluster name whatever I have
+
+01:02:36
+used here like this one ek-demo that is my cluster name. So let's take this one I am going to take this one. So will I create first I will create a policy I am policy I will go to I am I will go to I am can I consider this as a customer managed policy instead of AWS managed policy since I am creating a policy.
+
+01:03:06
+Consider this as a customer managed policy in AWS. Instead of AWS managed policy, yes. So let me go to policies. Let me go to policies. Let me create one policy here.
+
+01:03:20
+I can give you any name.
+
+01:03:24
+I can give any name.
+
+01:03:30
+service. This one.
+
+01:03:35
+If you want to create using UI, you can use this one. Since I already have a JSON, since I already have a JSON, can I go to this JSON option? Can I copy paste that JSON? I already have a policy JSON. I can go to this JSON option. I can copy paste this JSON with required policies, auto scaling policies. Click on Next. I will give some name. I'll give some name here.
+
+01:04:05
+cluster auto scalar policy like this some name.
+
+01:04:15
+some name. I'll create a policy. Now this policy can I attach to the IAM role which is already used in that node group. Can I attach this policy to the IAM role which is already used in that node group because here we are already using one IAM role. We are already using one IAM role to that node group. So I will go to that IAM role.
+
+01:04:42
+I'll go to that IAM role whatever role we already used I'll go to the roles here
+
+01:04:52
+this one EKS worker role is this role is used with your auto scaling that node group when I created a node group this one if you have a confusion you can go to that EKS cluster you can go to that EKS cluster
+
+01:05:28
+You can go to the CKS cluster. You can go to the configuration, compute. You click on this node group. If you click on this node group, now is this node group is using this IAM role? IAM role. If you click on this IAM role also, you will go to that IAM page. Now I'll attach. I'll attach that. I'll go to this role. Worker role. I'll go to this role. I'll go to the permissions.
+
+01:05:58
+add permissions attach policies attach policy now can I attach this policy whatever policy I created EKS cluster autoscaler policy with these required permissions can I attach that policy to this rule yes after attaching this after attaching this can I deploy my autoscaler that yml.
+
+01:06:27
+that yml that autoscaler is also kind of one yml if you see this is the yml kind of a deployment kind of a deployment
+
+01:06:39
+So this is the URL they have given. You are, you know, curl-o. You are downloading that YML. Now this is the YML. Let me open.
+
+01:06:52
+Now if you see is that cluster autoscaler is getting deployed as a deployment again this cluster autoscaler image that application that cluster autoscaler application is again getting deployed as a deployment using this image. Now it is creating some roles also because does this cluster autoscaler has to communicate with Kubernetes APIs also to see.
+
+01:07:20
+How many parts are there? How many parts are in a pending state? Does this cluster autoscaler requires permissions to the Kubernetes API also not only just AWS API.
+
+01:07:32
+Now how we are granting permissions to the AWS APIs here for that cluster autoscaler application. Are we using a concept of RBAC like service account we are creating. We are creating a role here. Are we granting permissions? To parts we are giving a permissions to parts. Nodes
+
+01:07:59
+required permissions to the pods, controllers, and all these things were granting this cluster role is associated with that cluster service account here. Service account here, this service account, this service account, the service account is using by your pod container. If you see your pod is attaching with that service account. So this way is this container.
+
+01:08:26
+will be able to access Kubernetes APIs also because of the permissions we are attaching here.
+
+01:08:36
+It has access to the Kubernetes APIs as well as AWS APIs. Now, if I deploy this cluster autoscaler, will it able to communicate with Kubernetes APIs to identify whether any parts are in a pending state because of low resources? At the same time, is that cluster autoscaler will be able to communicate with AWS APIs also to update the desired capacities, terminate the desired servers in that if there are less load.
+
+01:09:05
+Yes, but before deploying this, can I deploy as is without modifying you values here? Do I need to modify my cluster name here? What is the name of the cluster you need to modify? Now what you can do as per the installation instructions they have given you get that yml you get that yml they are saying modify a yml and replace this one with your cluster name.
+
+01:09:33
+replace this one with your cluster name, then you apply, then you apply like this.
+
+01:09:44
+Along with that one, you can update the region also in which region you want to have. Now I am giving that YML here guys, I am giving that YML here itself. Before you apply as is, do you need to replace here? What is your cluster name? And in which region your cluster? Do you need to replace these two places? Yes. Now let me.
+
+01:10:08
+give this one let me create like this.
+
+01:10:13
+I am creating one YML like this cluster autoscaler dot YML. So I am having all these things but I will make sure I will make sure these are updated region is correct. Now what is my cluster name? Is this cluster name correct?
+
+01:10:38
+It is not underscore I think now. It is not underscore I think now. It is what? iPhone. It is iPhone.
+
+01:10:50
+something like this. Now let me deploy. But this is also deployed as a quad, as a container. But since I'm requesting less CPU, less memory, is that cluster autoscaler pods get created. I'm just requesting 100 millicore, 300 megabytes for this one. So it may deploy.
+
+01:11:15
+Now, let me deploy cluster autoscaler. Now, if you see, they have one application called cluster autoscaler, one part called cluster autoscaler getting created in a cube system namespace.
+
+01:11:30
+If you observe now how many nodes I have, how many nodes I have as of now only two. Do I have some parts in a pending state? Do I have some parts in a pending state now? If you see, do I have some part in a pending state? Now I am deploying this cluster autoscaler. I am deploying this cluster autoscaler. Now cluster autoscaler is running cluster autoscaler is running.
+
+01:12:00
+If I see the logs of the cluster autoscaler, this is one application. This is one application. Now if you see, is it able to identify already is that cluster autoscaler application is it able to identify one part is unschedulable? Is it able to identify one part is unschedulable? And is it saying upcoming one node? Is it saying upcoming one node? This is one application basically.
+
+01:12:31
+This is one application, but is it our own application? Is it application for end users?
+
+01:12:39
+Is it an application for end users? No. It is like kind of one Kubernetes internal application. If you observe, is it developed using some programmatic language? Is it developed using some programmatic language? What programmatic language they have used to develop that cluster autoscaler Go language? Using that Go language, are they making API calls internally to the Kubernetes API server to identify?
+
+01:13:07
+the part details and also is it making AWS APIs internally to adjust the desired capacities.
+
+01:13:18
+now because of that now when i see cube ctl get pods now do you see whatever pod which was in a pending state now is it showing like a container creating which means is that pod got scheduled to some node is that pod got scheduled to some node now when i see cube ctl get nodes cube ctl get
+
+01:13:48
+Now is that part whatever part which was in a pending state is that part got scheduled to that node.
+
+01:13:56
+is that part got scheduled to that node, this node
+
+01:14:01
+225 this one
+
+01:14:07
+in that new node. Now, what exactly happened as I told, is that cluster autoscaler communicated with your AWS autoscaling group? Is it updated, the desired capacities? If I go and refresh here completely, whole page I'm refreshing here.
+
+01:14:31
+Now can I see three servers and the desired capacity of that node group was somehow it is not reflecting here but let me go to let me go to auto scaling group let me go to auto scaling group.
+
+01:14:53
+Let me go to auto scaling group.
+
+01:14:59
+let me go to auto scaling group here now can I see desired capacity is 3, current is 3 who updated this desired capacity here who updated this desired capacity is that cluster auto scaler updated this desired capacity
+
+01:15:17
+On which basis it is calculating? Christopher is asking on which basis it is calculating. You have to tell now and which basis it is calculating. Is it calculating based on the parts which are in a pending state and how many parts are in a pending state and how much CPU, how much memory you are requesting. If I create one server, will it be able to accommodate those many parts or do I need to create two parts based on that? Some algorithm is happening in that cluster auto-scalar application.
+
+01:15:47
+Is it calculating how many?
+
+01:15:52
+how many parts are in a pending state and to accommodate those parts how many nodes are we need to adjust is it calculating some kind of algorithm in that cluster autoscaler yes.
+
+01:16:04
+that is what happened now I have a three nodes my parts are in a running state now let me try to scale whether you are manually scaling whether you are automatically scaling that doesn't matter now let me scale it to maybe 10 servers sorry 10 ports let me again apply that YML let me again apply that YML now again if you see again to have some parts are in
+
+01:16:36
+sorry I have not applied that YML I have applied a different YML let me apply
+
+01:16:45
+you see it will apply that ML I am applying now if you see again do I have some parts in pending state it is able to accommodate one part it is able to accommodate another part also but again do I have one part which is in pending state again this one.
+
+01:17:03
+Now again is that cluster auto scalar again able to identify the parts are some parts are in pending state again again is it able to identify this part this part cube c tail gate parts if you see is it able to identify this part is in unschedulable state this part ending with the 7fb.
+
+01:17:30
+Now is it again saying upcoming one node because if it bring up one node that part can be accommodated in that node Now can I see four nodes again
+
+01:17:41
+when I execute kubectl nodes, can I see four nodes now? Just now that node got created. That node will be ready in some time. Once that node is ready, whatever part which was in a pending state, whatever part is in a pending state, is that part gets scheduled to that node once that node is ready? Once that node is ready? Yes. But even though I keep deploying a lot of applications,
+
+01:18:10
+If it is running out of resources, will it able to create more than five nodes? Will it able to create more than five nodes?
+
+01:18:21
+If I keep deploying let's say QV let's say Java web app now let's say I'm saying 15 servers I mean to say 15 replicas I'm manually scaling let's say I'm saying 15 replicas or 18 replicas like that now it is able to accommodate now the part is also running whatever it was in pending now I have total four nodes now I am trying to scale more.
+
+01:18:50
+I am trying to scale more. I will get another node, but will it able to get a sixth node, seventh node also, even though some parts are in a pending state.
+
+01:19:05
+now I am trying to scale lot of parts now again you see now some parts are in pending state let me see cube c tail get parts let me grip with pending
+
+01:19:24
+now do I have some parts are in pending state as of now these many parts are in pending state
+
+01:19:32
+Now as of now four nodes is there will it able to create another node now when I see the logs again it will say this many parts are in a pending state it will identify these many parts are in a pending state if you see the logs right it will identify a lot of parts are in pending state is it able to identify these many parts are in pending state.
+
+01:19:57
+Now it is saying upcoming one node upcoming one node only one node. But is it do you see a message saying that do you see a message saying that Max size is reached Max size is reached.
+
+01:20:12
+because what is the max size I have given for that scaling that group node group 5 now I will get only one node whatever parts can be accommodated in that node those parts gets accommodated but do I still have three parts in a pending state do I still have three parts in a pending state will I get does those parts get scheduled to any node now no because we already reached max
+
+01:20:41
+So this way, will I able to scale up my cluster also by using cluster autoscaler whenever any parts are in a pending state, will I able to increase the number of nodes? Will I able to decrease the number of nodes also? The way we are scaling the parts, can I scale the nodes also using this cluster autoscaler? This way, is your Kubernetes cluster also gets autoscaled adjusted based on the
+
+01:21:08
+requirements based on the applications which you are deploying. Yes. That is how it works. Now, let me scale down. If I remove lot of applications. I am not deploying lot of applications are I'm scaling down my parts. Does this notes also get terminated after sometime does this notes also get terminated. If you don't apply any parts to that nodes. Any parts.
+
+01:21:37
+you are not applying any application is not getting deployed in these nodes after some cool down period after some cool down period is that additional nodes also gets terminated whatever nodes is created yes so I am again scaling down my part I have only less parts now lot of parts are getting terminated now is this nodes get terminated after some time is this nodes also get adjusted.
+
+01:22:06
+maybe whatever nodes how many nodes it really need it will keep those many nodes it will terminate other nodes.
+
+01:22:17
+nothing called rolling update here I am talking about node so there is nothing called rolling update I am not updating any deployment here I am just increasing decreasing the nodes sorry number of pods so now instead of having those many pods I have only less pods for that application only two pods are there now these parts are running in these two nodes if none of the applications get deployed in other nodes
+
+01:22:45
+if none of the applications got deployed in these other nodes does cluster autoscaler will again reduce the desired size in that node group
+
+01:22:57
+Once it is reduced the desired size, is it going to terminate those servers where we don't have any pods running? Where we don't have any pods running is that nodes get terminated? Yes. So this is a cluster autoscaler works. This is a cluster autoscaler works. Is everyone clear? What is cluster autoscaler and how it works?
+
+01:23:23
+What is the difference between Cluster Autoscaler and Pod Autoscaler? Is everyone clear?
+
+01:23:34
+Now, will I able to achieve this cluster autoscaler if I am using a self-managed Kubernetes clusters or bare metal Kubernetes clusters? Cluster autoscaler? No. But is it possible to achieve pod autoscaler even though I am using bare metal or self-managed?
+
+01:23:52
+Yes. Now what is the one more advantage here? They have some storage classes configured by default. They already have one storage class here in this cluster. What is the storage class I have here?
+
+01:24:10
+What provisioner? What provisioner is that? What provisioner is that?
+
+01:24:17
+EBS GP2 volumes and is that provisioner is that storage class marked as a default
+
+01:24:30
+Now if I want to apply any application like any application like stateful application like a stateful set, stateful set also if I try to apply any application like a stateful set also like this. Now is volumes gets created.
+
+01:24:54
+Now this is my stateful set I want to create in some namespace called test as of now I don't have a test namespace I will create a namespace also I will create a namespace also cubectl apply iphonef sorry there is no yml right cubectl create ns namespace name is just a tester now do I have a namespace called test here as of now nothing is running
+
+01:25:23
+in that namespace.
+
+01:25:26
+Now, let me apply
+
+01:25:34
+Now if you see in that namespace I created a stateful set. It is going to create one after the other. It is going to create one after the other in the background. Am I getting volumes also? Who is creating these volumes? What type of volumes are getting created now?
+
+01:25:55
+I have a PVC also getting created because it's a stateful set. PVC is also getting created and a PV also getting created. Now when I go to AWS, can I see when I go to AWS volumes, EBS volumes, can I see some volumes getting created here? And is those volumes is attached with your parts, your containers. Now can I see this value?
+
+01:26:25
+Today at 9.26 it is attached with that server. It is attached with that server where my pod is running, where my Kubernetes pod is running. Since I created a stateful set with three replicas, am I getting multiple volumes? One after the other, you can see. I'll get multiple values because I'm using a stateful set. I'm using a stateful set. Now I have two pods, two PVs and two PVCs.
+
+01:26:54
+It will create one after the other. But once this is ready, can I set up that kind of a ripple ripple set or whatever that MongoDB ripple set primary secondary kind of a configuration, whatever we have done.
+
+01:27:15
+once these parts are ready I can go to one of the database pod the way I have done like kubectl exec-it I can go inside this
+
+01:27:30
+I fun in test namespace I fun I fun bash or SH now if you see host name we discussed all these things a stateful set concept this is the host name stable unique network identifiers and the stable values now I'll connect to Mongo shell I'll connect to Mongo shell by executing Mongo here can I execute these comments. But make sure.
+
+01:27:59
+your namespaces are correctly used as of now what is my namespace? just a test it is not a test-type on ns so can i execute like this?
+
+01:28:11
+Now if you see rs.status, the repelset status, the database comment,
+
+01:28:26
+the database repels set now do I have these members like out of this one one is primary this one is primary other two are secondary now I will create something like this the database root username and password
+
+01:28:43
+Once this is done, let me come out of this. Now my database is running as a cluster within my Kubernetes cluster using stateful set. Now can I deploy my application? Can I deploy that application, spring application here?
+
+01:29:04
+whether you are using config maps, secrets and all these things that doesn't matter as of now I am hard coding like this but this time can I create a service of type load balancer to access this one from outside
+
+01:29:21
+Now the best practices. Can I define liveness probe, readiness probe also? Liveness probe, readiness probe also for this application if I want to check the health of the application, yes. Now let me apply this. Now is that application, is this application is using this service name internally to communicate with your database pods? Now database should be accessible within the cluster.
+
+01:29:48
+I don't want this database to be exposed to the outside. So that's why what type of service we created again. It says stateful set what type of service we created. Is it a cluster IP service or headless service? If you see cluster IP none cluster IP none what type of service it is? Headless
+
+01:30:18
+Now you'll see.
+
+01:30:22
+Now my database pod is running, my application pod is also running. I got a load balancer for my application. Now can I use this load balancer to access that front end application? That stateless application. Once this is ready.
+
+01:30:46
+If you see, as of now, let's see how many nodes I have. If it is running out of nodes, does that cluster autoscaler? Already we have additional nodes. Five nodes are still there. So some parts are running in these nodes also. Some of the parts are running in these nodes also. So parts got scheduled in these nodes. In whatever nodes, we don't have any parts. After some cool down period, after some cool down period,
+
+01:31:15
+Does those parts get removed also by that cluster autoscaler?
+
+01:31:23
+Yes, that is each one do its job. Now I am able to access this application, but load balancer is not completely ready. This load balancer is getting created for the other application.
+
+01:31:39
+the load balancer is getting created for other applications.
+
+01:31:44
+I am getting one more load balancer for that other application.
+
+01:31:51
+Now, yeah, this one. Now I'm able to access this one. Is this application load balancer, this request is going to that load balancer, is load balancer is routing the traffic to nodes, nodes to that Kubernetes service, service to your spring application ports. And is that spring application ports are communicating with the database, that stateful set our database also running as a cluster within the Kubernetes.
+
+01:32:21
+So this way it is working. Now if required, I don't want to use this name. Can I go and map this name, a load by lancers with some domain name in route 53?
+
+01:32:41
+I can go to this.
+
+01:32:46
+I go to this I go to this hosted zone I'll create a record a record let's say if anyone is accessing like this a spring app dot mythun tech devops dot co dot in can I route the traffic to that load balancer which is classic load balancer in Mumbai region that one whatever you need to select the correct one what is that a 170 a 170 this one
+
+01:33:16
+Now if anyone access like this spring app dot mythun tech devops dot code dot in is that domain resolved to that ip of that load balancer request goes to that load balancer load balancer to load node to pod it will take some time spring app dot mythun tech that is missing
+
+01:33:44
+Now request is going to load balancer load balancer to the node node to pod. But since my application is running on root context itself. Now can I see without giving any context path also because my application is running on the root context itself. Am I able to access this application like this. Now do you guys also able to access this application.
+
+01:34:16
+Now what happened I need to see my database.
+
+01:34:24
+Some kind of adjustment has happened here. That cluster autoscaler or something went wrong with my database pods. Something went wrong with my database pods. Some kind of adjustment is happening here. That cluster autoscaler thinks that you really need those many nodes. You don't really need those many nodes. Is it adjusted nodes? Is it remove some additional nodes? And these pods are getting adjusted to new nodes also, if you see.
+
+01:34:55
+is your database parts are getting adjusted to new nodes if you see here. Yes, so it has terminated some additional nodes. Now since I am using stateful set with the EBS volumes even though parts are getting deleted is do I have a data loss here.
+
+01:35:18
+now will you guys able to relate end to end how it is happening
+
+01:35:28
+Now, if I have a CI CD pipe plans for each of these applications, whatever I have deployed in this cluster, suppose I have a CI CD pipelines for this Python application, I have a CI CD pipeline for this Java application. If I have a CI CD pipeline for this application also, then will I able to continuously integrate and apply also in this without downtime also if required.
+
+01:35:55
+And the other side, end users are accessing like this. You can do that. If you don't have a confidence on this rolling updates, will you be able to do a complete downtime deployments, or a blue-green deployments, or canary deployments also?
+
+01:36:18
+Yes, this is how it works. Now, one more important concept here. If I have to deploy hundreds of applications in my Kubernetes cluster, is it a good idea to have hundreds of load balancers? Because for each application, whenever I am creating a service of type load balancer, am I getting one external load balancer for each application? Now I just applied three microservices. Do I have a three load balancers created?
+
+01:36:49
+But if I have to deploy hundreds of applications, is it a best practice or is it good to have a hundreds of load balancers for each application, one load balancer, external load? Then how can I control the traffic within Kubernetes cluster with single external load balancer? I want to have only one external load balancer, but I want to control traffic, how traffic should be routed to your Kubernetes services.
+
+01:37:19
+from external traffic, how external traffic should be routed to Kubernetes services within the cluster with single load balancer. That is where we have one more concept. That is where we have one more concept called Ingress Controller. Ingress Controller and Ingress
+
+01:37:45
+This ingress controller and this ingress resource is different. Don't consider this ingress as a network policy ingress. This is altogether a different topic. Using this ingress controller with single load balancer from external traffic, with single external load balancer, we'll be able to route the traffic to Kubernetes services, different different Kubernetes services within the Kubernetes cluster.
+
+01:38:12
+kind of a host-based routing, path-based routing to Kubernetes services. Host-based routing to Kubernetes service, path-based routing to Kubernetes service within the Kubernetes cluster with the help of one Ingress controller with single external load balancer. So this I will continue in the next class. This I will continue in the next class. The next class is on Monday. So we will discuss about what is Ingress controller, what is that Ingress resource.
+
+01:38:42
+how to create ingress resource all these things we will discuss but meantime that video is already uploaded in our YouTube channel in the meantime the video is already uploaded in our YouTube channel if you get some time try to go through this video so that you can understand more easily this one kubernetes ingress controller and ingress resource but
+
+01:39:11
+Kubernetes cluster which is created using cops. I'm create in this video. I have used the Kubernetes cluster which is created using cops, but whether it's a cops cluster, whether it's a EKS cluster, whether it's a AKS, GKS, is this ingress controller and ingress concepts will be different?
+
+01:39:33
+Again, no, the concept remains same. Go through this video. I will explain this ingress controller and ingress resource in the next class. And if you don't have the CI CD already practiced, instead of you are manually deploying like this, will you able to do this using CI CD pipelines in each microservice repository? In the each microservice repository, can you have a Jenkins file?
+
+01:40:01
+Do you have a Docker file? Can you have a Kubernetes file also? Whatever Kubernetes objects you want to create for that application, you can have and apply. If that is not practiced, try to practice that one also.
+
+01:40:17
+The more you practice, the more you attend the classes, the more you practice, the more you go through these videos, you can understand end to end.
+
+01:40:29
+Are you going to work in a similar infrastructure kind of a similar environment in your actual projects also, but there the values I mean to say the size of the servers will be very huge the number of servers you will have a lot of servers the number of basically applications will be more the lines of code also very high except that they have all these concepts remain same CACD Docker Kubernetes. Yes.
+
+01:41:00
+The more you practice, the more you can manage your work and your interviews also. You don't need any proxy, any support because we are trying to cover all these use cases. Whatever we need to use in the actual environments, we are covering all the use cases. Use cases are nothing but requirements.
+
+01:41:20
+So whatever fits for your requirement, your use case, you need to implement that. Thank you guys. That's it for today. I'll continue next week.
+
+01:41:37
+Now, the next week, I mean to say...
+
+01:41:44
+By Friday or by Saturday, your course will be also completed and Kubernetes also completed. So maybe by Friday or max Saturday, the Kubernetes as well as your course is also done. If you need one interactive session at the end of the course, any time you can ask. Now if you want to ask some question, now itself, you can ask a question. Nothing like a separate session.
+
+01:42:13
+But if you want to interact now, if you want to interact, you can unmute and you can ask any question. Now, it's not my intention regarding. This is like whenever we go for interest, they're asking about your current environment, like how you set up. So like can you please explain any one of them like it would be helpful for us? The concept is conceptually, yeah, yeah, just like environment is nothing but your infrastructure.
+
+01:42:43
+right how you are setting up the infrastructure if I am using virtualized environment not containerized environments do I need to have application servers where I can install Tomcat and apply the application.
+
+01:42:58
+I need to have application servers where I need to set up applications, software, configuration, and all those things. If you are using cloud, instead of manually creating an infrastructure or that environment, can I automate that using Terraform? I will have a separate code, separate repositories where I will have only infrastructure code. Using that infrastructure as a code, if I run that code, is that infrastructure will be created using the Terraform?
+
+01:43:28
+Yes, but is that infrastructure will be like every day you are going to run that pipelines infrastructure pipelines The way the way you are running the pipelines for your applications is that infrastructure pipelines will be executed every day No, you are not going to change your infrastructure very frequently, right? The way you are going to change your applications You are not going to change the infrastructure But if any additional service is required if any additional resources are required
+
+01:43:56
+Can I modify that infrastructure as a code and run one more time? Yes, based upon that, there are your day to day activities. Yeah, that is your infrastructure as a code. But once that infrastructure is in place, can I have my application pipeline in place like application CI CD, whatever developers are developing the applications can have a separate source code repositories for that applications, build scripts, Docker files.
+
+01:44:26
+If you are using Kubernetes, Kubernetes manifest files as a separate application repository. If for that application repository, can I write a pipelines that pipelines will connect to the infrastructure which you have created to deploy.
+
+01:44:43
+So infrastructure is basically one thing. Application deployment is another thing. But application deployment, is it like a frequent changes? Like frequent changes. Developers will keep modifying the application code when they are actually developing. So do we need to support any new application, any new microservice comes into picture? Do we need to support that application team to onboard that application, like creating a Docker files if the application teams are
+
+01:45:12
+not familiar creating a namespace says based on their resource request and limits in the Kubernetes creating volumes. Based on the environment and yes, yes, we are using like cloud formation templates right in case they ask you are using terraform or not like which one you're using like daily like for creating that which one you are comfortable your project is using.
+
+01:45:41
+Now we are teaching Jenkins here, but we are teaching Jenkins here, but is Jenkins is the only CICD tool in the market? No, right? No, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no, no
+
+01:46:09
+In Jenkins, we are going to use groovy, that declarative or scripted. It's kind of a groovy scripting. But if I go for Azure DevOps, if I go for a GitLab, our pipelines in the form of YML files again, but in the background is that Azure DevOps or is that GitLab has the capabilities to create agents, run those steps, whatever you are giving in a YML format. Yes. So CACD will not be different, but the way we are going to use
+
+01:46:39
+the tool is different. So there are plenty of tools available in the market in DevOps. But category is important. Like you need to be familiar with each category, CI, CD, one tool. If projects are using different tool, will it be difficult for you to adapt the new tool in the same category? Need to know the terminology. Terminologies, that's what important.
+
+01:47:04
+But if you want to learn all the DevOps tools, whatever available in the market, even five years also not sufficient. So entire life is also not sufficient, correct? So based on the requirements, you need to keep adapting. If you ask me, when I moved to DevOps almost six, seven years back, I started with Jenkins. But later, I switched companies. I switched to different, different projects also within the company.
+
+01:47:34
+I started working on Azure, I started working on Google Cloud, I started working on AWS, on-prem, and again like a GitLab, Azure DevOps, Jenkins, Spinnaker. Based on the projects, they may use different, different tools, but you should be ready to accept that changes and you should be ready to learn and work. Otherwise, your career will be stagnant and you will not have any growth also. Nowadays...
+
+01:48:02
+So if they ask about Python and Terraform, like we should say like we didn't get a chance to work on that like that, right? We are ready to learn and we just need to work on that. Yes, yes, yes. Yes, yes, correct. As I already told guys many times, you are not the only one. You are not the superhero in your project. Like you, there are a lot of members. Each one will work in one area. If you got an opportunity to work on Terraform, you will become an expert in Terraform. If you don't got an opportunity to work in Terraform,
+
+01:48:30
+If you are got opportunity to work in only like Jenkins, like Kubernetes and all these things, your primary focus is only on that tool. It no need to be like always you say yes, yes, yes, whatever tools. But even though you are not working, but you should have a basics like what is terraform, what is you know, resource block, what is provider, some kind of a basics. Right? So you can say, I didn't got an opportunity to work on terraform. But I know.
+
+01:48:59
+I have explored myself, I know all these things. Provided a chance, I can start working on it. That's it.
+
+01:49:11
+Any other questions if you want to ask feel free to ask.
+
+01:49:21
+then thank you guys have a great weekend try to practice now you are all set to ready to put your resumes and start looking for a job you can prepare your resumes and upload in portals like now curry linkedin all those things
+
+01:49:38
+and try to appear for interviews. Easily you can crack if you understood, if you practice all these classes, whatever we are discussing from last four and a half to five months.
+
+01:49:51
+Thank you guys, will see you on Monday.
+
