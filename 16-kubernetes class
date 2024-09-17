@@ -1,0 +1,807 @@
+00:01
+This conference will now be recorded. We were discussing about what is stateful set and how it works, how to create a Mongo database cluster in Kubernetes as a pod containers. We discussed that and how it was working also we discussed. Today, I thought of discussing about the resource quota, limit range and network policies. But before I go there, let's try to discuss about scheduling concept.
+
+00:29
+I'll discuss that resource code on limit range network policies later. First, to discuss about scheduling, how scheduling is happening in Kubernetes. As I already told, by default, how scheduling is happening. We know we discuss many times by default how scheduling is happening in Kubernetes. I mean to say how parts are getting scheduled in Kubernetes.
+
+00:56
+What is the default scheduling behavior?
+
+01:27
+Anyone what is the default scheduling behavior?
+
+01:33
+We discussed a lot of times. Anyone.
+
+01:42
+how parts are getting scheduled by default.
+
+01:56
+how Kubernetes is deciding in which node that parts has to be scheduled. What is the default scheduling behavior?
+
+02:15
+Scheduler will schedule, but how? What is the default scheduling? Scheduler will schedule the parts to the nodes. Scheduler will decide in which node that part gets scheduled, in which node that part will be scheduled, will be decided by scheduler only, but what is the default scheduling behavior? On what basis scheduler is deciding? That is what my question.
+
+02:42
+the scheduler is deciding based on the resources available on the nodes comparing with resources, the parts are getting requested. Based on the resources, parts are getting requested and based on the resources actually available in that node.
+
+03:00
+It is deciding. We discussed a lot of times, but still people are very, they're not confident to answer. So that is the default scheduling behavior. So the default scheduling behavior will work for most of the cases. For most of the scenarios, the default scheduling behavior will work. But let's say I have a special use case, special requirement. I want my parts to be scheduled on the specific nodes.
+
+03:28
+or I don't want my parts to be scheduled on some nodes. I want my parts to be scheduled on a group of nodes. So if you have those type of use cases, is it possible for me to control how parts get scheduled by the scheduler? Will I able to control the scheduling part if I have those type of requirements?
+
+03:50
+Yes, that is possible using some concepts. That is possible using some concepts here. So Kubernetes scheduler ensures that right node, right node is selected by checking the node capacity, by checking the node capacity of CPU and RAM and comparing it to the pod resource request.
+
+04:15
+The scheduler will make sure that each of these resource type, sum of all the resource requests by the pod containers, which is already running on that node. Even after calculating, it will try to sum all the resource requests by whatever pods which is already requested and running in that node. It will try to minus that one from the node capacity. And if we still have some CPU and memory, and if that is matching with the
+
+04:44
+the other pod resource request, that pod get scheduled in that node, that pod get scheduled in that node. So this mechanism will ensure that the pod will end up in the right node with the spare resources. So this is the default behavior. The schedulers, the Kubernetes scheduler, default behavior works well for most of the cases. So it will ensure that pods are only placed on the nodes that have enough.
+
+05:13
+CPU and memory. It will have enough CPU and memory. It will try to balance out the resource utilization of the nodes. This is the default behavior. It works well for the most of the cases. But however, in some scenarios, you want your parts to be scheduled in the specific nodes.
+
+05:35
+In some scenario, you want your parts to be scheduled in some specific node. You want your parts to be end up on a machine with whatever machine which has a SSD storage or some special type of server. I have some servers with SSD storage attached, or I have some server with high CPUs, CPU optimized servers. I want my parts to be scheduled only in that node, where I have a special type of hardware,
+
+06:05
+machine. You want your parts to be end up on that machine or you don't want
+
+06:13
+some parts running in the same machine. You don't want some parts to be running in the same machine. Two parts don't want to run in the same machine. You want those two parts to be distributed to different machines. You have this type of requirement. Or you want to run some parts together in the same node. You want to co-locate the parts on a particular node. Same node, you want two applications, two different application parts to schedule on the same node. You have these type of requirements.
+
+06:43
+then you have to use some concept scheduling concepts in Kubernetes.
+
+06:51
+we have some concepts like simple one node selector another one is node affinity another one is pod affinity.
+
+07:08
+Anti affinity for anti affinity for definitely for anti affinity and we have pains and tolerations concept and also we have a cardan
+
+07:26
+Uncarded
+
+07:33
+and a drain. So you have some kind of scheduling features. These are some kind of a scheduling concept using these concepts. I can control how my parts can get scheduled to my Kubernetes nodes. Now the first one, the basic one and simple one is node selector. What do you mean by node selector? Now node selector.
+
+08:03
+that will allow you to schedule a pod onto a specific node where the node labels are matching with node selector. Where the node labels are matching with node selector. Now, I have a Kubernetes cluster, let's say. I have a Kubernetes cluster, let's say. Can I add a labels to the nodes? Now let's consider these are my nodes.
+
+08:31
+My Kubernetes nodes that can be a master node, that can be a worker node, whatever it is. I have some nodes, I have some servers. Is it possible for me to add labels to the nodes? The way we are adding labels to the pods and other stuff. Is it possible for me to add labels to the nodes also?
+
+08:52
+This is one node. This is another node.
+
+08:57
+Is it possible for me to add labels to the nodes?
+
+09:05
+This is another node this can be a master node. This can be a master node or this can be a worker node. These are like worker nodes. Now I can add a labels. I can add a labels to the nodes. Let's say.
+
+09:25
+this node I can add a label any label any key value pairs labels are key value pairs can add a label like this name something like this or can add a label whatever
+
+09:40
+just key value pairs can add any labels n number of labels to the nodes like this.
+
+09:50
+I can add a labels like this while creating a pod while creating a pod in my pod manifest. Can I use something called node selector something called node selector in my pod manifest. Can I use something called node selector if I use node selector like this. Now I am requesting with this option in my pod manifest request goes to the master request goes to the master.
+
+10:19
+The scheduler will I try to see this guy is using something called node selector and that a scheduler will try to schedule that part to the node where that selectors are matching with that node labels. Does that scheduler will try to schedule that part to that node where it is matching wherever it is matching that select that labels.
+
+10:46
+Yes, same concept we used in the Docker Swarm. Did we use that labels and constraints concept in the Docker Swarm?
+
+10:55
+Did we use that labels and constraints concept in the Docker Swarm? Similarly, here a node selector. Now, if you see, let me connect to my Kubernetes cluster. Let me connect to my Kubernetes cluster. Let me connect to this machine.
+
+11:26
+Let me connect to this machine. First, make sure I have my nodes ready. Make sure I have my nodes ready. My nodes are running. There is no issues in my nodes. Now, if you see, if I want to describe, I can describe the node also. If you describe the node, you can see the labels also. Lot of details are there, whether that node is healthy, what is happening in that node.
+
+11:55
+Is it running out of memory? Is it having a disk pressure? Is cublet is down? All those things you can see. And if you see, I already have some labels, default labels attached already. Some labels are already attached to that nodes. But who added all these labels? Who added all these labels? When these labels got added? By default, these got added whenever we initiated the cluster, whenever we joined that machines to the cluster. These labels got added.
+
+12:25
+these are the default labels. Now you observe any node there are some labels I am describing this node. Can I see some labels already some labels.
+
+12:42
+These are the default labels. If required, can I add my own labels also?
+
+12:58
+If required, we can add our own labels. And can I use those labels in my pod manifest as a node selector so that scheduler will try to place that pod in whatever node that labels are matching with your selectors?
+
+13:24
+Yes, it will try to schedule the pods to the nodes wherever that labels are matching with your node selectors. Now if I want to see only labels without describe also do I have some option like kubectl get nodes, hyphen hyphen show hyphen labels can I use this sub comments. Now if I execute this kubectl get nodes hyphen hyphen show hyphen labels is it showing the labels I'm just reducing the font size. So is it showing the labels.
+
+13:54
+We have whatever we have on that load. If I execute like this.
+
+14:01
+So now these are the default labels. These are the default labels, whatever I have by default. Now, if I want to add a label, can I add something like this? kubectl label add command. There is a command called label add like this. Label, what you want to label? kubectl label, what I want to label? Which kubernetes object I want to label?
+
+14:29
+I want to label a node. Can I use node ID or name? Whatever I am getting here. Can I use this node ID or name this one or this one? Which node you want to label? Can I use that here?
+
+14:51
+like this the node name I can use which node I want to add a label can I use any key any value whatever I want to add this label key label value.
+
+15:09
+Yes, I can use something like this. Don't copy paste as is don't copy paste as is this ID may change. So I'm typing something like this cube CTL label nodes. Now let's say I want to add a label to this node or 206. I want to add a label to this node or 206. Can I give anything something like this name worker one like this if required multiple labels also.
+
+15:38
+storage, suppose the server has a SSD disk, something like this, based on your requirement, based on your identification, can you add any labels like this, multiple labels, also like this, with space separated at the same time? Yes. Now, let me add one label. Now, when I get the labels, now can I see that label added to that node, that 206 node, can I see that label, whatever just now I added?
+
+16:11
+Now in my pod manifest in my pod manifest can I use this as a node selector
+
+16:20
+in my pod manifest can I use this as a node selector whether you are creating a pod directly whether you are creating a deployment whether you are creating a replica set whether you are creating a demon set stateful set can I use that because that comes under pod spec that comes under pod spec. So can I use that node selector whether I am creating a pod directly whether I am creating a deployment replica set stateful set demon set that doesn't matter.
+
+16:49
+Can I use that node selector concept to schedule my parts into the specific nodes?
+
+17:03
+Yes? Yes, you can use.
+
+17:07
+in any type of Kubernetes object like deployment, state, full set, replica set, demon set, all those things.
+
+17:21
+something like this in your specification. Now, can I directly use in pod also because sometimes you get these type of questions in CK or CKAD exam also ways. In CK and CKAD exams, it is a scenario based questions as I told multiple times. It is not like a multiple choice question. It is a scenario based question. They may ask you to create a so and so pod using so and so image in so and so node.
+
+17:51
+Do you need to be familiar with all these concepts and with a lot of practice and hands-on to do that quickly?
+
+18:03
+Yes. So.
+
+18:09
+Here you can use that for pod, you can use that for deployment based on your requirement. Now we added a label like node selector. There is a concept called node selector. It is a simple scheduling feature which we can use to schedule your pods based on the labels you added to the node. Then you can assign the pods to that node. I can add a label like this. Then can I use that?
+
+18:39
+like this whether I am creating a product here whether I am creating a deployment replica set a demon set that doesn't matter here can I use this here because it is coming under your pod specification can I use that node selector.
+
+18:57
+for any Kubernetes object. Yes. Now, let me show that. As of now, I don't have anything in default namespace. Let's see if I have something in test namespace. I'll delete and demonstrate. As of now, did I use any concept called node selector for any applications, any parts, whatever we deployed so far.
+
+19:22
+No, but is it mandatory to use all these things? Is it mandatory to use all these things? Node selector, node affinity, power affinity? No, that is based on your requirement, based on your use case, your requirement you need to use. Since Balaji sir is explaining, since he has given running nodes, then use this, don't do like that. If you have a requirement, then only you need to use that concept. Otherwise, no.
+
+19:56
+Now, first I'll delete all these applications. You may have a question, sir, why you are deleting all these things? If I try to schedule lot of applications because of resources, it will not work. It will go to a pending state. So I don't want all that to be happen. So I'm deleting all Kubernetes objects, whatever have in this namespace so that I'll get some space.
+
+20:27
+But in actual applications, live environment, to deploy your application, are you going to delete other applications? No. Very big no. No.
+
+20:42
+I don't have anything. Now I added a label. Now let me take any application that can be any application that doesn't matter here. Now let's consider maybe this application. I am creating a deployment and I am not given any replicas also. How many replicas it will create by default one. Now if I want more replicas, I need to give that replica.
+
+21:08
+I need to give more replicas than I have to do something like this replicas as two or one like that. Now here I'm not using any node selector concept based on the resources which I am requesting based on the resources are available in the nodes does scheduler will assign in which node that parts can be scheduled. Yes now if I want this parts to be scheduled in a specific node.
+
+21:35
+Can I use that concept here? Node selector, node selector. Now, that node selector, whatever label you have given, whatever label you have given, what label I have given like worker one, name worker one. Now, can I use that name something like this? Name like this?
+
+22:03
+Now I am intentionally doing some mistake here. I am intentionally doing some mistake here. Now these are case sensitive. These are case sensitive. When I am adding a label worker one, O caps, but here I am giving worker one O small. Now the scheduler will be able to find any node with this key and value as a labels on the nodes.
+
+22:34
+Then does your scheduler will try to schedule this pod? Does this will work?
+
+22:44
+No, now let me show that cube CTL apply I found out that Java web app I am deploying and which namespace let's see I think since I have not mentioned that in an oh sorry I'm executing delete that okay so since I have not mentioned any namespace in that YML I think it is deployed in it is deployed in default namespace but if you see
+
+23:13
+What is the status now? That pod status.
+
+23:20
+Why it is pending what could be the reason how to troubleshoot debugging in troubleshooting also important.
+
+23:28
+CubeCTA describe what I want to describe what I want to describe. I want to describe a pod this pod. Now what it is saying the scheduler is trying to say something. It is informing you something.
+
+23:59
+What it is saying? Take a screenshot and send it to Balaji sir. It is saying something like that. Take a screenshot and send it to Balaji sir. He will explain. It is saying something like that.
+
+24:15
+So it is saying zero by three nodes are available. It is saying total three nodes are there, zero by three nodes are available. Understanding, reading the error message is very, very important. I told multiple times.
+
+24:32
+I told multiple times understanding the error messages, reading the error messages is very, very important because you are going to get different, different types of issues. We are like I mean to say we are available to solve the problems because companies are hiring companies are firing you to solve some challenges, some problems. So you are going to get definitely a lot of issues. But do you need to be good at?
+
+25:01
+understanding troubleshooting reading doing some fixes. That's why they are hiring you know if you understand the error message read the error message any error message at least is it going to do something kind of 60% of the solution. I mean to say not the solution it is going to do what exactly the problem based on the problem will be able to identify and rectify that problem or fix that problem any problem.
+
+25:33
+So now if you see what it is saying, zero by three nodes are available. One node has a taint. It is saying one node has a taint. One node has taint, our pod is not tolerating that. The master node. Do we have a taint on the master node? Am I tolerating the taint in my pod manifest as of now? Am I tolerating the taint in the pod manifest as of now? No. So because of that, is it allowing to schedule in the master?
+
+26:03
+is the pod whatever pod I am trying to schedule is it allowed to be scheduled in the master no what about other two nodes what about other two nodes what it is saying what it is saying two nodes did not match no definity or node selector no definity or node selector it is not matching because I use this node selector
+
+26:32
+I use this as a node selector name worker1. If you see do I have any parts with that label, you will see they will get nodes. Do I see any nodes? Do I see any nodes with that label?
+
+26:46
+You may have a question, sir. We have here, right? You have here. In this node, we have that label, but why? Key is same, value also same, but it is case-sensitive. It is case-sensitive. Worker one. I had a label, O caps worker one. When I am using selector, O small. So because of that, it is not working. Now, there are two chances here. There are two fixes here. One.
+
+27:14
+Can I update my label of the node or can I update the selector of my pod? Anyone. Either I can update the label of my node or either I can update the selector of my pod. Anyone I can do that. Now let me update the selector here.
+
+27:33
+Since it's a deployment, since it's a deployment, I am making the changes in my parts spec. Then if I apply again. Now this time you see.
+
+27:46
+Is parts got scheduled now?
+
+27:52
+Now if you see why it is scheduled in same node. Why it is scheduled in same node? Both parts are scheduled in same node. Why it is not scheduled in another node? Different node.
+
+28:08
+Why both replicas are running in the same node because of the selectors. Do I have other node with that label? Suppose if I have other nodes also with that labels does my low parts will be distributed between those nodes wherever I have same labels. Does my parts gets distributed to those nodes wherever I have same label? Yes. Now if I try to scale also.
+
+28:35
+If I try to scale also now, let's say whether I am scaling manually or using I am using this commands to scale. Now let's say I'm trying to scale maybe three replicas again and I'm trying to apply whether it's a auto scaling HPA whether it's a manual scaling that doesn't matter. Now in the same node it is trying to come up why this time it is spending by this time it is spending.
+
+29:04
+What could be the reason this time?
+
+29:11
+Now you read the error message 0 by 3 nodes are available. One node has insufficient memory. One node has insufficient memory and one node has a taint. Our pod is not tolerating and other node is not matching with selectors. Other node is not matching with selectors. Other node is not matching with selector. One node is not tolerating the taint and one node insufficient memory because I have less CPU.
+
+29:41
+Is it able to schedule in that node wherever it is matching also is it able to schedule because of no resources available no CPU and no memory. Now because of this node selector let's say if I try to add a node selector same label to other nodes also now does this part can go to that node if I add a same label to some other nodes also it will work. So this is the default scheduling.
+
+30:09
+Now if something goes wrong with that node what will happen to these parts guys. Let's say something went wrong with this node that node went down because of insufficient CPU or disk pressure memory pressure. QBlet is failed in that node. If that node went down what will happen to the parts. These parts.
+
+30:32
+Krishna prasad is saying it will reschedule to other nodes. But unless until other nodes have that label, does that part get rescheduled to other nodes?
+
+30:46
+No. So it will not get rescheduled to other nodes unless until they are matching labels. So in real time, are you going to at least use the same labels for group of servers because you are not going to uniquely label the nodes. You will have these type of problems. So instead of having a single server with one label, can I have some two, three servers with same labels and selectors with different different hardware or storage like that so that it will get scheduled only in that group of servers?
+
+31:17
+This is simple. Select a scheduling feature called node selector. Is everyone clear? What do you mean by node selector? How it will work?
+
+31:34
+Now, this is simple, basic scheduling feature. Now we have some advanced features also. Kubernetes offers some advanced features. Kubernetes also offers some advanced scheduling features called node affinity. What do you mean by this node affinity? So node affinity is advanced version of node scheduling. As we already mentioned earlier,
+
+32:01
+node selector is the simplest part scheduling feature in Kubernetes. This node affinity will expand the node selector functionality with lot of improvements. Kind of advanced version of node selector. Now this affinity language is more expressive. It is more expressive.
+
+32:29
+What do you mean by more expressive? Can I use more logical operators if I use node affinity comparing with node selector? Can I use more logical operators like in, not in like that expressions?
+
+32:46
+when I'm using no-definity, yes. When I'm using node selector, is it kind of a equality-based selector here? Is it kind of an equality-based selector here? Am I able to use more logical operators, expressions like in, not in, those type of conditions here when I use node selector? No. So when it comes to no-definity, it will expand the features of node selector with a lot of improvements.
+
+33:15
+It is more expressive. I can use more logical operators to control how parts are scheduled. But again is this node affinity also works based on the labels on the node again is this node affinity also works based on the labels on the node the way the node selector is also working based on the labels on the node is this node affinity also works based on the labels on the node.
+
+33:47
+Yes, this node also works based on the labels and the nodes only. But can I use more logical operations, conditions, operators like in, not in, multiple values?
+
+34:04
+And again, there are soft scheduling rules, there are hard scheduling rules, which I can use in the node affinity. Soft scheduling rules, or I can use hard scheduling rules also when I'm using node affinity. What do you mean by soft? What do you mean by hard? I will explain now. That node selector is like a hard rule. If none of the node has that matching label,
+
+34:34
+Is your parts are getting scheduled when I'm using node selector? If none of the nodes has that matching labels, is your parts are getting scheduled? If I'm using node selector. No kind of a hard rule, but when I use no definitely can I use this after all as well as hard rule also if required, what do you mean by soft rule? Even though none of the nodes has that matching label, which you are using in the node affinity, the still
+
+35:04
+Parts can get scheduled in any node in the cluster.
+
+35:23
+Yes, if I use a soft rules with the node affinity, let's consider I am using node affinity instead of node selector. I am using node affinity here. Instead of node selector, I am using node affinity, but it is not exactly same like this. I will explain. Excuse me. One second.
+
+36:05
+Let's say I am using no-definity here even though I am using something like this and none of the nodes are matching then still does my part get scheduled maybe in this node or other node or other node based on the resources available even though I am using no-definity if I am using no-definity with soft rules if none of the nodes are having that label which I am using here.
+
+36:31
+Does my parts get scheduled maybe in this node or this node or this node based on the resources available? Yes. But is that the case when I am using node selector? If none of the nodes are matching, is it working like that? No.
+
+36:49
+We have a soft rules. We have a hard rules in the node affinity. We have a soft rules. We call it as a preferred rules. We call it as a preferred preferred rules. I am preferring that one, but if it is not able to schedule because of no matching nodes, it will try to schedule in any node preferred. This hard rule.
+
+37:18
+is kind of a required rule hard rule is like a required rule so it should be there required rules preferred rules and required rules are soft rules are hard rules now there are some options here there are some options here one is preferred during scheduling preferred during scheduling ignored during execution this one this is soft rule preferred during
+
+37:48
+Ignore during execution this hard rule required during scheduling ignore during execution required during scheduling ignore during execution but they announced one more thing required during scheduling and required during execution also but they have not released that future whatever future I am highlighted here another future they have not yet released they announced but they have not released that future required during scheduling
+
+38:17
+and required during execution they have announced but they have not released. So what do you mean by required during scheduling and required during execution also it is hard rule now let's say if I am using that required during scheduling and required during execution but that is not implemented you will not it will not work but just I am trying to say how it works. Is that labels has to be matched.
+
+38:46
+while scheduling that part. Whatever I'm using that no definitely required during scheduling required during execution is that rules has to be matched while scheduling. Yes, then only it will schedule even though after scheduling. Does those labels should be there on that node to continue that part in the same node? Yes, if I remove those labels, if I remove those labels after sometime.
+
+39:14
+If I use this one required during scheduling and required during execution also body schedule, but later I removed the labels. Do you think that that does that part will sit on that note? Do you think does that part will sit on that note? No, but they have announced that feature. They have announced that feature, but they have not released that feature. They will not release that feature. So you cannot use that one required during scheduling and required during execution. You cannot use. But
+
+39:43
+this can I use required during scheduling ignore during execution can I use this one the first one required during scheduling and ignore during execution yes this you can use so as of now this is the only preferred rule this is the only required rule now what do you mean by this preferred rule that is preferred during scheduling and ignore during execution
+
+40:12
+It is kind of a soft rule. Is it going to prefer if there is any matching node where labels are matching? Is it going to prefer that node if there is any node with matching labels? Yes. It will prefer to schedule in that node if there are any matching labels, matching nodes. But if it is not matching, is it going to ignore and schedule the pod in whatever node where you have enough CPU, enough memory?
+
+40:42
+Yes, that is soft rule that is soft rule. Now if I am using this one required during scheduling and ignore during execution, it is kind of a hard rule if none of the nodes has that matching labels, which I am using in this rule. Does that part get scheduled in that any node in the cluster? No, it has to be there while scheduling while scheduling. It has to be there. But once it is scheduled.
+
+41:10
+If I remove that label from this node, is there any impact on this part which is already scheduled in that node? If I remove that label, is there any impact on that part? If I remove that label, no, it will not impact on that node. But somehow you deleted this part, somehow you deleted that part completely. Then again, will it schedule? Because you already removed that label, again, will it schedule?
+
+41:41
+No. So that is hard rule. So which means you need to have that condition satisfied during scheduling. So this is two types of rules. Is everyone clear? What is this? No, definitely what is preferred rule or soft rule or what do you mean by this hard rule or required rule? How it works is everyone clear? Theoretically.
+
+42:08
+Now, let me demonstrate with preferred rule first. Let me demonstrate with preferred rule first. Now, I will delete that deployment completely. I'll delete the deployment completely. I'm going to demonstrate again.
+
+42:23
+I'm going to demonstrate again using that node affinity preferred
+
+42:31
+node affinity
+
+42:38
+Now let me change
+
+42:44
+Now here instead of using node selector like this can I use advanced version of this node selector called node affinity
+
+42:53
+something like this here you have affinity you have affinity first you need to use affinity you need to use affinity this affinity within that affinity what you need to use node affinity within that you need to use something like this node affinity.
+
+43:17
+affinity node affinity then under this node affinity something different like this now I am demonstrate this preferred preferred during scheduling ignore during execution I am using this type of rule kind of a what type of rule is this affinity node affinity this one what type of rule is this can I consider this as a soft rule preferred rule
+
+43:49
+kind of a soft rule preferred rule yes under this you need to use some options you need to use some options like this.
+
+44:01
+I will explain what is what in some time. I will explain what is what in some time I am using like this but indentation should be proper. Indentation should be proper.
+
+44:14
+Now this one preference match expressions. Now is it more expressive? Am I using kind of expression expressive? I mean to say expressions more logical conditions here using this. Now here can I match with multiple values also it is like in either that can be worker one that can be like this also worker one.
+
+44:42
+or that can be worker like this can I use multiple conditions also like multiple values same key can I use like this also yes now I will remove this one I will remove this one I can map with multiple values like this
+
+45:00
+Here in the operator section in the operator section can I use in not in not in innocence except this one anywhere is fine in whatever node where I have this label key and label value except that node any node is fine. Can I use not in condition instead of in condition if you have that type of requirement also.
+
+45:23
+Yes. Now, what do you mean by this weight? What do you mean by this weight? Now, this is preferred rule. This is preferred rule, not a required rule. Suppose this condition is not satisfied on the any node, this condition is not satisfied on any node. Still, does it has to say the parts does still your QB and it has to schedule the parts because we are using preferred rule.
+
+45:53
+So how it will schedule again, it will use some kind of a weights. It is going to use some kind of a weight, the weight mechanism, each and every node will have some weights. How the weight will be calculated based on the resources available, based on the resources available in that node, it will calculate some kind of a weight. And whatever node weight is near to this weight, whatever I'm mentioning, is it going to prefer in that node?
+
+46:20
+weights are calculated based on the resources available in that node and whatever weight is near to this weight I am using here is it going to schedule in that node.
+
+46:32
+yes some kind of algorithm will happen some kind of algorithm will happen wait in node affinity so if you open this official document itself you can understand what do you mean by that wait what do you mean by that wait so node affinity wait you can specify wait
+
+47:02
+What numbers I can maintain that I have what numbers I can mention that weight.
+
+47:08
+one to hundred and each instance of the this type when scheduler finds nodes that meet all other scheduling requirements like a lot of nodes are matching with resource request and all those things then scheduler will iterate through every preferred rule that node satisfies and adds the value of the weight for that expression to a sum. So it will calculate some kind of algorithm.
+
+47:37
+and whatever node is near to that weight, the final sum is added to the score. Then whatever node has nearby weight, then that part gets redone. When lot of nodes are matching.
+
+47:53
+with all the requirements. So, there kind of some algorithm will happen in the background. So that is only applicable that only applicable that only applicable when we are using which rule when we are using which rule that weight is applicable that we need to define the weight.
+
+48:13
+only when I am using this one preferred preferred rule on what basis the weights will be measured as I already told here what basis mates you know weights will be measured the scheduler will iterates through every rule that node is satisfying and it will add the value to the weight. I mean to say based on CPU also matching memory also matching and network related all number of parts which is running in that it will calculate some number.
+
+48:43
+and it will try to schedule in whatever node which is matching that one. But most of the cases, we will always mention values as only one value. This weight value as only one, but some in the background Kubernetes will run some algorithm. It will try to calculate the weight of the node based on all the conditions, whatever is satisfied on that node, then it will decide. This is only for preferred rule. Most of the cases, that number will be one only.
+
+49:13
+Now even though is this condition is satisfied now? Do I have any node with this label as a key? Key is matching. Key is matching, but do I have a value, this value? Is it matching now in any node? But still is my part get scheduled in some node?
+
+49:34
+because I am using which rule.
+
+49:41
+preferred now let me apply let me apply cube ctl apply
+
+49:55
+let me define now if you see is my parts are running I think in my YML I have kept the three parts in my YML I kept the three parts so since it is not matching also is it scheduled in 206 one part is running in 93 another part is running into not another 206 again because it's a preferred rule now instead of preferred rule instead of preferred rule if I use required
+
+50:24
+Do you think will it work like that?
+
+50:29
+now i am trying to duplicate this one file i am using required
+
+50:43
+now if I let me edit this let me edit this now instead of preferred rule now can I use required rule here
+
+51:03
+something like this required rule when I am using required rule it is little different required rule. So do have that weights concept here when I am using required rule. No, there is no weights concept when I am using this required rule weights are not there. I will remove that weights.
+
+51:30
+I removed that weight. Now here I am using node selector terms. I'm using something called a node selector terms. Under this I'm using something called node selector terms. Under that node selector terms, what do I have? Under that node selector terms, I have this match expressions. I have this match expressions as an array. As an array, let me.
+
+52:01
+match expressions something like this node selector terms under that match expressions key operator values so key operator values like this now it is required rule but I am using wrong value now if I try to deploy.
+
+52:23
+If I try to reply.
+
+52:27
+Now to understand this better you delete this and apply to understand this better you delete and apply even though I don't delete also since I am using a deployment is it going to create those things as per the changes whatever I have done even though I don't delete is your parts get created based on the changes I have done in my deployment yes but what type of deployment strategy by default it is going to follow
+
+52:58
+rolling update rolling update but already those nodes have lot of parts running will it able to create a new part before it is going to terminate old part it has to create a new part that new part has to be in ready state then only it can delete old part but if that node doesn't have any enough CPU and memory are you going to get a new parts.
+
+53:24
+No, so that is different concept. You need to understand all these things. You need to understand all these things Now for better understanding can I delete this existing deployment and again apply so that you will not have enough parts Running in that road you can understand properly So let me delete that
+
+53:48
+Whatever I'd applied.
+
+53:53
+I will delete so nothing I have nothing I have now I will try to apply using this required rule I will apply this using required rule you no need to delete but if you don't have spare enough resources it will not work again otherwise you can change your deployment strategy in this file you change your deployment strategy as recreate so first is it going to delete
+
+54:20
+If I change my deployment strategy as recreate, it will delete the old ports then it will schedule the new ports. That way also you can do whatever. Since I am using required rule now do you see my parts are in pending state.
+
+54:36
+Why it is in pending state now?
+
+54:41
+why it is in printing state now let's describe one by one
+
+54:47
+Do you have this problem again same problem 0 by 3 nodes are available one node has attained one node has attained other node 2 nodes doesn't match with quad no definity. It is not matching with no definity rule because what type of rule I am using no definity rule. I am using.
+
+55:10
+required rules hard rule now let me modify that yml let me correct this one now
+
+55:21
+I am fixing that problem now if I apply now will it work now let me apply this file again
+
+55:30
+Now if you see now is your parts are getting scheduled since I am using deployment a default deployment strategy one party scheduled it is terminating other part once this is running it is terminating other parts like that it is terminating but now why this is in pending state this one is in pending state this one I mean to say this one why it is still in pending state.
+
+55:58
+this is the new pod it has to terminate the old pod it has to terminate this old pod it has to create this new pod why this new pod is still in pending state because do I have enough CPU enough memory for this one I am trying to create three replicas in the same node do I have enough CPU for this pod
+
+56:20
+cubectl describe you describe this part
+
+56:28
+you describe this part
+
+56:32
+It is because of low resources. Now why still it is not terminating this old pod one one more old pod is still in pending that was pending because of no condition that is pending because condition is not satisfied. But why it is not able to terminate this one because it is following rolling update deployment strategy unless until this becomes ready. Does this world part gets terminated?
+
+57:01
+This world party is not going to be terminated. But why this part was in pending state last time? Is it because of low resources? This part was pending in the last time? No, it was because of that condition.
+
+57:16
+To understand these concepts clear you delete the deployments and apply so that you can easily understand.
+
+57:24
+But is everyone clear? What do you mean by this no-definity, hard rule, how it works?
+
+57:35
+Is everyone clear what is this node affinity, hard rule, soft rule, how it works. Now let's consider one more one more advanced scheduling feature for affinity and pod anti-affinity. We have a node affinity. Similarly, we have a pod affinity and anti affinity also in the pod. So how different it is from node affinities.
+
+58:04
+this node selector and node infinity
+
+58:12
+works based on what? This node affinity works based on what?
+
+58:22
+work it will work based on the
+
+58:28
+labels on the nodes based on the labels on the nodes everything works based on the labels and selectors only in kubernetes most of the things works based on the labels and selectors only but this works based on the labels on the this node selector and node refit work based on the labels on what labels on the nodes based on the labels on the nodes now there is another concept called pod affinity.
+
+58:58
+pod affinity pod anti affinity but if I use this pod affinity pod anti affinity this works based on what this pod affinity pod anti affinity works based on the labels on the pods which are already running in which are already running which are already
+
+59:28
+schedule.
+
+59:31
+scheduled in the nodes scheduled in the nodes, so This part affinity and part anti affinity works based on the labels on the parts Based on the labels on the parts which are already running in the nodes Which are already scheduled in your nodes. What do you mean by this one? no, I Have some application. Let's consider. I have some application. Let's say I have some micro service here
+
+01:00:00
+microservice one application I have.
+
+01:00:06
+I deployed that microservice in my cluster. Parts are running for that microservice. I'm not sure wherever it is, that doesn't matter. Now I have an application, let's say application A, application A or microservice A, that part is scheduled in this Kubernetes cluster. Now that part might be in this node or this node or this node, I don't know. Now while creating a part, did we add labels to the part?
+
+01:00:37
+Let's say I have added a labels for my pod like this labels app java web app like this. Now my pod is running here or here or here that doesn't but you know I am not sure where it is running. Now I am trying to deploy another application that is another application application B.
+
+01:01:06
+This application B, this microservice pod should get scheduled wherever this pod is running, wherever other application pod is running. This pod is already running in my cluster. I'm trying to create one more pod, other application pod. That pod should get scheduled along with this pod. I need to co-locate these pods. If this is running, this application is running, that pod is running in this node.
+
+01:01:35
+I want this also to go and sit in that node. If that part is running in this node, this application, I want this part also go and sit here. So here, if I have these type of requirement, what concept I can use? Can I use?
+
+01:01:54
+Quad affinity rules
+
+01:02:04
+pod affinity rules. So if I use pod affinity is my pods get scheduled based on the labels of the existing pods wherever the pod is running in that node this pod also gets scheduled. That is pod affinity. What do you mean by anti affinity? What do you mean by anti affinity?
+
+01:02:33
+I don't want these two run together opposite run two together. Let's consider I have this application microservice a running in this node. I don't want other microservice running in this node other pod running in this node. Can I use the anti affinity rule pod anti affinity rules instead of affinity rules.
+
+01:03:01
+So these are possible using anti affinity rules. Now let me demonstrate let me demonstrate. So to make things simple guys I am taking only one pod. I'm taking only one replica.
+
+01:03:31
+Now I will demonstrate for affinity.
+
+01:03:37
+Guys in this pod affinity also do have a soft rule and hard rule again. This pod affinity and pod anti affinity again do have a soft rule and hard rule again here. The way we have a soft rule and hard rules in the node affinity. Do have a soft rules and hard rules in the pod affinity and anti affinity. Yes. Now node affinity as I already explained node affinity allow you to schedule a pod on the set of nodes based on the labels on the nodes.
+
+01:04:06
+that no definity works based on the labels on the nodes that no definity works based on the labels present on the nodes but however in certain scenarios we might want to schedule certain parts together or we might want to make sure that certain parts are never scheduled together then can I achieve this by using
+
+01:04:37
+pod affinity or pod anti affinity respectively. We call it as a inter pod affinity and anti affinity inter pod affinity or anti affinity. We call this we can use this one here.
+
+01:04:52
+this part affinity or anti affinity will allow your parts to be scheduled based on what
+
+01:05:01
+based on what this part affinity anti affinity works based on the labels on the pods that are already running on the node that are already running on the node rather than based on the labels on the nodes it is going to work based on the labels on the pods similar to node affinity can I use this required during scheduling ignore during execution prefer during scheduling
+
+01:05:30
+Ignore during execution soft rules and hard rules in pod affinity pod anti affinity also
+
+01:05:38
+Yes, that is possible. So when you are scheduling your workloads, when you are scheduling your workloads workloads are nothing but your applications, we may need to schedule certain set of parts together for the affinity make sense when you are scheduling some workloads when you need to make sure that certain parts are not scheduled together for the anti affinity make sense. Now here.
+
+01:06:06
+when I am using affinity instead of node affinity what I am using here
+
+01:06:20
+pod affinity here can I use this required rule required rule or preferred rule also required rule also you can use that is hard rule preferred rule now here we are using one more concept called topology key the topology key is like a unique key unique key you have on the label also unique key you have on the node but 100 percent most of the cases
+
+01:06:48
+Do we have a hostname unique for each and every node? That hostname will be unique for each and every node? Yes. So can I use that hostname? Can I use that hostname kubernetes.io slash hostname as a topology key? Some kind of a unique key for each and every node we have in the cluster? Yes. So always this topology key will be something like this only. Always this topology key will be something like this only.
+
+01:07:17
+But when this topology key comes into picture when I am using pod affinity or pod anti affinity pod affinity or pod anti affinity I am using do I need to have this topology key also used to
+
+01:07:38
+yes now affinity and anti affinity and again preferred rules and required rules you can use preferred rules again for affinity and anti affinity
+
+01:07:55
+Guys as I told multiple times even though you are taking a CK or CKAD exam. Are you allowed to refer this official Kubernetes website while taking the exam also? Yes, but don't completely depend on this website because do you have a time to read and understand and again.
+
+01:08:16
+do that solutioning no but if you are already practice lot of times you know the concepts just to revise will I able to quickly go through this website and see like this and get whatever I want to get copy paste and modify as per your requirement
+
+01:08:36
+I can just copy paste this one and modify as per my requirement.
+
+01:08:45
+that you can do but don't completely depend on this website without practicing Kubernetes without understanding what is Kubernetes and its architecture. What are the Kubernetes resources? What do you mean by deployment? What do you mean by service without knowing without practicing this lot of times if you directly go for a CK or CK edit will not work out as I already told multiple times how many times you can attempt even though you failed for the first time.
+
+01:09:15
+There is another chance. There is another chance. Second time you can appear. Maximum two attempts even though you fail to clear in first attempt you can. Will get another attempt you can go and do it in a second attempt, but as I suggested multiple times. Do you need to be?
+
+01:09:36
+practice more. Do you need to have this Kubernetes concepts, Kubernetes commands on your fingertips? You need to be familiar with your Kubernetes concepts. You need to have your Kubernetes commands. This Kubernetes manifest how to write all these things on your fingertips. Like you should be able to quickly create a manifest, apply the manifest, troubleshoot, debug. That comes only when that comes only when if you have put a lot of effort.
+
+01:10:06
+understanding these classes, going through these classes, practicing multiple times, that comes by hard work. But I don't think CK is too much complex. Lot of our students are able to crack within first attempt itself, but they have done lot of practice. Lot of hard work they have done, lot of practice they have done. They're very good at commands, manifest, writing the manifest, troubleshooting.
+
+01:10:35
+Now if you see node affinity we discussed the way we have a node affinity we have a pod affinity pod anti affinity does pod anti affinity also support this required ignore preferred like again if it is a preferred rule again to have a weights concept here even though I am using pod affinity or pod anti affinity if I am using weights concept along with topology along with topology.
+
+01:11:06
+along with topology keys. Now, what do you mean by the topology? The topology key can be allowed label key with following expectations, right? So some kind of a unique, some kind of a unique name, unique way, identify your nodes. Now, let me use
+
+01:11:32
+Quad affinity.
+
+01:11:38
+for affinity concept. Now.
+
+01:11:46
+I will but my AML now let me modify this one now I want to use for affinity guys is it possible to use multiple for affinity no definitely together also node selector and for affinity together also yes but that is very rare case that is very rare case you can use multiple scheduling constraints like for affinity no definitely together also now instead of.
+
+01:12:15
+no definity i am trying to use what
+
+01:12:22
+I am trying to use fordefinity now I am trying to use fordefinity just to understand more clear let's reduce the number of replicas otherwise you will not understand clearly I will reduce the number of replicas to one so that you can clearly understand whether I use three replicas whether I use four replicas does that scheduling will work based on these rules whatever I am using here whether it's one two three that doesn't matter based on the rules I am using here it will work.
+
+01:12:53
+Now affinity I am saying for the affinity. Affinity for affinity instead of node affinity I'm using for affinity now. Again you can use the required rules or ignore rules. I'm using required rules now. I'm using required rules required rules. Now in this required during scheduling required during execution. Label selectors something different here label
+
+01:13:23
+selectors I'm using something like this guys if you have additional spaces or tabs, so do you have a problem again YML indentation? So I am using something like this required during scheduling required during execution label selector in this label selector. I am using something like this match expressions match expressions then match expressions again key key.
+
+01:13:53
+operator key whatever key you want to use key this is another pod another pod label key another pod label key operator operator you can say whatever in or not in values values is again multiple now let's say i'm giving this as an example now
+
+01:14:22
+Does this pod, does this pod, whatever pod I am using here, does this pod will get scheduled wherever some pod which is already running in my cluster and that pod has a label called app and value as nginx. Is it going to be scheduled in that node wherever another pod with the label called app and value as nginx is running in that cluster. Is it going to schedule in that node? Now, since I am using required rule, since I am using required rule,
+
+01:14:53
+Is it going to schedule this pod? If this pod is it going to schedule this current pod? If already you don't have an application with this pod label and value, is it going to work? Is it going to schedule? No. Because I am using required rule. Now here, as I already told this pod affinity anti affinity works based on what? Based on pod labels.
+
+01:15:21
+Now topology key topology key so I need to use the topology key some unique way of identifying the topology key is a sibling of your label selector it's a sibling of your label selector now let me delete whatever I have so that you can easily understand in the current namespace
+
+01:15:52
+so that you can easily understand. Now, kubectl apply ifanf.java webf for definetly I'm applying. Now if you see.
+
+01:16:06
+Why that is in pending state? I just create trying to create only one replica. Why that is in pending state? How to know? Can I describe that for you?
+
+01:16:22
+Can I describe that part and understand why?
+
+01:16:27
+This is right. Yes was missing Now what you can understand
+
+01:16:44
+0 by 3 nodes are available. One node has attained our pod is not tolerating. The other two nodes did not match pod affinity rules, which means they have any pod already running in this cluster with that label. I'm trying to show in all namespaces.
+
+01:17:09
+Now do I have any part where my label pod label is app value as nginx in any namespace in this cluster. Do I have any part where my app label that pod label is app value as nginx. No now because of that it is pending because it is not matching with that for definity rules. Now let me create a nginx pod. Let me create nginx pod.
+
+01:17:39
+Maybe that can be a pod or deployment that doesn't matter here that can be a pod or deployment of that doesn't matter here. Now wherever that engine X pod get scheduled whether you are creating a pod whether you are creating a deployment replica set that doesn't matter here. Now I am trying to create one engine X application that can be a deployment with replica one that can be a deployment with replicas to add that can be a pod that doesn't matter.
+
+01:18:08
+Now I am creating one nginx pod Metadata Name I am creating one nginx pod But it no need to be a pod Can I create this nginx pod using any controller Like replica set, deployment, demo set Whatever it is yes
+
+01:18:29
+that doesn't matter here now this is my pod spec I am creating it metadata is this now let's say labels this is my pod labels now I am adding like this do you think this condition will satisfy do you think even I schedule this pod whatever other pod which is waiting because of for definity rule do you think will it work no
+
+01:18:59
+value is matching but the key also should be matched
+
+01:19:06
+key also should match right so app nginx now whatever
+
+01:19:26
+Now while scheduling this one, I am not using I am not using any conditions. Does this can does this part can schedule in any node because while creating this part I am not using anything. I am not using any node affinity node selector whatever part selector that doesn't matter here. Now this no this part get scheduled in some node does other part also get scheduled in the same node where this part is going to be scheduled because the other part I am using
+
+01:19:58
+yes but the namespace let me see is it going to work it a namespace level now i am trying to apply this one in a different namespace and let's see now the other part in which namespace i try to schedule where i was using for definitely default now let's see if i create this part in test namespace will it pick or not this one i need to test i thought
+
+01:20:28
+Now let me do this also now.
+
+01:20:32
+I am trying to create this pod in a test namespace but other pod is using this pod affinity rules.
+
+01:20:45
+Now let's see.
+
+01:20:48
+Now nginx part is there, nginx part is there with the label, with the label app nginx in which namespace that part is there, in which namespace that part is there. Now there is a part with this label app nginx which is there in test namespace. But if you see, if you see still is this part is scheduled, is that part is scheduled even though I have a part.
+
+01:21:18
+even though I have a pod with that name label no because again this pod affinity this pod affinity rules is it working within a namespace level this pod affinity rules and anti affinity rules is it working in a namespace level yes but when it comes to no definity when it comes to no definity node selector that doesn't matter namespace namespace doesn't matter when I am using no definity or node selector but when I am
+
+01:21:47
+using pod affinity pod anti affinity is it working at a namespace level even though I have a pod with that label app engine X this part is still not scheduled but let me do one thing I am doubting one more thing let me delete that application and again apply if that picks up let's see I have one more doubt one more scenario I want to test because
+
+01:22:14
+all the possible scenarios I will test now and deleting that and again applying but now the pod is there that nginx pod is there let's see if this picks up now I have that nginx pod still pod is already running now let's see if I apply now again I deleted that application and again applying with that affinity rule if this also doesn't pick up if this also
+
+01:22:44
+it will be a kind of a namespace level now if you see it's kind of a namespace level only now again is it in a pending state even though i have a ford
+
+01:23:00
+now even though I have a pod that is running in this node 206 node that nginx pod is running this is still pending which means it is at a namespace level now let me delete that let me delete that nginx pod
+
+01:23:20
+now let me remove that namespace in that yml now let me remove that namespace in the yml
+
+01:23:31
+Now I have still that part in pending state. I have still that part in pending state. This one where I'm using no definity. Now I am creating now nginx part in the same namespace. In the same namespace I'm creating now. Now this time the nginx part got scheduled in the same namespace. Now do you see this part is getting created now. Is it came to running state now?
+
+01:23:59
+The moment pod is scheduled, this nginx pod is scheduled to some node. It is scheduled to 206. Do you see the other pod also came to 206. It's already started running. Is everyone clear how pod affinity works? Pod affinity works based on the existing pods at again at a namespace level. Do I need to use the labels of the pods which are in the same namespace?
+
+01:24:33
+yes now what do you mean by anti affinity what do you mean by anti affinity it's kind of a reverse it's kind of a reverse now let me do this let me do this it's kind of a reverse called anti affinity
+
+01:24:55
+Anti-affinity.
+
+01:25:00
+Now it's kind of a reverse now is this part get scheduled wherever nginx part is going to be scheduled if I use anti affinity rule instead of affinity rule if I use anti affinity rule is it going to schedule in the same node where this part is running is it going to run in the same node where this part is running.
+
+01:25:23
+no so something like this for anti affinity remaining thing is same as is instead of quad affinity instead of quad affinity we are using quad anti affinity now again it is a required rule it is not a preferred rule it is required rule now
+
+01:25:45
+Let me apply this.
+
+01:25:49
+let me delete existing one and apply so that you can easily understand I deleted existing one now I am applying with anti affinity rule with anti affinity rule I am applying now if you see
+
+01:26:12
+Do you see this nginx part is running in this one 206 is it scheduled in 206.
+
+01:26:21
+No 93 now if I scale this one if I scale this Java web app Maybe two replicas three replicas also is it going to schedule that a new part in this node wherever this nginx is running If I scale also no So this is anti-affinity This is anti-affinity Now one more important scenario which I wanted to discuss now
+
+01:26:49
+I am trying to create a multiple replicas of my application. I'm trying to create a multiple replicas of my application. Let's say I want to create two replicas of my application. I don't want this to happen at any time. How can I do that, guys?
+
+01:27:09
+same application pods. I don't want to run like this because I'll tell you one problem. I have two replicas. If both replicas are scheduled or running in a same node, if something goes wrong with this node, does Kubernetes will shift the pods immediately to other nodes?
+
+01:27:30
+thus Kubernetes will shift the parts immediately to other nodes.
+
+01:27:37
+If something goes wrong with this node, whatever parts is running in this node, does Kubernetes will shift the parts? I mean to say, is it going to recreate the parts in another node immediately?
+
+01:27:50
+No, it will wait for some time. Now, let's say I am deploying this application with two replicas both replicas are running in this node same node. Now that node went down now. Do you have a problem accessing that application within the cluster or outside the cluster? If that node went down both replicas, I have only two replicas if both replicas are running in same node to have a problem accessing that application for some time internally or externally.
+
+01:28:20
+Now how to avoid this situation? I don't want these two replicas running together. Same application, pods will never schedule together. What concept I can use? Can I use pod anti affinity on the same labels and the same application itself? Can I use pod anti affinity?
+
+01:28:42
+on the same application labels itself can I use pod anti affinity. So does this will happen anytime. If I use pod anti affinity on the same pod labels also it will work like this. It will never run together. So can I use this one to avoid that type of situation also.
+
+01:29:10
+yes so let me show that now i am trying to use for anti-affinity rules but on the same application same application like same labels can i use multiple also guys you can see this one as an array as an array so can i use this multiple times also this key value multiple times also yes now let's say app java web app
+
+01:29:39
+Now even though I create two replicas, three replicas, is it going to run together anytime? I am creating it two replicas. Let me apply.
+
+01:29:52
+java web app for anti affinity now i am using on same thing now do you see one is running in 93
+
+01:30:04
+Another one is in pending state because of no resources available. To understand better, delete and apply. To understand better, delete that application and apply so that you can easily understand. Unless until you are good at troubleshooting, you cannot understand. So let me delete. And let's apply now. Let's apply now. Now if you see. Now do you see?
+
+01:30:34
+scheduled in 93 another one is scheduled in 206. Now, if I try to scale, if I try to scale also, unless until I have some additional nodes, even though I have enough CPU, enough memory in this node on this node, does my part get scheduled to these nodes? Even though I have enough CPU, enough memory available in this node or this node, does third part get scheduled to this node or this node because of anti affinity rules?
+
+01:31:04
+I am using quad anti affinity rules.
+
+01:31:13
+Even though I try to create three replicas
+
+01:31:18
+Let me apply.
+
+01:31:22
+Now if you see why this is in pending state the third replica is it because of no resources it could be or it might not be it could be or it might not be let me show you QCTEL describe pod now why it is because node sorry that pod affinity that pod anti affinity rules are not satisfied.
+
+01:31:50
+Why it is not considering master? In the master node I don't have that pod because master node has a taint Now if I tolerate that along with my pod affinity rules pod anti affinity rules if I tolerate that one also taints then is it going to schedule that third replica in the master because in the master as of now this is not running in the master as of now this is not running if I tolerate that taints here
+
+01:32:19
+Does that third replica get scheduled in the master because if I tolerate that one? Yes, that is how it works. Is everyone clear guys? Whatever we discussed so far, what do you mean by node selector? What do you mean by node affinity? Soft rules, hard rules, for affinity, for anti affinity. Then I will discuss about this stains tolerations in the next class. The next class is on.
+
+01:32:49
+Thursday guys, tomorrow I am not able to take the class. Thursday I am taking the class. Tomorrow I have to attend one puja because I am constructing one farmhouse. Tomorrow I need to do the foundation. So I have to attend some puja, so I will not be taking class tomorrow because of some puja in my farmhouse, from my farmland.
+
+01:33:17
+So I will take a class on Thursday, tomorrow no class. Try to practice whatever has been discussed. I will continue on Thursday.
+
+01:33:28
+I am into cell 12th so 11th no class. Try to practice whatever has been discussed. I will continue on Thursday. Thank you guys. Will see you on Thursday.
+
