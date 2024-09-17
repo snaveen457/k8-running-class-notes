@@ -1,0 +1,951 @@
+00:00
+This conference will now be recorded. Before I start today's session, I wanted to make sure is everyone.
+
+00:11
+practiced what is Docker, what is container, how to create image, what is value, what is network.
+
+00:22
+What is compose and what is container orchestration? Why do we need container orchestration? Is everyone clear about terminologies like what is cluster? What is node? What is service? What is stack?
+
+00:44
+So we discussed almost 18 days each day. I think minimum one hour 45 minutes. Some days I took even two hours. So almost more than 30, 35 hours, close to 30, 35 hours we discussed only on Kubernetes. We tried to touch each and every point in, sorry, 30, 35 hours only on Docker. And each and every point we thought of, you know, discussed in detail.
+
+01:12
+But unless until you practice that is of no use. So if you are familiar with containers, if you are familiar with containers, it will be very easy for you to understand and implement container orchestration. If you don't know what is container, will you be able to understand the container orchestration first of all? No.
+
+01:38
+So I hope you are already familiar. What is container with respect to containers? What is Docker? What is image? What is value? What is network?
+
+01:52
+I hope you have already practiced if not, it will be very difficult for you to understand the classes. And also you need to be consistent in the class. What do you mean by consistent? You need to attend each and every session because one session is related to another session. One topic is related to another topic.
+
+02:15
+The complete DevOps, I am not talking about only Docker, only Kubernetes. From day one till the day
+
+02:25
+150 also 150th day of our course also you need to be available so that you can understand all the concepts.
+
+02:37
+That is very important. Even though you have some issues, that is common. Everyone will have some personal emergencies, one or two days, three days, fine. But once you come back, you should recover those classes by going through the recordings so that you can continue.
+
+02:55
+Kubernetes is very, very important. So I am expecting everyone you to attend all the Kubernetes sessions without missing a single session. If you miss.
+
+03:09
+You are going to lose the opportunity. So what is the meaning of opportunity here? Nowadays, there are a lot of openings on DevOps. But if you see any opening, any opening on DevOps, if you are seeing that JD job description or JD, what they're looking for, are they saying they should have knowledge on Docker? They should have knowledge on Kubernetes? Are they mentioning JD in the JD? Saying that Docker is required, Kubernetes knowledge is required.
+
+03:43
+Yes, so if you know, docker's Kubernetes. You will have lot of opportunities, lot of calls at least. At least you will get the calls. But. The clearing the interviews is depends on how good you have practiced, how good you have attended the classes, how much you have practiced, how much assignments you have done. The clearing the interviews is one thing that depends on how good you have practiced.
+
+04:13
+Did you attend all the classes, attended, understood all the concepts? Then how much you practice based on that you can crack the interviews.
+
+04:25
+So utilize this opportunity. That's what I wanted to tell because.
+
+04:37
+This Kubernetes is very, very important. Abhishek is asking, sir, in the Docker compose, can you explain what is that parallelism, all those things, parallelism? As I already told, using Docker Swarm, can I do zero downtime deployment?
+
+04:53
+So I have two replicas currently I have two containers for that service in my compose file. I said parallelism one parallelism like one delay 20 seconds like this. So when I'm updating the image currently this version of the image is running. I updated my compose file. I am redeploying my stack this version of the image. So because of this parallelism one delay 20 seconds is both old containers.
+
+05:22
+Whatever is running out of this version of the image will be deleted at the same time. Because of this option.
+
+05:31
+No. So is it going to delete one world container? Is it going to create one new container with this version? Then will it take 20 seconds break because your new container may take some time to come up. Can I give here instead of 20? Can I give 30, 50 based on your requirement delay? Yes. After that, is it going to delete one more world container?
+
+05:58
+and create a new container because of this will I able to achieve zero downtime deployment without bringing my application down? Can I roll out my new version of the application in Docker's one? So that is what the settings of that update config parallelism and all those things.
+
+06:19
+Now let's continue with Kubernetes. I don't want to waste much time here.
+
+06:34
+Yes, Kubernetes is very, very important. And again, I am telling with whatever Kubernetes content I am covering, it's very vast. You can crack even CKA exam also. You can crack CKA-D, Certified Kubernetes Application Developer Certificate. And you can crack CKA, Certified Kubernetes Administrator also. But to do that, you need to attend all the sessions. You need to practice a lot.
+
+07:04
+that CKA and CKAD is completely...
+
+07:10
+Scenario based questions like a practicals. It is not like a multiple choice question. They are not going to ask one question. They are not going to give some options where you can select. It is not like that. They are going to give one scenario, one use case. You need to do that. You need to implement that scenario or use case using all the Kubernetes concepts, whatever is expected to learn. So Kubernetes, I am going to cover in and out.
+
+07:40
+It may take 40 hours close to 40, 45 hours. It will take more than 25 sessions. I mean it. If you understood if you practiced if you attended all the Kubernetes sessions, you can become expert in Kubernetes. You can crack CKAD and CK also. Keep in mind that and don't miss any session on practice every day. Every day whatever has been discussed practice multiple times.
+
+08:13
+Kubernetes is little difficult as I already told multiple times. Kubernetes is little difficult. But if you give up.
+
+08:22
+Since Kubernetes is very difficult, so Balaji sir, whatever Balaji sir is explaining, I am not at all able to understand what he is explaining. He is explaining some Chinese language. So I am not able to understand if you feel that if you give up, you cannot learn even though it's difficult. If you go through, if you practice multiple times, it will be easy for you.
+
+08:51
+So keep in mind that and attend the QBAR netitions. It is very, very important. Now you go to any project guys, 90% of the projects as I already told, are they following microservices architecture? Is every application is implemented in microservice architecture? Whether they are using Java, whether they're using Python, Node.js, that doesn't matter.
+
+09:17
+They're running, they're developing the applications in a microservice. And if they're running as a microservice, what is the de facto tool which they will use to run those microservices, to deploy those microservices? Containers. So if it is a container, do you need to be familiar with the containerization, container orchestration, like Docker, Docker Swarm, and Kubernetes?
+
+09:46
+Yes. So as I already told, which one is widely used container orchestration tool in the market compared to all the tools whatever is available, Kubernetes. Container orchestration. I'm saying container orchestration, Kubernetes.
+
+10:05
+So this is very, very important. With that background, let's try to understand what is Kubernetes, what is the advantages of Kubernetes, what is the architecture of Kubernetes, Kubernetes components, like what is namespace, what is pod, what is deployment, what is the demon set, what is service. In Kubernetes, we'll try to understand all those things.
+
+10:35
+Now, also we'll try to understand how to set up the cluster and all those things. So first, what is Kubernetes?
+
+10:50
+As I already told, Kubernetes
+
+10:54
+is what orchestration. Orchestration engine it is a container orchestration software. Kubernetes is an orchestration engine and open source platform. Most importantly open source. What is the meaning of open source? Is it free?
+
+11:26
+Yes, so it's an open source platform for what? Kubernetes is an open source and orchestration software for what for managing? Containerized applications for managing containerized applications containerize applications like managing the containers. Like any other container orchestration software the responsibility of Kubernetes is what?
+
+11:52
+The responsibilities of Kubernetes, what we can do using Kubernetes? The responsibilities of Kubernetes includes container deployment. Can I deploy the containers? Can I schedule the containers using Kubernetes? Yes. Can I scale and de-scale? Which means, can I increase and decrease the number of replicas? Yes. And also,
+
+12:19
+Can I achieve service discovery and load balancing? Can I achieve that service discovery and load balancing also? Yes.
+
+12:30
+So, Kubernetes is not replacement for Docker. Do you think Kubernetes is a replacement for Docker? No, Kubernetes is not replacement for Docker, but can we consider Kubernetes is a replacement for Docker Swarm?
+
+12:52
+Yes, Kubernetes is a replacement for Docker Swarm. Kubernetes is significantly complex than Swarm. As I already told, is Kubernetes is very simple, as simple as Docker Swarm? No. Kubernetes is little complex than Swarm and requires more work to deploy. You need to do a lot of things to deploy your application in Kubernetes compared to the Docker Swarm. In Docker Swarm,
+
+13:21
+Do I need to just create a service just a service to deploy my application in Docker Swarm? Yes, but here in Kubernetes, there are a lot of things you need to understand. In Kubernetes, there are a lot of concepts like pods deployments services replica sets, daemons, there are a lot of things to understand and apply.
+
+13:46
+So Kubernetes is complex compared to the Swarm, but will it be a very strong? I mean to say Kubernetes is very powerful, very strong compared to Docker Swarm clusters. Yes.
+
+14:05
+Kubernetes is born in Google, which means who implemented Kubernetes initially.
+
+14:15
+Google born in Google. So this Kubernetes is also one application one software in which programmatic language they have written this Kubernetes.
+
+14:27
+go go lag guys docker docker and docker swami is also one software one application that is also developed using some programmatic language so docker is also written in which programmatic language go language only
+
+14:43
+So this Kubernetes is also implemented in Go language, born in Google. But Google donated Kubernetes to CNCF. Later, Google donated to, Google donated this Kubernetes to CNCF. What is CNCF? Cloud Native Computing Foundation. This one. Cloud Native Computing Foundation.
+
+15:13
+So CNCF, Cloud Native Computing Foundation. So as of now, who is managing and who is owning the Kubernetes? As of now, who is managing and who is owning the Kubernetes? CNCF, Cloud Native Computing Foundation. So initially, Kubernetes is developed by Google.
+
+15:41
+Initially, Kubernetes is developed by Google. Later, they donated to CNCF. Now, CNCF is owning and managing the.
+
+15:52
+Kubernetes. So Cloud Native Computing Foundation.
+
+15:58
+South as the vendor for neutral home for many fasted growing open source projects including Kubernetes Prometheus and all those things. So as of now who is owning and contributing.
+
+16:13
+maintaining Kubernetes and Prometheus software also like this CN CF. They are managing and maintaining open source projects. They are managing and maintaining open source projects like Kubernetes and Prometheus.
+
+16:31
+Before Kubernetes donated to CNCF, all the Google applications, like most of the Google applications also, whatever applications we are going to use in day-to-day life from Google, are these applications also managed by Kubernetes within their data centers? Are they running their applications as their containers? And are they using these Kubernetes to manage their software also? Like we use Google, Gmail, OneDrive.
+
+17:01
+YouTube, all those things, G Drive, yes. So most of the applications of Google also running as containers. Most of the Google applications also running as containers, and they're managing using Kubernetes. So Kubernetes is initially developed by Google, used by Google initially. Before Kubernetes is available in the market, which means.
+
+17:29
+before Kubernetes is available for other IT applications and projects. Is Kubernetes is already used internally by Google? Yes.
+
+17:41
+So Google initially developed Kubernetes. Later, they donated to CNCF. When they donated to CNCF?
+
+17:52
+in 2014. So Kubernetes version 1.0 Kubernetes first version Kubernetes software version 1.0 is released on July 21, 2015, which means the first version of Kubernetes is released to market.
+
+18:15
+when in July 21, 2015, which means is Kubernetes is available for other IT applications and projects from when, when people started using Kubernetes.
+
+18:29
+2015 after 2015 only. So how old the Kubernetes software is from now for now like almost seven years close to seven years now we are 2022 we are in 2022 which means is Kubernetes is available in the market for last seven years is people started using Kubernetes years.
+
+18:54
+Guys don't say I worked on Kubernetes in 2013, 2012 like that. If you are already a senior resource. If you're already having experience like 10 years, don't say I worked in Kubernetes in 2013, 2012 like that.
+
+19:14
+So it is available in the market from 2015. So what is the current stable release?
+
+19:25
+When I documented recently when I documented recently it is version 1.22. When I documented this recently it is version 1.22 just last month. I think I they again they have released a new version.
+
+19:42
+So this is the official website of kubernetes. This is the official website of kubernetes. This is the official website of kubernetes kubernetes.io. So you can see everything each and everything. So if you see they are already planned for which one they're already planned for which one. Now it is 1.23 already planned for 1.24. So this releases.
+
+20:11
+major versions, minor versions. There are two types of things guys for any software major version and minor version. So can I call this as a major release like whenever we are changing from 22 to 23, 23 to 24 like that major but within 22 like 22.1 22.2 3 4 like that. Can I call these changes as a minor releases?
+
+20:41
+yes major versions minor versions so if you see current
+
+20:50
+stable Kubernetes version.
+
+20:57
+stable again stable is important current stable Kubernetes versions. If you see when the release date is when they released this version 23.5 version 23.5 when they released.
+
+21:18
+last month 16th right. So these releases will keep on changing which means how many versions got changed how many versions of Kubernetes software got released within last seven years. Don't consider this minor versions minor versions every month also they may release major versions. So how many major versions as of now from 1.0 to 1.23 which means
+
+21:46
+This is also a software. Did they improve a lot of features? Did they added a lot of features to Kubernetes from version 1.0 till version 1.23? Did they introduce a lot of features to the Kubernetes software? And a lot of issues also will be there, you know, bugs, defects. This is also a software. So did they done a lot of bug fixes also, if any issues are there in this Kubernetes also?
+
+22:15
+they have enhanced the product and also they have done lot of bug fixes also.
+
+22:24
+Now this is the current stable release version 1.23 which means last seven years 23 releases guys again sometimes in the interview they are going to ask what version of docker you are using what version of kubernetes you are using even though this is version 23 are we going to use this version immediately are you going to upgrade immediately
+
+22:50
+No, as of now in my current project as of now in my current project we were using version 1.19 only which means how many versions we are behind to the current version four four versions behind but we are planning to upgrade to 1.20 we are planning to upgrade to 1.20 so whenever in the interview also they're asking which version
+
+23:18
+Don't say the latest versions for any software. Don't say the latest version for any software. At least two versions, minus two of current version.
+
+23:32
+at least minimum why we will not upgrade immediately. Do we need to observe is is that version is stable? Do we have any issues in that software? Is there any enhancements they have done? Do we need to verify that first before we just upgrade blindly?
+
+23:52
+Yes. And again, even though you upgrade, will you directly upgrade that versions in the production first? Directly will you do in the production? First, will you upgrade your lower environment clusters, like a dev cluster first? You will do the deployments in dev, and will you identify? Is there any issues with that latest Kubernetes version or Docker version with our applications? Are you going to check the compatibility?
+
+24:20
+with your application with that latest version? Yes. If there are no issues reported in the lower environment, will you upgrade in the higher environment one after the other? You will upgrade in QA, where you will perform load testing, performance testing, stress testing, all those things you will perform. If there are no issues observed, then finally in one day, will you upgrade that in a production?
+
+24:45
+Yes, so that is how the process will happen.
+
+24:51
+That is how the process will happen. So familiar with these type of things also because in the interviews, any type of question can come. But these are, you don't need to be an expert in that subject. Do you need to apply minimum common sense? Like, are you going to directly do in production? If you have minimum common sense, will you go and do directly in production? Will you impact your end users directly?
+
+25:20
+No. So do we need to do something in the local environments first then we will go to the higher environments that is how it works.
+
+25:34
+Now I need to update this document. Now what is the current version? Version 1.23 major version this minor one 1.23.5.
+
+25:53
+So this is the current stable release. Now, the features of Kubernetes, what are the advantages or what are the features of Kubernetes?
+
+26:07
+Very simple, since you already know Docker Swarm, same type of features. Will I able to do automated scheduling, which means using Kubernetes, can I schedule my containers, my containers here in the cluster?
+
+26:23
+automated scheduling. Does Kubernetes provides one scheduler to launch containers on the nodes? Does Kubernetes will have some scheduler who can schedule my containers to the cluster nodes? Who will schedule my containers to the cluster nodes? Yes. So there is an automated scheduling. Kubernetes provides advanced scheduler who can schedule the containers.
+
+26:50
+and the cluster nodes.
+
+26:53
+Again, is Kubernetes is also implemented in a cluster background, which means will I have a multiple servers which will participate in that Kubernetes cluster, some machines as a masters, some machines as a workers again here.
+
+27:10
+Kubernetes also implemented in a cluster background. We will have multiple servers. Some servers will be acting as a masters. Some servers will be acting as a workers in the cluster.
+
+27:24
+Will I able to schedule my containers on the nodes, which is part of my cluster using Kubernetes? Will it have a scheduler to schedule the containers? Yes.
+
+27:36
+Self-healing capabilities. What is the meaning of self-healing capabilities in general English plain English? What is the meaning of self-healing?
+
+28:02
+recovering himself or recovering itself, recovering itself auto recovery auto recovery or I can say fault tolerance self recovery auto recovery or fault tolerance. So
+
+28:19
+Does Cuba Kubernetes is capable of rescheduling or replacing or restarting the containers which are died, which means for some reason your containers are stopped or died. Does Cuba Kubernetes is capable of rescheduling replacing or recreating the containers which are died?
+
+28:42
+Yes, if something goes wrong with your containers, does that container will be recreated or restarted automatically? Here also, yes And automated rollouts and rollbacks so Kubernetes supports rollout rollback
+
+29:03
+Some general English knowledge also required here. What is the meaning of roll out? Kubernetes supports roll outs and roll backs of your application. What is the meaning of roll out? Roll out, can I call that as a release? Can I call that roll out as a release? Releasing the new version, new future? Yes. Using Kubernetes, can I roll out? Can I release my application?
+
+29:34
+as a container.
+
+29:38
+And again, with zero downtime, without bringing my application down also, can I roll out the new version of my application software? Yes. And if something goes wrong, can I roll back to the previous state, previous version of the application? If something goes wrong with the latest version, can I go back to the previous version of the application also? Yes.
+
+30:07
+So Kubernetes supports rollouts and rollbacks for the desired state of the containerized application.
+
+30:15
+we can do the rollouts and rollbacks. And also, does it support the scaling and load balancing of your containers?
+
+30:27
+horizontal scaling. Kubernetes can scale up, scale down the application containers as per the requirements. I can scale up and scale down. But what is one more advantage in Kubernetes? Will I able to scale automatically also based on the load on your application container? Based on the load on your application container, will I able to increase and decrease the number of containers in Kubernetes?
+
+30:54
+And if I have multiple replicas, can I achieve the load balancing also within the cluster, that service discovery and DNS?
+
+31:05
+Yes, so these are the features service discovery and load balancing. Service discovery and load balancing with Kubernetes. You no need to worry about networking and communication. Because Kubernetes will automatically Kubernetes will automatically assign IP addresses, IP addresses to containers. And also.
+
+31:36
+a single DNS name, single DNS name kind of a service name, single DNS name kind of a service name for set of containers.
+
+31:49
+So that can load balance the traffic inside the cluster. Within the cluster, can I use that name, kind of a service name that is your DNS name? Can I use that DNS name instead of using any IP, your container IP or service IP? Can I use that service name within the cluster for accessing one application with other application? Yes. So that can load balance the traffic inside the cluster. So,
+
+32:17
+We have a DNS also within the cluster. We have a service discovery and load balancing. Service discovery is nothing but DNS within the cluster.
+
+32:31
+So do I need to worry about IP addresses? Do I need to worry about what is my container IP or what is my system IP? Within the cluster, if I want to access one application, do I need to identify or use IPs myself? No. So there is a service discovery and load balancing embedded as part of the Kubernetes. And also storage orchestration, storage orchestration.
+
+33:01
+With Kubernetes, you can mount the storage of your choice. Using Kubernetes also, are we managing the containers here? Are we deploying and managing the containers here in Kubernetes also? Yes. Suppose I deployed some stateful applications. I deployed some stateful applications in my Kubernetes cluster. If your stateful application containers are deleted and recreated, do you have any data, any state? No.
+
+33:31
+So in that case, in that case, do I need to use some storage? Do I need to use some Valumes concept here also? Does Kubernetes also support storage orchestration? Which means with Kubernetes, can I mount whatever storage system like a EFS, NFS, local Valumes or EBS Valumes like that to my containers in Kubernetes also? Yes. So these are the features.
+
+34:01
+which we will get in Kubernetes. But before I set up and install Kubernetes, before I set up and install Kubernetes, you need to understand the Kubernetes architecture first.
+
+34:17
+This is very, very important in the interview perspective also. Not only just in the interview perspective, if you want to know how Kubernetes is going to work in the background, this architecture is very, very important. In the interview also, a lot of questions is being asked on this architecture, Kubernetes architecture.
+
+34:41
+Very important and try to focus here more when I am discussing architecture.
+
+34:48
+As I already told, Kubernetes implements in a cluster computing background. Kubernetes implements in a cluster computing background. So everything works from inside a Kubernetes cluster. Everything works from inside a Kubernetes cluster. Kubernetes implements a cluster computing background. Everything works from inside a Kubernetes cluster.
+
+35:18
+So as I already told in general, what do you mean by cluster? What do you mean by cluster?
+
+35:27
+group group of nodes here. So can I create a Kubernetes cluster? This cluster can be hosted one node acting as a master of the cluster one node acting as a master of the cluster and other nodes acting as a workers.
+
+35:52
+But in real time again, in real time again, will I go with only one master?
+
+36:00
+So can I have one or more masters in real time? Will I have again one or more masters? Again, in Kubernetes also, what is the recommended number of masters which will be created for high availability? Three, again three masters is recommended in the Kubernetes also. So I have a masters, I have a workers.
+
+36:28
+But when I'm explaining this architecture, we are taking only one master. But even though I have other master, will I have same components in that other master also? Whatever is documented here, will I have the same components in the other master also? Yes.
+
+36:45
+So when we are explaining the architecture, master like this only. Now.
+
+36:53
+What are the components we will be having in the architecture? What components we have in the master? What components we have in the worker? We'll try to understand. Now, this is kind of one circle, like one boundary.
+
+37:16
+Let's consider this is one cluster. Let's consider this is one cluster. So within this cluster can I have some masters? Can I have some workers based on your requirement? You can have n number of workers n number of masters.
+
+37:34
+So you have some masters. It's a group of nodes. So this is one server. This is one physical machine or virtual machine. This is another physical machine or virtual machine.
+
+37:54
+Now what are the components we will have in the master? What are the components we will have in the worker? That is important. Now let's try to understand.
+
+38:05
+Now I am explaining something like this. First of all, I will have an operating system. That is common. Without operating system, can I install any software? Any software? No. So I will have some operating system. I will have some operating system. But in the architecture diagram, it is not shown. But we will have that operating system.
+
+38:34
+Can any server exist without operating system? At least you need operating system, right? One operating system that can be Linux, Windows, Mac, whatever it is.
+
+38:46
+I have some operating system. Now, Kubernetes is a container orchestration software. Kubernetes is a container orchestration software, which means in each and every server, do I need to have some container runtime? Do I need to have some containerization runtime? In each and every server of my Kubernetes cluster, do I need to have some container runtime?
+
+39:14
+container runtime. What is that container runtime?
+
+39:25
+like a Docker like a Docker guys one more important here does Kubernetes supports only Docker can I have any other container runtime also not only just Docker can I have any other containerization software also container runtime instead of Docker
+
+39:45
+Instead of Docker, can I use any other containerization runtime? Like container D, container D, rocket CRIO like that instead of Docker. Yes. So does Kubernetes supports any containerization runtime? Not only just Docker. Is it going to support other container runtimes also? Yes. But when it comes to Docker Swarm, does Docker Swarm support only Docker?
+
+40:16
+Yes, now any container runtime like this one more shocking news now. It is not a kind of a shocking news. Did you guys heard about one news saying that kubernetes deprecated Docker? Anyone heard that news? Kubernetes deprecated Docker.
+
+40:41
+What do you mean by that? Kubernetes deprecated Docker. What do you mean by that? Which means, does Kubernetes is going to support officially Docker anymore as a container runtime? Officially, does Kubernetes is going to support Docker as a container runtime officially anymore in the future releases? No. Sir, what is this?
+
+41:06
+You discuss Docker 18 days and you are saying kubernetes is not supported by sorry kubernetes is not going to support Docker. Does it mean all the 18 days whatever has been discussed it is of waste it is of scrap
+
+41:30
+Does it mean it's end of Docker? Since Kubernetes is not supporting Docker officially, does it mean it's end of Docker? There is no life for Docker. It is not like that. Still Docker is a powerful software. Docker is still powerful software. Even though, even though Kubernetes deprecated Docker, can I still use Docker?
+
+42:01
+in my project yes for what purpose can I still use docker in the ci part which means can I using in the ci part can I use docker to build my images using docker can I still my can I still use docker to build the images
+
+42:23
+by writing the Docker file, can I still build my images using Docker? Yes. Can I maintain that images in the registries? Can they maintain that in the container registries? Can I maintain the Docker images? But even though even though Kubernetes is not supporting Docker as a runtime. Now instead of Docker, I can use container D or any other container runtime here.
+
+42:53
+instead of Docker I can use container D that is one more container software
+
+43:00
+That is one more container software. So even though I use container D as a runtime container runtime, can I still deploy the images, whatever created using Docker? Can I deploy that in the container runtime of container D? Can I still run that images? Whatever images is created using Docker? Can I still deploy that images in my Kubernetes? Even though Kubernetes is not using Docker as a runtime.
+
+43:27
+it is using container ID as a runtime. Yes. Which means do we still use Docker? Can we still use Docker? Yes, but only for building and maintaining the images. But you may have a question, sir, whatever images I have built using Docker, is it compatible with other container runtime softwares like container, DECRIO like that, whatever images I have created using Docker.
+
+43:56
+Is it compatible with other container runtime software like container D? Yes. How come sir? How come that is possible? There is one concept or standards. OCI. There is one standards defined around container formats. Open standard container initiative.
+
+44:26
+or open container initiative or open standard container initiative oci oci open container initiative so that is one standard
+
+44:43
+or let me type full form open container initiative. So what do you mean by this open container initiative?
+
+44:53
+It's a standards open container. Initiative is a governance governance structure, which means standards. So this open container in Seattle is a standards defined around. It's a defined. It's a standards defined around industry standards defined around container formats and runtimes. This OCI is a governance structure, which means standards.
+
+45:23
+industry standards defined around container formats and runtimes. So this OCI is established in 2015. This OCI is this governance is established in 2015 by Docker and other leaders in the container industry. So all the container runtimes are following these standards, which means Docker is also implementing or following the governance, the standards defined by OCI.
+
+45:52
+the container D or CRIO also following the same standards, which means even though images are created using Docker, can I run those images as a containers in the other container runtime because all are following the same standards or specifications. If you are from a development background, you can easily understand. There is a concept called interface and implementation. Interface is nothing but a standard.
+
+46:22
+Implementation is basically actual solution. If I am following same interface.
+
+46:30
+Same standards, can I implement it differently using different implementations? Yes. So this OCI is a standard surround open container in CI2, is a standard surround container formats and runtimes. So because of that, will I able to run my container Docker images in the container also?
+
+46:59
+Container ready here and time.
+
+47:03
+Yes, but you may have a question sir. Why kubernetes deprecated doctor? Still you may have a question sometimes in the interview also they'll ask this question kubernetes deprecated doctor. Why? Why they are deprecating doctor? What is the problem? If you see here There itself they are saying They are only saying don't panic Before they announce their deprecating doctor. They are saying don't panic
+
+47:33
+Don't get tensed. Nothing will happen. So don't get tensed. Don't panic. So Kubernetes deprecated Docker. So why they have deprecated Docker? Because Docker is not a container runtime, actually. Docker is not a container runtime. Even though we are using Docker, Docker is not a container runtime, actually.
+
+48:03
+lot of wrappers lot of you know Docker is having lot of wrappers around container runtime. Do you know Docker is internally using container D, container D as a runtime. Docker is internally it is using container D as a runtime. Docker is not a container runtime. It is a wrapper surround container runtime which means it has lot of CP sorry CLIs API surround containers.
+
+48:32
+Docker has very good CLI, very good API surround container runtime, which means Docker is not a container runtime. This
+
+48:44
+So, darken.
+
+48:49
+internally is going to use docker is internally going to use container d as a runtime if you see it's a more wrapper around it so docker has lot of cli c apis built around container d docker is contain docker is internally using container d but is it a wrapper of lot of cli and apis around that container d using
+
+49:16
+those CLIs and APIs can manage the container's use.
+
+49:25
+Docker has lot of components inside it. Kubernetes will support Docker via Docker Shim. There is one more concept in called Docker Shim. Kubernetes cannot directly support Docker. It has to use one more software called Docker Shim. It is a lot of overhead. It is a lot of overhead to Kubernetes. So since
+
+49:52
+Kubernetes also can directly support container D. Do they need to support one more software called Docker Sim just to support Docker? Internally Docker is again using container D. So they don't want that overhead. They don't want that overhead to manage one more additional software just to support Docker. So that's why they have deprecated. So in which version they said they're going to deprecate?
+
+50:22
+Kubernetes is deprecating Docker as a container runtime after which version?
+
+50:32
+version 1.20 they are saying they are deprecating but does it mean cannot I cannot use Docker I cannot use Docker in 1.20 1.21 1.22 can I still use Docker yes I can still use Docker then what is the meaning of deprecating is there any official support in the future releases any issues arises when you are
+
+51:01
+Is there any official support from Kubernetes? Are they going to consider those issues and fix the issues?
+
+51:09
+No.
+
+51:13
+Which doesn't mean I cannot use they're not going to support if they're not going to officially support again Will you dare to use that software if Kubernetes itself is not supporting that one? Are you going to take that risk and use that container? Docker as a container runtime. No, right?
+
+51:32
+So even though we are not going to use Docker as a runtime, can I still use Docker in the future releases of Kubernetes also? You are not using Docker as a runtime, but can I still use Docker in my build servers? Can I install Docker? Can I build the images? Can I push the images? CI part.
+
+51:55
+When it comes to the deployment, can I deploy whatever images I have created using Docker and a Docker file? Can I deploy those as a containers in any container runtime like container DCRIO also? Yes. Is everyone clear? What is the meaning of Docker deprecated? Sorry, Kubernetes deprecating Docker.
+
+52:18
+Does it mean it's end of Docker? You may thought, sir, why you have explained 18 days if Kubernetes is not supporting. You wasted my 18 days of time. It's not like that. Docker is still powerful tool. We can still use Docker. When I'm using container D, do I have a very good CLI or API surround container D to manage images, to create images? No.
+
+52:53
+So compared to the Docker, does any other container runtime has very good CLIs and APS to manage?
+
+53:03
+It's not a prank Venkat. It's real. So now in our YouTube channel also I have explained why Kubernetes deprecated Docker. Why? What does it mean? What reason for what reason they have deprecated Docker? And does it mean it's end of Docker? Or can I still use Docker if I use Docker where I can use Docker? All these things are explained in detail.
+
+53:32
+I recommend you to go through this video at least before coming to tomorrow's class. I want you to go through this video.
+
+53:41
+Kubernetes deprecating doctor.
+
+53:46
+What does it mean? Why it is deprecating Docker? Does it mean it's end of Docker? But in this video, I have explained how to set up the Kubernetes cluster using container runtime. Instead of using Docker as a container runtime, in this video, I explain two things. One is why it is deprecating Docker. If it is deprecating Docker, how can I set up my Kubernetes cluster using container as a runtime?
+
+54:15
+but anyhow I will explain that setting up the cluster but I will recommend you to go through this video to understand why Kubernetes is deprecating Docker does it mean it's end of Docker or if I if there is a life for a Docker where I can use how I can use all these things. I have explained in this video. I recommend you to go through this video.
+
+54:39
+So let me come back to the architecture. Now in this architecture. Now, instead of Docker, can I use container D or any other containerization software like CRIO also? Yes.
+
+54:57
+There should be one container runtime. In each and every node. Now what is additionally required in the master node? What is the part of control plane? What components is part of your control plane? What do you mean by control plane? Can I call control plane or master both are same? Control plane or master? Yes.
+
+55:25
+control plane or master both are same. So what is part of your control plane? I mean to say master what components we have as per your architecture. Now these are the control plane components master components. What do we have in the master? Now I have a API server. I have
+
+55:49
+Scheduler?
+
+55:52
+I have control managers.
+
+56:01
+Control managers.
+
+56:04
+and I have ETCD, one more component called ETCD.
+
+56:11
+So all these components I have as part of my master. That is we call it as a control plane node or master node. Master node, manager node, or control plane node.
+
+56:28
+Is this control plane node is this master node is responsible for controlling the cluster the components of your cluster. Is this master is responsible for managing or controlling that applications in the cluster.
+
+56:44
+Yes, so this is master components, API server, scheduler, control managers and ETCD. Now. What are the components in the workers? Guys, these type of questions will be asked in the interview. What are the components in the worker? As of now, I am representing here with the Docker as a container runtime. Even though Docker is deprecated instead of Docker here.
+
+57:11
+Can I have container D or any other container software here instead of darker here?
+
+57:18
+yes for now i am using docker but that can be anything now instead of docker can i have container runtime like container d in the workers
+
+57:32
+Yes. Now what components we have in the worker if you see in the worker what components we have here if you see in the worker we have cubelet we have cubelet.
+
+57:47
+cubelet and cubeproxy.
+
+57:51
+You have cubelet and cubroxy.
+
+58:04
+You have a cube proxy and cubelet.
+
+58:11
+in the workers you have a cubelet and q proxy. In fact, in fact, this cubelet and q proxy will be part of master also this in fact, it will be part of master also. But when it comes to architecture is cubelet and q proxies.
+
+58:33
+compared to the other important components in the workers. I mean to say in the master. So in fact, this cubelet and cube proxy will be part of master also. But when you are explaining the architecture, does any architecture diagram you take, Kubernetes architecture diagram, will they represent or will they showcase these two in the master? No, but it doesn't mean those two are not part of master. Those two part of master also. But when it comes to architecture,
+
+59:03
+X instead of this cubelet and q proxy is these are very important when it comes to architecture discussion or exploration compared to this. This is very, very important. API server scheduler control managers and etcd. If you see any architecture diagram, Kubernetes architecture diagram.
+
+59:26
+You take any Kubernetes architecture.
+
+59:31
+If you see any diagram you open, any architecture diagram you open, if you see this is primary, I mean to say control plane master, are they explaining here about that cubelet and qproxy? Is it documented here? No. Which doesn't mean it is not there, it is still there. But is this are important in the master, like API server, control manager, scheduler, and etcd? But when it comes to workers,
+
+01:00:00
+Are they explaining about cubelet and cuproxy here?
+
+01:00:06
+If you take anything any architecture diagram master in the master API server control manager scheduler and etcd in the workers you have a cubelet and qproxy.
+
+01:00:21
+You take any diagram architecture diagram. It will be like that only if you see this one also this diagram in the architecture in the master do have this API server controller scheduler and ETCD in the worker cubelet and cube proxy and container runtime as of now that container runtime. Can it be anything like Docker container D also?
+
+01:00:50
+Yes. So.
+
+01:00:54
+These are the components of worker, cubelet and qproxy. In the architecture, in the master, you have a API server, scheduler, control manager, and etcd. Now, what is this API server? These type of questions they will ask in the interview, guys. In the interview, you will get lot of questions on the architecture itself. If you explain the architecture in detail, they will be impressed there itself.
+
+01:01:25
+So if you explain what is what in the architecture, what is API server, what is scheduler, what is control manager, and what is ETCD, what is cubelet, what is kube proxy, what is the role of each component, why what is very important. This is not only just for interview purpose, if you know the architecture of any application or any software, whether it's an application, whether it's a software, if you know the architecture,
+
+01:01:54
+will be able to easily understand what is happening, how it is working in the background.
+
+01:02:05
+Yes. So here in the master, you have a API server, scheduler, control manager, etcd. In the worker, you have a cubelet, cubeproxy. Whether I have 100 workers, in each worker, do I have a cubelet and cubeproxy? Whether I have 100 worker machines or just two worker machines? Yes. Suppose if I have, instead of one master, if I have multiple masters, in each master, do I have this API server schedulers?
+
+01:02:34
+control managers like this. Yes. So what is this API server? Before I go there, what is the purpose of master node? Before I explain what is API server, what is scheduler, what is control manager and what is GTCT? What is the role of master? We have a master node. What is the role of master? The master node.
+
+01:03:02
+The master node is responsible for what? Management of your Kubernetes cluster. Is it responsible for managing the cluster?
+
+01:03:18
+Cluster.
+
+01:03:20
+managing the cluster. What is the meaning of managing the cluster? Is it responsible for scheduling? I mean to say deploying the containers and looking after those containers. If something goes wrong with one container, is it responsible for recreating the containers or rescheduling the containers? And also if something goes wrong with one of the worker, let's say one of the worker node went down. This node itself is went down. Is it responsible for
+
+01:03:49
+shifting all these containers to other server. I mean to say is it responsible for looking after that node and rescheduling recreating that in another server.
+
+01:04:03
+So it is responsible for managing the cluster. So is master machine is main entry point for all administrators who want to deploy, who want to deploy or manage the applications in the cluster, whom should I contact? Do I need to contact the control plane? I mean to say master.
+
+01:04:25
+Yes. So does it is going to handle the orchestration of may in a parts. I mean to say is it responsible for looking after the parts and your notes.
+
+01:04:38
+Yes. So can I have more than one master? As I already told, there can be more than one master in one cluster. For what purpose? For fault tolerance, for tolerating the master failure. Can I have another master for high availability and fault tolerance? Yes.
+
+01:04:59
+Now in Kubernetes before I explain further if you see you see something called pod. Sir, what is this pod? Does kubernetes will directly manage containers in kubernetes? Can I directly create a containers and manage the containers in kubernetes? No In kubernetes, you are not going to directly create and manage the containers
+
+01:05:25
+Does containers will be wrapped under one concept called pod? Does containers will be created using pods? Does Kubernetes will create a pods and manage the pods?
+
+01:05:37
+Within the pod within the pod can I have container?
+
+01:05:44
+Yes, if you see in Kubernetes, we are not directly managing the containers is containers are wrapped under one more concept called pod is containers are packed under pods and are we deploying pods and managing the pods in Kubernetes instead of managing the containers directly.
+
+01:06:05
+Instead of deploying and managing the containers directly, we are deploying the parts and managing the parts in Kubernetes. But within the pod, what do we have within the pod? What do we have within the pod? Do we have a container? Yes. So what is pod? What is single container pod? What is multi container pod? All those things I will explain later. But here onwards, I will use a term called pod.
+
+01:06:33
+don't get confused what is pod as I already told pod is a collection of one or more containers in Kubernetes if I want to deploy any container do I need to create a pod can I directly create a container
+
+01:06:50
+No, so don't get confused with the terminology called pod. So in Kubernetes, we are going to create a pod. Does pod will have a container? Yes.
+
+01:07:02
+So don't get confused whenever I am using a term called pod. So if you see in the architecture, I have a master, I have a workers, right? In the workers, can I create my pods, which means can I deploy my containers as a pods?
+
+01:07:22
+Yes, no master node is responsible for that scheduling the parts and managing the parts. So who is responsible for scheduling which means creating or deploying the parts and looking after that quad containers must. So in master. What is this components? What are the important components you have in the master API server in the master?
+
+01:07:51
+One more important component these are the components of master in the master. There is a component called API server What is API server? What exactly API server will do? What is the whole purpose of API server in the control plane in the master? So first Before we understand API server. What do you mean by API guys? What do you mean by API?
+
+01:08:21
+What is the full form of API?
+
+01:08:32
+application programming interface, which means whatever you do in Kubernetes, whether you are creating a pod, whether you are deleting a pod, whether you are creating a deployment, deleting a deployment, whatever you do in Kubernetes, is it one API call?
+
+01:08:51
+Do you need to make some API calls to do anything, to do anything in Kubernetes?
+
+01:08:59
+Yes. So do I have all those APIs? Do I have all those APIs running in my Kubernetes control plane? Whatever I want to do is all those services, is all those things running as APIs as a code in my control plane in the master? Yes. So.
+
+01:09:21
+Each and every Kubernetes object is one API. This pod is also one Kubernetes API.
+
+01:09:31
+So if I want to create this pod, I want to create some pod in my Kubernetes cluster. Who should I contact this? Who should I contact if I want to create some pods or containers in that pod? Who should I contact? Do I need to contact master? And again, within the master, who should I contact?
+
+01:09:52
+Who should I request?
+
+01:09:55
+API server. Suppose I want to update this pod or I want to delete this pod also, then whom should I contact? Whatever I want to do in my Kubernetes cluster, do I need to contact my API server in the master?
+
+01:10:15
+Yes, so API server what API server does API server will interacts with API which means code code Kubernetes is implemented in Go language. Does it mean do I need to learn Go language if I want to manage Kubernetes cluster if I want to deploy applications in Kubernetes cluster do I need to learn Go language not required.
+
+01:10:43
+Kubernetes API server will interacts with API.
+
+01:10:48
+Internally, it will be interacting with the APS. So can I call this Kubernetes API server? Can I call this API server as a front end for all my Kubernetes operations? Whatever I want to do in my Kubernetes cluster, can I call this as a entry point or front end? Whatever I want to do in this Kubernetes cluster? Whatever I want to do in this Kubernetes cluster, whom should I contact?
+
+01:11:17
+I want to contact the API server the API server. So can I call this as a communication center communication center for developers or system administrators who like developers if they want to develop sorry if they want to deploy their application if I want to deploy their application does a developer need to contact
+
+01:11:46
+I mean to say containers. Yes. And also is it a communication for system administrators like Kubernetes administrators to do the administrative tasks like creating a values, creating a values, creating new servers, granting the permissions. So is this API server is kind of a control plane or I mean to say front end for Kubernetes operations, whatever you want to do in this cluster.
+
+01:12:14
+Do I need to contact this Kubernetes API server?
+
+01:12:19
+Yes, but how to communicate how to communicate with this API server. This is a client server architecture. Kubernetes is also a client server architecture. This is API server using some client. Can I communicate with that API server?
+
+01:12:41
+Can I communicate with that API server using some client? So if I want to communicate, if I want to communicate, how can I communicate with that API server? If you see that diagram, architecture diagram, if you see that architecture diagram.
+
+01:13:02
+CLI. Can I use some client software CLI software?
+
+01:13:14
+What is that client software that CLI software or client software? Cube CTL. What is this Cube CTL? It's a Kubernetes CLI. Using Cube CTL, we can communicate with Kubernetes cluster, which means your
+
+01:13:43
+with whom you will communicate with API server.
+
+01:13:51
+So you can use CLI. You can execute something like this. If you want to see how many nodes are there, if you want to see how many parts are there in that cluster, I can execute some commands like this. If I want to deploy part also, I can deploy some parts, something like this. Using these images, I want to create a part. That part will have a container out of that image like this. So I can execute CLI commands.
+
+01:14:20
+But even though I am executing comments in the background, is it going to make a API calls? Is this CLI is responsible for making a API calls to this? API server. So I am executing command. I am executing command, but in the background, is it a programmatic call kind of a REST call REST API call?
+
+01:14:45
+It's a rest API call. So this CLI is creating a request and the CLI is passing that request to the API server. So can I call this as a client? Can I call this as a server?
+
+01:15:01
+kuber rate is claimed now whatever I do using CLI does request goes to the API server is that API server will validate and process that request
+
+01:15:17
+This is a CLI and also using UI also can I do that? Can I write some UI internally using that UI from that UI? Also, can I make some API calls? Can I make some API calls using that UI? Kubernetes dashboard.
+
+01:15:37
+Kubernetes dashboard, but are you going to use UI for deploying managing your applications in the actual projects? Are you going to do using UI? No, but using this UI using this Kubernetes dashboard or UI will I able to have a overview about my cluster which means how many nodes are part of my cluster? How many parts are part of my cluster? Whether they are running whether they are not running?
+
+01:16:06
+Will I able to have a overview using UI
+
+01:16:12
+Yes, so whether it's a GUI whether it's a CLI both whether it's a GUI or CLI in the background we need to contact whom for getting or updating or deleting anything in the Kubernetes API server API server. So whenever I execute any command like this also first what happens first request goes
+
+01:16:44
+API server but does the CLI should know where exactly that cluster is running where exactly that API server is running without having that information the CLI will be able to communicate with this API server no so we are going to configure this CLI we are going to configure this CLI using one file called config file one file called config file cube
+
+01:17:14
+config file. So within that server in the current user under that dot cube folder, I will have one config file. Does that config file if that config file has this information where exactly that API server on which IP and which port that API server is running. What is the username and certificates to connect to that API server. If I have all those information in this cube config file in this client machine.
+
+01:17:43
+any command I execute is this CLI will use this config file to connect with API server. I mean to say communicate with API server.
+
+01:17:56
+Yes. So first request goes to API server. What this API server does here? Guys, this is very, very important. Sometimes in the interview also they are asking you are executing some commands like this. Can you explain what is happening in the background? You are executing some commands like this. Can you explain the flow? How kubectl is reaching or how kubectl is communicating with your Kubernetes cluster?
+
+01:18:26
+Can you explain all the flow? Sometimes they're asking in the interview. Remember, any command I execute like this, is it going to use this kubeconfig file to identify on which IP and which port that API server is running as a which user I need to connect to that API server for authentication and authorization. So this kubectl first make a request to the API server.
+
+01:18:54
+What this API server does once the request comes to API server is this API server will authenticate
+
+01:19:04
+and authorize the request first. What is the meaning of authentication and authorization? So whoever is requesting, whoever is requesting, does this user, does this system is known to the API server or not? Is it going to do some kind of authentication whether this system or user is known to the Kubernetes? Authentication, kind of a login. Is it going to validate?
+
+01:19:33
+whether that system is valid that user is valid or not first. Are is it blindly going to process that request? Is it blindly give the information or update the information blindly? No.
+
+01:19:48
+First it will authenticate. If it is authenticated, the user is known to the system. What it does next? What it does next authentication is different. Authorization is different. Is it going to authorize whether that system or user is authorized to perform that activity? Whether he is trying to get the nodes, whether he is trying to get the pods. So will it validate whether that user has permissions?
+
+01:20:17
+It is not going to do the permissions. It is going to validate the permissions. Is it going to validate the permission whether that user or system has the permissions to perform that activity or not?
+
+01:20:30
+Yes, guys in the Jenkins also you have done this right in the Jenkins do you have this you authentication and authorization nexus also you have this authentication and authorization.
+
+01:20:44
+So same thing. Does your API server first will it do the authentication and authorization before it process that request? Whether you want to deploy a pod, whether you want to delete a pod. So does Kubernetes will first authenticate and authorize before it performs that activity? Does the API server will authenticate and authorize? Yes. Once authentication and authorization is done,
+
+01:21:11
+Is it going to validate and process that request? It is going to validate and process the request based on whatever you are trying to do. Suppose I am trying to create a pod. I mean to say I'm trying to deploy my application. I'm trying to create a pod. I am trying to deploy my application. So it is going to authenticate authorize. If the request is proper, then what it does?
+
+01:21:42
+What that API server does once that is everything is proper. It has authenticated authorized and at the request data is also proper. Then. Is it going to persist that information in ATCD?
+
+01:21:59
+It will persist that information in ETCD. It will persist. The requested details.
+
+01:22:12
+details in ATCD.
+
+01:22:16
+Guys suppose the authorization is failed, authentication is failed. Is it going to return the response back to the client saying that you are not allowed to do that permission. You are not allowed to do that permission or some kind of error. You are not authenticated or authorized to do that. Yes. And if he's using some invalid options, incorrect request, then is it going to validate and say you are using some kind of invalid options or request?
+
+01:22:47
+again yes if everything is proper if everything is proper is that api server is going to persist that request details in etcd if you are trying to create a pod is it going to save that pod information in etcd yes is everyone clear what is cli what is cube ctl cube ctl is a client cube ctl is a client software cli software
+
+01:23:16
+Can I use this kubectl to communicate with my kubernetes cluster that is API server?
+
+01:23:25
+Yes. So what is API server? Is everyone clear? What is the role of API server? What exactly API server does in the Kubernetes?
+
+01:23:38
+Now it is going to process, authenticate, authorize, then validate and process that request. Whatever request comes to the Kubernetes cluster. It is going to purchase that information in ETCD. Then what is this ETCD? Next question comes. What is this ETCD?
+
+01:24:01
+What is ETCD?
+
+01:24:08
+this is very very important to understand and understand the architecture
+
+01:24:15
+What is this CTCD? This ETCD is a data store. This ETCD is a key value distributed data store kind of a database database for what is it a database for your applications your database is this a database for your applications or is it a database for Kubernetes where it can maintain the Kubernetes information Kubernetes state.
+
+01:24:45
+So, ETCD, this ETCD is a key value distributed data store, kind of a JSON data, key value. ETCD is a simple distributed key value store. Kubernetes will use ETCD as its what? Kubernetes will use ETCD as its a database to store what information? To store all your Kubernetes information.
+
+01:25:17
+Just to give an example, what type of information will be stored in the Kubernetes DTCD? Is it going to store the information about pods? How many pods are there? Each pod, how many containers? What images used? And is it going to have a deployment information, services information? How many nodes are part of that cluster? Is ETCD will store all that information, your Kubernetes information? Yes.
+
+01:25:47
+So this is ETCD.
+
+01:25:51
+now whenever I am requesting to create a pod whenever I am requesting to create a pod
+
+01:26:02
+Whenever I'm trying to create a pod or deployment like this using client, is this going to happen? First, is this request goes to API server? Is that API server will authenticate, authorize, and process that request? If everything is proper, is it going to purchase that information in ATCD? Yes. Then.
+
+01:26:26
+Once that information is persisted in ETCD who comes into picture suppose. I am creating I am asking to create a pod I am asking to create a pod or deployment. Let's say This will process that request validate that request save that request then who comes into picture here. We have a scheduler We have a scheduler here. So what this scheduler does? The name itself it is saying is scheduler is responsible for scheduling
+
+01:26:55
+pods is scheduler is responsible for scheduling your pods to the nodes
+
+01:27:04
+Is this scheduler is going to verify etcd is it going to look etcd is there any parts which are in a which are not scheduled at is this scheduler will verify etcd is it going to check in the etcd scheduler will try to assign assign nodes nodes
+
+01:27:35
+to the pods which are unscheduled.
+
+01:27:43
+Which means is this scheduler is going to look after the ETCD and it will identify is there any pod which is not yet scheduled in the cluster. So is this scheduler is this scheduler is going to One second is give me one second.
+
+01:28:50
+I guess we'll continue. So the scheduler comes into picture. The scheduler will try to see, is there any parts which are not scheduled? So is that scheduler is responsible for deciding in which node that part can be scheduled? Does the scheduler will decide in which node that part can be scheduled in the cluster?
+
+01:29:15
+Yes. So how it will decide how it will decide is that scheduler is going to communicate with the agent software that is cubelet is that scheduler is going to communicate with one agent software called cubelet, which is running in each and every node is the scheduler is going to communicate with this cubelet and identify does this node has enough CPU enough memory available so that I can schedule that part of this node is the scheduler.
+
+01:29:44
+will communicate with your cubelet which is running in these nodes to identify whether I can schedule this part or not in that node. Whether that node has enough CPU enough memory. Yes, so scheduler will assign the nodes to the pods which are not scheduled. But this control may I mean to say this master who is going to communicate with within the workers are within these nodes.
+
+01:30:12
+with which component this control plane like your scheduler or your control manager or your API server with whom it is going to communicate in these nodes with whom it is going to communicate with these nodes to manage that to manage the nodes. I mean to say to manage the nodes and parts which is running in that nodes. It is going to communicate with whom cubelet. So what is cubelet again?
+
+01:30:42
+What is cubelet? Cubelet is different. Cubectl is different. Cubelet is different. Cubectl is different. What is cubelet guys? Cubectl is a CLI. Cubelet is what? Can I call this as one agent software? Cubelet is a primary node agent. Cubelet is a primary node agent that will run on each nodes in each and every node including master also. So, what is cubelet? Cubelet is a CLI. Cubelet is a CLI
+
+01:31:11
+Can I call master also as one node? Master also as one node, yes. So Qubelet is a primary node agent. It will read the container manifest, which will ensure that containers are running. And it will make sure that containers are running in the pod. So is your control plane? Is your master will communicate with your nodes with the help of Qubelet? Can I call this Qubelet as a agent software, node agent?
+
+01:31:41
+Kubernetes node agent, Kubernetes agent, or can I call this as a Kubernetes agent or Kubernetes node agent, this cubelet? Yes. So the scheduler will just decide in which node that pod can be scheduled. Again, does this control manager comes into picture? One scheduler decided, right? In which node that pod can be scheduled? Does this control manager comes into picture?
+
+01:32:11
+Does this control managers will communicate with that node agent and ask him to create a container using so-and-so image? So the parts gets created here. In whatever node that is decided. If your pod is created here pod will have a container and again. If something goes wrong with this containers are pods do have some control managers who is looking after those pods and those nodes.
+
+01:32:42
+We have a lot of control managers like a node control manager. Node control manager. Replication control manager.
+
+01:32:54
+deployment control manager like this. We have a lot of control managers. Suppose I created a replication controller. Is this replication control manager will look after your replicas. If this replica is not running, is this replication control manager again will replicate that in some node or same node.
+
+01:33:16
+Yes, and we have a node control manager. If something goes wrong with this node itself, does this node control manager will do something?
+
+01:33:27
+You have a lot of control managers, like a node control manager, replication control manager, deployment control manager, a lot of control managers. Each control manager will perform some activity. Suppose if something goes wrong with this node itself, does this node control manager comes into picture? Is this node control manager is responsible for noticing? If node goes down, is it responsible for noticing and doing something? If any node goes down?
+
+01:33:59
+Yes, so what this node control manager does for some reason this node itself is down maximum what that node control manager does is it going to recreate or reassign these parts to other nodes.
+
+01:34:14
+Yes, suppose node is healthy. I created a replication controller to deploy this part. I created a replication controller. Is that replication controller is responsible for managing this part replicas if this replica is down, is it going to replicate again that replication control manager?
+
+01:34:38
+So we have a lot of control managers like this. So is everyone clear the architecture? What is API server? What it does? What is scheduler? What it does? What is control managers? There are a lot of control managers like this.
+
+01:34:56
+node control manager replication control manager replica set deployment a demon set. I will explain all these things later. What is replication controller? What is deployment? What is demon set? We will discuss later, but do we have control managers who is responsible for managing nodes or parts like that?
+
+01:35:20
+Yes, is everyone clear in the master? What is API server? What is the responsibility of API server? What is scheduler? What is the responsibility of scheduler? What is control managers? What is GTCD and what is cubelet as I already told what is cubelet
+
+01:35:45
+So is your control manager will communicate? Will it manage node and the pods?
+
+01:35:56
+parts which are running in that node using cubelet is your control manager is going to manage that node using that agent
+
+01:36:08
+it will manage node and it parts using that agent. Kind of agent. This is manager, this is agent. Just to make it simple, like you have agents for LIC, right? You have a LIC, there will be a manager. In the LIC, there will be a manager. You will have some agents. Does that manager will communicate with agents to track how many policies has done, is the business is achieved like that? Similarly, similarly, this is.
+
+01:36:36
+Kubernetes control plane master is this control plane will communicate with cubelet that is agent to see whether that node is healthy, whether the parts which is running in that node are healthy.
+
+01:36:50
+Yes, so that is agent. What is difference between cubelet and cubectl? Don't get confused. Cubectl is different. Cubelet is different. So what is this cubectl guys?
+
+01:37:08
+CubeCTL is a CLI. Using that CLI can I communicate with my Kubernetes cluster? I mean to say that is API server.
+
+01:37:20
+Now, is it mandatory to have this kubectl also in the master machine? I mean to say, do I need to install this client software also in the master machine? Client server architecture. If you understand the client server architecture, is it mandatory to have this kubectl also in the master? No. Can I have this CLI anywhere? Even in the master also, I can install kubectl or in any other system also, like a developer laptop.
+
+01:37:49
+or a Jenkins server also can have a kubectl installed. And if I have this config file, if I have that kubernetes config file in that system, even though kubectl is in Jenkins server, if I have that kube config file, even though I execute kubectl commands here, is it going to communicate with that cluster and do the operations?
+
+01:38:14
+Yes, that is what kubectl is doing right. People are saying no, I have a kubectl installed in Jenkins server and if I have a kubeconfig file of that cluster, even though I execute kubectl get nodes.
+
+01:38:31
+using this kubectl get nodes is the request goes to this API server and get the information. If I want to deploy can I execute kubectl commands from this server even though this is not a kubernetes machine. This is not a master. This is not a worker. Does this machine can communicate with the cluster and do the deployment in the cluster?
+
+01:38:56
+Yes, if required, can I install kubectl also in the master? Yes, without installing in the master also, can I have a kubectl in a separate machine? And if I have that kubeconfig file, can I communicate with my cluster? Yes, but if I have a kubectl in a separate machine, is this machine is part of the cluster? I mean to say is this machine is part of your cluster?
+
+01:39:26
+Even though you are deploying applications using this machine, is it a master or worker? No.
+
+01:39:34
+that is cubectl what is cubelet?
+
+01:39:45
+Cubelet is agent node agent. Now is everyone clear guys? What is container runtime? What is API server? What is scheduler? What is control manager? What is ETCD and what is cubelet? And what is left in the architecture? One component left in the architecture. What is that left? We need to discuss. Cube proxy. What is that proxy?
+
+01:40:14
+the name itself it is saying proxy. It's a networking proxy. So if I want to access the containers, which is running in my Kubernetes cluster, I want to access these applications, these pods, which are running in my Kubernetes cluster, within the cluster or outside the cluster, if I want to access, with the help of whom I can reach the containers, the applications.
+
+01:40:42
+are the pods which is running in my Kubernetes cluster with the help of kube-proxy. So that kube-proxy is a networking proxy. kube-proxy enables Kubernetes service abstraction. It is going to maintain the networking rules on the host. It is going to perform the connection forwarding.
+
+01:41:09
+It is going to perform the connection forwarding. It's a networking proxy. So QProxy will maintain network rules on the nodes. It is going to maintain those network rules on the nodes. Does these network rules will allow us to communicate your pods inside the cluster or outside the cluster? What is the meaning of inside the cluster? Suppose I have another pod, another application running in my cluster. If this application.
+
+01:41:37
+want to communicate with this application. Can I call this as an inside cluster? I want to access this one from this one. Can I call that as an inside cluster? Yes. Suppose if I want to access from outside the cluster from separate machine, can I call this as an outside cluster from this machine or system? I want to access this one. Can I call this as an outside cluster? Yes. So.
+
+01:42:06
+If I want to access inside the cluster or outside the cluster your applications, who is going to help to access those spots within the cluster or outside the cluster? Kube proxy. So it will help us to have a network proxy. It will help us to have a network proxy in Kubernetes. So there is a separate concept here, guys, service. There is a separate concept called service, Kubernetes service.
+
+01:42:35
+So we can do that using service. I mean to say, I can access this application within the cluster or outside the cluster using service by creating a service. Service is a logical concept. Service is a logical concept, but the actual work will be done by whom in the background. We are creating a service to access that application. But in the background, who is going to do the actual work? Service is just a logical concept.
+
+01:43:05
+the actual work will be done by your Q-proxy.
+
+01:43:11
+Is everyone clear on the architecture? If you understand this architecture, you can understand Kubernetes very well.
+
+01:43:21
+in and out of architecture I explained this is very very important sometimes in the interview they are going to ask
+
+01:43:30
+You are executing some cubes, CTA comments. What is happening in the background is request is going to a PSR. What is a PSR? What is doing this? Scheduler is doing something. It is CD is doing something. Cubelet is used for some purpose. Cube proxy is is used for some purpose.
+
+01:43:49
+Is everyone clear the kubernetes architecture today we covered only architecture tomorrow. I am going to explain how to set up this cluster. We are going to set up the kubernetes cluster tomorrow. So can I set up kubernetes cluster in any kind of infrastructure whether it's an on-prem infrastructure whether it's a cloud infrastructure? Can I run my kubernetes anywhere?
+
+01:44:19
+Suppose my company, my application is using data center, their own data centers. Can I run my Kubernetes in data center or can I run Kubernetes in the cloud also? Yes. So tomorrow, I will explain how to set up the cluster. Today, only architecture. This is very, very important. Now, today, you need to go through one more video. Kubernetes deprecating Docker. But don't set up the cluster.
+
+01:44:49
+Here I have explained how to set up the cluster also. Anyhow, I am going to explain tomorrow. Don't set up the cluster, but just understand why Kubernetes deprecated Docker and also try to go through today's session one more time and understand the architecture. Tomorrow, I'm going to continue with setting up the Kubernetes cluster.
+
+01:45:13
+Thank you, guys. That's it for today. Have a great day. We'll see you tomorrow. We'll set up the Kubernetes cluster. Thank you.
+
